@@ -1,15 +1,21 @@
 # Multi-stage build with uv. Runs the API with the fake provider unless an API key is passed.
+# `llm-evalops` is a path dependency (../llm-evalops) outside this build context; pass it as a
+# named context:
+#   docker build --build-context llm-evalops=../llm-evalops -t briefing-agent .
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0
 WORKDIR /app
+# `../llm-evalops` relative to /app is /llm-evalops; --no-editable installs it into the venv.
+COPY --from=llm-evalops pyproject.toml README.md /llm-evalops/
+COPY --from=llm-evalops src /llm-evalops/src
 COPY pyproject.toml uv.lock .python-version README.md ./
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-install-project --no-dev
+    uv sync --frozen --no-install-project --no-dev --no-editable
 COPY src ./src
 COPY pricing.json evals.yaml ./
 COPY tests/fixtures ./tests/fixtures
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+    uv sync --frozen --no-dev --no-editable
 
 FROM python:3.12-slim-bookworm
 RUN useradd --create-home app

@@ -269,7 +269,7 @@ curl -s localhost:8000/notes
 Docker (multi-stage, uv, non-root, fixtures baked in so it works keyless):
 
 ```bash
-docker build -t briefing-agent .
+docker build --build-context llm-evalops=../llm-evalops -t briefing-agent .
 docker run -p 8000:8000 -e OPENROUTER_API_KEY=... briefing-agent     # omit the key for the fake provider
 ```
 
@@ -297,6 +297,33 @@ Every LLM call, tool call and verification writes one JSON line to `TRACE_PATH` 
 shared span schema (`trace_id`, `span_id`, `parent_span_id`, `kind`, tokens, `cost_usd`,
 `status`, `error_kind`, `meta`), and the API response carries the per-run summary
 (`cost.llm_calls`, `cost.tool_calls`, tokens, `cost.by_model`).
+
+## Depending on llm-evalops
+
+Tracing, pricing and the regression gate come from the sibling project `llm-evalops`
+(`llmops` and `evalkit` packages). For local development it is a path dependency with an
+editable install; `pyproject.toml` carries
+
+```toml
+[tool.uv.sources]
+llm-evalops = { path = "../llm-evalops", editable = true }
+```
+
+so clone the two repos side by side and run `uv sync`. To switch to a git dependency once the
+repos are on GitHub (placeholder URL, replace the owner if it differs):
+
+```bash
+uv add "llm-evalops @ git+https://github.com/palademian-jose/llm-evalops"
+# and delete the path entry from [tool.uv.sources]
+```
+
+CI checks the sibling repo out next to this one (`actions/checkout` with
+`repository: palademian-jose/llm-evalops`; `checkout` cannot write outside the workspace, so both
+repos live under it as `briefing-agent/` and `llm-evalops/` and `../llm-evalops` resolves). The
+sibling must be public; if it is private, create a read-only token and store it as the
+`EVALOPS_TOKEN` secret, which the workflow already prefers over the default token. The Docker
+image takes the sibling as a named build context:
+`docker build --build-context llm-evalops=../llm-evalops -t briefing-agent .`.
 
 ## Known limitations
 

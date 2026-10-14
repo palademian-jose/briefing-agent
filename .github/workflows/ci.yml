@@ -9,15 +9,33 @@ env:
   LLM_PROVIDER: fake
   NETWORK_MODE: fixture
 
+# `llm-evalops` is a path dependency (`../llm-evalops`, see [tool.uv.sources] in pyproject.toml).
+# actions/checkout cannot write outside $GITHUB_WORKSPACE, so both repos are checked out side by
+# side inside it (briefing-agent/ and llm-evalops/) and every step runs from briefing-agent/.
+# The sibling repo must be public; if it is private, add a read-only token as the EVALOPS_TOKEN
+# secret.
+defaults:
+  run:
+    working-directory: briefing-agent
+
 jobs:
   lint-test-eval:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: briefing-agent
+
+      - uses: actions/checkout@v4
+        with:
+          repository: palademian-jose/llm-evalops
+          path: llm-evalops
+          token: ${{ secrets.EVALOPS_TOKEN || github.token }}
 
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          cache-dependency-glob: briefing-agent/uv.lock
 
       - name: Install
         run: uv sync --frozen
@@ -37,7 +55,13 @@ jobs:
         run: uv run python scripts/eval.py --k 1 --subset 12 --faults "fetch_timeout:0.3,search_empty:0.2,fetch_not_found:0.15" --out reports --suffix ci-faults
 
       - name: Gate against baseline
-        run: uv run python scripts/gate.py --baseline reports/baseline.json --candidate reports/latest-ci.json --config evals.yaml
+        run: |
+          uv run evalkit gate \
+            --baseline reports/baseline.json \
+            --candidate reports/latest-ci.json \
+            --config evals.yaml \
+            --md reports/gate.md \
+            --annotate
 
       - name: Upload reports
         if: always()
@@ -45,5 +69,5 @@ jobs:
         with:
           name: eval-reports
           path: |
-            reports/*.json
-            reports/*.md
+            briefing-agent/reports/*.json
+            briefing-agent/reports/*.md
