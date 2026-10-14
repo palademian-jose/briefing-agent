@@ -1,0 +1,7 @@
+{
+  "_note": "USD per million tokens. Snapshot for cost accounting only. Verify before relying on these numbers; llm-evalops is the source of truth.",
+  "claude-sonnet-4-5": {"input_per_m": 3.0, "output_per_m": 15.0},
+  "claude-haiku-4-5": {"input_per_m": 1.0, "output_per_m": 5.0},
+  "gpt-4o": {"input_per_m": 2.5, "output_per_m": 10.0},
+  "gpt-4o-mini": {"input_per_m": 0.15, "output_per_m": 0.6}
+}

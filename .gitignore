@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+data/*.db
+data/*.db-journal
+traces/*.jsonl
+checkpoints/*.json
+reports/eval-*.json
+dist/
+build/
+*.egg-info/
