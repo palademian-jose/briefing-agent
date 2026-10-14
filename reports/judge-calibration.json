@@ -1,0 +1,178 @@
+{
+ "judge": "lexical-fallback",
+ "n": 20,
+ "agreement": 0.95,
+ "kappa": 0.898,
+ "confusion": {
+  "tp": 11,
+  "tn": 8,
+  "fp": 1,
+  "fn": 0
+ },
+ "position_swap_flip_rate": 0.0,
+ "length_padding_flip_rate": 0.0,
+ "pass_rate_short_half": 1.0,
+ "pass_rate_long_half": 1.0,
+ "items": [
+  {
+   "id": "h-001",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-002",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-003",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-004",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-005",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-006",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-007",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-008",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "clean fake-pipeline output; every fact is a sentence from its cited page"
+  },
+  {
+   "id": "h-009",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-010",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-011",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-012",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-013",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-014",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "2 fact(s) not supported by their cited source",
+   "note": "fact 3 is invented (Kepler-442 colony) and the last fact cites a source that does not exist"
+  },
+  {
+   "id": "h-015",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "first three facts rewritten with synonyms; meaning preserved, lexical overlap reduced"
+  },
+  {
+   "id": "h-016",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "first three facts rewritten with synonyms; meaning preserved, lexical overlap reduced"
+  },
+  {
+   "id": "h-017",
+   "label": true,
+   "verdict": true,
+   "agree": true,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "first three facts rewritten with synonyms; meaning preserved, lexical overlap reduced"
+  },
+  {
+   "id": "h-018",
+   "label": false,
+   "verdict": true,
+   "agree": false,
+   "reason": "meets the criterion under the lexical rubric",
+   "note": "faithful to its sources but the sources are about Kalman filter, not Bloom filter"
+  },
+  {
+   "id": "h-019",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "summary and facts never mention the topic",
+   "note": "faithful to its sources but the sources are about Word2vec, not Consistent hashing"
+  },
+  {
+   "id": "h-020",
+   "label": false,
+   "verdict": false,
+   "agree": true,
+   "reason": "summary and facts never mention the topic",
+   "note": "faithful to its sources but the sources are about Beam search, not PageRank"
+  }
+ ]
+}

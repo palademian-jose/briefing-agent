@@ -1,0 +1,2319 @@
+{
+ "run_id": "20261014T200200-ff3652",
+ "commit": "253546e",
+ "timestamp": "2026-10-14T20:02:08+00:00",
+ "provider": "fake",
+ "model": "anthropic/claude-sonnet-4.5",
+ "judge_model": "lexical-fallback",
+ "faults": "",
+ "seed": 7,
+ "metrics": {
+  "task_success": 0.9333,
+  "pass_k": 0.9333,
+  "k": 3,
+  "mean_tool_calls": 6.3,
+  "mean_llm_calls": 9.6,
+  "recovery_rate": null,
+  "faulted_runs": 0,
+  "faults_per_run": 0.0,
+  "cost_usd_mean": 0.0513,
+  "latency_p95_ms": 124.1,
+  "latency_mean_ms": 64.4,
+  "verifier_pass_rate": 1.0,
+  "repair_rate": 0.0,
+  "judge_pass_rate": 0.9333,
+  "needs_human_rate": 0.0,
+  "budget_exceeded_rate": 0.0,
+  "runs": 90,
+  "tasks": 30,
+  "wall_s": 7.4
+ },
+ "cases": [
+  {
+   "id": "g-0001",
+   "topic": "Bloom filter",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "data-structures",
+    "easy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 62.4,
+   "cost_usd": 0.048983,
+   "runs": [
+    {
+     "run_id": "db9bbe58697c",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.048983,
+     "latency_ms": 81.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "ec120cb5c5e2",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.048983,
+     "latency_ms": 53.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "2f486286f92f",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.048983,
+     "latency_ms": 52.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0002",
+   "topic": "Consistent hashing",
+   "failure_mode": "hallucination",
+   "tags": [
+    "distributed-systems",
+    "easy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 95.4,
+   "cost_usd": 0.057043,
+   "runs": [
+    {
+     "run_id": "2f3445a1a900",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.057043,
+     "latency_ms": 97.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "4a6da4b5ba8b",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.057043,
+     "latency_ms": 93.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "2809dab59675",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.057043,
+     "latency_ms": 95.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0003",
+   "topic": "Raft (algorithm)",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "distributed-systems",
+    "consensus"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 34.4,
+   "cost_usd": 0.052929,
+   "runs": [
+    {
+     "run_id": "467639cc2f42",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.052929,
+     "latency_ms": 33.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "f21029f15ebb",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.052929,
+     "latency_ms": 35.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "9513bedca252",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.052929,
+     "latency_ms": 34.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0004",
+   "topic": "Paxos (computer science)",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "distributed-systems",
+    "consensus"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 51.3,
+   "cost_usd": 0.050599,
+   "runs": [
+    {
+     "run_id": "1004bb7d64fd",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050599,
+     "latency_ms": 71.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "ea8cc4f1d104",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050599,
+     "latency_ms": 40.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "3f96a45711c4",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050599,
+     "latency_ms": 42.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0005",
+   "topic": "PageRank",
+   "failure_mode": "hallucination",
+   "tags": [
+    "search",
+    "easy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 60.5,
+   "cost_usd": 0.050312,
+   "runs": [
+    {
+     "run_id": "f7036b370e3e",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050312,
+     "latency_ms": 62.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "53319a9c4d9c",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050312,
+     "latency_ms": 59.7,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "8ca6fb0e2095",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050312,
+     "latency_ms": 59.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0006",
+   "topic": "Kalman filter",
+   "failure_mode": "hallucination",
+   "tags": [
+    "signal-processing",
+    "math-heavy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 54.3,
+   "cost_usd": 0.05242,
+   "runs": [
+    {
+     "run_id": "0b3392cc2c02",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.05242,
+     "latency_ms": 55.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "7c4e6ded64b8",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.05242,
+     "latency_ms": 54.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "5fc1e4331597",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.05242,
+     "latency_ms": 53.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0007",
+   "topic": "Merkle tree",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "data-structures",
+    "cryptography"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 44.7,
+   "cost_usd": 0.051814,
+   "runs": [
+    {
+     "run_id": "cbc8fa321a73",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.051814,
+     "latency_ms": 44.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "1bff51002efb",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.051814,
+     "latency_ms": 44.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "c04015a15fd8",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.051814,
+     "latency_ms": 45.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0008",
+   "topic": "Byzantine fault",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "distributed-systems"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 41.7,
+   "cost_usd": 0.055997,
+   "runs": [
+    {
+     "run_id": "7bb263b81c10",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.055997,
+     "latency_ms": 42.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "cb53ba35b4e5",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.055997,
+     "latency_ms": 42.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "be7811f87f6f",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.055997,
+     "latency_ms": 41.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0009",
+   "topic": "Two-phase commit protocol",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "databases",
+    "distributed-systems"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 35.5,
+   "cost_usd": 0.050246,
+   "runs": [
+    {
+     "run_id": "8e880eff8070",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050246,
+     "latency_ms": 36.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "23062024cce8",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050246,
+     "latency_ms": 33.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "0cb8e6f09b1c",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.050246,
+     "latency_ms": 36.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0010",
+   "topic": "CAP theorem",
+   "failure_mode": "hallucination",
+   "tags": [
+    "distributed-systems",
+    "easy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 87.1,
+   "cost_usd": 0.042402,
+   "runs": [
+    {
+     "run_id": "ac5f2d8a7ee7",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.042402,
+     "latency_ms": 106.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "b9865822a8b1",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.042402,
+     "latency_ms": 78.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "8674ae1668de",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.042402,
+     "latency_ms": 76.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0011",
+   "topic": "Lamport timestamp",
+   "failure_mode": "tool_loop",
+   "tags": [
+    "distributed-systems",
+    "few-sources"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 35.5,
+   "cost_usd": 0.038912,
+   "runs": [
+    {
+     "run_id": "e11e1e9cd349",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.038912,
+     "latency_ms": 35.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "f649bf22e064",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.038912,
+     "latency_ms": 36.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "735227393b21",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.038912,
+     "latency_ms": 34.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0012",
+   "topic": "Conflict-free replicated data type",
+   "failure_mode": "empty_search",
+   "tags": [
+    "distributed-systems",
+    "long-title"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 42.8,
+   "cost_usd": 0.055044,
+   "runs": [
+    {
+     "run_id": "d13fd977ffe2",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055044,
+     "latency_ms": 41.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "a6dc1dc350bb",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055044,
+     "latency_ms": 44.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "41178fb12523",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055044,
+     "latency_ms": 43.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0013",
+   "topic": "Locality-sensitive hashing",
+   "failure_mode": "hallucination",
+   "tags": [
+    "search",
+    "ml"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 90.8,
+   "cost_usd": 0.047208,
+   "runs": [
+    {
+     "run_id": "aec870c28c77",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.047208,
+     "latency_ms": 74.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "cb002ea81b81",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.047208,
+     "latency_ms": 120.7,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6e59f7fb9bd7",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.047208,
+     "latency_ms": 77.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0014",
+   "topic": "Okapi BM25",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "search",
+    "ranking"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 41.8,
+   "cost_usd": 0.03419,
+   "runs": [
+    {
+     "run_id": "7c57c79a1492",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.03419,
+     "latency_ms": 39.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "e61a4d2188d1",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.03419,
+     "latency_ms": 42.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "ebb43e67682d",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.03419,
+     "latency_ms": 44.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0015",
+   "topic": "tf-idf",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "search",
+    "ranking",
+    "short-query"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 42.1,
+   "cost_usd": 0.039601,
+   "runs": [
+    {
+     "run_id": "8296901c017a",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.039601,
+     "latency_ms": 41.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "ec52eb15dc87",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.039601,
+     "latency_ms": 40.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "ee6431910152",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.039601,
+     "latency_ms": 44.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0016",
+   "topic": "Learning to rank",
+   "failure_mode": "off_topic_source",
+   "tags": [
+    "search",
+    "ranking"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 61.2,
+   "cost_usd": 0.049671,
+   "runs": [
+    {
+     "run_id": "6b4ebf2483c1",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049671,
+     "latency_ms": 61.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "e9e41761273d",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049671,
+     "latency_ms": 62.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "76c0eb6f6bd9",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049671,
+     "latency_ms": 60.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0017",
+   "topic": "Transformer (deep learning architecture)",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "ml",
+    "long-title"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 80.7,
+   "cost_usd": 0.063894,
+   "runs": [
+    {
+     "run_id": "42e35c671c4f",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.063894,
+     "latency_ms": 63.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "186fd37f5ce1",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.063894,
+     "latency_ms": 114.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "64085f0a0adf",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.063894,
+     "latency_ms": 64.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0018",
+   "topic": "Word2vec",
+   "failure_mode": "hallucination",
+   "tags": [
+    "ml",
+    "nlp"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 82.5,
+   "cost_usd": 0.087366,
+   "runs": [
+    {
+     "run_id": "b58e96d238d9",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 8,
+     "llm_calls": 13,
+     "retries": 0,
+     "cost_usd": 0.087366,
+     "latency_ms": 84.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "8a37c13d9737",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 8,
+     "llm_calls": 13,
+     "retries": 0,
+     "cost_usd": 0.087366,
+     "latency_ms": 81.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6a0033a3f9cd",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 8,
+     "llm_calls": 13,
+     "retries": 0,
+     "cost_usd": 0.087366,
+     "latency_ms": 81.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0019",
+   "topic": "Byte pair encoding",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "ml",
+    "nlp"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 48.6,
+   "cost_usd": 0.049447,
+   "runs": [
+    {
+     "run_id": "5a74eb80127b",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049447,
+     "latency_ms": 48.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6e463d19dba8",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049447,
+     "latency_ms": 48.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "9dc6ca6a55b6",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049447,
+     "latency_ms": 49.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0020",
+   "topic": "Beam search",
+   "failure_mode": "tool_loop",
+   "tags": [
+    "ml",
+    "few-sources"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 62.1,
+   "cost_usd": 0.026245,
+   "runs": [
+    {
+     "run_id": "0eb673307ea0",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 5,
+     "llm_calls": 7,
+     "retries": 0,
+     "cost_usd": 0.026245,
+     "latency_ms": 47.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "4ed2000e2391",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 5,
+     "llm_calls": 7,
+     "retries": 0,
+     "cost_usd": 0.026245,
+     "latency_ms": 48.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "8e683ba0e4a8",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 5,
+     "llm_calls": 7,
+     "retries": 0,
+     "cost_usd": 0.026245,
+     "latency_ms": 90.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0021",
+   "topic": "Monte Carlo tree search",
+   "failure_mode": "hallucination",
+   "tags": [
+    "ml",
+    "games"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 74.2,
+   "cost_usd": 0.055863,
+   "runs": [
+    {
+     "run_id": "7b405b80507a",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055863,
+     "latency_ms": 74.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "5dc89da02069",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055863,
+     "latency_ms": 74.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "8d3cbc9c8984",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.055863,
+     "latency_ms": 73.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0022",
+   "topic": "A* search algorithm",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "algorithms",
+    "special-chars"
+   ],
+   "scores": {
+    "task_success": 0.0,
+    "judge_pass": 0.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": false,
+   "latency_ms": 42.6,
+   "cost_usd": 0.043296,
+   "runs": [
+    {
+     "run_id": "62518d0a8ca6",
+     "passed": false,
+     "failures": [
+      "missing term 'heuristic' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.043296,
+     "latency_ms": 51.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    },
+    {
+     "run_id": "af4553089efb",
+     "passed": false,
+     "failures": [
+      "missing term 'heuristic' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.043296,
+     "latency_ms": 39.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    },
+    {
+     "run_id": "648f8cc646eb",
+     "passed": false,
+     "failures": [
+      "missing term 'heuristic' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.043296,
+     "latency_ms": 37.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0023",
+   "topic": "Dijkstra's algorithm",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "algorithms",
+    "special-chars"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 101.9,
+   "cost_usd": 0.056639,
+   "runs": [
+    {
+     "run_id": "77fe4ec5393f",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056639,
+     "latency_ms": 92.4,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "855f774277b1",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056639,
+     "latency_ms": 124.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6c09a6cf1d83",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056639,
+     "latency_ms": 89.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0024",
+   "topic": "Gradient descent",
+   "failure_mode": "hallucination",
+   "tags": [
+    "ml",
+    "optimization"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 139.3,
+   "cost_usd": 0.056348,
+   "runs": [
+    {
+     "run_id": "669b30d32a23",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056348,
+     "latency_ms": 128.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "7a4f502fac0f",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056348,
+     "latency_ms": 164.6,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "47dc091ac410",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056348,
+     "latency_ms": 124.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0025",
+   "topic": "Backpropagation",
+   "failure_mode": "hallucination",
+   "tags": [
+    "ml"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 60.7,
+   "cost_usd": 0.054011,
+   "runs": [
+    {
+     "run_id": "48e42513c0d0",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054011,
+     "latency_ms": 60.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "db86b59b4b16",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054011,
+     "latency_ms": 61.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "2c9533d2bbd5",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054011,
+     "latency_ms": 60.7,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0026",
+   "topic": "Public-key cryptography",
+   "failure_mode": "missing_citation",
+   "tags": [
+    "cryptography",
+    "easy"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 71.3,
+   "cost_usd": 0.054704,
+   "runs": [
+    {
+     "run_id": "e8fa7d298cc5",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054704,
+     "latency_ms": 52.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "f47c78b88760",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054704,
+     "latency_ms": 50.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "7d75995eb415",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.054704,
+     "latency_ms": 110.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0027",
+   "topic": "Reed-Solomon error correction",
+   "failure_mode": "ambiguous_topic",
+   "tags": [
+    "coding-theory",
+    "special-chars"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 98.4,
+   "cost_usd": 0.067612,
+   "runs": [
+    {
+     "run_id": "1be0541c4d24",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.067612,
+     "latency_ms": 102.8,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6c2886162cf3",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.067612,
+     "latency_ms": 93.2,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "a316234fe94e",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.067612,
+     "latency_ms": 99.3,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0028",
+   "topic": "Apache Kafka",
+   "failure_mode": "off_topic_source",
+   "tags": [
+    "infrastructure",
+    "named-entity"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 36.5,
+   "cost_usd": 0.038652,
+   "runs": [
+    {
+     "run_id": "6d56c8cb6452",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.038652,
+     "latency_ms": 38.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "6b608dc4c930",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.038652,
+     "latency_ms": 36.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "906563f0f49c",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 7,
+     "llm_calls": 11,
+     "retries": 0,
+     "cost_usd": 0.038652,
+     "latency_ms": 35.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0029",
+   "topic": "Retrieval-augmented generation",
+   "failure_mode": "hallucination",
+   "tags": [
+    "ml",
+    "llm"
+   ],
+   "scores": {
+    "task_success": 1.0,
+    "judge_pass": 1.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": true,
+   "latency_ms": 54.8,
+   "cost_usd": 0.049868,
+   "runs": [
+    {
+     "run_id": "ae134d4a6c73",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049868,
+     "latency_ms": 53.5,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "a7cec0f509be",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049868,
+     "latency_ms": 57.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    },
+    {
+     "run_id": "defd11d2b7d9",
+     "passed": true,
+     "failures": [],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.049868,
+     "latency_ms": 54.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": true,
+      "reason": "meets the criterion under the lexical rubric",
+      "judge": "lexical-fallback"
+     }
+    }
+   ]
+  },
+  {
+   "id": "g-0030",
+   "topic": "Reciprocal rank fusion in search",
+   "failure_mode": "off_topic_source",
+   "tags": [
+    "search",
+    "no-dedicated-article",
+    "hard"
+   ],
+   "scores": {
+    "task_success": 0.0,
+    "judge_pass": 0.0,
+    "verifier_first_pass": 1.0
+   },
+   "passed": false,
+   "latency_ms": 97.3,
+   "cost_usd": 0.056495,
+   "runs": [
+    {
+     "run_id": "c5e3f1c64be0",
+     "passed": false,
+     "failures": [
+      "missing term 'rank fusion' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056495,
+     "latency_ms": 124.1,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    },
+    {
+     "run_id": "abd162ba1983",
+     "passed": false,
+     "failures": [
+      "missing term 'rank fusion' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056495,
+     "latency_ms": 82.9,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    },
+    {
+     "run_id": "c59140b3c20e",
+     "passed": false,
+     "failures": [
+      "missing term 'rank fusion' in summary/facts"
+     ],
+     "status": "ok",
+     "tool_calls": 6,
+     "llm_calls": 9,
+     "retries": 0,
+     "cost_usd": 0.056495,
+     "latency_ms": 85.0,
+     "faults_injected": 0,
+     "verifier_first_pass": true,
+     "repair_attempted": false,
+     "judge": {
+      "pass": false,
+      "reason": "not judged (run failed)"
+     }
+    }
+   ]
+  }
+ ]
+}

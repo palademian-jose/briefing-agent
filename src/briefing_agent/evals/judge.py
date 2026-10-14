@@ -79,6 +79,17 @@ def lexical_judge(
     }
 
 
+_CLIENT_CACHE: dict[str, LLMClient] = {}
+
+
+def _default_client(s: Settings) -> LLMClient:
+    """One client per provider for the process (avoids re-logging the fallback warning)."""
+    key = s.effective_provider
+    if key not in _CLIENT_CACHE:
+        _CLIENT_CACHE[key] = get_client(s)
+    return _CLIENT_CACHE[key]
+
+
 def judge(
     criterion: str,
     input_: dict[str, Any],
@@ -89,7 +100,7 @@ def judge(
     settings: Settings | None = None,
 ) -> dict[str, Any]:
     s = settings or get_settings()
-    c = client or get_client(s)
+    c = client or _default_client(s)
     if getattr(c, "provider", "fake") == "fake":
         verdict = lexical_judge(
             criterion, input_, output, reference, threshold=s.verify_match_threshold
