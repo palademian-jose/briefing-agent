@@ -9,19 +9,22 @@ from typing import Literal
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-Provider = Literal["fake", "anthropic", "openai"]
+Provider = Literal["openrouter", "anthropic", "openai", "fake"]
 NetworkMode = Literal["auto", "fixture", "live"]
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    llm_provider: Provider = "fake"
+    llm_provider: Provider | Literal[""] = ""
+    openrouter_api_key: str = ""
     anthropic_api_key: str = ""
     openai_api_key: str = ""
-    llm_model: str = "claude-sonnet-4-5"
-    cheap_model: str = "claude-haiku-4-5"
-    judge_model: str = "gpt-4o-mini"
+    openrouter_site_url: str = ""
+    openrouter_app_name: str = "briefing-agent"
+    llm_model: str = "anthropic/claude-sonnet-4.5"
+    cheap_model: str = "anthropic/claude-haiku-4.5"
+    judge_model: str = "openai/gpt-4.1-mini"
 
     network_mode: NetworkMode = "auto"
     http_timeout_s: float = 10.0
@@ -51,12 +54,21 @@ class Settings(BaseSettings):
 
     @property
     def effective_provider(self) -> Provider:
-        """Fall back to the fake provider when the configured real provider has no key."""
-        if self.llm_provider == "anthropic" and not self.anthropic_api_key:
+        """Explicit provider wins when its key exists; otherwise auto-detect from keys;
+        otherwise fall back to the fake provider."""
+        keyed = {
+            "openrouter": bool(self.openrouter_api_key),
+            "anthropic": bool(self.anthropic_api_key),
+            "openai": bool(self.openai_api_key),
+        }
+        if self.llm_provider == "fake":
             return "fake"
-        if self.llm_provider == "openai" and not self.openai_api_key:
-            return "fake"
-        return self.llm_provider
+        if self.llm_provider and keyed.get(self.llm_provider):
+            return self.llm_provider
+        for name in ("openrouter", "anthropic", "openai"):
+            if keyed[name]:
+                return name  # type: ignore[return-value]
+        return "fake"
 
     @property
     def effective_network_mode(self) -> Literal["fixture", "live"]:

@@ -1,7 +1,17 @@
 {
-  "_note": "USD per million tokens. Snapshot for cost accounting only. Verify before relying on these numbers; llm-evalops is the source of truth.",
+  "_note": "USD per million tokens. Snapshot for cost accounting only; verify before relying on these numbers. llm-evalops is the source of truth. Lookup falls back by stripping the vendor prefix (anthropic/claude-sonnet-4.5 -> claude-sonnet-4.5) and tolerates 4.5 / 4-5 variants.",
+  "anthropic/claude-sonnet-4.5": {"input_per_m": 3.0, "output_per_m": 15.0},
+  "anthropic/claude-haiku-4.5": {"input_per_m": 1.0, "output_per_m": 5.0},
+  "openai/gpt-4o": {"input_per_m": 2.5, "output_per_m": 10.0},
+  "openai/gpt-4o-mini": {"input_per_m": 0.15, "output_per_m": 0.6},
+  "openai/gpt-4.1": {"input_per_m": 2.0, "output_per_m": 8.0},
+  "openai/gpt-4.1-mini": {"input_per_m": 0.4, "output_per_m": 1.6},
+  "google/gemini-2.5-flash": {"input_per_m": 0.3, "output_per_m": 2.5},
   "claude-sonnet-4-5": {"input_per_m": 3.0, "output_per_m": 15.0},
   "claude-haiku-4-5": {"input_per_m": 1.0, "output_per_m": 5.0},
   "gpt-4o": {"input_per_m": 2.5, "output_per_m": 10.0},
-  "gpt-4o-mini": {"input_per_m": 0.15, "output_per_m": 0.6}
+  "gpt-4o-mini": {"input_per_m": 0.15, "output_per_m": 0.6},
+  "gpt-4.1": {"input_per_m": 2.0, "output_per_m": 8.0},
+  "gpt-4.1-mini": {"input_per_m": 0.4, "output_per_m": 1.6},
+  "gemini-2.5-flash": {"input_per_m": 0.3, "output_per_m": 2.5}
 }
