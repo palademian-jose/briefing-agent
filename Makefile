@@ -28,7 +28,7 @@ calibrate:
 	uv run python scripts/calibrate_judge.py
 
 gate:
-	uv run python scripts/gate.py --baseline reports/baseline.json --candidate reports/latest.json --config evals.yaml
+	uv run evalkit gate --baseline reports/baseline.json --candidate reports/latest.json --config evals.yaml --md reports/gate.md
 
 serve:
 	uv run uvicorn briefing_agent.api:app --host 0.0.0.0 --port 8000

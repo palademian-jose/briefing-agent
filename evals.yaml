@@ -1,11 +1,13 @@
-# Gate thresholds for scripts/gate.py (same format as `evalkit gate` in llm-evalops).
-# min/max are absolute; max_drop/max_rise are relative to reports/baseline.json.
+# Gate thresholds read by `evalkit gate` (llm-evalops): `make gate` and the CI job.
+# min/max are absolute; max_drop (higher-is-better) / max_increase (lower-is-better) are relative
+# to reports/baseline.json. `optional: true` skips a metric the run did not measure (status SKIP);
+# the pre-integration gate called the lower-is-better delta `max_rise`.
 metrics:
   task_success: {min: 0.85, max_drop: 0.05}
   pass_k: {min: 0.85, max_drop: 0.05}
   verifier_pass_rate: {min: 0.90, max_drop: 0.05}
   judge_pass_rate: {min: 0.85, max_drop: 0.05}
-  mean_tool_calls: {max: 12, max_rise: 2}
-  cost_usd_mean: {max: 0.25, max_rise: 0.05}
+  mean_tool_calls: {max: 12, max_increase: 2}
+  cost_usd_mean: {max: 0.25, max_increase: 0.05}
   budget_exceeded_rate: {max: 0.05}
   recovery_rate: {min: 0.70, max_drop: 0.10, optional: true}
