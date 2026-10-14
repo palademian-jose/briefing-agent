@@ -1,0 +1,11 @@
+# Gate thresholds for scripts/gate.py (same format as `evalkit gate` in llm-evalops).
+# min/max are absolute; max_drop/max_rise are relative to reports/baseline.json.
+metrics:
+  task_success: {min: 0.85, max_drop: 0.05}
+  pass_k: {min: 0.85, max_drop: 0.05}
+  verifier_pass_rate: {min: 0.90, max_drop: 0.05}
+  judge_pass_rate: {min: 0.85, max_drop: 0.05}
+  mean_tool_calls: {max: 12, max_rise: 2}
+  cost_usd_mean: {max: 0.25, max_rise: 0.05}
+  budget_exceeded_rate: {max: 0.05}
+  recovery_rate: {min: 0.70, max_drop: 0.10, optional: true}
