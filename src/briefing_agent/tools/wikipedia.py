@@ -109,8 +109,9 @@ def html_to_text(html: str) -> tuple[str, str]:
     )
     title = re.sub(r"\s+-\s+Wikipedia$", "", title)
     root = soup.select_one("div.mw-parser-output") or soup.body or soup
+    candidates = root.find_all("p") or soup.find_all("p")
     paragraphs: list[str] = []
-    for p in root.find_all("p"):
+    for p in candidates:
         txt = _WS.sub(" ", p.get_text("", strip=False))
         txt = _REF_MARK.sub("", txt)
         txt = _PUNCT_SPACE.sub(r"\1", txt).strip()

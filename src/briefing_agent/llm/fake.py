@@ -90,18 +90,28 @@ def observe(messages: list[Message]) -> Observed:
     return obs
 
 
-def broaden(topic: str, attempt: int) -> str:
-    """Progressively simpler queries: strip qualifiers, then keep the head words."""
+def query_candidates(topic: str) -> list[str]:
+    """Distinct queries from most to least specific: the topic, the topic without
+    qualifiers, its head words, a single head word, then a generic re-phrasing."""
     base = re.sub(r"\(.*?\)", "", topic).strip()
     base = re.split(r"\s+(?:in|for|of|and|vs\.?|versus)\s+", base, maxsplit=1)[0].strip() or topic
     words = base.split()
-    if attempt <= 0:
-        return topic
-    if attempt == 1:
-        return base if base.lower() != topic.lower() else " ".join(words[:3])
-    if attempt == 2:
-        return " ".join(words[:2]) if len(words) >= 2 else words[0]
-    return words[0]
+    raw = [topic, base, " ".join(words[:3]), " ".join(words[:2]), words[0], f"{base} overview"]
+    out: list[str] = []
+    for q in raw:
+        q = q.strip()
+        if q and q.lower() not in (o.lower() for o in out):
+            out.append(q)
+    return out
+
+
+def broaden(topic: str, tried: list[str]) -> str | None:
+    """Next untried query, or None when the candidate list is exhausted."""
+    tried_l = {t.lower() for t in tried}
+    for q in query_candidates(topic):
+        if q.lower() not in tried_l:
+            return q
+    return None
 
 
 def _sentences(text: str) -> list[str]:
@@ -223,6 +233,10 @@ class FakeClient:
             for c in obs.candidates
             if c["url"] not in obs.fetched_ok and c["url"] not in obs.failed
         ]
+        # Relevance before rank: a title sharing words with the topic beats a higher-ranked
+        # but unrelated hit (stable sort keeps search order among equals).
+        topic_tokens = set(content_tokens(obs.topic))
+        untried.sort(key=lambda c: -len(topic_tokens & set(content_tokens(c["title"]))))
 
         if len(obs.fetched_ok) >= obs.target:
             return f"DONE: {len(obs.fetched_ok)} sources fetched.", []
@@ -239,14 +253,14 @@ class FakeClient:
             and len(obs.queries) < 4
             and len(obs.fetched_ok) < max(2, obs.target)
         ):
-            query = broaden(obs.topic, len(obs.queries))
-            if query.lower() in (q.lower() for q in obs.queries):
-                query = broaden(obs.topic, len(obs.queries) + 1)
-            if query.lower() not in (q.lower() for q in obs.queries):
-                why = "no results yet" if not obs.candidates else "need more sources"
-                return f"Re-planning ({why}): searching '{query}'.", [
-                    self._call("search_wikipedia", query=query, limit=5)
-                ]
+            query = broaden(obs.topic, obs.queries)
+            if query is not None:
+                if not obs.queries:
+                    text = f"Searching '{query}'."
+                else:
+                    why = "no results yet" if not obs.candidates else "need more sources"
+                    text = f"Re-planning ({why}): searching '{query}'."
+                return text, [self._call("search_wikipedia", query=query, limit=5)]
 
         if obs.fetched_ok:
             return f"DONE: {len(obs.fetched_ok)} sources fetched (no more candidates).", []
@@ -318,7 +332,8 @@ class FakeClient:
         ]
         used = {fct.text for fct in kept}
         rebuilt = self._build(topic, sources, lo, hi, used=used, seed_facts=kept)
-        rebuilt.summary = old.summary or rebuilt.summary
+        if old.summary and not any(i.get("code") == "no_summary" for i in issues):
+            rebuilt.summary = old.summary
         return rebuilt.render()
 
     def _build(

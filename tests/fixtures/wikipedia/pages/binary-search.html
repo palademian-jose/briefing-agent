@@ -3,6 +3,1430 @@
 <body>
 <h1 id="firstHeading">Binary search</h1>
 <div id="mw-content-text"><div class="mw-parser-output">
-
+<p class="mw-empty-elt" id="mwBQ"><span about="#mwt4" data-mw='{"parts":[{"template":{"target":{"wt":"featured article","href":"./Template:Featured_article"},"params":{},"i":0}}]}' id="mwBg" typeof="mw:Nowiki mw:Transclusion"></span><meta about="#mwt4" data-mw='{"name":"indicator","attrs":{"name":"featured-star"},"body":{"extsrc":"[[File:cscr-featured.svg|20x20px |link=Wikipedia:Featured articles* |alt=Featured article  |This is a featured article. Click here for more information.]]\n"}}' id="mwBw" typeof="mw:Extension/indicator"/><link about="#mwt4" href="./Category:Featured_articles" id="mwCA" rel="mw:PageProp/Category"/>
+<span about="#mwt6" data-mw='{"parts":[{"template":{"target":{"wt":"Use dmy dates","href":"./Template:Use_dmy_dates"},"params":{"date":{"wt":"August 2026"}},"i":0}}]}' id="mwCQ" typeof="mw:Nowiki mw:Transclusion"></span><link about="#mwt6" href="./Category:Use_dmy_dates_from_August_2026" id="mwCg" rel="mw:PageProp/Category"/></p>
+<p id="mwDQ">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwDg" rel="mw:WikiLink" title="Computer science">computer science</a>, <b id="mwDw">binary search</b>, also known as <b id="mwEA">half-interval search</b>,<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Williams1976"},"body":{"id":"mw-reference-text-cite_note-Williams1976-1"}}' id="cite_ref-Williams1976_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Williams1976-1" id="mwEQ"><span class="mw-reflink-text" id="mwEg"><span class="cite-bracket" id="mwEw">[</span>1<span class="cite-bracket" id="mwFA">]</span></span></a></sup> <b id="mwFQ">logarithmic search</b>,<sup about="#mwt9" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Binary_search\"-2"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Binary_search"_2-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Binary_search"-2' id="mwFg"><span class="mw-reflink-text" id="mwFw"><span class="cite-bracket" id="mwGA">[</span>2<span class="cite-bracket" id="mwGQ">]</span></span></a></sup> or <b id="mwGg">binary chop</b>,<sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEButterfieldNgondi201646"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEButterfieldNgondi201646-3"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Butterfield"},"2":{"wt":"Ngondi"},"3":{"wt":"2016"},"p":{"wt":"46"}},"i":0}}]}' id="cite_ref-FOOTNOTEButterfieldNgondi201646_3-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEButterfieldNgondi201646-3" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>3<span class="cite-bracket" id="mwHg">]</span></span></a></sup> is a <a href="https://en.wikipedia.org/wiki/Search_algorithm" id="mwHw" rel="mw:WikiLink" title="Search algorithm">search algorithm</a> that finds the position of a target value within a <a href="https://en.wikipedia.org/wiki/Sorted_array" id="mwIA" rel="mw:WikiLink" title="Sorted array">sorted array</a>.<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTECormenLeisersonRivestStein200939"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTECormenLeisersonRivestStein200939-4"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Cormen"},"2":{"wt":"Leiserson"},"3":{"wt":"Rivest"},"4":{"wt":"Stein"},"5":{"wt":"2009"},"p":{"wt":"39"}},"i":0}}]}' id="cite_ref-FOOTNOTECormenLeisersonRivestStein200939_4-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTECormenLeisersonRivestStein200939-4" id="mwIQ"><span class="mw-reflink-text" id="mwIg"><span class="cite-bracket" id="mwIw">[</span>4<span class="cite-bracket" id="mwJA">]</span></span></a></sup><sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwJQ"><span class="mw-reflink-text" id="mwJg"><span class="cite-bracket" id="mwJw">[</span>5<span class="cite-bracket" id="mwKA">]</span></span></a></sup> Binary search compares the target value to the middle element of the array. If they are not equal, the half in which the target cannot lie is eliminated and the search continues on the remaining half, again taking the middle element to compare to the target value, and repeating this until the target value is found. If the search ends with the remaining half being empty, the target is not in the array.</p>
+<p id="mwKQ">Binary search runs in <a href="https://en.wikipedia.org/wiki/Time_complexity#Logarithmic_time" id="mwKg" rel="mw:WikiLink" title="Time complexity">logarithmic time</a> in the <a href="https://en.wikipedia.org/wiki/Best,_worst_and_average_case" id="mwKw" rel="mw:WikiLink" title="Best, worst and average case">worst case</a>, making <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwLA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> comparisons, where <span about="#mwt36" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwLQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is the number of elements in the array.<sup about="#mwt24" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-6"},"parts":[{"template":{"target":{"wt":"Efn","href":"./Template:Efn"},"params":{"1":{"wt":"The &lt;math&gt;O&lt;/math&gt; is [[Big O notation]], and &lt;math&gt;\\log&lt;/math&gt; is the [[logarithm]]. In Big O notation, the base of the logarithm does not matter since every logarithm of a given base is a constant factor of another logarithm of another base. That is, &lt;math&gt;\\log_b(n) = \\log_k(n) \\div \\log_k(b)&lt;/math&gt;, where &lt;math&gt;\\log_k(b)&lt;/math&gt; is a constant."}},"i":0}}]}' id="cite_ref-6" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-6" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>a<span class="cite-bracket" id="mwMQ">]</span></span></a></sup><sup about="#mwt39" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"FloresMadpis1971"},"body":{"id":"mw-reference-text-cite_note-FloresMadpis1971-7"}}' id="cite_ref-FloresMadpis1971_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-FloresMadpis1971-7" id="mwMg"><span class="mw-reflink-text" id="mwMw"><span class="cite-bracket" id="mwNA">[</span>6<span class="cite-bracket" id="mwNQ">]</span></span></a></sup> Binary search is faster than <a href="https://en.wikipedia.org/wiki/Linear_search" id="mwNg" rel="mw:WikiLink" title="Linear search">linear search</a> except for small arrays. However, the array must be sorted first to be able to apply binary search. There are specialized <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_structures" id="mwNw" rel="mw:WikiLink" title="Data structures">data structures</a> designed for fast searching, such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hash_tables" id="mwOA" rel="mw:WikiLink" title="Hash tables">hash tables</a>, that can be searched more efficiently than binary search. However, binary search can be used to solve a wider range of problems, such as finding the next-smallest or next-largest element in the array relative to the target even if it is absent from the array.</p>
+<p id="mwOQ">There are numerous variations of binary search. In particular, <a href="https://en.wikipedia.org/wiki/Fractional_cascading" id="mwOg" rel="mw:WikiLink" title="Fractional cascading">fractional cascading</a> speeds up binary searches for the same value in multiple arrays. Fractional cascading efficiently solves a number of search problems in <a href="https://en.wikipedia.org/wiki/Computational_geometry" id="mwOw" rel="mw:WikiLink" title="Computational geometry">computational geometry</a> and in numerous other fields. <a href="https://en.wikipedia.org/wiki/Exponential_search" id="mwPA" rel="mw:WikiLink" title="Exponential search">Exponential search</a> extends binary search to unbounded lists. The <a href="https://en.wikipedia.org/wiki/Binary_search_tree" id="mwPQ" rel="mw:WikiLink" title="Binary search tree">binary search tree</a> and <a href="https://en.wikipedia.org/wiki/B-tree" id="mwPg" rel="mw:WikiLink" title="B-tree">B-tree</a> data structures are based on binary search.</p>
+<p id="mwQQ">Binary search works on sorted arrays. Binary search begins by comparing an element in the middle of the array with the target value. If the target value matches the element, its position in the array is returned. If the target value is less than the element, the search continues in the lower half of the array. If the target value is greater than the element, the search continues in the upper half of the array. By doing this, the algorithm eliminates the half in which the target value cannot lie in each iteration.<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Algorithm_B\"-8"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"_8-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"-8' id="mwQg"><span class="mw-reflink-text" id="mwQw"><span class="cite-bracket" id="mwRA">[</span>7<span class="cite-bracket" id="mwRQ">]</span></span></a></sup></p>
+<p id="mwRw">Given an array <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwSA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> of <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwSQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> elements with values or <a href="https://en.wikipedia.org/wiki/Record_(computer_science)" id="mwSg" rel="mw:WikiLink" title="Record (computer science)">records</a> <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_0,A_1,A_2,\\ldots,A_{n-1}"}}' id="mwSw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{0},A_{1},A_{2},\ldots ,A_{n-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{0},A_{1},A_{2},\ldots ,A_{n-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{0},A_{1},A_{2},\ldots ,A_{n-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6d8d813e3e6d50ef13e04948e72fcacaf43b7d5c" style="vertical-align: -0.671ex; width:20.7ex; height:2.509ex;"/></span>sorted such that <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_0 \\leq A_1 \\leq A_2 \\leq \\cdots \\leq A_{n-1}"}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{0}\leq A_{1}\leq A_{2}\leq \cdots \leq A_{n-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>≤<!-- ≤ --></mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>≤<!-- ≤ --></mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>≤<!-- ≤ --></mo>
+<mo>⋯<!-- ⋯ --></mo>
+<mo>≤<!-- ≤ --></mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{0}\leq A_{1}\leq A_{2}\leq \cdots \leq A_{n-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{0}\leq A_{1}\leq A_{2}\leq \cdots \leq A_{n-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/13c473f721041f872e852b4ad816f5ee77b1681d" style="vertical-align: -0.671ex; width:28.571ex; height:2.509ex;"/></span>, and target value <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwTQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>, the following <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Subroutine" id="mwTg" rel="mw:WikiLink" title="Subroutine">subroutine</a> uses binary search to find the index of <span about="#mwt51" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwTw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> in <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>.<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Algorithm_B\"-8"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"_8-1' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"-8' id="mwUQ"><span class="mw-reflink-text" id="mwUg"><span class="cite-bracket" id="mwUw">[</span>7<span class="cite-bracket" id="mwVA">]</span></span></a></sup></p>
+<p id="mwbg">This iterative procedure keeps track of the search boundaries with the two variables <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/103168b86f781fe6e9a4a87b8ea1cebe0ad4ede8" style="vertical-align: -0.338ex; width:1.583ex; height:2.176ex;"/></span> and <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4b0bfb3769bf24d80e15374dc37b0441e2616e33" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span>. The procedure may be expressed in <a href="https://en.wikipedia.org/wiki/Pseudocode" id="mwcQ" rel="mw:WikiLink" title="Pseudocode">pseudocode</a> as follows, where the variable names and types remain the same as above, <code id="mwcg">floor</code> is the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Floor_function" id="mwcw" rel="mw:WikiLink" title="Floor function">floor function</a>, and <code id="mwdA">unsuccessful</code> refers to a specific value that conveys the failure of the search.<sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Algorithm_B\"-8"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Algorithm B\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"_8-2' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Algorithm_B"-8' id="mwdQ"><span class="mw-reflink-text" id="mwdg"><span class="cite-bracket" id="mwdw">[</span>7<span class="cite-bracket" id="mweA">]</span></span></a></sup></p>
+<p id="mwiw">Alternatively, the algorithm may take the <a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" id="mwjA" rel="mw:WikiLink" title="Floor and ceiling functions">ceiling</a> of <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{R-L}{2}"}}' id="mwjQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {R-L}{2}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>R</mi>
+<mo>−<!-- − --></mo>
+<mi>L</mi>
+</mrow>
+<mn>2</mn>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {R-L}{2}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {R-L}{2}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/801f3c2d241b36a59832f085772765bea3956521" style="vertical-align: -1.838ex; width:7.023ex; height:5.176ex;"/></span>. This may change the result if the target value appears more than once in the array.</p>
+<p id="mwjw">In the above procedure, the algorithm checks whether the middle element (<span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwkA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span>) is equal to the target (<span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwkQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>) in every iteration. Some implementations leave out this check during each iteration. The algorithm would perform this check only when one element is left (when <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L=R"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L=R}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo>=</mo>
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L=R}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L=R}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c86913dc0a2e9c004d477017bccd932a5dc00d59" style="vertical-align: -0.338ex; width:6.445ex; height:2.176ex;"/></span>). This results in a faster comparison loop, as one comparison is eliminated per iteration, while it requires only one more iteration on average.<sup about="#mwt81" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bottenbruch1962"},"body":{"id":"mw-reference-text-cite_note-Bottenbruch1962-9"}}' id="cite_ref-Bottenbruch1962_9-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bottenbruch1962-9" id="mwkw"><span class="mw-reflink-text" id="mwlA"><span class="cite-bracket" id="mwlQ">[</span>8<span class="cite-bracket" id="mwlg">]</span></span></a></sup></p>
+<p id="mwlw"><a href="https://en.wikipedia.org/wiki/Hermann_Bottenbruch" id="mwmA" rel="mw:WikiLink" title="Hermann Bottenbruch">Hermann Bottenbruch</a> published the first implementation to leave out this check in 1962.<sup about="#mwt85" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bottenbruch1962"}}' id="cite_ref-Bottenbruch1962_9-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bottenbruch1962-9" id="mwmQ"><span class="mw-reflink-text" id="mwmg"><span class="cite-bracket" id="mwmw">[</span>8<span class="cite-bracket" id="mwnA">]</span></span></a></sup><sup about="#mwt82" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"History and bibliography\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"History_and_bibliography\"-10"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"History and bibliography\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"History_and_bibliography"_10-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"History_and_bibliography"-10' id="mwnQ"><span class="mw-reflink-text" id="mwng"><span class="cite-bracket" id="mwnw">[</span>9<span class="cite-bracket" id="mwoA">]</span></span></a></sup></p>
+<p id="mwvA">Where <code id="mwvQ">ceil</code> is the ceiling function, the pseudocode for this version is:</p>
+<p id="mwzQ">The procedure may return any index whose element is equal to the target value, even if there are duplicate elements in the array. For example, if the array to be searched was <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"[1,2,3,4,4,5,6,7]"}}' id="mwzg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle [1,2,3,4,4,5,6,7]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">[</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mn>3</mn>
+<mo>,</mo>
+<mn>4</mn>
+<mo>,</mo>
+<mn>4</mn>
+<mo>,</mo>
+<mn>5</mn>
+<mo>,</mo>
+<mn>6</mn>
+<mo>,</mo>
+<mn>7</mn>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle [1,2,3,4,4,5,6,7]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle [1,2,3,4,4,5,6,7]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8d3a10b0250aafff08cc862bc99b5f3b4f7c33f3" style="vertical-align: -0.838ex; width:17.831ex; height:2.843ex;"/></span> and the target was <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"4"}}' id="mwzw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 4}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>4</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 4}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 4}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/295b4bf1de7cd3500e740e0f4f0635db22d87b42" style="vertical-align: -0.338ex; width:1.162ex; height:2.176ex;"/></span>, then it would be correct for the algorithm to either return the 4th (index 3) or 5th (index 4) element. The regular procedure would return the 4th element (index 3) in this case. It does not always return the first duplicate (consider <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"[1,2,4,4,4,5,6,7]"}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle [1,2,4,4,4,5,6,7]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">[</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mn>4</mn>
+<mo>,</mo>
+<mn>4</mn>
+<mo>,</mo>
+<mn>4</mn>
+<mo>,</mo>
+<mn>5</mn>
+<mo>,</mo>
+<mn>6</mn>
+<mo>,</mo>
+<mn>7</mn>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle [1,2,4,4,4,5,6,7]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle [1,2,4,4,4,5,6,7]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5867073891e85c24ad16f2e0df8a93bd487cdec3" style="vertical-align: -0.838ex; width:17.831ex; height:2.843ex;"/></span> which still returns the 4th element). However, it is sometimes necessary to find the leftmost element or the rightmost element for a target value that is duplicated in the array. In the above example, the 4th element is the leftmost element of the value 4, while the 5th element is the rightmost element of the value 4. The alternative procedure above will always return the index of the rightmost element if such an element exists.<sup about="#mwt104" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"History and bibliography\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"History_and_bibliography\"-10"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"History and bibliography\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"History_and_bibliography"_10-1' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"History_and_bibliography"-10' id="mw0Q"><span class="mw-reflink-text" id="mw0g"><span class="cite-bracket" id="mw0w">[</span>9<span class="cite-bracket" id="mw1A">]</span></span></a></sup></p>
+<p id="mw1g">To find the leftmost element, the following procedure can be used:<sup about="#mwt110" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKasaharaMorishita20068–9"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKasaharaMorishita20068–9-11"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Kasahara"},"2":{"wt":"Morishita"},"3":{"wt":"2006"},"pp":{"wt":"8–9"}},"i":0}}]}' id="cite_ref-FOOTNOTEKasaharaMorishita20068–9_11-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEKasaharaMorishita20068–9-11" id="mw1w"><span class="mw-reflink-text" id="mw2A"><span class="cite-bracket" id="mw2Q">[</span>10<span class="cite-bracket" id="mw2g">]</span></span></a></sup></p>
+<p id="mw9Q">If <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L &lt; n"}}' id="mw9g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L&lt;n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo>&lt;</mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L&lt;n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L&lt;n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3bb3bae6c384daab0d9cd7208aba6f7a743c221d" style="vertical-align: -0.338ex; width:6.076ex; height:2.176ex;"/></span> and <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_L = T"}}' id="mw9w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{L}=T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>L</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{L}=T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{L}=T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6a4373e3e18ed6b51e3b76011bf80faebbe2cc93" style="vertical-align: -0.671ex; width:7.829ex; height:2.509ex;"/></span>, then <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_L"}}' id="mw-A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{L}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>L</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{L}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{L}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/543968f6cc63f97109c5ba70d7dfe9bc23176442" style="vertical-align: -0.671ex; width:3.095ex; height:2.509ex;"/></span> is the leftmost element that equals <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mw-Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>. Even if <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mw-g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> is not in the array, <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/103168b86f781fe6e9a4a87b8ea1cebe0ad4ede8" style="vertical-align: -0.338ex; width:1.583ex; height:2.176ex;"/></span> is the <a class="mw-selflink-fragment" href="#Approximate_matches" id="mw_A" rel="mw:WikiLink">rank</a> of <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mw_Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> in the array, or the number of elements in the array that are less than <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mw_g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>.</p>
+<p id="mw_w">Where <code id="mwAQA">floor</code> is the floor function, the pseudocode for this version is:</p>
+<p id="mwAQg">To find the rightmost element, the following procedure can be used:<sup about="#mwt137" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKasaharaMorishita20068–9"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKasaharaMorishita20068–9-11"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Kasahara"},"2":{"wt":"Morishita"},"3":{"wt":"2006"},"pp":{"wt":"8–9"}},"i":0}}]}' id="cite_ref-FOOTNOTEKasaharaMorishita20068–9_11-1" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEKasaharaMorishita20068–9-11" id="mwAQk"><span class="mw-reflink-text" id="mwAQo"><span class="cite-bracket" id="mwAQs">[</span>10<span class="cite-bracket" id="mwAQw">]</span></span></a></sup></p>
+<p id="mwASc">If <span about="#mwt156" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R &gt; 0"}}' id="mwASg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R&gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>R</mi>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R&gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R&gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/57914127d03a5cea02c60a32cfbb22f34904f00d" style="vertical-align: -0.338ex; width:6.025ex; height:2.176ex;"/></span> and <span about="#mwt157" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_{R-1}=T"}}' id="mwASk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{R-1}=T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>R</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{R-1}=T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{R-1}=T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4af970b83da631be1036b4923e59669cca3c253" style="vertical-align: -0.671ex; width:10.058ex; height:2.509ex;"/></span>, then <span about="#mwt158" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_{R-1}"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{R-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>R</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{R-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{R-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bc9841052e04d66c14d4cf1ac1d653438a2ad6a1" style="vertical-align: -0.671ex; width:5.323ex; height:2.509ex;"/></span> is the rightmost element that equals <span about="#mwt159" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwASs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>. Even if <i id="mwASw"><span about="#mwt160" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwAS0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span></i> is not in the array, <span about="#mwt161" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n-R"}}' id="mwAS4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n-R}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n-R}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n-R}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/237932bba5fe0a0dbf98410bbb454475fd52a065" style="vertical-align: -0.505ex; width:5.999ex; height:2.343ex;"/></span> is the number of elements in the array that are greater than <i id="mwAS8"><span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwATA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span></i>.</p>
+<p id="mwATE">Where <code id="mwATI">floor</code> is the floor function, the pseudocode for this version is:</p>
+<p id="mwAT8">The above procedure only performs <i id="mwAUA">exact</i> matches, finding the position of a target value. However, it is trivial to extend binary search to perform approximate matches because binary search operates on sorted arrays. For example, binary search can be used to compute, for a given value, its rank (the number of smaller elements), predecessor (next-smallest element), successor (next-largest element), and <a href="https://en.wikipedia.org/wiki/Nearest_neighbor_search" id="mwAUE" rel="mw:WikiLink" title="Nearest neighbor search">nearest neighbor</a>. <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Range_query_(data_structures)" id="mwAUI" rel="mw:WikiLink" title="Range query (data structures)">Range queries</a> seeking the number of elements between two values can be performed with two rank queries.<sup about="#mwt164" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTESedgewickWayne2011§3.1, subsection \"Rank and selection\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTESedgewickWayne2011§3.1,_subsection_\"Rank_and_selection\"-12"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Sedgewick"},"2":{"wt":"Wayne"},"3":{"wt":"2011"},"loc":{"wt":"§3.1, subsection \"Rank and selection\""}},"i":0}}]}' id='cite_ref-FOOTNOTESedgewickWayne2011§3.1,_subsection_"Rank_and_selection"_12-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTESedgewickWayne2011§3.1,_subsection_"Rank_and_selection"-12' id="mwAUM"><span class="mw-reflink-text" id="mwAUQ"><span class="cite-bracket" id="mwAUU">[</span>11<span class="cite-bracket" id="mwAUY">]</span></span></a></sup></p>
+<p id="mwAXc">In terms of the number of comparisons, the performance of binary search can be analyzed by viewing the run of the procedure on a binary tree. The root node of the tree is the middle element of the array. The middle element of the lower half is the left child node of the root, and the middle element of the upper half is the right child node of the root. The rest of the tree is built in a similar fashion. Starting from the root node, the left or right subtrees are traversed depending on whether the target value is less or more than the node under consideration.<sup about="#mwt191" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"FloresMadpis1971"}}' id="cite_ref-FloresMadpis1971_7-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-FloresMadpis1971-7" id="mwAXg"><span class="mw-reflink-text" id="mwAXk"><span class="cite-bracket" id="mwAXo">[</span>6<span class="cite-bracket" id="mwAXs">]</span></span></a></sup><sup about="#mwt188" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAXw"><span class="mw-reflink-text" id="mwAX0"><span class="cite-bracket" id="mwAX4">[</span>14<span class="cite-bracket" id="mwAX8">]</span></span></a></sup></p>
+<p id="mwAYA">In the worst case, binary search makes <span about="#mwt192" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\lfloor \\log_2 (n) + 1 \\rfloor"}}' id="mwAYE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \lfloor \log _{2}(n)+1\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7928b7b7af618a0184d934219526c5c5e2b6fc06" style="vertical-align: -0.838ex; width:13.298ex; height:2.843ex;"/></span> iterations of the comparison loop, where the <span about="#mwt193" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\lfloor\\cdot \\rfloor"}}' id="mwAYI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \lfloor \cdot \rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \lfloor \cdot \rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \lfloor \cdot \rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4008aeac65a4d0dcb42b26d5309528f73b37a64d" style="vertical-align: -0.838ex; width:2.712ex; height:2.843ex;"/></span> notation denotes the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Floor_function" id="mwAYM" rel="mw:WikiLink" title="Floor function">floor function</a> that yields the greatest integer less than or equal to the argument, and <span about="#mwt194" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\log_2"}}' id="mwAYQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \log _{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \log _{2}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \log _{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9a493f09c50f545ad47dba794bf06b66a94893d1" style="vertical-align: -0.838ex; width:4.026ex; height:2.676ex;"/></span> is the <a href="https://en.wikipedia.org/wiki/Binary_logarithm" id="mwAYU" rel="mw:WikiLink" title="Binary logarithm">binary logarithm</a>. This is because the worst case is reached when the search reaches the deepest level of the tree, and there are always <span about="#mwt195" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\lfloor \\log_2 (n) + 1 \\rfloor"}}' id="mwAYY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \lfloor \log _{2}(n)+1\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7928b7b7af618a0184d934219526c5c5e2b6fc06" style="vertical-align: -0.838ex; width:13.298ex; height:2.843ex;"/></span> levels in the tree for any binary search.</p>
+<p id="mwAYc">The worst case may also be reached when the target element is not in the array. If <span about="#mwt199" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"n"}}' id="mwAYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle n}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cc6e1f880981346a604257ebcacdef24c0aca2d6" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is one less than a <a href="https://en.wikipedia.org/wiki/Power_of_two" id="mwAYk" rel="mw:WikiLink" title="Power of two">power of two</a>, then this is always the case. Otherwise, the search may perform <span about="#mwt200" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\lfloor \\log_2 (n) + 1 \\rfloor"}}' id="mwAYo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \lfloor \log _{2}(n)+1\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \lfloor \log _{2}(n)+1\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7928b7b7af618a0184d934219526c5c5e2b6fc06" style="vertical-align: -0.838ex; width:13.298ex; height:2.843ex;"/></span>iterations if the search reaches the deepest level of the tree. However, it may make <span about="#mwt201" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"\\lfloor \\log_2 (n) \\rfloor"}}' id="mwAYs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \lfloor \log _{2}(n)\rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \lfloor \log _{2}(n)\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \lfloor \log _{2}(n)\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/22ca7cce146baea017de6b182d3aaff99af0c8bd" style="vertical-align: -0.838ex; width:9.295ex; height:2.843ex;"/></span> iterations, which is one less than the worst case, if the search ends at the second-deepest level of the tree.<sup about="#mwt196" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), \"Theorem B\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_\"Theorem_B\"-16"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), \"Theorem B\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_"Theorem_B"_16-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_"Theorem_B"-16' id="mwAYw"><span class="mw-reflink-text" id="mwAY0"><span class="cite-bracket" id="mwAY4">[</span>15<span class="cite-bracket" id="mwAY8">]</span></span></a></sup></p>
+<p id="mwAZA">On average, assuming that each element is equally likely to be searched, binary search makes <span about="#mwt205" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\lfloor \\log_2 (n) \\rfloor + 1 - (2^{\\lfloor \\log_2 (n) \\rfloor + 1} - \\lfloor \\log_2 (n) \\rfloor - 2)/n"}}' id="mwAZE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>−<!-- − --></mo>
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/29b723650fef7fc47b8ebe3f1d93c109cdb5d12b" style="vertical-align: -0.838ex; width:46.796ex; height:3.343ex;"/></span> iterations when the target element is in the array. This is approximately equal to <span about="#mwt206" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\log_2(n) - 1"}}' id="mwAZI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \log _{2}(n)-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \log _{2}(n)-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \log _{2}(n)-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c5c75208a76daad7c09420b4a19d784c45530a87" style="vertical-align: -0.838ex; width:11.233ex; height:2.843ex;"/></span> iterations. When the target element is not in the array, binary search makes <span about="#mwt207" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\lfloor \\log_2 (n) \\rfloor + 2 - 2^{\\lfloor \\log_2 (n) \\rfloor + 1}/(n + 1)"}}' id="mwAZM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \lfloor \log _{2}(n)\rfloor +2-2^{\lfloor \log _{2}(n)\rfloor +1}/(n+1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>2</mn>
+<mo>−<!-- − --></mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \lfloor \log _{2}(n)\rfloor +2-2^{\lfloor \log _{2}(n)\rfloor +1}/(n+1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \lfloor \log _{2}(n)\rfloor +2-2^{\lfloor \log _{2}(n)\rfloor +1}/(n+1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8076f066d54334bbaf1ecfe396ad494c86d5446a" style="vertical-align: -0.838ex; width:34.661ex; height:3.343ex;"/></span> iterations on average, assuming that the range between and outside elements is equally likely to be searched.<sup about="#mwt202" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-1' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAZQ"><span class="mw-reflink-text" id="mwAZU"><span class="cite-bracket" id="mwAZY">[</span>14<span class="cite-bracket" id="mwAZc">]</span></span></a></sup></p>
+<p id="mwAZg">In the best case, where the target value is the middle element of the array, its position is returned after one iteration.<sup about="#mwt208" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEChang2003169"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEChang2003169-17"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Chang"},"2":{"wt":"2003"},"p":{"wt":"169"}},"i":0}}]}' id="cite_ref-FOOTNOTEChang2003169_17-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEChang2003169-17" id="mwAZk"><span class="mw-reflink-text" id="mwAZo"><span class="cite-bracket" id="mwAZs">[</span>16<span class="cite-bracket" id="mwAZw">]</span></span></a></sup></p>
+<p id="mwAZ0">In terms of iterations, no search algorithm that works only by comparing elements can exhibit better average and worst-case performance than binary search. The comparison tree representing binary search has the fewest levels possible as every level above the lowest level of the tree is filled completely.<sup about="#mwt211" class="mw-ref reference" data-mw="{&quot;name&quot;:&quot;ref&quot;,&quot;attrs&quot;:{&quot;group&quot;:&quot;lower-alpha&quot;},&quot;body&quot;:{&quot;id&quot;:&quot;mw-reference-text-cite_note-18&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;Efn&quot;,&quot;href&quot;:&quot;./Template:Efn&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Any search algorithm based solely on comparisons can be represented using a binary comparison tree. An ''internal path'' is any path from the root to an existing node. Let &lt;math&gt;I&lt;/math&gt; be the ''internal path length'', the sum of the lengths of all internal paths. If each element is equally likely to be searched, the average case is &lt;math&gt;1 + \\frac{I}{n}&lt;/math&gt; or simply one plus the average of all the internal path lengths of the tree. This is because internal paths represent the elements that the search algorithm compares to the target. The lengths of these internal paths represent the number of iterations ''after'' the root node. Adding the average of these lengths to the one iteration at the root yields the average case. Therefore, to minimize the average number of comparisons, the internal path length &lt;math&gt;I&lt;/math&gt; must be minimized. It turns out that the tree for binary search minimizes the internal path length. {{Harvnb|Knuth|1998}} proved that the ''external path'' length (the path length over all nodes where both children are present for each already-existing node) is minimized when the external nodes (the nodes with no children) lie within two consecutive levels of the tree. This also applies to internal paths as internal path length &lt;math&gt;I&lt;/math&gt; is linearly related to external path length &lt;math&gt;E&lt;/math&gt;. For any tree of &lt;math&gt;n&lt;/math&gt; nodes, &lt;math&gt;I = E - 2n&lt;/math&gt;. When each subtree has a similar number of nodes, or equivalently the array is divided into halves in each iteration, the external nodes as well as their interior parent nodes lie within two levels. It follows that binary search minimizes the number of average comparisons as its comparison tree has the lowest possible internal path length.{{Sfn|Knuth|1998|loc=§6.2.1 (\&quot;Searching an ordered table\&quot;), subsection \&quot;Further analysis of binary search\&quot;}}&quot;}},&quot;i&quot;:0}}]}" id="cite_ref-18" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-18" id="mwAZ4"><span class="mw-reflink-text" id="mwAZ8"><span class="cite-bracket" id="mwAaA">[</span>b<span class="cite-bracket" id="mwAaE">]</span></span></a></sup> Otherwise, the search algorithm can eliminate few elements in an iteration, increasing the number of iterations required in the average and worst case. This is the case for other search algorithms based on comparisons, as while they may work faster on some target values, the average performance over <i id="mwAaI">all</i> elements is worse than binary search. By dividing the array in half, binary search ensures that the size of both subarrays are as similar as possible.<sup about="#mwt231" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-3' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAaM"><span class="mw-reflink-text" id="mwAaQ"><span class="cite-bracket" id="mwAaU">[</span>14<span class="cite-bracket" id="mwAaY">]</span></span></a></sup></p>
+<p id="mwAag">Binary search requires three pointers to elements, which may be array indices or pointers to memory locations, regardless of the size of the array. Therefore, the <a href="https://en.wikipedia.org/wiki/Space_complexity" id="mwAak" rel="mw:WikiLink" title="Space complexity">space complexity</a> of binary search is <span about="#mwt234" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwAao" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> in the <a href="https://en.wikipedia.org/wiki/Word_RAM" id="mwAas" rel="mw:WikiLink" title="Word RAM">word RAM</a> <a href="https://en.wikipedia.org/wiki/Model_of_computation" id="mwAaw" rel="mw:WikiLink" title="Model of computation">model of computation</a>.</p>
+<p id="mwAa4">The average number of iterations performed by binary search depends on the probability of each element being searched. The average case is different for successful searches and unsuccessful searches. It will be assumed that each element is equally likely to be searched for successful searches. For unsuccessful searches, it will be assumed that the <a href="https://en.wikipedia.org/wiki/Interval_(mathematics)" id="mwAa8" rel="mw:WikiLink" title="Interval (mathematics)">intervals</a> between and outside elements are equally likely to be searched. The average case for successful searches is the number of iterations required to search every element exactly once, divided by <span about="#mwt238" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>, the number of elements. The average case for unsuccessful searches is the number of iterations required to search an element within every interval exactly once, divided by the <span about="#mwt239" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n + 1"}}' id="mwAbE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a135e65a42f2d73cccbfc4569523996ca0036f1" style="vertical-align: -0.505ex; width:5.398ex; height:2.343ex;"/></span> intervals.<sup about="#mwt235" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-4' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAbI"><span class="mw-reflink-text" id="mwAbM"><span class="cite-bracket" id="mwAbQ">[</span>14<span class="cite-bracket" id="mwAbU">]</span></span></a></sup></p>
+<p id="mwAbc">In the binary tree representation, a successful search can be represented by a path from the root to the target node, called an <i id="mwAbg">internal path</i>. The length of a path is the number of edges (connections between nodes) that the path passes through. The number of iterations performed by a search, given that the corresponding path has length <span about="#mwt240" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"l"}},"i":0}}]}' id="mwAbk" style="font-style:italic;" typeof="mw:Transclusion">l</span>, is <span about="#mwt245" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l + 1"}}' id="mwAbo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b611b61103606b988023375dc7dc44046d1e7f9d" style="vertical-align: -0.505ex; width:4.696ex; height:2.343ex;"/></span> counting the initial iteration. The <i id="mwAbs">internal path length</i> is the sum of the lengths of all unique internal paths. Since there is only one path from the root to any single node, each internal path represents a search for a specific element. If there are <span about="#mwt241" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAbw" style="font-style:italic;" typeof="mw:Transclusion">n</span> elements, which is a positive integer, and the internal path length is <span about="#mwt246" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"I(n)"}}' id="mwAb0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8ae81bd86e4a3bb04199358dc26325d3889e7b93" style="vertical-align: -0.838ex; width:4.376ex; height:2.843ex;"/></span>, then the average number of iterations for a successful search <span about="#mwt247" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T(n) = 1 + \\frac{I(n)}{n}"}}' id="mwAb4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T(n)=1+{\frac {I(n)}{n}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>1</mn>
+<mo>+</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mi>n</mi>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T(n)=1+{\frac {I(n)}{n}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T(n)=1+{\frac {I(n)}{n}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7384199e6eba1f9257188bd3440622f5a3b7fea1" style="vertical-align: -1.838ex; width:17.153ex; height:5.676ex;"/></span>, with the one iteration added to count the initial iteration.<sup about="#mwt242" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-5' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAb8"><span class="mw-reflink-text" id="mwAcA"><span class="cite-bracket" id="mwAcE">[</span>14<span class="cite-bracket" id="mwAcI">]</span></span></a></sup></p>
+<p id="mwAcM">Since binary search is the optimal algorithm for searching with comparisons, this problem is reduced to calculating the minimum internal path length of all binary trees with <span about="#mwt248" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAcQ" style="font-style:italic;" typeof="mw:Transclusion">n</span> nodes, which is equal to:<sup about="#mwt249" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1997§2.3.4.5 (\"Path length\")"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1997§2.3.4.5_(\"Path_length\")-19"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1997"},"loc":{"wt":"§2.3.4.5 (\"Path length\")"}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")_19-0' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")-19' id="mwAcU"><span class="mw-reflink-text" id="mwAcY"><span class="cite-bracket" id="mwAcc">[</span>17<span class="cite-bracket" id="mwAcg">]</span></span></a></sup></p>
+<p id="mwAck"><span about="#mwt252" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\nI(n) = \\sum_{k=1}^n \\left \\lfloor \\log_2(k) \\right \\rfloor\n"}}' id="mwAco" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor }" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bd31bd3da2406b50deae2a55a2f85c920d3437db" style="vertical-align: -3.005ex; width:20.328ex; height:6.843ex;"/></span></p>
+<p id="mwAcs">For example, in a 7-element array, the root requires one iteration, the two elements below the root require two iterations, and the four elements below require three iterations. In this case, the internal path length is:<sup about="#mwt253" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1997§2.3.4.5 (\"Path length\")"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1997§2.3.4.5_(\"Path_length\")-19"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1997"},"loc":{"wt":"§2.3.4.5 (\"Path length\")"}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")_19-1' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")-19' id="mwAcw"><span class="mw-reflink-text" id="mwAc0"><span class="cite-bracket" id="mwAc4">[</span>17<span class="cite-bracket" id="mwAc8">]</span></span></a></sup></p>
+<p id="mwAdA"><span about="#mwt256" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\sum_{k=1}^7 \\left \\lfloor \\log_2(k) \\right \\rfloor = 0 + 2(1) + 4(2) = 2 + 8 = 10\n"}}' id="mwAdE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{k=1}^{7}\left\lfloor \log _{2}(k)\right\rfloor =0+2(1)+4(2)=2+8=10}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>7</mn>
+</mrow>
+</munderover>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>=</mo>
+<mn>0</mn>
+<mo>+</mo>
+<mn>2</mn>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mn>4</mn>
+<mo stretchy="false">(</mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>2</mn>
+<mo>+</mo>
+<mn>8</mn>
+<mo>=</mo>
+<mn>10</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{k=1}^{7}\left\lfloor \log _{2}(k)\right\rfloor =0+2(1)+4(2)=2+8=10}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{k=1}^{7}\left\lfloor \log _{2}(k)\right\rfloor =0+2(1)+4(2)=2+8=10}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6e9fe3bdbc0672707e8a54ea46c75c0606568dad" style="vertical-align: -3.005ex; width:44.751ex; height:7.343ex;"/></span></p>
+<p id="mwAdI">The average number of iterations would be <span about="#mwt260" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1 + \\frac{10}{7} = 2 \\frac{3}{7}"}}' id="mwAdM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1+{\frac {10}{7}}=2{\frac {3}{7}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>+</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>10</mn>
+<mn>7</mn>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>3</mn>
+<mn>7</mn>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1+{\frac {10}{7}}=2{\frac {3}{7}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1+{\frac {10}{7}}=2{\frac {3}{7}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/24b4a392be5c5feaa883e3ea1a432fc9bc966613" style="vertical-align: -2.005ex; width:13.423ex; height:5.343ex;"/></span> based on the equation for the average case. The sum for <span about="#mwt261" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"I(n)"}}' id="mwAdQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8ae81bd86e4a3bb04199358dc26325d3889e7b93" style="vertical-align: -0.838ex; width:4.376ex; height:2.843ex;"/></span> can be simplified to:<sup about="#mwt257" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-6' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAdU"><span class="mw-reflink-text" id="mwAdY"><span class="cite-bracket" id="mwAdc">[</span>14<span class="cite-bracket" id="mwAdg">]</span></span></a></sup></p>
+<p id="mwAdk"><span about="#mwt262" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\nI(n) = \\sum_{k=1}^n \\left \\lfloor \\log_2(k) \\right \\rfloor = (n + 1)\\left \\lfloor \\log_2(n + 1) \\right \\rfloor - 2^{\\left \\lfloor \\log_2(n+1) \\right \\rfloor + 1} + 2\n"}}' id="mwAdo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor =(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>−<!-- − --></mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>+</mo>
+<mn>2</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor =(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)=\sum _{k=1}^{n}\left\lfloor \log _{2}(k)\right\rfloor =(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9a7bcd9b31e894139312fb84b8a879b21e615bf0" style="vertical-align: -3.005ex; width:63.415ex; height:6.843ex;"/></span></p>
+<p id="mwAds">Substituting the equation for <span about="#mwt266" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"I(n)"}}' id="mwAdw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8ae81bd86e4a3bb04199358dc26325d3889e7b93" style="vertical-align: -0.838ex; width:4.376ex; height:2.843ex;"/></span> into the equation for <span about="#mwt267" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T(n)"}}' id="mwAd0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0be5a46684e1279c27414b285fa995f30407d002" style="vertical-align: -0.838ex; width:4.84ex; height:2.843ex;"/></span>:<sup about="#mwt263" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-7' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAd4"><span class="mw-reflink-text" id="mwAd8"><span class="cite-bracket" id="mwAeA">[</span>14<span class="cite-bracket" id="mwAeE">]</span></span></a></sup></p>
+<p id="mwAeI"><span about="#mwt268" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\nT(n) = 1 + \\frac{(n + 1)\\left \\lfloor \\log_2(n + 1) \\right \\rfloor - 2^{\\left \\lfloor \\log_2(n+1) \\right \\rfloor + 1} + 2}{n} = \\lfloor \\log_2 (n) \\rfloor + 1 - (2^{\\lfloor \\log_2 (n) \\rfloor + 1} - \\lfloor \\log_2 (n) \\rfloor - 2)/n\n"}}' id="mwAeM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T(n)=1+{\frac {(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}{n}}=\lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>1</mn>
+<mo>+</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>−<!-- − --></mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>+</mo>
+<mn>2</mn>
+</mrow>
+<mi>n</mi>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>−<!-- − --></mo>
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T(n)=1+{\frac {(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}{n}}=\lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T(n)=1+{\frac {(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2}{n}}=\lfloor \log _{2}(n)\rfloor +1-(2^{\lfloor \log _{2}(n)\rfloor +1}-\lfloor \log _{2}(n)\rfloor -2)/n}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7243dc7974c37c7291a32e04b67ac422ba01e3eb" style="vertical-align: -1.838ex; width:102.662ex; height:6.009ex;"/></span></p>
+<p id="mwAeQ">For integer <span about="#mwt269" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAeU" style="font-style:italic;" typeof="mw:Transclusion">n</span>, this is equivalent to the equation for the average case on a successful search specified above.</p>
+<p id="mwAec">Unsuccessful searches can be represented by augmenting the tree with <i id="mwAeg">external nodes</i>, which forms an <i id="mwAek">extended binary tree</i>. If an internal node, or a node present in the tree, has fewer than two child nodes, then additional child nodes, called external nodes, are added so that each internal node has two children. By doing so, an unsuccessful search can be represented as a path to an external node, whose parent is the single element that remains during the last iteration. An <i id="mwAeo">external path</i> is a path from the root to an external node. The <i id="mwAes">external path length</i> is the sum of the lengths of all unique external paths. If there are <span about="#mwt273" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> elements, which is a positive integer, and the external path length is <span about="#mwt274" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E(n)"}}' id="mwAe0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle E(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>E</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle E(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle E(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8b3b6ec0effe4cf5a6a54bd424fb04984dbe97d" style="vertical-align: -0.838ex; width:4.98ex; height:2.843ex;"/></span>, then the average number of iterations for an unsuccessful search is <span about="#mwt275" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;T'(n)=\\frac{E(n)}{n+1}&quot;}}" id="mwAe4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T'(n)={\frac {E(n)}{n+1}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>T</mi>
+<mo>′</mo>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>E</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T'(n)={\frac {E(n)}{n+1}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T'(n)={\frac {E(n)}{n+1}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a09900d9732d45fd9535343216926c82af02103" style="vertical-align: -2.005ex; width:14.941ex; height:5.843ex;"/></span>, with the one iteration added to count the initial iteration. The external path length is divided by <span about="#mwt276" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n+1"}}' id="mwAe8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a135e65a42f2d73cccbfc4569523996ca0036f1" style="vertical-align: -0.505ex; width:5.398ex; height:2.343ex;"/></span> instead of <span about="#mwt277" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> because there are <span about="#mwt278" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n+1"}}' id="mwAfE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a135e65a42f2d73cccbfc4569523996ca0036f1" style="vertical-align: -0.505ex; width:5.398ex; height:2.343ex;"/></span> external paths, representing the intervals between and outside the elements of the array.<sup about="#mwt270" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-8' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAfI"><span class="mw-reflink-text" id="mwAfM"><span class="cite-bracket" id="mwAfQ">[</span>14<span class="cite-bracket" id="mwAfU">]</span></span></a></sup></p>
+<p id="mwAfY">This problem can similarly be reduced to determining the minimum external path length of all binary trees with <span about="#mwt285" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAfc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> nodes. For all binary trees, the external path length is equal to the internal path length plus <span about="#mwt286" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2n"}}' id="mwAfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>2</mn>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/134afa8ff09fdddd24b06f289e92e3a045092bd1" style="vertical-align: -0.338ex; width:2.557ex; height:2.176ex;"/></span>.<sup about="#mwt279" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1997§2.3.4.5 (\"Path length\")"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1997§2.3.4.5_(\"Path_length\")-19"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1997"},"loc":{"wt":"§2.3.4.5 (\"Path length\")"}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")_19-2' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1997§2.3.4.5_("Path_length")-19' id="mwAfk"><span class="mw-reflink-text" id="mwAfo"><span class="cite-bracket" id="mwAfs">[</span>17<span class="cite-bracket" id="mwAfw">]</span></span></a></sup> Substituting the equation for <span about="#mwt287" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"I(n)"}}' id="mwAf0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8ae81bd86e4a3bb04199358dc26325d3889e7b93" style="vertical-align: -0.838ex; width:4.376ex; height:2.843ex;"/></span>:<sup about="#mwt282" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKnuth1998§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKnuth1998§6.2.1_(\"Searching_an_ordered_table\"),_subsection_\"Further_analysis_of_binary_search\"-15"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Knuth"},"2":{"wt":"1998"},"loc":{"wt":"§6.2.1 (\"Searching an ordered table\"), subsection \"Further analysis of binary search\""}},"i":0}}]}' id='cite_ref-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"_15-9' rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href='#cite_note-FOOTNOTEKnuth1998§6.2.1_("Searching_an_ordered_table"),_subsection_"Further_analysis_of_binary_search"-15' id="mwAf4"><span class="mw-reflink-text" id="mwAf8"><span class="cite-bracket" id="mwAgA">[</span>14<span class="cite-bracket" id="mwAgE">]</span></span></a></sup></p>
+<p id="mwAgI"><span about="#mwt288" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\nE(n) = I(n) + 2n = \\left[(n + 1)\\left \\lfloor \\log_2(n + 1) \\right \\rfloor - 2^{\\left \\lfloor \\log_2(n+1) \\right \\rfloor + 1} + 2\\right] + 2n = (n + 1) (\\lfloor \\log_2 (n) \\rfloor + 2) - 2^{\\lfloor \\log_2 (n) \\rfloor + 1}\n"}}' id="mwAgM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle E(n)=I(n)+2n=\left[(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2\right]+2n=(n+1)(\lfloor \log _{2}(n)\rfloor +2)-2^{\lfloor \log _{2}(n)\rfloor +1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>E</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>I</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mn>2</mn>
+<mi>n</mi>
+<mo>=</mo>
+<mrow>
+<mo>[</mo>
+<mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>−<!-- − --></mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>⌊</mo>
+<mrow>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>+</mo>
+<mn>2</mn>
+</mrow>
+<mo>]</mo>
+</mrow>
+<mo>+</mo>
+<mn>2</mn>
+<mi>n</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">(</mo>
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<msub>
+<mi>log</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle E(n)=I(n)+2n=\left[(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2\right]+2n=(n+1)(\lfloor \log _{2}(n)\rfloor +2)-2^{\lfloor \log _{2}(n)\rfloor +1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle E(n)=I(n)+2n=\left[(n+1)\left\lfloor \log _{2}(n+1)\right\rfloor -2^{\left\lfloor \log _{2}(n+1)\right\rfloor +1}+2\right]+2n=(n+1)(\lfloor \log _{2}(n)\rfloor +2)-2^{\lfloor \log _{2}(n)\rfloor +1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/edbb46592a2cfed4a5d626d6080fd530bf7693b5" style="vertical-align: -1.838ex; width:106.938ex; height:4.843ex;"/></span></p>
 </div></div>
 </body></html>

@@ -42,13 +42,16 @@ def trim_html(html: str, max_paragraphs: int) -> str:
     )
     body = soup.select_one("div.mw-parser-output")
     paragraphs = []
-    if body is not None:
-        for p in body.find_all("p"):
-            if p.find_parent("table") is not None:
-                continue
-            paragraphs.append(str(p))
-            if len(paragraphs) >= max_paragraphs:
-                break
+    candidates = body.find_all("p") if body is not None else []
+    if not candidates:
+        # html.parser sometimes closes the content div early; fall back to the whole document.
+        candidates = soup.find_all("p")
+    for p in candidates:
+        if p.find_parent("table") is not None:
+            continue
+        paragraphs.append(str(p))
+        if len(paragraphs) >= max_paragraphs:
+            break
     inner = "\n".join(paragraphs)
     return (
         '<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8">'

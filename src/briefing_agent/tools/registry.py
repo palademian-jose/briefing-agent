@@ -10,19 +10,21 @@ from __future__ import annotations
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import httpx
 from jsonschema import Draft202012Validator
 
 from briefing_agent.llm.base import ToolSpec
-from briefing_agent.store import Store
 from briefing_agent.tools import schemas
 from briefing_agent.tools.errors import ErrorKind, ToolError, ToolErrorInfo, permanent
 from briefing_agent.tools.faults import FaultInjector
 from briefing_agent.tools.verify import verify_briefing
 from briefing_agent.tools.wikipedia import fetch_page, search_wikipedia
 from briefing_agent.tracing import Tracer
+
+if TYPE_CHECKING:
+    from briefing_agent.store import Store
 
 
 @dataclass
