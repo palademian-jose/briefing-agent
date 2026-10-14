@@ -63,7 +63,7 @@ class LLMResponse(BaseModel):
     model: str
     latency_ms: float
     stop_reason: str  # "end_turn" | "tool_use" | "max_tokens" | ...
-    reported_cost_usd: float | None = None  # provider-billed cost when the API reports it
+    cost_usd: float | None = None  # provider-billed cost when the API reports it (OpenRouter)
 
     def as_assistant_message(self) -> Message:
         if not self.tool_calls:

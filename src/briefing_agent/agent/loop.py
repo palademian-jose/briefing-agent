@@ -17,10 +17,9 @@ from briefing_agent.agent import prompts
 from briefing_agent.agent.policy import NeedsHuman, ToolExecutor
 from briefing_agent.agent.state import Budget, RunState, save_checkpoint
 from briefing_agent.llm.base import LLMClient, LLMResponse, Message, ToolSpec, tool_result_message
-from briefing_agent.llm.traced import traced_complete
 from briefing_agent.tools.registry import ToolRegistry
 from briefing_agent.tools.schemas import SEARCH_STAGE_TOOLS
-from briefing_agent.tracing import Tracer
+from briefing_agent.tracing import FEATURE, Tracer, response_cost, wrap_client
 
 
 @dataclass
@@ -34,7 +33,6 @@ class AgentEnv:
     budget: Budget = field(default_factory=Budget)
     model: str = "anthropic/claude-sonnet-4.5"
     cheap_model: str = "anthropic/claude-haiku-4.5"
-    pricing_path: str = "pricing.json"
     checkpoint_dir: Path = Path("checkpoints")
     min_facts: int = 5
     max_facts: int = 8
@@ -52,19 +50,24 @@ class AgentEnv:
         max_tokens: int = 1024,
     ) -> LLMResponse:
         """Every LLM call goes through here: traced, costed, counted against the budget."""
-        resp = traced_complete(
+        # One llm span per call (llmops.tracing.wrap_client): tokens, latency, and cost where the
+        # provider-reported cost (OpenRouter usage.cost) wins over tokens x pricing.json.
+        traced = wrap_client(
             self.client,
             self.tracer,
-            name,
-            messages,
-            tools=tools,
-            model=model or self.model,
-            max_tokens=max_tokens,
-            pricing_path=self.pricing_path,
-            meta={"run_id": state.run_id, "phase": state.phase},
+            name=name,
+            feature=FEATURE,
+            meta={
+                "run_id": state.run_id,
+                "phase": state.phase,
+                "provider": getattr(self.client, "provider", "unknown"),
+            },
+        )
+        resp = traced.complete(
+            messages, tools=tools, model=model or self.model, max_tokens=max_tokens
         )
         state.llm_calls += 1
-        state.cost_usd = round(state.cost_usd + self.tracer.spans[-1]["cost_usd"], 8)
+        state.cost_usd = round(state.cost_usd + response_cost(resp), 8)
         return resp
 
     def checkpoint(self, state: RunState, step: str) -> None:

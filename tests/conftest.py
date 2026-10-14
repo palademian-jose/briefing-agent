@@ -35,7 +35,6 @@ def settings(tmp_path: Path) -> Settings:
         trace_path=tmp_path / "spans.jsonl",
         checkpoint_dir=tmp_path / "checkpoints",
         fixture_dir=FIXTURES,
-        pricing_path=ROOT / "pricing.json",
         retry_base_ms=0,
     )
 

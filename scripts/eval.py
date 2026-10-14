@@ -108,7 +108,6 @@ def run_eval(
         checkpoint_dir=ROOT / "checkpoints" / "eval",
         faults=faults,
         fixture_dir=ROOT / "tests" / "fixtures" / "wikipedia",
-        pricing_path=ROOT / "pricing.json",
         **(settings_overrides or {}),
     )
     store = Store(settings.db_path)

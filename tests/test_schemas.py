@@ -11,7 +11,7 @@ from briefing_agent.tools.errors import ErrorKind, ToolError
 from briefing_agent.tools.network import make_http_client
 from briefing_agent.tools.registry import RunContext, ToolRegistry
 from briefing_agent.tools.schemas import ALL_TOOLS
-from briefing_agent.tracing import Tracer
+from briefing_agent.tracing import make_tracer, run_spans
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def registry(settings: Settings) -> ToolRegistry:
     ctx = RunContext(
         http=make_http_client("fixture", fixture_dir=settings.fixture_dir),
         store=Store(settings.db_path),
-        tracer=Tracer(settings.trace_path),
+        tracer=make_tracer(settings.trace_path),
     )
     return ToolRegistry(ctx)
 
@@ -81,4 +81,4 @@ def test_execute_returns_structured_error_without_running(registry: ToolRegistry
     assert err["kind"] == "PERMANENT" and err["retryable"] is False
     assert err["code"] == "invalid_arguments"
     assert registry.calls == 0  # nothing executed
-    assert registry.ctx.tracer.spans[-1]["status"] == "error"
+    assert run_spans(registry.ctx.tracer)[-1].status == "error"

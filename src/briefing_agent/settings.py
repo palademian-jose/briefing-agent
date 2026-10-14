@@ -45,7 +45,6 @@ class Settings(BaseSettings):
     db_path: Path = Path("data/briefing.db")
     trace_path: Path = Path("traces/spans.jsonl")
     checkpoint_dir: Path = Path("checkpoints")
-    pricing_path: Path = Path("pricing.json")
     fixture_dir: Path = Path("tests/fixtures/wikipedia")
 
     rate_limit_per_minute: int = Field(default=10, ge=1)

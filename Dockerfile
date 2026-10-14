@@ -12,7 +12,7 @@ COPY pyproject.toml uv.lock .python-version README.md ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev --no-editable
 COPY src ./src
-COPY pricing.json evals.yaml ./
+COPY evals.yaml ./
 COPY tests/fixtures ./tests/fixtures
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable

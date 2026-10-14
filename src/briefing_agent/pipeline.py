@@ -30,7 +30,7 @@ from briefing_agent.store import Store
 from briefing_agent.tools.faults import FaultInjector
 from briefing_agent.tools.network import make_http_client
 from briefing_agent.tools.registry import RunContext, ToolRegistry
-from briefing_agent.tracing import Tracer
+from briefing_agent.tracing import FEATURE, JsonlSink, make_tracer, run_spans, summarize
 
 log = logging.getLogger(__name__)
 
@@ -63,11 +63,13 @@ class Runner:
         self.sleep = sleep or time.sleep
         self.on_step = on_step
         self.trace_path = Path(trace_path or s.trace_path)
+        # One open JSONL sink per runner; every run gets its own tracer (and in-memory span list).
+        self._sink = JsonlSink(self.trace_path)
 
     # -- wiring ----------------------------------------------------------------------
     def _env(self, state: RunState) -> AgentEnv:
         s = self.settings
-        tracer = Tracer(self.trace_path, trace_id=state.trace_id, feature="agent.run")
+        tracer = make_tracer(self._sink)
         faults = FaultInjector.from_spec(self.fault_spec, seed=self.fault_seed + state.iteration)
         if hasattr(self.client, "faults"):
             self.client.faults = faults  # fake provider: LLM-level soft faults
@@ -104,7 +106,6 @@ class Runner:
             ),
             model=s.llm_model,
             cheap_model=s.cheap_model,
-            pricing_path=str(s.pricing_path),
             checkpoint_dir=s.checkpoint_dir,
             min_facts=s.min_facts,
             max_facts=s.max_facts,
@@ -132,7 +133,10 @@ class Runner:
     def _execute(self, state: RunState) -> dict[str, Any]:
         env = self._env(state)
         started = time.time()
-        with env.tracer.span("agent.run", "other", run_id=state.run_id, topic=state.topic):
+        with (
+            env.tracer.trace(trace_id=state.trace_id, feature=FEATURE),
+            env.tracer.span("agent.run", "other", run_id=state.run_id, topic=state.topic),
+        ):
             try:
                 if state.phase in ("init", "discover"):
                     discover_sources(state, env)
@@ -244,7 +248,7 @@ class Runner:
 
     def _result(self, state: RunState, env: AgentEnv, started: float) -> dict[str, Any]:
         parsed = parse_briefing(state.briefing_md or "", state.topic)
-        summary = env.tracer.summary()
+        summary = summarize(run_spans(env.tracer))
         return {
             "run_id": state.run_id,
             "trace_id": state.trace_id,

@@ -155,29 +155,25 @@ class ToolRegistry:
         normalised = arguments if isinstance(arguments, dict) else {}
         error: ToolErrorInfo | None = None
         result: dict[str, Any]
-        try:
-            normalised = self.validate(name, arguments)
-            self.calls += 1
-            self.ctx.faults.before_tool(name, normalised)
-            result = self.impls[name](self.ctx, normalised)
-        except ToolError as exc:
-            error = exc.info
-            result = exc.info.as_result()
-        end = time.time()
-        meta: dict[str, Any] = {"arguments": _redact(normalised), "attempt": attempt}
-        if error is not None:
-            meta["error"] = error.model_dump(mode="json")
-        else:
-            meta["result_summary"] = _summarise(name, result)
-        self.ctx.tracer.emit(
-            f"tool.{name}",
-            "verify" if name == "verify_briefing" else "tool",
-            start=start,
-            end=end,
-            status="ok" if error is None else "error",
-            error_kind=None if error is None else str(error.kind),
-            meta=meta,
-        )
+        kind = "verify" if name == "verify_briefing" else "tool"
+        with self.ctx.tracer.span(f"tool.{name}", kind) as span:
+            try:
+                normalised = self.validate(name, arguments)
+                self.calls += 1
+                self.ctx.faults.before_tool(name, normalised)
+                result = self.impls[name](self.ctx, normalised)
+            except ToolError as exc:
+                error = exc.info
+                result = exc.info.as_result()
+            end = time.time()
+            span.meta.update({"arguments": _redact(normalised), "attempt": attempt})
+            if error is not None:
+                # A tool error is a result the model sees, not an exception: record it on the span.
+                span.status = "error"
+                span.error_kind = str(error.kind)
+                span.meta["error"] = error.model_dump(mode="json")
+            else:
+                span.meta["result_summary"] = _summarise(name, result)
         return ToolOutcome(
             name=name,
             arguments=normalised,

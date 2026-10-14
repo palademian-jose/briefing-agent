@@ -14,7 +14,7 @@ from briefing_agent.tools.errors import permanent, requires_human, transient
 from briefing_agent.tools.faults import FaultInjector, parse_faults
 from briefing_agent.tools.network import make_http_client
 from briefing_agent.tools.registry import RunContext, ToolRegistry
-from briefing_agent.tracing import Tracer
+from briefing_agent.tracing import make_tracer
 
 SPEC = ToolSpec(
     name="flaky",
@@ -31,7 +31,7 @@ def make_registry(settings: Settings, behaviour: list[Any]) -> ToolRegistry:
     ctx = RunContext(
         http=make_http_client("fixture", fixture_dir=settings.fixture_dir),
         store=Store(settings.db_path),
-        tracer=Tracer(settings.trace_path),
+        tracer=make_tracer(settings.trace_path),
     )
     reg = ToolRegistry(ctx)
     calls = iter(behaviour)

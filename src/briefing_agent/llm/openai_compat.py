@@ -130,5 +130,5 @@ class OpenAICompatClient:
             stop_reason="tool_use" if calls else (choice.finish_reason or "end_turn"),
         )
         if reported_cost is not None:
-            out.reported_cost_usd = float(reported_cost)
+            out.cost_usd = float(reported_cost)
         return out
