@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  LLM_PROVIDER: fake
+  NETWORK_MODE: fixture
+
+jobs:
+  lint-test-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        run: uv sync --frozen
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Test
+        run: uv run pytest -q
+
+      - name: Eval (fake provider, subset, k=3)
+        run: uv run python scripts/eval.py --k 3 --subset 12 --out reports --suffix ci
+
+      - name: Eval with fault injection (recovery rate)
+        run: uv run python scripts/eval.py --k 1 --subset 12 --faults "fetch_timeout:0.3,search_empty:0.2,fetch_not_found:0.15" --out reports --suffix ci-faults
+
+      - name: Gate against baseline
+        run: uv run python scripts/gate.py --baseline reports/baseline.json --candidate reports/latest-ci.json --config evals.yaml
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-reports
+          path: |
+            reports/*.json
+            reports/*.md
