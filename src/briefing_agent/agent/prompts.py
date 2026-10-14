@@ -37,9 +37,6 @@ source text, drop citations that do not map to a source, drop sources that were 
 remove duplicate sources, and keep the fact count within the stated bounds. Return the full
 corrected briefing only."""
 
-JUDGE_SYSTEM = """You are a strict binary grader. Answer with a JSON object
-{"pass": true|false, "reason": "<one sentence>"} and nothing else."""
-
 
 def search_user(topic: str, audience: str, target_sources: int) -> str:
     return (
@@ -94,16 +91,4 @@ def repair_user(
         f"{sources_block(sources)}\n\n"
         "Briefing to fix:\n\n"
         f"{briefing}"
-    )
-
-
-def judge_user(
-    criterion: str, input_: dict[str, Any], output: dict[str, Any], reference: dict | None
-) -> str:
-    return (
-        "TASK: judge\n"
-        f"Criterion: {criterion}\n"
-        f"Input: {json.dumps(input_, ensure_ascii=False)}\n"
-        f"Output: {json.dumps(output, ensure_ascii=False)}\n"
-        f"Reference: {json.dumps(reference, ensure_ascii=False) if reference else 'none'}"
     )
