@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Consistent hashing - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Consistent hashing</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBA">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwBQ" rel="mw:WikiLink" title="Computer science">computer science</a>, <b id="mwBg">consistent hashing</b><sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"KargerEtAl1997"}}' id="cite_ref-KargerEtAl1997_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-KargerEtAl1997-1" id="mwBw"><span class="mw-reflink-text" id="mwCA"><span class="cite-bracket" id="mwCQ">[</span>1<span class="cite-bracket" id="mwCg">]</span></span></a></sup><sup about="#mwt5" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nuggets"}}' id="cite_ref-nuggets_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nuggets-2" id="mwCw"><span class="mw-reflink-text" id="mwDA"><span class="cite-bracket" id="mwDQ">[</span>2<span class="cite-bracket" id="mwDg">]</span></span></a></sup> is a special kind of <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwDw" rel="mw:WikiLink" title="Hash function">hashing</a> technique such that when a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwEA" rel="mw:WikiLink" title="Hash table">hash table</a> is resized, only <span about="#mwt6" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n/m"}}' id="mwEQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n/m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n/m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n/m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e555a7e118f9dbc0c67bc579d736ce73d94773e3" style="vertical-align: -0.838ex; width:4.598ex; height:2.843ex;"/></span> keys need to be remapped on average where <span about="#mwt7" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwEg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is the number of keys and <span about="#mwt8" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwEw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is the number of slots. Consistent hashing evenly distributes cache keys across <a href="https://en.wikipedia.org/wiki/Shard_(database_architecture)" id="mwFA" rel="mw:WikiLink" title="Shard (database architecture)">shards</a>, even if some of the shards crash or become unavailable.<sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>3<span class="cite-bracket" id="mwGA">]</span></span></a></sup> In contrast, in most traditional hash tables, a change in the number of array slots causes nearly all keys to be remapped because the mapping between the keys and the slots is defined by a <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" id="mwGQ" rel="mw:WikiLink" title="Modular arithmetic">modular operation</a>.</p>
+<p id="mwGg">Consistent hashing is used by <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Content_Delivery_Network" id="mwGw" rel="mw:WikiLink" title="Content Delivery Network">Content Delivery Networks</a> because it is useful for distributing requests for content from a rotating population of web servers. <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" id="mwHA" rel="mw:WikiLink" title="Tim Berners-Lee">Tim Berners-Lee</a> credits consistent hashing algorithms, and <a href="https://en.wikipedia.org/wiki/Daniel_Lewin" id="mwHQ" rel="mw:WikiLink" title="Daniel Lewin">Daniel Lewin</a> as their inventor, with solving the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Slashdotting" id="mwHg" rel="mw:WikiLink" title="Slashdotting">slashdotting</a> problem which plagued the <a href="https://en.wikipedia.org/wiki/World_Wide_Web" id="mwHw" rel="mw:WikiLink" title="World Wide Web">World Wide Web</a> in the 1990s.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwIA"><span class="mw-reflink-text" id="mwIQ"><span class="cite-bracket" id="mwIg">[</span>4<span class="cite-bracket" id="mwIw">]</span></span></a></sup></p>
+<p id="mwJg">The term "consistent hashing" was introduced by <a href="https://en.wikipedia.org/wiki/David_Karger" id="mwJw" rel="mw:WikiLink" title="David Karger">David Karger</a> <i id="mwKA">et al.</i> at <a class="mw-redirect" href="https://en.wikipedia.org/wiki/MIT" id="mwKQ" rel="mw:WikiLink" title="MIT">MIT</a> for use in <a href="https://en.wikipedia.org/wiki/Distributed_cache" id="mwKg" rel="mw:WikiLink" title="Distributed cache">distributed caching</a>, particularly for the <a href="https://en.wikipedia.org/wiki/World_Wide_Web" id="mwKw" rel="mw:WikiLink" title="World Wide Web">web</a>.<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTERoughgardenValiant20212"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTERoughgardenValiant20212-5"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Roughgarden"},"2":{"wt":"Valiant"},"3":{"wt":"2021"},"p":{"wt":"2"}},"i":0}}]}' id="cite_ref-FOOTNOTERoughgardenValiant20212_5-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTERoughgardenValiant20212-5" id="mwLA"><span class="mw-reflink-text" id="mwLQ"><span class="cite-bracket" id="mwLg">[</span>5<span class="cite-bracket" id="mwLw">]</span></span></a></sup> This academic paper from 1997 in <a href="https://en.wikipedia.org/wiki/Symposium_on_Theory_of_Computing" id="mwMA" rel="mw:WikiLink" title="Symposium on Theory of Computing">Symposium on Theory of Computing</a> introduced the term "consistent hashing" as a way of distributing requests among a changing population of web servers.<sup about="#mwt18" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTERoughgardenValiant20217"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTERoughgardenValiant20217-6"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Roughgarden"},"2":{"wt":"Valiant"},"3":{"wt":"2021"},"p":{"wt":"7"}},"i":0}}]}' id="cite_ref-FOOTNOTERoughgardenValiant20217_6-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTERoughgardenValiant20217-6" id="mwMQ"><span class="mw-reflink-text" id="mwMg"><span class="cite-bracket" id="mwMw">[</span>6<span class="cite-bracket" id="mwNA">]</span></span></a></sup> Each slot is then represented by a server in a distributed system or cluster. The addition of a server and the removal of a server (during scalability or outage) requires only <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"num\\_keys/num\\_slots"}}' id="mwNQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle num\_keys/num\_slots}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mi>u</mi>
+<mi>m</mi>
+<mi mathvariant="normal">_<!-- _ --></mi>
+<mi>k</mi>
+<mi>e</mi>
+<mi>y</mi>
+<mi>s</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+<mi>u</mi>
+<mi>m</mi>
+<mi mathvariant="normal">_<!-- _ --></mi>
+<mi>s</mi>
+<mi>l</mi>
+<mi>o</mi>
+<mi>t</mi>
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle num\_keys/num\_slots}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle num\_keys/num\_slots}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d54d4de974af2e564dae1463b1f4fbf35ab1c788" style="vertical-align: -0.838ex; width:22.399ex; height:2.843ex;"/></span> items to be re-shuffled when the number of slots (i.e. servers) change. The authors mention <a href="https://en.wikipedia.org/wiki/Linear_hashing" id="mwNg" rel="mw:WikiLink" title="Linear hashing">linear hashing</a> and its ability to handle sequential server addition and removal, while consistent hashing allows servers to be added and removed in an arbitrary order.
+<sup about="#mwt27" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"KargerEtAl1997"},"body":{"id":"mw-reference-text-cite_note-KargerEtAl1997-1"}}' id="cite_ref-KargerEtAl1997_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-KargerEtAl1997-1" id="mwNw"><span class="mw-reflink-text" id="mwOA"><span class="cite-bracket" id="mwOQ">[</span>1<span class="cite-bracket" id="mwOg">]</span></span></a></sup> The paper was later re-purposed to address technical challenge of keeping track of a file in <a href="https://en.wikipedia.org/wiki/Peer-to-peer" id="mwOw" rel="mw:WikiLink" title="Peer-to-peer">peer-to-peer networks</a> such as a <a href="https://en.wikipedia.org/wiki/Distributed_hash_table" id="mwPA" rel="mw:WikiLink" title="Distributed hash table">distributed hash table</a>.<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTERoughgardenValiant20218"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTERoughgardenValiant20218-7"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Roughgarden"},"2":{"wt":"Valiant"},"3":{"wt":"2021"},"p":{"wt":"8"}},"i":0}}]}' id="cite_ref-FOOTNOTERoughgardenValiant20218_7-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTERoughgardenValiant20218-7" id="mwPQ"><span class="mw-reflink-text" id="mwPg"><span class="cite-bracket" id="mwPw">[</span>7<span class="cite-bracket" id="mwQA">]</span></span></a></sup><sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwQQ"><span class="mw-reflink-text" id="mwQg"><span class="cite-bracket" id="mwQw">[</span>8<span class="cite-bracket" id="mwRA">]</span></span></a></sup></p>
+<p id="mwRQ"><a href="https://en.wikipedia.org/wiki/Teradata" id="mwRg" rel="mw:WikiLink" title="Teradata">Teradata</a> used this technique in their <a href="https://en.wikipedia.org/wiki/Distributed_database" id="mwRw" rel="mw:WikiLink" title="Distributed database">distributed database</a><link about="#mwt29" data-mw='{"parts":[{"template":{"target":{"wt":"Citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"September 2024"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwSA" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt29" href="./Category:Articles_with_unsourced_statements_from_September_2024" rel="mw:PageProp/Category"/><sup about="#mwt29" class="noprint Inline-Template Template-Fact" id="mwSQ" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (September 2024)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup>, released in 1986, although they did not use this term. Teradata still uses the concept of a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwSg" rel="mw:WikiLink" title="Hash table">hash table</a> to fulfill exactly this purpose. <a href="https://en.wikipedia.org/wiki/Akamai_Technologies" id="mwSw" rel="mw:WikiLink" title="Akamai Technologies">Akamai Technologies</a> was founded in 1998 by the scientists <a href="https://en.wikipedia.org/wiki/Daniel_Lewin" id="mwTA" rel="mw:WikiLink" title="Daniel Lewin">Daniel Lewin</a> and <a href="https://en.wikipedia.org/wiki/F._Thomson_Leighton" id="mwTQ" rel="mw:WikiLink" title="F. Thomson Leighton">F. Thomson Leighton</a> (co-authors of the article coining "consistent hashing"). In Akamai's content delivery network,<sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwTg"><span class="mw-reflink-text" id="mwTw"><span class="cite-bracket" id="mwUA">[</span>9<span class="cite-bracket" id="mwUQ">]</span></span></a></sup> consistent hashing is used to balance the load within a cluster of servers, while a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Stable_marriage_problem" id="mwUg" rel="mw:WikiLink" title="Stable marriage problem">stable marriage</a> algorithm is used to balance load across clusters.<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nuggets"},"body":{"id":"mw-reference-text-cite_note-nuggets-2"}}' id="cite_ref-nuggets_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nuggets-2" id="mwUw"><span class="mw-reflink-text" id="mwVA"><span class="cite-bracket" id="mwVQ">[</span>2<span class="cite-bracket" id="mwVg">]</span></span></a></sup></p>
+<p id="mwVw">Consistent hashing has also been used to reduce the impact of partial system failures in large web applications to provide robust caching without incurring the system-wide fallout of a failure.<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"KargerEtAl1999"},"body":{"id":"mw-reference-text-cite_note-KargerEtAl1999-10"}}' id="cite_ref-KargerEtAl1999_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-KargerEtAl1999-10" id="mwWA"><span class="mw-reflink-text" id="mwWQ"><span class="cite-bracket" id="mwWg">[</span>10<span class="cite-bracket" id="mwWw">]</span></span></a></sup> Consistent hashing is also the cornerstone of <a href="https://en.wikipedia.org/wiki/Distributed_hash_table" id="mwXA" rel="mw:WikiLink" title="Distributed hash table">distributed hash tables</a> (DHTs), which employ hash values to partition a keyspace across a distributed set of nodes, then construct an <a href="https://en.wikipedia.org/wiki/Overlay_network" id="mwXQ" rel="mw:WikiLink" title="Overlay network">overlay network</a> of connected nodes that provide efficient node retrieval by key.</p>
+<p id="mwXg"><a href="https://en.wikipedia.org/wiki/Rendezvous_hashing" id="mwXw" rel="mw:WikiLink" title="Rendezvous hashing">Rendezvous hashing</a>, designed in 1996, is a simpler and more general technique <link about="#mwt39" data-mw='{"parts":[{"template":{"target":{"wt":"Citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"April 2021"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwYA" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt39" href="./Category:Articles_with_unsourced_statements_from_April_2021" rel="mw:PageProp/Category"/><sup about="#mwt39" class="noprint Inline-Template Template-Fact" id="mwYQ" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (April 2021)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup>. It achieves the goals of consistent hashing using the very different highest random weight (HRW) algorithm.</p>
+<p id="mwaA">In the problem of <a href="https://en.wikipedia.org/wiki/Load_balancing_(computing)" id="mwaQ" rel="mw:WikiLink" title="Load balancing (computing)">load balancing</a>, for example, when a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Binary_large_object" id="mwag" rel="mw:WikiLink" title="Binary large object">BLOB</a> has to be assigned to one of <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwaw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> servers on a <a href="https://en.wikipedia.org/wiki/Computer_cluster" id="mwbA" rel="mw:WikiLink" title="Computer cluster">cluster</a>, a standard hash function could be used in such a way that we calculate the hash value for that BLOB, assuming the resultant value of the hash is <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7ed48a5e36207156fb792fa79d29925d2f7901e8" style="vertical-align: -0.671ex; width:1.332ex; height:2.509ex;"/></span>, we perform <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" id="mwbg" rel="mw:WikiLink" title="Modular arithmetic">modular operation</a> with the number of servers (<span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> in this case) to determine the server in which we can place the BLOB: <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\zeta = \\beta\\ \\%\\ n"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \zeta =\beta \ \%\ n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ζ<!-- ζ --></mi>
+<mo>=</mo>
+<mi>β<!-- β --></mi>
+<mtext> </mtext>
+<mi mathvariant="normal">%<!-- % --></mi>
+<mtext> </mtext>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \zeta =\beta \ \%\ n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \zeta =\beta \ \%\ n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9f1cae2745f4fb66e1ffd65a724630475d5d7f39" style="vertical-align: -0.671ex; width:10.017ex; height:2.676ex;"/></span>; hence the BLOB will be placed in the server whose <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\text{server ID}"}}' id="mwcQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{server ID}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>server ID</mtext>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{server ID}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{server ID}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1536bfe5827e3bd28f0c1cf3524d4078ca7ac62c" style="vertical-align: -0.338ex; width:9.228ex; height:2.176ex;"/></span> is successor of <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\zeta"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \zeta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ζ<!-- ζ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \zeta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \zeta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d5c3916703cae7938143d38865f78f27faadd4ae" style="vertical-align: -0.671ex; width:1.095ex; height:2.509ex;"/></span> in this case. However, when a server is added or removed during outage or scaling (when <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> changes), all the BLOBs in every server should be reassigned and moved due to <a href="https://en.wikipedia.org/wiki/Hash_table#Dynamic_resizing" id="mwdA" rel="mw:WikiLink" title="Hash table">rehashing</a>, but this operation is expensive.</p>
+<p id="mwdQ">Consistent hashing was designed to avoid the problem of having to reassign every BLOB when a server is added or removed throughout the cluster. The central idea is to use a hash function that maps both the BLOB and servers to a unit circle, usually <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2\\pi"}}' id="mwdg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2\pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>2</mn>
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2\pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2\pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/73efd1f6493490b058097060a572606d2c550a06" style="vertical-align: -0.338ex; width:2.494ex; height:2.176ex;"/></span> radians. For example, <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\zeta = \\Phi\\ \\%\\ 360"}}' id="mwdw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \zeta =\Phi \ \%\ 360}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ζ<!-- ζ --></mi>
+<mo>=</mo>
+<mi mathvariant="normal">Φ<!-- Φ --></mi>
+<mtext> </mtext>
+<mi mathvariant="normal">%<!-- % --></mi>
+<mtext> </mtext>
+<mn>360</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \zeta =\Phi \ \%\ 360}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \zeta =\Phi \ \%\ 360}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6bed5b344f95897e2336a14ef9a34731f7bbfd33" style="vertical-align: -0.671ex; width:12.456ex; height:2.676ex;"/></span> (where <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\Phi"}}' id="mweA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \Phi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">Φ<!-- Φ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \Phi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \Phi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aed80a2011a3912b028ba32a52dfa57165455f24" style="vertical-align: -0.338ex; width:1.678ex; height:2.176ex;"/></span> is hash of a BLOB or server's identifier, like <a href="https://en.wikipedia.org/wiki/IP_address" id="mweQ" rel="mw:WikiLink" title="IP address">IP address</a> or <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier" id="mweg" rel="mw:WikiLink" title="Universally unique identifier">UUID</a>). Each BLOB is then assigned to the next server that appears on the circle in clockwise order. Usually, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Binary_search_algorithm" id="mwew" rel="mw:WikiLink" title="Binary search algorithm">binary search algorithm</a> or <a href="https://en.wikipedia.org/wiki/Linear_search" id="mwfA" rel="mw:WikiLink" title="Linear search">linear search</a> is used to find a "spot" or server to place that particular BLOB in <span about="#mwt51" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log N)"}}' id="mwfQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log N)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>N</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log N)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log N)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14eea297b4387decf341763c39dc038e05744272" style="vertical-align: -0.838ex; width:9.005ex; height:2.843ex;"/></span> or <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(N)"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(N)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>N</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(N)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(N)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/78484c5c26cfc97bb3b915418caa09454421e80b" style="vertical-align: -0.838ex; width:5.646ex; height:2.843ex;"/></span> complexities respectively; and in every iteration, which happens in clockwise manner, an operation <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\zeta\\ \\le\\ \\Psi"}}' id="mwfw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \zeta \ \leq \ \Psi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ζ<!-- ζ --></mi>
+<mtext> </mtext>
+<mo>≤<!-- ≤ --></mo>
+<mtext> </mtext>
+<mi mathvariant="normal">Ψ<!-- Ψ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \zeta \ \leq \ \Psi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \zeta \ \leq \ \Psi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/12213aa097020ec5710f55848ed8f7a4802154bb" style="vertical-align: -0.671ex; width:7.163ex; height:2.509ex;"/></span> (where <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\Psi"}}' id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \Psi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">Ψ<!-- Ψ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \Psi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \Psi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5471531a3fe80741a839bc98d49fae862a6439a" style="vertical-align: -0.338ex; width:1.808ex; height:2.176ex;"/></span> is the value of the server within the cluster) is performed to find the server to place the BLOB. This provides an even distribution of BLOBs to servers. But, more importantly, if a server fails and is removed from the circle, only the BLOBs that were mapped to the failed server need to be reassigned to the next server in clockwise order. Likewise, if a new server is added, it is added to the unit circle, and only the BLOBs that would now be assigned to the new server need to be reassigned. These are BLOBs previously assigned to an existing server, but for which the new server is now the next server clockwise.</p>
+<p id="mwgQ">Importantly, when a server is added or removed, the vast majority of the BLOBs maintain their prior server assignments, and the addition of <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n^{th}"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n^{th}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mi>h</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n^{th}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n^{th}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5d54f58e8109a3d758d6712278b03f6aea6e696c" style="vertical-align: -0.338ex; width:3.167ex; height:2.676ex;"/></span> server only causes <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1/n"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1/n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1/n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1/n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f0e10667bad240500f5044257143510127e03d69" style="vertical-align: -0.838ex; width:3.72ex; height:2.843ex;"/></span> fraction of the BLOBs to relocate. Although the process of moving BLOBs across cache servers in the cluster depends on the context, commonly, the newly added cache server identifies its "predecessor" and moves all the BLOBs, whose mapping belongs to this server (i.e. whose hash value is less than that of the new server), from it. However, in the case of <a href="https://en.wikipedia.org/wiki/Web_cache" id="mwhA" rel="mw:WikiLink" title="Web cache">web page caches</a>, in most implementations there is no involvement of moving or copying, assuming the cached BLOB is small enough. When a request hits a newly added cache server, a <a href="https://en.wikipedia.org/wiki/Cache_(computing)#CACHE-MISS" id="mwhQ" rel="mw:WikiLink" title="Cache (computing)">cache miss</a> happens and a request to the actual <a href="https://en.wikipedia.org/wiki/Web_server" id="mwhg" rel="mw:WikiLink" title="Web server">web server</a> is made and the BLOB is cached locally for future requests. The redundant BLOBs on the previously used cache servers would be removed as per the <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies" id="mwhw" rel="mw:WikiLink" title="Cache replacement policies">cache eviction policies</a>.<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTERoughgardenValiant20216"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTERoughgardenValiant20216-11"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Roughgarden"},"2":{"wt":"Valiant"},"3":{"wt":"2021"},"p":{"wt":"6"}},"i":0}}]}' id="cite_ref-FOOTNOTERoughgardenValiant20216_11-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTERoughgardenValiant20216-11" id="mwiA"><span class="mw-reflink-text" id="mwiQ"><span class="cite-bracket" id="mwig">[</span>11<span class="cite-bracket" id="mwiw">]</span></span></a></sup></p>
+<p id="mwjQ">Let <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{b}(x)"}}' id="mwjg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{b}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>b</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{b}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{b}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/42708b0e624c69a13c6f3f495254b9629307b98c" style="vertical-align: -0.838ex; width:5.416ex; height:2.843ex;"/></span> and <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{s}(x)"}}' id="mwjw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{s}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{s}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{s}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/125e4cc169dcd847da58b17c1d05817264ada21c" style="vertical-align: -0.838ex; width:5.481ex; height:2.843ex;"/></span> be the hash functions used for the BLOB and server's unique identifier respectively. In practice, a <a href="https://en.wikipedia.org/wiki/Binary_search_tree" id="mwkA" rel="mw:WikiLink" title="Binary search tree">binary search tree</a> (BST) is used to dynamically maintain the <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\text{server ID}"}}' id="mwkQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{server ID}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>server ID</mtext>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{server ID}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{server ID}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1536bfe5827e3bd28f0c1cf3524d4078ca7ac62c" style="vertical-align: -0.338ex; width:9.228ex; height:2.176ex;"/></span> within a cluster or hashring, and to find the successor or minimum within the BST, <a href="https://en.wikipedia.org/wiki/Tree_traversal" id="mwkg" rel="mw:WikiLink" title="Tree traversal">tree traversal</a> is used.</p>
+<p id="mwyA">To avoid <a href="https://en.wikipedia.org/wiki/Skewness" id="mwyQ" rel="mw:WikiLink" title="Skewness">skewness</a> of multiple nodes within the radian, which happen due to lack of <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution" id="mwyg" rel="mw:WikiLink" title="Discrete uniform distribution">uniform distribution</a> of the servers within the cluster, multiple labels are used. Those duplicate labels are called "virtual nodes" i.e. multiple labels which point to a single "real" label or server within the cluster. The amount of virtual nodes or duplicate labels used for a particular server within a cluster is called the "weight" of that particular server.<sup about="#mwt103" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTERoughgardenValiant20216–7"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTERoughgardenValiant20216–7-15"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Roughgarden"},"2":{"wt":"Valiant"},"3":{"wt":"2021"},"p":{"wt":"6–7"}},"i":0}}]}' id="cite_ref-FOOTNOTERoughgardenValiant20216–7_15-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTERoughgardenValiant20216–7-15" id="mwyw"><span class="mw-reflink-text" id="mwzA"><span class="cite-bracket" id="mwzQ">[</span>15<span class="cite-bracket" id="mwzg">]</span></span></a></sup></p>
+<p id="mw0A">A number of extensions to the basic technique are needed for effectively using consistent hashing for load balancing in practice. In the basic scheme above, if a server fails, all its BLOBs are reassigned to the next server in clockwise order, potentially doubling the load of that server. This may not be desirable. To ensure a more even redistribution of BLOBs on server failure, each server can be hashed to multiple locations on the unit circle. When a server fails, the BLOBs assigned to each of its replicas on the unit circle will get reassigned to a different server in clockwise order, thus redistributing the BLOBs more evenly. Another extension concerns a situation where a single BLOB gets "hot" and is accessed a large number of times and will have to be hosted in multiple servers. In this situation, the BLOB may be assigned to multiple contiguous servers by traversing the unit circle in clockwise order. A more complex practical consideration arises when two BLOBs are hashed near each other in the unit circle and both get "hot" at the same time. In this case, both BLOBs will use the same set of contiguous servers in the unit circle. This situation can be ameliorated by each BLOB choosing a different hash function for mapping servers to the unit circle.<sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nuggets"}}' id="cite_ref-nuggets_2-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nuggets-2" id="mw0Q"><span class="mw-reflink-text" id="mw0g"><span class="cite-bracket" id="mw0w">[</span>2<span class="cite-bracket" id="mw1A">]</span></span></a></sup></p>
+<p id="mw2A"><a href="https://en.wikipedia.org/wiki/Rendezvous_hashing" id="mw2Q" rel="mw:WikiLink" title="Rendezvous hashing">Rendezvous hashing</a>, designed in 1996, is a simpler and more general technique, and permits fully distributed agreement on a set of <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mw2g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> options out of a possible set of <span about="#mwt110" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mw2w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> options. <a href="https://en.wikipedia.org/wiki/Rendezvous_hashing#Consistent_hashing_is_a_special_case_of_Rendezvous_hashing" id="mw3A" rel="mw:WikiLink" title="Rendezvous hashing">It can in fact be shown</a> that consistent hashing is a special case of rendezvous hashing. Because of its simplicity and generality, rendezvous hashing is now being used in place of Consistent Hashing in many applications.</p>
+<p id="mw3Q">If key values will always increase <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Monotonic" id="mw3g" rel="mw:WikiLink" title="Monotonic">monotonically</a>, an alternative approach using a <a href="https://en.wikipedia.org/wiki/Hash_table#Monotonic_keys" id="mw3w" rel="mw:WikiLink" title="Hash table">hash table with monotonic keys</a> may be more suitable than consistent hashing.<link about="#mwt111" data-mw='{"parts":[{"template":{"target":{"wt":"citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"October 2019"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mw4A" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt111" href="./Category:Articles_with_unsourced_statements_from_October_2019" rel="mw:PageProp/Category"/><sup about="#mwt111" class="noprint Inline-Template Template-Fact" id="mw4Q" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (October 2019)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwAQs">The <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(K/N)"}}' id="mwAQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(K/N)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>N</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(K/N)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(K/N)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dc1c249b4f2ab04eb9f3a69ecbc3419bd1fdbd9f" style="vertical-align: -0.838ex; width:8.875ex; height:2.843ex;"/></span> is an average cost for redistribution of keys and the <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log N)"}}' id="mwAQ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log N)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>N</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log N)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log N)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14eea297b4387decf341763c39dc038e05744272" style="vertical-align: -0.838ex; width:9.005ex; height:2.843ex;"/></span> complexity for consistent hashing comes from the fact that a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Binary_search_algorithm" id="mwAQ4" rel="mw:WikiLink" title="Binary search algorithm">binary search</a> among nodes angles is required to find the next node on the ring.<link about="#mwt124" data-mw='{"parts":[{"template":{"target":{"wt":"citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"October 2019"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwAQ8" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt124" href="./Category:Articles_with_unsourced_statements_from_October_2019" rel="mw:PageProp/Category"/><sup about="#mwt124" class="noprint Inline-Template Template-Fact" id="mwARA" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (October 2019)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwARI">Known examples of consistent hashing use include:</p>
+<p id="mwArk">
+<!--Interwikies-->
+<br id="mwAro"/></p>
+</div></div>
+</body></html>

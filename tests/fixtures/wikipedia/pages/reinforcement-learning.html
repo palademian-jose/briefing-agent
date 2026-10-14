@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Reinforcement learning - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Reinforcement learning</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwCw">In <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwDA" rel="mw:WikiLink" title="Machine learning">machine learning</a> and <a href="https://en.wikipedia.org/wiki/Optimal_control" id="mwDQ" rel="mw:WikiLink" title="Optimal control">optimal control</a>, <b id="mwDg">reinforcement learning</b> (<b id="mwDw">RL</b>) (<i id="mwEA">also known as approximate dynamic programming</i>)<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwEQ"><span class="mw-reflink-text" id="mwEg"><span class="cite-bracket" id="mwEw">[</span>1<span class="cite-bracket" id="mwFA">]</span></span></a></sup> is concerned with how an <a href="https://en.wikipedia.org/wiki/Intelligent_agent" id="mwFQ" rel="mw:WikiLink" title="Intelligent agent">intelligent agent</a> should <a href="https://en.wikipedia.org/wiki/Action_selection" id="mwFg" rel="mw:WikiLink" title="Action selection">take actions</a> in a dynamic environment in order to <a href="https://en.wikipedia.org/wiki/Reward-based_selection" id="mwFw" rel="mw:WikiLink" title="Reward-based selection">maximize a reward</a> signal. Reinforcement learning is one of the <a href="https://en.wikipedia.org/wiki/Machine_learning#Approaches" id="mwGA" rel="mw:WikiLink" title="Machine learning">three basic machine learning paradigms</a>, alongside <a href="https://en.wikipedia.org/wiki/Supervised_learning" id="mwGQ" rel="mw:WikiLink" title="Supervised learning">supervised learning</a> and <a href="https://en.wikipedia.org/wiki/Unsupervised_learning" id="mwGg" rel="mw:WikiLink" title="Unsupervised learning">unsupervised learning</a>.</p>
+<p id="mwGw">While supervised learning and unsupervised learning algorithms respectively attempt to discover patterns in labeled and unlabeled data, reinforcement learning involves training an agent through interactions with its environment. To learn to maximize rewards from these interactions, the agent makes decisions between trying new actions to learn more about the environment (exploration), or using current knowledge of the environment to take the best action (exploitation).<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"kaelbling"},"body":{"id":"mw-reference-text-cite_note-kaelbling-2"}}' id="cite_ref-kaelbling_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-kaelbling-2" id="mwHA"><span class="mw-reflink-text" id="mwHQ"><span class="cite-bracket" id="mwHg">[</span>2<span class="cite-bracket" id="mwHw">]</span></span></a></sup> The search for the optimal balance between these two strategies is known as the <a href="https://en.wikipedia.org/wiki/Exploration–exploitation_dilemma" id="mwIA" rel="mw:WikiLink" title="Exploration–exploitation dilemma">exploration–exploitation dilemma</a>.</p>
+<p id="mwIQ">
+
+The environment is typically stated in the form of a <a href="https://en.wikipedia.org/wiki/Markov_decision_process" id="mwIg" rel="mw:WikiLink" title="Markov decision process">Markov decision process</a>, as many reinforcement learning algorithms use <a href="https://en.wikipedia.org/wiki/Dynamic_programming" id="mwIw" rel="mw:WikiLink" title="Dynamic programming">dynamic programming</a> techniques.<sup about="#mwt21" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwJA"><span class="mw-reflink-text" id="mwJQ"><span class="cite-bracket" id="mwJg">[</span>3<span class="cite-bracket" id="mwJw">]</span></span></a></sup> The main difference between classical dynamic programming methods and reinforcement learning algorithms is that the latter do not assume knowledge of an exact mathematical model of the Markov decision process, and they target large Markov decision processes where exact methods become infeasible.<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Li-2023"},"body":{"id":"mw-reference-text-cite_note-Li-2023-4"}}' id="cite_ref-Li-2023_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Li-2023-4" id="mwKA"><span class="mw-reflink-text" id="mwKQ"><span class="cite-bracket" id="mwKg">[</span>4<span class="cite-bracket" id="mwKw">]</span></span></a></sup></p>
+<p id="mwLw">Due to its generality, reinforcement learning is studied in many disciplines, such as <a href="https://en.wikipedia.org/wiki/Game_theory" id="mwMA" rel="mw:WikiLink" title="Game theory">game theory</a>, <a href="https://en.wikipedia.org/wiki/Control_theory" id="mwMQ" rel="mw:WikiLink" title="Control theory">control theory</a>, <a href="https://en.wikipedia.org/wiki/Operations_research" id="mwMg" rel="mw:WikiLink" title="Operations research">operations research</a>, <a href="https://en.wikipedia.org/wiki/Information_theory" id="mwMw" rel="mw:WikiLink" title="Information theory">information theory</a>, <a href="https://en.wikipedia.org/wiki/Simulation-based_optimization" id="mwNA" rel="mw:WikiLink" title="Simulation-based optimization">simulation-based optimization</a>, <a href="https://en.wikipedia.org/wiki/Multi-agent_system" id="mwNQ" rel="mw:WikiLink" title="Multi-agent system">multi-agent systems</a>, <a href="https://en.wikipedia.org/wiki/Swarm_intelligence" id="mwNg" rel="mw:WikiLink" title="Swarm intelligence">swarm intelligence</a>, and <a href="https://en.wikipedia.org/wiki/Statistics" id="mwNw" rel="mw:WikiLink" title="Statistics">statistics</a>. In the operations research and control literature, RL is called <i id="mwOA">approximate dynamic programming</i>, or <i id="mwOQ">neuro-dynamic programming.</i> The problems of interest in RL have also been studied in the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Optimal_control_theory" id="mwOg" rel="mw:WikiLink" title="Optimal control theory">theory of optimal control</a>, which is concerned mostly with the existence and characterization of optimal solutions, and algorithms for their exact computation, and less with learning or approximation (particularly in the absence of a mathematical model of the environment).</p>
+<p id="mwOw">Basic reinforcement learning is modeled as a <a href="https://en.wikipedia.org/wiki/Markov_decision_process" id="mwPA" rel="mw:WikiLink" title="Markov decision process">Markov decision process</a>:</p>
+<p id="mwTQ">The purpose of reinforcement learning is for the agent to learn an optimal (or near-optimal) policy that maximizes the reward function or other user-provided reinforcement signal that accumulates from immediate rewards. This is similar to <a href="https://en.wikipedia.org/wiki/Reinforcement" id="mwTg" rel="mw:WikiLink" title="Reinforcement">processes</a> that appear to occur in animal psychology. For example, biological brains are hardwired to interpret signals such as pain and hunger as negative reinforcements, and interpret pleasure and food intake as positive reinforcements. In some circumstances, animals learn to adopt behaviors that optimize these rewards. This suggests that animals are capable of reinforcement learning.<sup about="#mwt39" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwTw"><span class="mw-reflink-text" id="mwUA"><span class="cite-bracket" id="mwUQ">[</span>5<span class="cite-bracket" id="mwUg">]</span></span></a></sup><sup about="#mwt42" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwUw"><span class="mw-reflink-text" id="mwVA"><span class="cite-bracket" id="mwVQ">[</span>6<span class="cite-bracket" id="mwVg">]</span></span></a></sup></p>
+<p id="mwVw">A basic reinforcement learning agent interacts with its environment in discrete time steps. At each time step <span about="#mwt43" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwWA" style="font-style:italic;" typeof="mw:Transclusion">t</span>, the agent receives the current state <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_t"}}' id="mwWQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7e2391e6e796fbf718be3828080775ac2ac3d3d4" style="vertical-align: -0.671ex; width:2.251ex; height:2.509ex;"/></span> and reward <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R_t"}}' id="mwWg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d65b678ee539ac36de96b554af181ac03b7f16a8" style="vertical-align: -0.671ex; width:2.59ex; height:2.509ex;"/></span>. It then chooses an action <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A_t"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/265483c517cb98cde609f03a31964d86cdcb05c9" style="vertical-align: -0.671ex; width:2.569ex; height:2.509ex;"/></span> from the set of available actions, which is subsequently sent to the environment. The environment moves to a new state <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{t+1}"}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{t+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{t+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{t+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7fde0b9d29bcb7e8d3eee3a8f42ead14aa3b8cee" style="vertical-align: -0.671ex; width:4.351ex; height:2.509ex;"/></span> and the reward <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R_{t+1}"}}' id="mwXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R_{t+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R_{t+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R_{t+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/78bc3f077c19f7db4e89b5529a5861b06ae782b7" style="vertical-align: -0.671ex; width:4.69ex; height:2.509ex;"/></span> associated with the <i id="mwXg">transition</i> <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(S_t,A_t,S_{t+1})"}}' id="mwXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (S_{t},A_{t},S_{t+1})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (S_{t},A_{t},S_{t+1})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (S_{t},A_{t},S_{t+1})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efa800ac9fbf81e68eb97515e04cf99ef35b730d" style="vertical-align: -0.838ex; width:13.048ex; height:2.843ex;"/></span> is determined. The goal of a reinforcement learning agent is to learn a <i id="mwYA">policy</i>:</p>
+<p id="mwYQ"><span about="#mwt50" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\begin{align}\n&amp;\\pi: \\mathcal{S} \\times \\mathcal{A} \\to [0,1] \\\\\n&amp;\\pi(s,a) = \\Pr(A_t{=}a \\mid S_t{=}s)\n\\end{align}"}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}&amp;\pi :{\mathcal {S}}\times {\mathcal {A}}\to [0,1]\\&amp;\pi (s,a)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt">
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi>π<!-- π --></mi>
+<mo>:</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">S</mi>
+</mrow>
+</mrow>
+<mo>×<!-- × --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">A</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">→<!-- → --></mo>
+<mo stretchy="false">[</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo stretchy="false">]</mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>a</mi>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}&amp;\pi</annotation></semantics></math><span typeof="mw:DisplaySpace"> </span>:{\mathcal {S}}\times {\mathcal {A}}\to [0,1]\\&amp;\pi (s,a)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}
+  
+</span><img alt="{\displaystyle {\begin{aligned}&amp;\pi :{\mathcal {S}}\times {\mathcal {A}}\to [0,1]\\&amp;\pi (s,a)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ee75e84787ca0c966a0e9f0211d5cc6d7e620cbd" style="vertical-align: -2.505ex; width:27.343ex; height:6.176ex;"/></span></p>
+<p id="mwYw">that maximizes the expected cumulative reward.</p>
+<p id="mwZA">Formulating the problem as a Markov decision process assumes the agent directly observes the current environmental state; in this case, the problem is said to have <i id="mwZQ">full observability</i>. If the agent only has access to a subset of states, or if the observed states are corrupted by noise, the agent is said to have <i id="mwZg">partial observability</i>, and formally the problem must be formulated as a <a href="https://en.wikipedia.org/wiki/Partially_observable_Markov_decision_process" id="mwZw" rel="mw:WikiLink" title="Partially observable Markov decision process">partially observable Markov decision process</a>. In both cases, the set of actions available to the agent can be restricted. For example, the state of an account balance could be restricted to be positive; if the current value of the state is 3 and the state transition attempts to reduce the value by 4, the transition will not be allowed.</p>
+<p id="mwaA">When the agent's performance is compared to that of an agent that acts optimally, the difference in performance yields the notion of <a href="https://en.wikipedia.org/wiki/Regret_(decision_theory)" id="mwaQ" rel="mw:WikiLink" title="Regret (decision theory)">regret</a>. In order to act near optimally, the agent must reason about long-term consequences of its actions (i.e., maximize future rewards), although the immediate reward associated with this might be negative.</p>
+<p id="mwag">Thus, reinforcement learning is particularly well-suited to problems that include a long-term versus short-term reward trade-off. It has been applied successfully to various problems, including <a href="https://en.wikipedia.org/wiki/Energy_storage" id="mwaw" rel="mw:WikiLink" title="Energy storage">energy storage</a>,<sup about="#mwt56" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwbA"><span class="mw-reflink-text" id="mwbQ"><span class="cite-bracket" id="mwbg">[</span>7<span class="cite-bracket" id="mwbw">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Robot_control" id="mwcA" rel="mw:WikiLink" title="Robot control">robot control</a>,<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>8<span class="cite-bracket" id="mwdA">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Photovoltaic_system" id="mwdQ" rel="mw:WikiLink" title="Photovoltaic system">photovoltaic generators</a>,<sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwdg"><span class="mw-reflink-text" id="mwdw"><span class="cite-bracket" id="mweA">[</span>9<span class="cite-bracket" id="mweQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Backgammon" id="mweg" rel="mw:WikiLink" title="Backgammon">backgammon</a>, <a href="https://en.wikipedia.org/wiki/Checkers" id="mwew" rel="mw:WikiLink" title="Checkers">checkers</a>,<sup about="#mwt51" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTESuttonBarto2018Chapter 11"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTESuttonBarto2018Chapter_11-10"},"parts":[{"template":{"target":{"wt":"Sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Sutton"},"2":{"wt":"Barto"},"3":{"wt":"2018"},"p":{"wt":""},"loc":{"wt":"Chapter 11"}},"i":0}}]}' id="cite_ref-FOOTNOTESuttonBarto2018Chapter_11_10-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTESuttonBarto2018Chapter_11-10" id="mwfA"><span class="mw-reflink-text" id="mwfQ"><span class="cite-bracket" id="mwfg">[</span>10<span class="cite-bracket" id="mwfw">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Go_(game)" id="mwgA" rel="mw:WikiLink" title="Go (game)">Go</a> (<a href="https://en.wikipedia.org/wiki/AlphaGo" id="mwgQ" rel="mw:WikiLink" title="AlphaGo">AlphaGo</a>), and <a href="https://en.wikipedia.org/wiki/Self-driving_car" id="mwgg" rel="mw:WikiLink" title="Self-driving car">autonomous driving systems</a>.<sup about="#mwt65" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Ren-2022"},"body":{"id":"mw-reference-text-cite_note-Ren-2022-11"}}' id="cite_ref-Ren-2022_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Ren-2022-11" id="mwgw"><span class="mw-reflink-text" id="mwhA"><span class="cite-bracket" id="mwhQ">[</span>11<span class="cite-bracket" id="mwhg">]</span></span></a></sup></p>
+<p id="mwhw">Two elements make reinforcement learning powerful: the use of samples to optimize performance, and the use of <a href="https://en.wikipedia.org/wiki/Neural_network_(machine_learning)" id="mwiA" rel="mw:WikiLink" title="Neural network (machine learning)">function approximation</a> to deal with large environments. Thanks to these two key components, RL can be used in large environments in the following situations:</p>
+<p id="mwkw">The first two of these problems could be considered planning problems (since some form of model is available), while the last one could be considered to be a genuine learning problem. However, reinforcement learning converts both planning problems to <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwlA" rel="mw:WikiLink" title="Machine learning">machine learning</a> problems.</p>
+<p id="mwlg">The <a href="https://en.wikipedia.org/wiki/Exploration–exploitation_dilemma" id="mwlw" rel="mw:WikiLink" title="Exploration–exploitation dilemma">trade-off between exploration and exploitation</a> has been most thoroughly studied through the <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit" id="mwmA" rel="mw:WikiLink" title="Multi-armed bandit">multi-armed bandit</a> problem and for finite state space Markov decision processes in Burnetas and Katehakis (1997).<sup about="#mwt71" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Optimal adaptive policies for Marko"},"body":{"id":"mw-reference-text-cite_note-Optimal_adaptive_policies_for_Marko-13"}}' id="cite_ref-Optimal_adaptive_policies_for_Marko_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Optimal_adaptive_policies_for_Marko-13" id="mwmQ"><span class="mw-reflink-text" id="mwmg"><span class="cite-bracket" id="mwmw">[</span>13<span class="cite-bracket" id="mwnA">]</span></span></a></sup></p>
+<p id="mwnQ">Reinforcement learning requires clever exploration mechanisms; randomly selecting actions, without reference to an estimated probability distribution, shows poor performance. The case of (small) finite Markov decision processes is relatively well understood. However, due to the lack of algorithms that scale well with the number of states (or scale to problems with infinite state spaces), simple exploration methods are the most practical.</p>
+<p id="mwng">One such method is <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\varepsilon"}}' id="mwnw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a30c89172e5b88edbd45d3e2772c7f5e562e5173" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span>-greedy, where <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"0 &lt; \\varepsilon &lt; 1"}}' id="mwoA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 0&lt;\varepsilon &lt;1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>0</mn>
+<mo>&lt;</mo>
+<mi>ε<!-- ε --></mi>
+<mo>&lt;</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 0&lt;\varepsilon &lt;1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 0&lt;\varepsilon &lt;1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a62c0bbc36352f492bde6217430cfe342032487d" style="vertical-align: -0.338ex; width:9.605ex; height:2.176ex;"/></span> is a parameter controlling the amount of exploration vs. exploitation. With probability <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1-\\varepsilon"}}' id="mwoQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1-\varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1-\varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1-\varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/09646b74d0bca9befab4b7e9456a44a20d250ace" style="vertical-align: -0.505ex; width:5.086ex; height:2.343ex;"/></span>, exploitation is chosen, and the agent chooses the action that it believes has the best long-term effect (ties between actions are broken uniformly at random). Alternatively, with probability <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\varepsilon"}}' id="mwog" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a30c89172e5b88edbd45d3e2772c7f5e562e5173" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span>, exploration is chosen, and the action is chosen uniformly at random. <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\varepsilon"}}' id="mwow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a30c89172e5b88edbd45d3e2772c7f5e562e5173" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span> is usually a fixed parameter but can be adjusted either according to a schedule (making the agent explore progressively less), or adaptively based on heuristics.<sup about="#mwt79" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwpA"><span class="mw-reflink-text" id="mwpQ"><span class="cite-bracket" id="mwpg">[</span>14<span class="cite-bracket" id="mwpw">]</span></span></a></sup></p>
+<p id="mwqQ">Even if the issue of exploration is disregarded and even if the state was observable (assumed hereafter), the problem remains to use past experience to find out which actions lead to higher cumulative rewards.</p>
+<p id="mwrA">The agent's action selection is modeled as a map called <i id="mwrQ">policy</i>:
+<span about="#mwt80" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\begin{align}\n&amp;\\pi: \\mathcal{A} \\times \\mathcal{S} \\to [0,1] \\\\\n&amp;\\pi(a,s) = \\Pr(A_t{=}a \\mid S_t{=}s)\n\\end{align}"}}' id="mwrg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}&amp;\pi :{\mathcal {A}}\times {\mathcal {S}}\to [0,1]\\&amp;\pi (a,s)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt">
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi>π<!-- π --></mi>
+<mo>:</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">A</mi>
+</mrow>
+</mrow>
+<mo>×<!-- × --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">S</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">→<!-- → --></mo>
+<mo stretchy="false">[</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo stretchy="false">]</mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo>,</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>a</mi>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}&amp;\pi</annotation></semantics></math><span typeof="mw:DisplaySpace"> </span>:{\mathcal {A}}\times {\mathcal {S}}\to [0,1]\\&amp;\pi (a,s)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}
+  
+</span><img alt="{\displaystyle {\begin{aligned}&amp;\pi :{\mathcal {A}}\times {\mathcal {S}}\to [0,1]\\&amp;\pi (a,s)=\Pr(A_{t}{=}a\mid S_{t}{=}s)\end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/faf86ca6e9ac691c88adc9e5181f49aa9c8ed658" style="vertical-align: -2.505ex; width:27.343ex; height:6.176ex;"/></span></p>
+<p id="mwrw">The policy map gives the probability of taking action <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwsA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> when in state <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwsQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>.<sup about="#mwt86" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-15"}}' id="cite_ref-:0_15-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-15" id="mwsg"><span class="mw-reflink-text" id="mwsw"><span class="cite-bracket" id="mwtA">[</span>15<span class="cite-bracket" id="mwtQ">]</span></span></a></sup><sup about="#mwt81" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Rp","href":"./Template:Rp"},"params":{"p":{"wt":"61"}},"i":0}}]}' id="mwtg" typeof="mw:Transclusion"><span title="Page: 61"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>61<span typeof="mw:Entity"> </span></span></sup> There are also deterministic policies  <span about="#mwt87" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mwtw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span> for which <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi(s)"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi (s)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi (s)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi (s)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a3df25793e1e7a06faa8e939a794c8de8b4459bf" style="vertical-align: -0.838ex; width:4.232ex; height:2.843ex;"/></span> denotes the action that should be played at state <span about="#mwt89" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>.</p>
+<p id="mwuw">The state-value function <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V_\\pi(s)"}}' id="mwvA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V_{\pi }(s)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V_{\pi }(s)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V_{\pi }(s)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/04f08b168d05891950e565017e284abee8bf7cf1" style="vertical-align: -0.838ex; width:5.429ex; height:2.843ex;"/></span> is defined as, <i id="mwvQ">expected discounted return</i> starting with state <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwvg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>, i.e. <span about="#mwt93" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_0 = s"}}' id="mwvw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{0}=s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{0}=s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{0}=s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/76b9df1ecbdbd4dbae77931a7aa185959d3b55f3" style="vertical-align: -0.671ex; width:6.668ex; height:2.509ex;"/></span>, and successively following policy <span about="#mwt94" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mwwA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span>. Hence, roughly speaking, the value function estimates "how good" it is to be in a given state.<sup about="#mwt95" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_15-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-15" id="mwwQ"><span class="mw-reflink-text" id="mwwg"><span class="cite-bracket" id="mwww">[</span>15<span class="cite-bracket" id="mwxA">]</span></span></a></sup><sup about="#mwt90" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Rp","href":"./Template:Rp"},"params":{"p":{"wt":"60"}},"i":0}}]}' id="mwxQ" typeof="mw:Transclusion"><span title="Page: 60"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>60<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwxg"><span about="#mwt96" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"V_\\pi(s) = \\operatorname \\mathbb{E}[G\\mid S_0{=}s] = \\operatorname \\mathbb{E}\\left[\\sum_{t=0}^\\infty \\gamma^t R_{t+1} \\mid S_0{=}s\\right],"}}' id="mwxw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V_{\pi }(s)=\operatorname {\mathbb {E} } [G\mid S_{0}{=}s]=\operatorname {\mathbb {E} } \left[\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}\mid S_{0}{=}s\right],}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+</mrow>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">[</mo>
+<mi>G</mi>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>s</mi>
+<mo stretchy="false">]</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+</mrow>
+<mo>⁡<!-- ⁡ --></mo>
+<mrow>
+<mo>[</mo>
+<mrow>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>=</mo>
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">∞<!-- ∞ --></mi>
+</mrow>
+</munderover>
+<msup>
+<mi>γ<!-- γ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msup>
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>=</mo>
+</mrow>
+<mi>s</mi>
+</mrow>
+<mo>]</mo>
+</mrow>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V_{\pi }(s)=\operatorname {\mathbb {E} } [G\mid S_{0}{=}s]=\operatorname {\mathbb {E} } \left[\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}\mid S_{0}{=}s\right],}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V_{\pi }(s)=\operatorname {\mathbb {E} } [G\mid S_{0}{=}s]=\operatorname {\mathbb {E} } \left[\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}\mid S_{0}{=}s\right],}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2996eb96d86d3825a44865cba9f412f447f5066d" style="vertical-align: -3.171ex; width:46.373ex; height:7.509ex;"/></span></p>
+<p id="mwyA">where the random variable <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mwyQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> denotes the <b id="mwyg">discounted return</b>, and is defined as the sum of future discounted rewards:</p>
+<p id="mwyw"><span about="#mwt98" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"G = \\sum_{t=0}^\\infty \\gamma^t R_{t+1}=R_1 + \\gamma R_2 + \\gamma^2 R_3 + \\cdots,"}}' id="mwzA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G=\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}=R_{1}+\gamma R_{2}+\gamma ^{2}R_{3}+\cdots ,}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>=</mo>
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">∞<!-- ∞ --></mi>
+</mrow>
+</munderover>
+<msup>
+<mi>γ<!-- γ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msup>
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<mi>γ<!-- γ --></mi>
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msup>
+<mi>γ<!-- γ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<mo>⋯<!-- ⋯ --></mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G=\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}=R_{1}+\gamma R_{2}+\gamma ^{2}R_{3}+\cdots ,}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G=\sum _{t=0}^{\infty }\gamma ^{t}R_{t+1}=R_{1}+\gamma R_{2}+\gamma ^{2}R_{3}+\cdots ,}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2ea5e83239be695abb7fef3a349fda8063852820" style="vertical-align: -3.005ex; width:42.892ex; height:6.843ex;"/></span></p>
+<p id="mwzQ">where <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R_{t+1}"}}' id="mwzg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R_{t+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R_{t+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R_{t+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/78bc3f077c19f7db4e89b5529a5861b06ae782b7" style="vertical-align: -0.671ex; width:4.69ex; height:2.509ex;"/></span> is the reward for transitioning from state <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_t"}}' id="mwzw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7e2391e6e796fbf718be3828080775ac2ac3d3d4" style="vertical-align: -0.671ex; width:2.251ex; height:2.509ex;"/></span> to <span about="#mwt99" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"nowrap","href":"./Template:Nowrap"},"params":{"1":{"wt":"&lt;math&gt;S_{t+1}&lt;/math&gt;,"}},"i":0}}]}' id="mw0A" typeof="mw:Transclusion"><span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{t+1}"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{t+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{t+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{t+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7fde0b9d29bcb7e8d3eee3a8f42ead14aa3b8cee" style="vertical-align: -0.671ex; width:4.351ex; height:2.509ex;"/></span>,</span> <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"0 \\le \\gamma&lt;1"}}' id="mw0Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 0\leq \gamma &lt;1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>0</mn>
+<mo>≤<!-- ≤ --></mo>
+<mi>γ<!-- γ --></mi>
+<mo>&lt;</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 0\leq \gamma &lt;1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 0\leq \gamma &lt;1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/84796b874665109176d8773a2e6495f00c7cc360" style="vertical-align: -0.838ex; width:9.784ex; height:2.676ex;"/></span> is the <a href="https://en.wikipedia.org/wiki/Q-learning#Discount_factor" id="mw0g" rel="mw:WikiLink" title="Q-learning">discount rate</a>. <span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\gamma"}}' id="mw0w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \gamma }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>γ<!-- γ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \gamma }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \gamma }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a223c880b0ce3da8f64ee33c4f0010beee400b1a" style="vertical-align: -0.838ex; width:1.262ex; height:2.176ex;"/></span> is less than 1, so rewards in the distant future are weighted less than rewards in the immediate future.</p>
+<p id="mw1A">The goal is to find a policy that maximizes the expected discounted return. From the theory of Markov decision processes it is known that, without loss of generality, the search can be restricted to the set of so-called <i id="mw1Q">stationary</i> policies. A policy is <i id="mw1g">stationary</i> if the action-distribution returned by it depends only on the last state visited (from the observation agent's history). The search can be further restricted to <i id="mw1w">deterministic</i> stationary policies. A <i id="mw2A">deterministic stationary</i> policy deterministically selects actions based on the current state. Since any such policy can be identified with a mapping from the set of states to the set of actions, these policies can be identified with such mappings with no loss of generality.</p>
+<p id="mw2g">The <a href="https://en.wikipedia.org/wiki/Brute-force_search" id="mw2w" rel="mw:WikiLink" title="Brute-force search">brute force</a> approach entails two steps:</p>
+<p id="mw3w">One problem with this is that the number of policies can be large, or even infinite. Another is that the variance of the returns may be large, which requires many samples to accurately estimate the discounted return of each policy.</p>
+<p id="mw4A">These problems can be ameliorated if we assume some structure and allow samples generated from one policy to influence the estimates made for others. The two main approaches for achieving this are <a class="mw-selflink-fragment" href="#Value_function" id="mw4Q" rel="mw:WikiLink">value function estimation</a> and <a class="mw-selflink-fragment" href="#Direct_policy_search" id="mw4g" rel="mw:WikiLink">direct policy search</a>.</p>
+<p id="mw5g">Value function approaches attempt to find a policy that maximizes the discounted return by maintaining a set of estimates of expected discounted returns <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\operatorname \\mathbb{E}[G]"}}' id="mw5w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \operatorname {\mathbb {E} } [G]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+</mrow>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">[</mo>
+<mi>G</mi>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \operatorname {\mathbb {E} } [G]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \operatorname {\mathbb {E} } [G]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c17deb2341b047040bbddcbb56bae20d587311cb" style="vertical-align: -0.838ex; width:4.671ex; height:2.843ex;"/></span> for some policy (usually either the "current" [on-policy] or the optimal [off-policy] one).</p>
+<p id="mw6A">These methods rely on the theory of Markov decision processes, where optimality is defined in a sense stronger than the one above: A policy is optimal if it achieves the best-expected discounted return from <i id="mw6Q">any</i> initial state (i.e., initial distributions play no role in this definition). Again, an optimal policy can always be found among stationary policies.</p>
+<p id="mw6g">To define optimality in a formal manner, define the state-value of a policy <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mw6w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span> by</p>
+<p id="mw7A"><span about="#mwt109" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":" V^{\\pi} (s) = \\operatorname \\mathbb{E}[G\\mid s,\\pi],"}}' id="mw7Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V^{\pi }(s)=\operatorname {\mathbb {E} } [G\mid s,\pi ],}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+</mrow>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">[</mo>
+<mi>G</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">]</mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V^{\pi }(s)=\operatorname {\mathbb {E} } [G\mid s,\pi ],}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V^{\pi }(s)=\operatorname {\mathbb {E} } [G\mid s,\pi ],}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f79fad295cbb4d688fe27b8e58110fddde33549f" style="vertical-align: -0.838ex; width:19.8ex; height:2.843ex;"/></span></p>
+<p id="mw7g">where <span about="#mwt110" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mw7w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> stands for the discounted return associated with following <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mw8A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span> from the initial state <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mw8Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>. Defining <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V^*(s)"}}' id="mw8g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V^{*}(s)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V^{*}(s)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V^{*}(s)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b0c55d312621b3ac9cbd28f1af88d01d4cb4d110" style="vertical-align: -0.838ex; width:5.871ex; height:2.843ex;"/></span> as the maximum possible state-value of <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V^\\pi(s)"}}' id="mw8w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V^{\pi }(s)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V^{\pi }(s)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V^{\pi }(s)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a42ff0c4c2e0d6e3bbfc997e81544641805798a4" style="vertical-align: -0.838ex; width:5.991ex; height:2.843ex;"/></span>, where <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mw9A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span> is allowed to change,</p>
+<p id="mw9Q"><span about="#mwt116" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"V^*(s) = \\max_\\pi V^\\pi(s)."}}' id="mw9g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V^{*}(s)=\max _{\pi }V^{\pi }(s).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munder>
+<mo form="prefix" movablelimits="true">max</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</munder>
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V^{*}(s)=\max _{\pi }V^{\pi }(s).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V^{*}(s)=\max _{\pi }V^{\pi }(s).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a1364980b05ea95dedcefb2082869eab54dd1cc" style="vertical-align: -2.005ex; width:20.32ex; height:4.009ex;"/></span></p>
+<p id="mw9w">A policy that achieves these optimal state-values in each state is called <i id="mw-A">optimal</i>. Clearly, a policy that is optimal in this sense is also optimal in the sense that it maximizes the expected discounted return, since <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V^*(s) = \\max_\\pi \\mathbb{E}[G\\mid s,\\pi]"}}' id="mw-Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V^{*}(s)=\max _{\pi }\mathbb {E} [G\mid s,\pi ]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munder>
+<mo form="prefix" movablelimits="true">max</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</munder>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+<mo stretchy="false">[</mo>
+<mi>G</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V^{*}(s)=\max _{\pi }\mathbb {E} [G\mid s,\pi ]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V^{*}(s)=\max _{\pi }\mathbb {E} [G\mid s,\pi ]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/83afb99d87052615899fbc3413a1e02467143957" style="vertical-align: -2.005ex; width:23.747ex; height:4.009ex;"/></span>, where <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mw-g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span> is a state randomly sampled from the distribution <span about="#mwt121" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> of initial states (so <span about="#mwt117" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"nowrap","href":"./Template:Nowrap"},"params":{"1":{"wt":"&lt;math&gt;\\mu(s) = \\Pr(S_0 = s)&lt;/math&gt;)."}},"i":0}}]}' id="mw_A" typeof="mw:Transclusion"><span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu(s) = \\Pr(S_0 = s)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu (s)=\Pr(S_{0}=s)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>s</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu (s)=\Pr(S_{0}=s)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu (s)=\Pr(S_{0}=s)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/de42c6766fe6d309149deb462214e1d2c9f5fa36" style="vertical-align: -0.838ex; width:18.372ex; height:2.843ex;"/></span>).</span></p>
+<p id="mw_Q">Although state-values suffice to define optimality, it is useful to define action-values. Given a state <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mw_g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>, an action <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mw_w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and a policy <span about="#mwt124" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span>, the action-value of the pair <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(s,a)"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (s,a)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (s,a)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (s,a)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9e483c36a133514a0cd6d604f5cce56d2fd4cae9" style="vertical-align: -0.838ex; width:5.164ex; height:2.843ex;"/></span> under <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mwAQI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span> is defined by</p>
+<p id="mwAQM"><span about="#mwt127" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"Q^\\pi(s,a) = \\operatorname \\mathbb{E}[G\\mid s,a,\\pi],"}}' id="mwAQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q^{\pi }(s,a)=\operatorname {\mathbb {E} } [G\mid s,a,\pi ],}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>π<!-- π --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">E</mi>
+</mrow>
+</mrow>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">[</mo>
+<mi>G</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>s</mi>
+<mo>,</mo>
+<mi>a</mi>
+<mo>,</mo>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">]</mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q^{\pi }(s,a)=\operatorname {\mathbb {E} } [G\mid s,a,\pi ],}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q^{\pi }(s,a)=\operatorname {\mathbb {E} } [G\mid s,a,\pi ],}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a26e4d47d3b8c180b9fe6050106afe85755c6f99" style="vertical-align: -0.838ex; width:24.249ex; height:2.843ex;"/></span></p>
+<p id="mwAQU">where <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mwAQY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> now stands for the random discounted return associated with first taking action <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwAQc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> in state <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwAQg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span> and following <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi"}}' id="mwAQk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>π<!-- π --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a" style="vertical-align: -0.338ex; width:1.332ex; height:1.676ex;"/></span>, thereafter.</p>
+<p id="mwAQo">The theory of Markov decision processes states that if <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\pi^*"}}' id="mwAQs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \pi ^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>π<!-- π --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \pi ^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \pi ^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f44ad69ec033a9a86437b2edaf620ea0b2c3f494" style="vertical-align: -0.338ex; width:2.388ex; height:2.343ex;"/></span> is an optimal policy, we act optimally (take the optimal action) by choosing the action from <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q^{\\pi^*}(s,\\cdot)"}}' id="mwAQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q^{\pi ^{*}}(s,\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>π<!-- π --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi>s</mi>
+<mo>,</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q^{\pi ^{*}}(s,\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q^{\pi ^{*}}(s,\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fafa0cb84fd68dbe99e9b5baa0b421837c2835d8" style="vertical-align: -0.838ex; width:8.426ex; height:3.343ex;"/></span> with the highest action-value at each state, <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwAQ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>. The <i id="mwAQ4">action-value function</i> of such an optimal policy (<span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q^{\\pi^*}"}}' id="mwAQ8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q^{\pi ^{*}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>π<!-- π --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q^{\pi ^{*}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q^{\pi ^{*}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efdae1153bf5fc57c8777369756d7c5cc20fd90a" style="vertical-align: -0.671ex; width:3.846ex; height:3.176ex;"/></span>) is called the <i id="mwARA">optimal action-value function</i> and is commonly denoted by <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q^*"}}' id="mwARE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1785c0a77ab5a06684e8a7ac4f5e59d59ec0319" style="vertical-align: -0.671ex; width:2.893ex; height:2.676ex;"/></span>. In summary, the knowledge of the optimal action-value function alone suffices to know how to act optimally.</p>
+</div></div>
+</body></html>

@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 212571,
+   "suggestion": "page rank",
+   "suggestionsnippet": "page rank"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "PageRank",
+    "pageid": 26334893,
+    "size": 74353,
+    "wordcount": 8957,
+    "snippet": "<span class=\"searchmatch\">PageRank</span> (PR) is an algorithm used by Google Search to <span class=\"searchmatch\">rank</span> web <span class=\"searchmatch\">pages</span> in their search engine results. It is named after both the term &quot;web <span class=\"searchmatch\">page</span>&quot; and co-founder",
+    "timestamp": "2026-10-08T08:43:48Z"
+   },
+   {
+    "ns": 0,
+    "title": "Nofollow",
+    "pageid": 3766084,
+    "size": 16787,
+    "wordcount": 1582,
+    "snippet": "evaporation of the <span class=\"searchmatch\">pagerank</span> of outgoing normal links as they started counting total links while calculating <span class=\"searchmatch\">page</span> <span class=\"searchmatch\">rank</span>. The new system divides <span class=\"searchmatch\">page</span> <span class=\"searchmatch\">rank</span> by the total",
+    "timestamp": "2026-09-10T23:07:45Z"
+   },
+   {
+    "ns": 0,
+    "title": "CheiRank",
+    "pageid": 30386872,
+    "size": 12841,
+    "wordcount": 1504,
+    "snippet": "complementary to the <span class=\"searchmatch\">PageRank</span> vector, which ranks nodes based on their number of incoming links. Due to the inversion of link directions, Chei<span class=\"searchmatch\">Rank</span> measures a node&#039;s",
+    "timestamp": "2026-09-24T11:19:32Z"
+   },
+   {
+    "ns": 0,
+    "title": "Search engine optimization",
+    "pageid": 187946,
+    "size": 51493,
+    "wordcount": 4850,
+    "snippet": "the algorithm, <span class=\"searchmatch\">PageRank</span>, is a function of the quantity and strength of inbound links. <span class=\"searchmatch\">PageRank</span> estimates the likelihood that a given <span class=\"searchmatch\">page</span> will be reached",
+    "timestamp": "2026-09-26T02:58:03Z"
+   },
+   {
+    "ns": 0,
+    "title": "Search engine optimization metrics",
+    "pageid": 47764110,
+    "size": 4925,
+    "wordcount": 530,
+    "snippet": "Google <span class=\"searchmatch\">PageRank</span> (Google PR) is one of the methods Google uses to determine a <span class=\"searchmatch\">page&#039;s</span> relevance or importance. Important <span class=\"searchmatch\">pages</span> receive a higher <span class=\"searchmatch\">PageRank</span> and",
+    "timestamp": "2026-09-24T06:28:36Z"
+   }
+  ]
+ }
+}

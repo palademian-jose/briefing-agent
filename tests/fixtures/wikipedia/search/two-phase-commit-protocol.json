@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 863
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Two-phase commit protocol",
+    "pageid": 787850,
+    "size": 15007,
+    "wordcount": 1911,
+    "snippet": "databases, and computer networking, the <span class=\"searchmatch\">two</span>-<span class=\"searchmatch\">phase</span> <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocol</span> (2PC, tupac) is a type of atomic commitment <span class=\"searchmatch\">protocol</span> (ACP). It is a distributed algorithm",
+    "timestamp": "2025-11-10T14:19:58Z"
+   },
+   {
+    "ns": 0,
+    "title": "Three-phase commit protocol",
+    "pageid": 2044655,
+    "size": 4278,
+    "wordcount": 573,
+    "snippet": "the <span class=\"searchmatch\">two</span>-<span class=\"searchmatch\">phase</span> <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocol</span> (2PC) by eliminating the possibility of indefinite blocking caused by a specific type of failure during the <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">phase</span>. A",
+    "timestamp": "2026-09-04T15:14:10Z"
+   },
+   {
+    "ns": 0,
+    "title": "Commit (data management)",
+    "pageid": 1626958,
+    "size": 23434,
+    "wordcount": 2879,
+    "snippet": "multiple systems, <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocols</span> have been evolving since their emergence in the 1970s. The main developments include the <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">Phase</span> <span class=\"searchmatch\">Commit</span> (2PC) first proposed",
+    "timestamp": "2025-09-22T06:19:15Z"
+   },
+   {
+    "ns": 0,
+    "title": "Atomic commit",
+    "pageid": 1117060,
+    "size": 14262,
+    "wordcount": 1849,
+    "snippet": "problem will still encounter the <span class=\"searchmatch\">Two</span> Generals’ Problem. The <span class=\"searchmatch\">two</span>-<span class=\"searchmatch\">phase</span> <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocol</span> and three-<span class=\"searchmatch\">phase</span> <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocol</span> attempt to solve this and some of",
+    "timestamp": "2026-06-08T22:42:49Z"
+   },
+   {
+    "ns": 0,
+    "title": "Two-phase",
+    "pageid": 17444250,
+    "size": 237,
+    "wordcount": 64,
+    "snippet": "<span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> may refer to: <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> electric power <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> <span class=\"searchmatch\">commit</span> <span class=\"searchmatch\">protocol</span> <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> flow <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> locking <span class=\"searchmatch\">Two</span>-<span class=\"searchmatch\">phase</span> servo motor Binary <span class=\"searchmatch\">phase</span>, chemical",
+    "timestamp": "2026-06-20T01:47:58Z"
+   }
+  ]
+ }
+}

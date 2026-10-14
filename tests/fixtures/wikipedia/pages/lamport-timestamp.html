@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Lamport timestamp - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Lamport timestamp</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">The <b id="mwBA">Lamport timestamp</b> algorithm is a simple <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Logical_clock_algorithm" id="mwBQ" rel="mw:WikiLink" title="Logical clock algorithm">logical clock algorithm</a> used to determine the order of events in a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Distributed_computer_system" id="mwBg" rel="mw:WikiLink" title="Distributed computer system">distributed computer system</a>. As different nodes or processes will typically not be perfectly synchronized, this algorithm is used to provide a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set" id="mwBw" rel="mw:WikiLink" title="Partially ordered set">partial ordering</a> of events with minimal overhead, and conceptually provide a starting point for the more advanced <a href="https://en.wikipedia.org/wiki/Vector_clock" id="mwCA" rel="mw:WikiLink" title="Vector clock">vector clock</a> method. The algorithm is named after its creator, <a href="https://en.wikipedia.org/wiki/Leslie_Lamport" id="mwCQ" rel="mw:WikiLink" title="Leslie Lamport">Leslie Lamport</a>.</p>
+<p id="mwCg">Distributed algorithms such as resource synchronization often depend on some method of ordering events to function. For example, consider a system with two processes and a disk. The processes send messages to each other, and also send messages to the disk requesting access. The disk grants access in the order the messages were <i id="mwCw">received</i>. For example process <span about="#mwt2" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwDA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> sends a message to the disk requesting write access, and then sends a read instruction message to process <span about="#mwt3" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwDQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span>. Process <span about="#mwt4" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwDg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> receives the message, and as a result sends its own read request message to the disk. If there is a timing delay causing the disk to receive both messages at the same time, it can determine which message <i id="mwDw"><a href="https://en.wikipedia.org/wiki/Happened-before" id="mwEA" rel="mw:WikiLink" title="Happened-before">happened-before</a></i> the other: <span about="#mwt5" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwEQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> <i id="mwEg">happens-before</i> <span about="#mwt6" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwEw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> if one can get from <span about="#mwt7" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwFA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> to <span about="#mwt8" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwFQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> by a sequence of moves of two types: moving forward while remaining in the same process, and following a message from its sending to its reception. A logical clock algorithm provides a mechanism to determine facts about the order of such events. Note that if two events happen in different processes that do not exchange messages directly or indirectly via third-party processes, then we say that the two processes are concurrent, that is, nothing can be said about the ordering of the two events.<sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwFg"><span class="mw-reflink-text" id="mwFw"><span class="cite-bracket" id="mwGA">[</span>1<span class="cite-bracket" id="mwGQ">]</span></span></a></sup></p>
+<p id="mwGg">Lamport invented a simple mechanism by which the <i id="mwGw">happened-before</i> ordering can be captured numerically. A Lamport logical clock is a numerical software counter value maintained in each process.</p>
+<p id="mwHA">Conceptually, this logical clock can be thought of as a clock that only has meaning in relation to messages moving between processes. When a process receives a message, it re-synchronizes its logical clock with that sender. The above-mentioned vector clock is a generalization of the idea into the context of an arbitrary number of parallel, independent processes.</p>
+<p id="mwHw">The algorithm follows some simple rules:</p>
+<p id="mwKA">In <a href="https://en.wikipedia.org/wiki/Pseudocode" id="mwKQ" rel="mw:WikiLink" title="Pseudocode">pseudocode</a>, the algorithm for sending is:</p>
+<p id="mwKw">The algorithm for receiving a message is:</p>
+<p id="mwLg">For every two different events <span about="#mwt15" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwLw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwMA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> occurring in the same process, and <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(x)"}}' id="mwMQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7f6b53682fddbe3028ffd75bd75771b86c6c7bd9" style="vertical-align: -0.838ex; width:4.905ex; height:2.843ex;"/></span> being the timestamp for a certain event <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span>, it is necessary that <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a)"}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b56d60b084e7a60e5d95f3a7c64a79945616431" style="vertical-align: -0.838ex; width:4.805ex; height:2.843ex;"/></span> never equals <span about="#mwt20" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(b)"}}' id="mwNA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/107d66df8a250b694e33028c7c50f6a91cc4dea4" style="vertical-align: -0.838ex; width:4.573ex; height:2.843ex;"/></span>.</p>
+<p id="mwNQ">Therefore it is necessary that:</p>
+<p id="mwPg">For any two events, <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwPw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>, if there is any way that <span about="#mwt27" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> could have influenced <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwQg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>, then the Lamport timestamp of <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> will be less than the Lamport timestamp of <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwRA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>. It’s also possible to have two events where we can’t say which came first; when that happens, it means that they couldn’t have affected each other. If <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwRQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwRg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> can’t have any effect on each other, then it doesn’t matter which one came first.</p>
+<p id="mwSA">A Lamport clock may be used to create a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set#:~:text=A_partial_order_defines_a,(also_called_a_poset)." id="mwSQ" rel="mw:WikiLink" title="Partially ordered set">partial ordering</a> of events between processes. Given a logical clock following these rules, the following relation is true: if <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\rightarrow b"}}' id="mwSg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\rightarrow b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\rightarrow b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\rightarrow b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/390afdb0d8e933dbc4eee8022d8c91b2015f0522" style="vertical-align: -0.338ex; width:5.841ex; height:2.176ex;"/></span> then <span about="#mwt34" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) &lt; C(b)"}}' id="mwSw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)&lt;C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)&lt;C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)&lt;C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61a75c7595dc224580384eddca657fd6ce251662" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span>, where <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\rightarrow\\,"}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \rightarrow \,}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">→<!-- → --></mo>
+<mspace width="thinmathspace"></mspace>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \rightarrow \,}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \rightarrow \,}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/30c77b3d020a207c12a2e96794b739223a647089" style="vertical-align: -0.338ex; width:2.711ex; height:1.843ex;"/></span> means <i id="mwTQ">happened-before</i>.</p>
+<p id="mwTg">This relation only goes one way, and is called the <i id="mwTw">clock consistency condition</i>: if one event comes before another, then that event's logical clock comes before the other's. The <i id="mwUA">strong clock consistency condition</i>, which is two way (if <span about="#mwt36" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) &lt; C(b)"}}' id="mwUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)&lt;C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)&lt;C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)&lt;C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61a75c7595dc224580384eddca657fd6ce251662" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span> then <span about="#mwt37" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\rightarrow b"}}' id="mwUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\rightarrow b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\rightarrow b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\rightarrow b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/390afdb0d8e933dbc4eee8022d8c91b2015f0522" style="vertical-align: -0.338ex; width:5.841ex; height:2.176ex;"/></span>), can be obtained by other techniques such as vector clocks. Using only a simple Lamport clock, only a partial causal ordering can be inferred from the clock.</p>
+<p id="mwUw">However, via the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Contrapositive" id="mwVA" rel="mw:WikiLink" title="Contrapositive">contrapositive</a>, it's true that <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) \\nless C(b)"}}' id="mwVQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)\nless C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>≮<!-- ≮ --></mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)\nless C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)\nless C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/186c9626b0523862ce845cd727c046710c211804" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span> implies <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\nrightarrow b"}}' id="mwVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\nrightarrow b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo>↛<!-- ↛ --></mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\nrightarrow b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\nrightarrow b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bcf07bf280d7da508f3464c5c9a8a76b82d07ad8" style="vertical-align: -0.338ex; width:5.841ex; height:2.176ex;"/></span>. So, for example, if <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) \\geq C(b)"}}' id="mwVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)\geq C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>≥<!-- ≥ --></mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)\geq C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)\geq C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/982338a5c3552c8fa2f6957459c4d1004e24340a" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span> then <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwWA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> cannot have <i id="mwWQ">happened-before</i> <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwWg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>.</p>
+<p id="mwWw">Another way of putting this is that <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) &lt; C(b)"}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)&lt;C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)&lt;C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)&lt;C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61a75c7595dc224580384eddca657fd6ce251662" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span> means that <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> may have <i id="mwXg">happened-before</i> <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>, or be incomparable with <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> in the <i id="mwYQ">happened-before</i> ordering, but <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> did not happen after <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>.</p>
+<p id="mwZA">Nevertheless, Lamport timestamps can be used to create a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Total_ordering" id="mwZQ" rel="mw:WikiLink" title="Total ordering">total ordering</a> of events in a distributed system by using some arbitrary mechanism to break ties (e.g., the ID of the process). The caveat is that this ordering is artificial and cannot be depended on to imply a causal relationship.</p>
+<p id="mwZw">In a distributed system, it is not possible in practice to <a href="https://en.wikipedia.org/wiki/Clock_synchronization" id="mwaA" rel="mw:WikiLink" title="Clock synchronization">synchronize time</a> across entities (typically thought of as processes) within the system; hence, the entities can use the concept of a logical clock based on the events through which they communicate.</p>
+<p id="mwaQ">If two entities do not exchange any messages, then they probably do not need to share a common clock; events occurring on those entities are termed concurrent events.</p>
+<p id="mwag">Among the processes on the same local machine we can order the events based on the local clock of the system.</p>
+<p id="mwaw">When two entities communicate by <a href="https://en.wikipedia.org/wiki/Message_passing" id="mwbA" rel="mw:WikiLink" title="Message passing">message passing</a>, then the send event is said to <i id="mwbQ">happen-before</i> the receive event, and the logical order can be established among the events.</p>
+<p id="mwbg">A distributed system is said to have partial order if we can have a partial order relationship among the events in the system. If "totality", i.e., causal relationship among all events in the system, can be established, then the system is said to have total order.</p>
+<p id="mwbw">A single entity cannot have two events occur simultaneously. If the system has total order we can determine the order among all events in the system. If the system has partial order between processes, which is the type of order Lamport's logical clock provides, then we can only tell the ordering between entities that interact. Lamport addressed ordering two events with the same timestamp (or counter): "To break ties, we use any arbitrary total ordering <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"&lt;"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle &lt;}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>&lt;</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle &lt;}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle &lt;}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/33737c89a17785dacc8638b4d66db3d5c8670de1" style="vertical-align: -0.338ex; width:1.808ex; height:1.843ex;"/></span> of the processes."<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Lamport 1978"}}' id="cite_ref-Lamport_1978_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Lamport_1978-2" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>2<span class="cite-bracket" id="mwdA">]</span></span></a></sup> Thus two timestamps or counters may be the same within a distributed system, but in applying the logical clocks algorithm events that occur will always maintain at least a strict partial ordering.</p>
+<p id="mwdQ">Lamport clocks lead to a situation where all events in a distributed system are totally ordered. That is, if <span about="#mwt51" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\rightarrow b"}}' id="mwdg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\rightarrow b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\rightarrow b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\rightarrow b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/390afdb0d8e933dbc4eee8022d8c91b2015f0522" style="vertical-align: -0.338ex; width:5.841ex; height:2.176ex;"/></span>, then we can say <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwdw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> actually happened before <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mweA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>.</p>
+<p id="mweQ">Note that with Lamport’s clocks, nothing can be said about the actual time of <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mweg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>. If the logical clock says <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(a) &lt; C(b)"}}' id="mwfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(a)&lt;C(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(a)&lt;C(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(a)&lt;C(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61a75c7595dc224580384eddca657fd6ce251662" style="vertical-align: -0.838ex; width:12.477ex; height:2.843ex;"/></span>, that does not mean in reality that <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwfQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> actually happened before <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> in terms of real time.</p>
+<p id="mwfw">Lamport clocks show non-causality, but do not capture all causality. Knowing <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\rightarrow c"}}' id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\rightarrow c}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>c</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\rightarrow c}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\rightarrow c}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/de8f69264bbc4ad99a97d815a607210e2bdd56ec" style="vertical-align: -0.338ex; width:5.851ex; height:1.843ex;"/></span> and <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b \\rightarrow c"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b\rightarrow c}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>c</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b\rightarrow c}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b\rightarrow c}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5f56ed0cf3c535544111c1f4f367eec31ec5e4b5" style="vertical-align: -0.338ex; width:5.618ex; height:2.176ex;"/></span> shows <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"c"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle c}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle c}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle c}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/86a67b81c2de995bd608d5b2df50cd8cd7d92455" style="vertical-align: -0.338ex; width:1.007ex; height:1.676ex;"/></span> did not cause <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> or <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> but we cannot say which initiated <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"c"}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle c}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle c}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle c}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/86a67b81c2de995bd608d5b2df50cd8cd7d92455" style="vertical-align: -0.338ex; width:1.007ex; height:1.676ex;"/></span>.</p>
+<p id="mwhg">This kind of information can be important when trying to replay events in a distributed system (such as when trying to recover after a crash). If one node goes down, and we know the causal relationships between messages, then we can replay those messages and respect the causal relationship to get that node back up to the state it needs to be in.<sup about="#mwt67" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwhw"><span class="mw-reflink-text" id="mwiA"><span class="cite-bracket" id="mwiQ">[</span>3<span class="cite-bracket" id="mwig">]</span></span></a></sup></p>
+<p id="mwjA">The happened-before relation captures potential causality, not true causality. In 2011–2012, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Munindar_Singh" id="mwjQ" rel="mw:WikiLink" title="Munindar Singh">Munindar Singh</a> proposed a declarative, multiagent approach based on true causality called information protocols. An information protocol specifies the constraints on communications between the agents that constitute a distributed system.<sup about="#mwt71" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwjg"><span class="mw-reflink-text" id="mwjw"><span class="cite-bracket" id="mwkA">[</span>4<span class="cite-bracket" id="mwkQ">]</span></span></a></sup> However, instead of specifying message ordering (e.g., via a state machine, a common way of representing protocols in computing), an information protocol specifies the information dependencies between the communications that agents (the protocol's endpoints) may send. An agent may send a communication in a local state (its communication history) only if the communication and the state together satisfy the relevant information dependencies. For example, an information protocol for an e-commerce application may specify that to send a quote with parameters ID (a uniquifier), item, and price, seller must already know the ID and item from its state but can generate whatever price it wants. A remarkable thing about information protocols is that although emissions are constrained, receptions are not. Specifically, agents may receive communications in any order whatsoever<span about="#mwt68" data-mw='{"parts":[{"template":{"target":{"wt":"snd","href":"./Template:Snd"},"params":{},"i":0}}]}' id="mwkg" typeof="mw:Transclusion mw:Entity"> </span><span about="#mwt68" typeof="mw:Entity">–</span><span about="#mwt68" typeof="mw:Entity"> </span> receptions simply bring information and there is no point delaying them. This means that information protocols can be enacted over unordered communication services such as <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" id="mwkw" rel="mw:WikiLink" title="User Datagram Protocol">UDP</a>.</p>
+<p id="mwlA">The bigger idea is that of application semantics, the idea of designing distributed systems based on the content of the messages, an idea implicated in the <a href="https://en.wikipedia.org/wiki/End-to-end_principle" id="mwlQ" rel="mw:WikiLink" title="End-to-end principle">end-to-end principle</a>. Current approaches largely ignore semantics and focus on providing application-agnostic ("syntactic") message delivery and ordering guarantees in communication services, which is where ideas like potential causality help. But if we had a suitable way of doing application semantics, then we wouldn't need such communication services. An unordered, unreliable communication service would suffice. The real value of the information protocols approach is that it provides the foundations for an application semantics approach.</p>
+</div></div>
+</body></html>

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 70
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Locality-sensitive hashing",
+    "pageid": 11634012,
+    "size": 31425,
+    "wordcount": 4194,
+    "snippet": "In computer science, <span class=\"searchmatch\">locality</span>-<span class=\"searchmatch\">sensitive</span> <span class=\"searchmatch\">hashing</span> (LSH) is a fuzzy <span class=\"searchmatch\">hashing</span> technique that <span class=\"searchmatch\">hashes</span> similar input items into the same &quot;buckets&quot; with high probability",
+    "timestamp": "2026-09-10T09:09:17Z"
+   },
+   {
+    "ns": 0,
+    "title": "Nearest neighbor search",
+    "pageid": 7309022,
+    "size": 28703,
+    "wordcount": 3477,
+    "snippet": "k-nearest neighbor algorithm Linear least squares <span class=\"searchmatch\">Locality</span> <span class=\"searchmatch\">sensitive</span> <span class=\"searchmatch\">hashing</span> Maximum inner-product search Min<span class=\"searchmatch\">Hash</span> Multidimensional analysis Nearest-neighbor",
+    "timestamp": "2026-08-31T17:58:48Z"
+   },
+   {
+    "ns": 0,
+    "title": "Fuzzy hashing",
+    "pageid": 70392883,
+    "size": 9770,
+    "wordcount": 880,
+    "snippet": "Nilsimsa <span class=\"searchmatch\">Hash</span> is an anti-spam–focused <span class=\"searchmatch\">locality</span>-<span class=\"searchmatch\">sensitive</span> <span class=\"searchmatch\">hashing</span> algorithm. ssdeep is a fuzzy <span class=\"searchmatch\">hashing</span> tool based on context-triggered piecewise <span class=\"searchmatch\">hashing</span> to compare",
+    "timestamp": "2026-06-27T13:28:24Z"
+   },
+   {
+    "ns": 0,
+    "title": "Similarity search",
+    "pageid": 13619555,
+    "size": 5797,
+    "wordcount": 766,
+    "snippet": "performed. A popular approach for similarity search is <span class=\"searchmatch\">locality</span> <span class=\"searchmatch\">sensitive</span> <span class=\"searchmatch\">hashing</span> (LSH). It <span class=\"searchmatch\">hashes</span> input items so that similar items map to the same &quot;buckets&quot;",
+    "timestamp": "2025-04-14T15:46:40Z"
+   },
+   {
+    "ns": 0,
+    "title": "MinHash",
+    "pageid": 30632997,
+    "size": 25529,
+    "wordcount": 3195,
+    "snippet": "computer science and data mining, Min<span class=\"searchmatch\">Hash</span> (or the min-wise independent permutations <span class=\"searchmatch\">locality</span> <span class=\"searchmatch\">sensitive</span> <span class=\"searchmatch\">hashing</span> scheme) is a technique for quickly estimating",
+    "timestamp": "2026-09-25T05:40:13Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 505
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Byte-pair encoding",
+    "pageid": 5825526,
+    "size": 9734,
+    "wordcount": 1258,
+    "snippet": "In computing, <span class=\"searchmatch\">byte</span>-<span class=\"searchmatch\">pair</span> <span class=\"searchmatch\">encoding</span> (BPE), or digram coding, is an algorithm, first described in 1994 by Philip Gage, for <span class=\"searchmatch\">encoding</span> strings of text into smaller",
+    "timestamp": "2026-04-01T20:21:51Z"
+   },
+   {
+    "ns": 0,
+    "title": "Large language model",
+    "pageid": 73248112,
+    "size": 135991,
+    "wordcount": 13540,
+    "snippet": "embedding is associated with the integer index. Algorithms include <span class=\"searchmatch\">byte</span>-<span class=\"searchmatch\">pair</span> <span class=\"searchmatch\">encoding</span> (BPE) and WordPiece. There are also special tokens serving as control",
+    "timestamp": "2026-10-13T01:17:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "Percent-encoding",
+    "pageid": 1829286,
+    "size": 19412,
+    "wordcount": 1977,
+    "snippet": "Percent-<span class=\"searchmatch\">encoding</span>, also known as URL <span class=\"searchmatch\">encoding</span>, is a method to <span class=\"searchmatch\">encode</span> arbitrary data in a uniform resource identifier (URI) using only the US-ASCII characters",
+    "timestamp": "2026-08-20T14:19:43Z"
+   },
+   {
+    "ns": 0,
+    "title": "Base64",
+    "pageid": 215241,
+    "size": 37731,
+    "wordcount": 3623,
+    "snippet": "binary-to-text <span class=\"searchmatch\">encoding</span> that uses 64 printable characters to represent each 6-bit segment of a sequence of <span class=\"searchmatch\">byte</span> values. As for all binary-to-text <span class=\"searchmatch\">encodings</span>, Base64",
+    "timestamp": "2026-10-13T01:43:54Z"
+   },
+   {
+    "ns": 0,
+    "title": "Attention Is All You Need",
+    "pageid": 75477752,
+    "size": 15883,
+    "wordcount": 4049,
+    "snippet": "dataset, consisting of 36 million sentences. Both datasets were <span class=\"searchmatch\">encoded</span> with <span class=\"searchmatch\">byte</span>-<span class=\"searchmatch\">pair</span> <span class=\"searchmatch\">encoding</span>. Hardware - The models were trained using 8 NVIDIA P100 GPUs",
+    "timestamp": "2026-10-13T01:11:58Z"
+   }
+  ]
+ }
+}

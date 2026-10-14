@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Monte Carlo method - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Monte Carlo method</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p class="mw-empty-elt" id="mwBQ"><span about="#mwt4" data-mw='{"parts":[{"template":{"target":{"wt":"Use American English","href":"./Template:Use_American_English"},"params":{"date":{"wt":"February 2024"}},"i":0}}]}' id="mwBg" typeof="mw:Nowiki mw:Transclusion"></span><link about="#mwt4" href="./Category:Use_American_English_from_February_2024" rel="mw:PageProp/Category"/><link about="#mwt4" href="./Category:All_Wikipedia_articles_written_in_American_English" id="mwBw" rel="mw:PageProp/Category"/>
+<span about="#mwt5" data-mw='{"parts":[{"template":{"target":{"wt":"Use mdy dates","href":"./Template:Use_mdy_dates"},"params":{"date":{"wt":"February 2024"}},"i":0}}]}' id="mwCA" typeof="mw:Nowiki mw:Transclusion"></span><link about="#mwt5" href="./Category:Use_mdy_dates_from_February_2024" id="mwCQ" rel="mw:PageProp/Category"/></p>
+<p id="mwDw"><b id="mwEA">Monte Carlo methods</b>, also called the <b id="mwEQ">Monte Carlo experiments</b> or <b id="mwEg">Monte Carlo simulations</b>, are a broad class of computational <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwEw" rel="mw:WikiLink" title="Algorithm">algorithms</a> based on <a href="https://en.wikipedia.org/wiki/Resampling_(statistics)" id="mwFA" rel="mw:WikiLink" title="Resampling (statistics)">repeated</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Random_sampling" id="mwFQ" rel="mw:WikiLink" title="Random sampling">random sampling</a> for obtaining numerical results, conceptualized by Polish mathematician <a href="https://en.wikipedia.org/wiki/Stanisław_Ulam" id="mwFg" rel="mw:WikiLink" title="Stanisław Ulam">Stanisław Ulam</a>. The underlying concept is to use <a href="https://en.wikipedia.org/wiki/Randomness" id="mwFw" rel="mw:WikiLink" title="Randomness">randomness</a> to solve <a href="https://en.wikipedia.org/wiki/Deterministic_system" id="mwGA" rel="mw:WikiLink" title="Deterministic system">deterministic</a> problems.</p>
+<p id="mwGQ">Monte Carlo methods are mainly used in three distinct problem classes: <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Optimization" id="mwGg" rel="mw:WikiLink" title="Optimization">optimization</a>, <a href="https://en.wikipedia.org/wiki/Numerical_integration" id="mwGw" rel="mw:WikiLink" title="Numerical integration">numerical integration</a>, and <a href="https://en.wikipedia.org/wiki/Non-uniform_random_variate_generation" id="mwHA" rel="mw:WikiLink" title="Non-uniform random variate generation">non-uniform random variate generation</a>, available for modeling <a href="https://en.wikipedia.org/wiki/Phenomenon" id="mwHQ" rel="mw:WikiLink" title="Phenomenon">phenomena</a> with significant input <a href="https://en.wikipedia.org/wiki/Uncertainty_quantification" id="mwHg" rel="mw:WikiLink" title="Uncertainty quantification">uncertainties</a>, e.g. risk assessments for nuclear power plants. Monte Carlo methods are often implemented using <a href="https://en.wikipedia.org/wiki/Computer_simulation" id="mwHw" rel="mw:WikiLink" title="Computer simulation">computer simulations</a>. They can provide approximate solutions to problems too complex for <a href="https://en.wikipedia.org/wiki/Mathematical_analysis" id="mwIA" rel="mw:WikiLink" title="Mathematical analysis">mathematical analysis</a>.</p>
+<p id="mwIw">The name comes from the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_Casino" id="mwJA" rel="mw:WikiLink" title="Monte Carlo Casino">Monte Carlo Casino</a> in <a href="https://en.wikipedia.org/wiki/Monaco" id="mwJQ" rel="mw:WikiLink" title="Monaco">Monaco</a>, where the primary developer of the method, <a href="https://en.wikipedia.org/wiki/Mathematician" id="mwJg" rel="mw:WikiLink" title="Mathematician">mathematician</a> <a href="https://en.wikipedia.org/wiki/Stanisław_Ulam" id="mwJw" rel="mw:WikiLink" title="Stanisław Ulam">Stanisław Ulam</a>, was inspired by his uncle's <a href="https://en.wikipedia.org/wiki/Gambling" id="mwKA" rel="mw:WikiLink" title="Gambling">gambling</a> habits. Monte Carlo methods are widely used in various fields of science, engineering, and mathematics, such as physics, chemistry, biology, statistics, artificial intelligence, finance, and cryptography. They have also been applied to social sciences, such as sociology, psychology, and political science. Monte Carlo methods have been recognized as one of the most important and influential ideas of the 20th century, and they have enabled many scientific and technological breakthroughs.<link about="#mwt6" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwKQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt6" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt6" class="noprint Inline-Template Template-Fact" id="mwKg" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwKw">Monte Carlo methods also have some limitations and challenges, such as the trade-off between accuracy and computational cost, the <a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality" id="mwLA" rel="mw:WikiLink" title="Curse of dimensionality">curse of dimensionality</a>, the reliability of random number generators, and the verification and validation of the results. Monte Carlo methods vary, but tend to follow a particular pattern:</p>
+<p id="mwOQ">For example, consider a <a href="https://en.wikipedia.org/wiki/Circular_sector#Quadrant" id="mwOg" rel="mw:WikiLink" title="Circular sector">quadrant (circular sector)</a> inscribed in a <a href="https://en.wikipedia.org/wiki/Unit_square" id="mwOw" rel="mw:WikiLink" title="Unit square">unit square</a>. Given that the ratio of their areas is <style about="#mwt8" data-mw='{"name":"templatestyles","attrs":{"src":"Sfrac/styles.css"},"parts":[{"template":{"target":{"wt":"sfrac","href":"./Template:Sfrac"},"params":{"1":{"wt":"{{pi}}"},"2":{"wt":"4"}},"i":0}}]}' data-mw-deduplicate="TemplateStyles:r1354360663" id="mwPA" typeof="mw:Extension/templatestyles mw:Transclusion">.mw-parser-output .sfrac{white-space:nowrap}.mw-parser-output .sfrac.tion,.mw-parser-output .sfrac .tion{display:inline-block;vertical-align:-0.5em;font-size:85%;text-align:center;margin-left:.1em;margin-right:.1em}.mw-parser-output .sfrac .num{display:block;border-bottom:1px solid}.mw-parser-output .sfrac .den{display:block;line-height:1.5em}.mw-parser-output .sr-only{border:0;clip:rect(0,0,0,0);clip-path:polygon(0px 0px,0px 0px,0px 0px);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}</style><span about="#mwt8" class="sfrac" id="mwPQ"><span typeof="mw:Entity">⁠</span><span class="tion"><span class="num"><span class="texhtml mvar" style="font-style:italic;">π</span></span><span class="sr-only">/</span><span class="den">4</span></span><span typeof="mw:Entity">⁠</span></span>, the value of <a href="https://en.wikipedia.org/wiki/Pi" id="mwPg" rel="mw:WikiLink" title="Pi"><span about="#mwt13" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"pi","href":"./Template:Pi"},"params":{},"i":0}}]}' id="mwPw" style="font-style:italic;" typeof="mw:Transclusion">π</span></a> can be approximated using the Monte Carlo method:<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEKalosWhitlock2008"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEKalosWhitlock2008-1"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Kalos"},"2":{"wt":"Whitlock"},"3":{"wt":"2008"}},"i":0}}]}' id="cite_ref-FOOTNOTEKalosWhitlock2008_1-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEKalosWhitlock2008-1" id="mwQA"><span class="mw-reflink-text" id="mwQQ"><span class="cite-bracket" id="mwQg">[</span>1<span class="cite-bracket" id="mwQw">]</span></span></a></sup></p>
+<p id="mwTg">In this procedure, the domain of inputs is the square that circumscribes the quadrant. One can generate random inputs by scattering grains over the square, then performing a computation on each input to test whether it falls within the quadrant. Aggregating the results yields our final result, the approximation of <span about="#mwt17" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"pi","href":"./Template:Pi"},"params":{},"i":0}}]}' id="mwTw" style="font-style:italic;" typeof="mw:Transclusion">π</span>.<link about="#mwt18" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwUA" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt18" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt18" class="noprint Inline-Template Template-Fact" id="mwUQ" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup> There are two important considerations:</p>
+<p id="mwVQ">Uses of Monte Carlo methods require large amounts of random numbers, and their use benefitted greatly from <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Pseudorandom_number_generators" id="mwVg" rel="mw:WikiLink" title="Pseudorandom number generators">pseudorandom number generators</a>, which are far quicker to use than the tables of random numbers that had been previously employed.</p>
+<p id="mwWA">Monte Carlo methods are often used in <a href="https://en.wikipedia.org/wiki/Physics" id="mwWQ" rel="mw:WikiLink" title="Physics">physical</a> and <a href="https://en.wikipedia.org/wiki/Mathematics" id="mwWg" rel="mw:WikiLink" title="Mathematics">mathematical</a> problems and are most useful when it is difficult or impossible to use other approaches. Monte Carlo methods are mainly used in three problem classes:<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwWw"><span class="mw-reflink-text" id="mwXA"><span class="cite-bracket" id="mwXQ">[</span>2<span class="cite-bracket" id="mwXg">]</span></span></a></sup> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Optimization" id="mwXw" rel="mw:WikiLink" title="Optimization">optimization</a>, <a href="https://en.wikipedia.org/wiki/Numerical_integration" id="mwYA" rel="mw:WikiLink" title="Numerical integration">numerical integration</a>, and generating draws from a <a href="https://en.wikipedia.org/wiki/Probability_distribution" id="mwYQ" rel="mw:WikiLink" title="Probability distribution">probability distribution</a>.</p>
+<p id="mwYg">In physics-related problems, Monte Carlo methods are useful for simulating systems with many <a href="https://en.wikipedia.org/wiki/Coupling_(physics)" id="mwYw" rel="mw:WikiLink" title="Coupling (physics)">coupled</a> <a href="https://en.wikipedia.org/wiki/Degrees_of_freedom" id="mwZA" rel="mw:WikiLink" title="Degrees of freedom">degrees of freedom</a>, such as fluids, disordered materials, strongly coupled solids, and cellular structures, e.g. <a href="https://en.wikipedia.org/wiki/Cellular_Potts_model" id="mwZQ" rel="mw:WikiLink" title="Cellular Potts model">cellular Potts model</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Interacting_particle_systems" id="mwZg" rel="mw:WikiLink" title="Interacting particle systems">interacting particle systems</a>, <a href="https://en.wikipedia.org/wiki/McKean–Vlasov_process" id="mwZw" rel="mw:WikiLink" title="McKean–Vlasov process">McKean–Vlasov processes</a>, <a href="https://en.wikipedia.org/wiki/Kinetic_theory_of_gases" id="mwaA" rel="mw:WikiLink" title="Kinetic theory of gases">kinetic models of gases</a>.<link about="#mwt23" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwaQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt23" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt23" class="noprint Inline-Template Template-Fact" id="mwag" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwaw">Other examples include modeling phenomena with significant <a href="https://en.wikipedia.org/wiki/Uncertainty" id="mwbA" rel="mw:WikiLink" title="Uncertainty">uncertainty</a> in inputs such as the calculation of <a href="https://en.wikipedia.org/wiki/Risk" id="mwbQ" rel="mw:WikiLink" title="Risk">risk</a> in business and, in mathematics, evaluation of multidimensional <a href="https://en.wikipedia.org/wiki/Integral" id="mwbg" rel="mw:WikiLink" title="Integral">definite integrals</a> with complicated <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Boundary_conditions" id="mwbw" rel="mw:WikiLink" title="Boundary conditions">boundary conditions</a>. In application to systems engineering problems (space, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Oil_exploration" id="mwcA" rel="mw:WikiLink" title="Oil exploration">oil exploration</a>, aircraft design, etc.), Monte Carlo–based predictions of failure, <a href="https://en.wikipedia.org/wiki/Cost_overrun" id="mwcQ" rel="mw:WikiLink" title="Cost overrun">cost overruns</a> and schedule overruns are routinely better than human intuition or alternative "soft" methods.<sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwcg"><span class="mw-reflink-text" id="mwcw"><span class="cite-bracket" id="mwdA">[</span>3<span class="cite-bracket" id="mwdQ">]</span></span></a></sup></p>
+<p id="mwdg">In principle, Monte Carlo methods can be used to solve any problem having a probabilistic interpretation. By the <a href="https://en.wikipedia.org/wiki/Law_of_large_numbers" id="mwdw" rel="mw:WikiLink" title="Law of large numbers">law of large numbers</a>, integrals described by the <a href="https://en.wikipedia.org/wiki/Expected_value" id="mweA" rel="mw:WikiLink" title="Expected value">expected value</a> of some random variable can be approximated by taking the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sample_mean_and_sample_covariance" id="mweQ" rel="mw:WikiLink" title="Sample mean and sample covariance">empirical mean</a> (<abbr about="#mwt27" data-mw='{"parts":[{"template":{"target":{"wt":"a.k.a.","href":"./Template:A.k.a."},"params":{},"i":0}}]}' id="mweg" title="also known as" typeof="mw:Transclusion">a.k.a.</abbr> the 'sample mean') of independent samples of the variable. When the <a href="https://en.wikipedia.org/wiki/Probability_distribution" id="mwew" rel="mw:WikiLink" title="Probability distribution">probability distribution</a> of the variable is parameterized, mathematicians often use a <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo" id="mwfA" rel="mw:WikiLink" title="Markov chain Monte Carlo">Markov chain Monte Carlo</a> (MCMC) sampler.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwfQ"><span class="mw-reflink-text" id="mwfg"><span class="cite-bracket" id="mwfw">[</span>4<span class="cite-bracket" id="mwgA">]</span></span></a></sup><sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwgQ"><span class="mw-reflink-text" id="mwgg"><span class="cite-bracket" id="mwgw">[</span>5<span class="cite-bracket" id="mwhA">]</span></span></a></sup><sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwhQ"><span class="mw-reflink-text" id="mwhg"><span class="cite-bracket" id="mwhw">[</span>6<span class="cite-bracket" id="mwiA">]</span></span></a></sup> The central idea is to design a judicious <a href="https://en.wikipedia.org/wiki/Markov_chain" id="mwiQ" rel="mw:WikiLink" title="Markov chain">Markov chain</a> model with a prescribed <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Stationary_probability_distribution" id="mwig" rel="mw:WikiLink" title="Stationary probability distribution">stationary probability distribution</a>. That is, in the limit, the samples being generated by the MCMC method will be samples from the desired (target) distribution.<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwiw"><span class="mw-reflink-text" id="mwjA"><span class="cite-bracket" id="mwjQ">[</span>7<span class="cite-bracket" id="mwjg">]</span></span></a></sup><sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwjw"><span class="mw-reflink-text" id="mwkA"><span class="cite-bracket" id="mwkQ">[</span>8<span class="cite-bracket" id="mwkg">]</span></span></a></sup> By the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Ergodic_theorem" id="mwkw" rel="mw:WikiLink" title="Ergodic theorem">ergodic theorem</a>, the stationary distribution is approximated by the <a href="https://en.wikipedia.org/wiki/Empirical_measure" id="mwlA" rel="mw:WikiLink" title="Empirical measure">empirical measures</a> of the random states of the MCMC sampler.<link about="#mwt28" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwlQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt28" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt28" class="noprint Inline-Template Template-Fact" id="mwlg" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwlw">In other problems, the objective is generating draws from a sequence of probability distributions satisfying a nonlinear evolution equation. These flows of probability distributions can always be interpreted as the distributions of the random states of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Markov_process" id="mwmA" rel="mw:WikiLink" title="Markov process">Markov process</a> whose transition probabilities depend on the distributions of the current random states (see <a href="https://en.wikipedia.org/wiki/McKean–Vlasov_process" id="mwmQ" rel="mw:WikiLink" title="McKean–Vlasov process">McKean–Vlasov processes</a>, <a href="https://en.wikipedia.org/wiki/Particle_filter" id="mwmg" rel="mw:WikiLink" title="Particle filter">nonlinear filtering equation</a>).<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"kol10"},"body":{"id":"mw-reference-text-cite_note-kol10-9"}}' id="cite_ref-kol10_9-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-kol10-9" id="mwmw"><span class="mw-reflink-text" id="mwnA"><span class="cite-bracket" id="mwnQ">[</span>9<span class="cite-bracket" id="mwng">]</span></span></a></sup><sup about="#mwt49" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dp13"},"body":{"id":"mw-reference-text-cite_note-dp13-10"}}' id="cite_ref-dp13_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dp13-10" id="mwnw"><span class="mw-reflink-text" id="mwoA"><span class="cite-bracket" id="mwoQ">[</span>10<span class="cite-bracket" id="mwog">]</span></span></a></sup> In other instances, a flow of probability distributions with an increasing level of sampling complexity arise (path spaces models with an increasing time horizon, Boltzmann–Gibbs measures associated with decreasing temperature parameters, and many others). These models can also be seen as the evolution of the law of the random states of a nonlinear Markov chain.<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dp13"}}' id="cite_ref-dp13_10-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dp13-10" id="mwow"><span class="mw-reflink-text" id="mwpA"><span class="cite-bracket" id="mwpQ">[</span>10<span class="cite-bracket" id="mwpg">]</span></span></a></sup><sup about="#mwt53" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwpw"><span class="mw-reflink-text" id="mwqA"><span class="cite-bracket" id="mwqQ">[</span>11<span class="cite-bracket" id="mwqg">]</span></span></a></sup></p>
+<p id="mwqw">A natural way to simulate these sophisticated nonlinear Markov processes is to sample multiple copies of the process, replacing in the evolution equation the unknown distributions of the random states by the sampled empirical measures. In contrast with traditional Monte Carlo and MCMC methodologies, these <a href="https://en.wikipedia.org/wiki/Mean-field_particle_methods" id="mwrA" rel="mw:WikiLink" title="Mean-field particle methods">mean-field particle</a> techniques rely on sequential interacting samples. The terminology <i id="mwrQ">mean field</i> reflects the fact that each of the <i id="mwrg">samples</i> (<abbr about="#mwt54" data-mw='{"parts":[{"template":{"target":{"wt":"a.k.a.","href":"./Template:A.k.a."},"params":{},"i":0}}]}' id="mwrw" title="also known as" typeof="mw:Transclusion">a.k.a.</abbr> particles, individuals, walkers, agents, creatures, or phenotypes) interacts with the empirical measures of the process. When the size of the system tends to infinity, these random empirical measures converge to the deterministic distribution of the random states of the nonlinear Markov chain, so that the statistical interaction between particles vanishes.<link about="#mwt55" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwsA" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt55" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt55" class="noprint Inline-Template Template-Fact" id="mwsQ" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwsw">Suppose one wants to know the expected value <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwtA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> of a population (and knows that <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwtQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> exists), but does not have a formula available to compute it. The simple Monte Carlo method gives an estimate for <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwtg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> by running <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwtw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> simulations and averaging the simulations' results. It has no restrictions on the probability distribution of the inputs to the simulations, requiring only that the inputs are randomly generated and are independent of each other and that <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> exists. A sufficiently large <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> will produce a value for <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> that is arbitrarily close to <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwuw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span>; more formally, it will be the case that, for any <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon &gt; 0"}}' id="mwvA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon &gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon &gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon &gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/568095ad3924314374a5ab68fae17343661f2a71" style="vertical-align: -0.338ex; width:5.205ex; height:2.176ex;"/></span>, <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"|\\mu - m| \\leq \\epsilon"}}' id="mwvQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle |\mu -m|\leq \epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>μ<!-- μ --></mi>
+<mo>−<!-- − --></mo>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mo>≤<!-- ≤ --></mo>
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle |\mu -m|\leq \epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle |\mu -m|\leq \epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32a52cf007e700fb1c72ab071cdb20a9d770f3c0" style="vertical-align: -0.838ex; width:11.619ex; height:2.843ex;"/></span>.
+<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-12"}}' id="cite_ref-:1_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-12" id="mwvg"><span class="mw-reflink-text" id="mwvw"><span class="cite-bracket" id="mwwA">[</span>12<span class="cite-bracket" id="mwwQ">]</span></span></a></sup> Typically, the algorithm to obtain <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwwg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is</p>
+<p id="mw2Q">Suppose we want to know how many times we should expect to throw three eight-sided dice for the total of the dice throws to be at least <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mw2g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span>. We know the expected value exists. The dice throws are randomly distributed and independent of each other. So simple Monte Carlo is applicable:</p>
+<p id="mw8A">If <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mw8Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is large enough, <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mw8g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> will be within <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon"}}' id="mw8w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3837cad72483d97bcdde49c85d3b7b859fb3fd2" style="vertical-align: -0.338ex; width:0.944ex; height:1.676ex;"/></span> of <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mw9A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> for any <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon &gt; 0"}}' id="mw9Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon &gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon &gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon &gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/568095ad3924314374a5ab68fae17343661f2a71" style="vertical-align: -0.338ex; width:5.205ex; height:2.176ex;"/></span>.</p>
+<p id="mw-Q">Let <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\epsilon = |\\mu - m| &gt; 0 "}}' id="mw-g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon =|\mu -m|&gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>μ<!-- μ --></mi>
+<mo>−<!-- − --></mo>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon =|\mu -m|&gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon =|\mu -m|&gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/afc33c179ff251a2caa5bdcbc5b93292023ecfe6" style="vertical-align: -0.838ex; width:15.88ex; height:2.843ex;"/></span>. Choose the desired confidence level – the percent chance that, when the Monte Carlo algorithm completes, <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is indeed within <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon"}}' id="mw_A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3837cad72483d97bcdde49c85d3b7b859fb3fd2" style="vertical-align: -0.338ex; width:0.944ex; height:1.676ex;"/></span> of <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mw_Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span>. Let <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"z"}}' id="mw_g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle z}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>z</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle z}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle z}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bf368e72c009decd9b6686ee84a375632e11de98" style="vertical-align: -0.338ex; width:1.088ex; height:1.676ex;"/></span> be the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Z-score" id="mw_w" rel="mw:WikiLink" title="Z-score"><span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"z"}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle z}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>z</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle z}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle z}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bf368e72c009decd9b6686ee84a375632e11de98" style="vertical-align: -0.338ex; width:1.088ex; height:1.676ex;"/></span>-score</a> corresponding to that confidence level.</p>
+<p id="mwAQE">Let <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s^2"}}' id="mwAQI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s^{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>s</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s^{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/58d7841cee3671436949ee789b84a848fd150bd3" style="vertical-align: -0.338ex; width:2.145ex; height:2.676ex;"/></span> be the estimated variance, sometimes called the "sample" variance; it is the variance of the results obtained from a relatively small number <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAQM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> of "sample" simulations. Choose a <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>; Driels and Shin observe that "<i id="mwAQU">even for sample sizes an order of magnitude lower than the number required, the calculation of that number is quite stable.</i>"<sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"},"body":{"id":"mw-reference-text-cite_note-:2-13"}}' id="cite_ref-:2_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-13" id="mwAQY"><span class="mw-reflink-text" id="mwAQc"><span class="cite-bracket" id="mwAQg">[</span>13<span class="cite-bracket" id="mwAQk">]</span></span></a></sup> The following algorithm computes <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s^2"}}' id="mwAQo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s^{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>s</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s^{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/58d7841cee3671436949ee789b84a848fd150bd3" style="vertical-align: -0.338ex; width:2.145ex; height:2.676ex;"/></span> in one pass while minimizing the possibility that accumulated numerical error produces erroneous results:<sup about="#mwt89" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_12-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-12" id="mwAQs"><span class="mw-reflink-text" id="mwAQw"><span class="cite-bracket" id="mwAQ0">[</span>12<span class="cite-bracket" id="mwAQ4">]</span></span></a></sup></p>
+<p id="mwAUc">Note that, when the algorithm completes, <span about="#mwt90" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m_k"}}' id="mwAUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0d5e3b1ba705c5adda8381cb22580d26d64968f8" style="vertical-align: -0.671ex; width:3.129ex; height:2.009ex;"/></span> is the mean of the <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAUk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> results.</p>
+<p id="mwAUo">The value <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAUs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is sufficiently large when</p>
+<p id="mwAVc">If <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n \\leq k"}}' id="mwAVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n\leq k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>≤<!-- ≤ --></mo>
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n\leq k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n\leq k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b0ac61b7d1fad06bf9d004c774bd7931b8b51bf" style="vertical-align: -0.505ex; width:5.704ex; height:2.343ex;"/></span>, then <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m_k = m"}}' id="mwAVk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m_{k}=m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m_{k}=m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m_{k}=m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/44c1258c7f3dabee761d5e98b61c742abdb316ee" style="vertical-align: -0.671ex; width:8.268ex; height:2.009ex;"/></span>; sufficient sample simulations were done to ensure that <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m_k"}}' id="mwAVo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0d5e3b1ba705c5adda8381cb22580d26d64968f8" style="vertical-align: -0.671ex; width:3.129ex; height:2.009ex;"/></span> is within <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon"}}' id="mwAVs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3837cad72483d97bcdde49c85d3b7b859fb3fd2" style="vertical-align: -0.338ex; width:0.944ex; height:1.676ex;"/></span> of <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwAVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span>. If <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n &gt; k"}}' id="mwAV0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n&gt;k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>&gt;</mo>
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n&gt;k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n&gt;k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8afbc0693bee3f48a31d2c991ddc8b6b4a35322" style="vertical-align: -0.338ex; width:5.704ex; height:2.176ex;"/></span>, then <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAV4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> simulations can be run "from scratch," or, since <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAV8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> simulations have already been done, one can just run <span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n - k"}}' id="mwAWA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n-k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n-k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n-k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b98e1d6a69bccd09a4b9b69bdf03a08c1706c8c1" style="vertical-align: -0.505ex; width:5.446ex; height:2.343ex;"/></span> more simulations and add their results into those from the sample simulations:</p>
+<p id="mwAXc">An alternative formula can be used in the special case where all simulation results are bounded above and below.</p>
+<p id="mwAXg">Choose a value for <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon"}}' id="mwAXk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3837cad72483d97bcdde49c85d3b7b859fb3fd2" style="vertical-align: -0.338ex; width:0.944ex; height:1.676ex;"/></span> that is twice the maximum allowed difference between <span about="#mwt106" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mu"}}' id="mwAXo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mu }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>μ<!-- μ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mu }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mu }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9fd47b2a39f7a7856952afec1f1db72c67af6161" style="vertical-align: -0.838ex; width:1.402ex; height:2.176ex;"/></span> and <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAXs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span>. Let <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"0 &lt; \\delta &lt; 100"}}' id="mwAXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 0&lt;\delta &lt;100}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>0</mn>
+<mo>&lt;</mo>
+<mi>δ<!-- δ --></mi>
+<mo>&lt;</mo>
+<mn>100</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 0&lt;\delta &lt;100}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 0&lt;\delta &lt;100}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fb7fd98772fab187c78138cdc603a6369ae35810" style="vertical-align: -0.338ex; width:11.895ex; height:2.343ex;"/></span> be the desired confidence level, expressed as a percentage. Let every simulation result <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"r_1, r_2, \\ldots, r_i, \\ldots, r_n"}}' id="mwAX0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle r_{1},r_{2},\ldots ,r_{i},\ldots ,r_{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>r</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>r</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>r</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>r</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle r_{1},r_{2},\ldots ,r_{i},\ldots ,r_{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle r_{1},r_{2},\ldots ,r_{i},\ldots ,r_{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/729fa10b8913e2eba3523b9620cfd01787b0d02c" style="vertical-align: -0.671ex; width:19.712ex; height:2.009ex;"/></span> be such that <span about="#mwt110" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a \\leq r_i \\leq b"}}' id="mwAX4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a\leq r_{i}\leq b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo>≤<!-- ≤ --></mo>
+<msub>
+<mi>r</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>≤<!-- ≤ --></mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a\leq r_{i}\leq b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a\leq r_{i}\leq b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/204022cbe45c7ac4a41851003e6aa2f1942deaca" style="vertical-align: -0.671ex; width:10.273ex; height:2.509ex;"/></span> for finite <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a"}}' id="mwAX8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd2487510aa438433a2579450ab2b3d557e5edc" style="vertical-align: -0.338ex; width:1.23ex; height:1.676ex;"/></span> and <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwAYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>. To have confidence of at least <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta"}}' id="mwAYE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c5321cfa797202b3e1f8620663ff43c4660ea03a" style="vertical-align: -0.338ex; width:1.049ex; height:2.343ex;"/></span> that <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"|\\mu - m| &lt; \\epsilon/2"}}' id="mwAYI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle |\mu -m|&lt;\epsilon /2}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>μ<!-- μ --></mi>
+<mo>−<!-- − --></mo>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mo>&lt;</mo>
+<mi>ϵ<!-- ϵ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>2</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle |\mu -m|&lt;\epsilon /2}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle |\mu -m|&lt;\epsilon /2}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c74e8e9a3ca21a089cdf19d73c75f32ed909f800" style="vertical-align: -0.838ex; width:13.944ex; height:2.843ex;"/></span>, use a value for <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAYM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> such that:</p>
+<p id="mwAYc">For example, if <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\delta = 99\\% "}}' id="mwAYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta =99\%}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo>=</mo>
+<mn>99</mn>
+<mi mathvariant="normal">%<!-- % --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta =99\%}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta =99\%}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/631fd28e43337b234fb045210acfcd047544cbde" style="vertical-align: -0.338ex; width:8.408ex; height:2.343ex;"/></span>, then <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n \\geq 2(b - a)^2 \\ln(2/0.01)/\\epsilon^2 \\approx 10.6(b - a)^2/\\epsilon^2"}}' id="mwAYk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n\geq 2(b-a)^{2}\ln(2/0.01)/\epsilon ^{2}\approx 10.6(b-a)^{2}/\epsilon ^{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>≥<!-- ≥ --></mo>
+<mn>2</mn>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo>−<!-- − --></mo>
+<mi>a</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>0.01</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msup>
+<mi>ϵ<!-- ϵ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>≈<!-- ≈ --></mo>
+<mn>10.6</mn>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo>−<!-- − --></mo>
+<mi>a</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msup>
+<mi>ϵ<!-- ϵ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n\geq 2(b-a)^{2}\ln(2/0.01)/\epsilon ^{2}\approx 10.6(b-a)^{2}/\epsilon ^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n\geq 2(b-a)^{2}\ln(2/0.01)/\epsilon ^{2}\approx 10.6(b-a)^{2}/\epsilon ^{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d46af9d9862fa596a344496e63dce35b8ca87157" style="vertical-align: -0.838ex; width:45.667ex; height:3.176ex;"/></span>.<sup about="#mwt119" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_12-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-12" id="mwAYo"><span class="mw-reflink-text" id="mwAYs"><span class="cite-bracket" id="mwAYw">[</span>12<span class="cite-bracket" id="mwAY0">]</span></span></a></sup></p>
+<p id="mwAY8">Despite its conceptual and algorithmic simplicity, the computational cost associated with a Monte Carlo simulation can be staggeringly high. In general the method requires many samples to get a good approximation, which may incur an arbitrarily large total runtime if the processing time of a single sample is high.<sup about="#mwt122" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"sw09"},"body":{"id":"mw-reference-text-cite_note-sw09-14"}}' id="cite_ref-sw09_14-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-sw09-14" id="mwAZA"><span class="mw-reflink-text" id="mwAZE"><span class="cite-bracket" id="mwAZI">[</span>14<span class="cite-bracket" id="mwAZM">]</span></span></a></sup> Although this is a severe limitation in very complex problems, the <a href="https://en.wikipedia.org/wiki/Embarrassingly_parallel" id="mwAZQ" rel="mw:WikiLink" title="Embarrassingly parallel">embarrassingly parallel</a> nature of the algorithm allows this large cost to be reduced (perhaps to a feasible level) through <a href="https://en.wikipedia.org/wiki/Parallel_computing" id="mwAZU" rel="mw:WikiLink" title="Parallel computing">parallel computing</a> strategies in local processors, clusters, cloud computing, GPU, FPGA, etc.<sup about="#mwt125" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwAZY"><span class="mw-reflink-text" id="mwAZc"><span class="cite-bracket" id="mwAZg">[</span>15<span class="cite-bracket" id="mwAZk">]</span></span></a></sup><sup about="#mwt128" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwAZo"><span class="mw-reflink-text" id="mwAZs"><span class="cite-bracket" id="mwAZw">[</span>16<span class="cite-bracket" id="mwAZ0">]</span></span></a></sup><sup about="#mwt131" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mwAZ4"><span class="mw-reflink-text" id="mwAZ8"><span class="cite-bracket" id="mwAaA">[</span>17<span class="cite-bracket" id="mwAaE">]</span></span></a></sup><sup about="#mwt134" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mwAaI"><span class="mw-reflink-text" id="mwAaM"><span class="cite-bracket" id="mwAaQ">[</span>18<span class="cite-bracket" id="mwAaU">]</span></span></a></sup>
+In financial and safety-critical applications, floating-point non-determinism across hardware platforms can compound these costs, as results may vary between runs or across different processors (x86, ARM, GPU), sometimes requiring redundant simulations or consensus mechanisms to verify numerical correctness.<sup about="#mwt137" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwAaY"><span class="mw-reflink-text" id="mwAac"><span class="cite-bracket" id="mwAag">[</span>19<span class="cite-bracket" id="mwAak">]</span></span></a></sup></p>
+<p id="mwAas">Before the Monte Carlo method was developed, simulations tested a previously understood deterministic problem, and statistical sampling was used to estimate uncertainties in the simulations. Monte Carlo simulations invert this approach, solving deterministic problems using <a href="https://en.wikipedia.org/wiki/Probability" id="mwAaw" rel="mw:WikiLink" title="Probability">probabilistic</a> <a href="https://en.wikipedia.org/wiki/Metaheuristic" id="mwAa0" rel="mw:WikiLink" title="Metaheuristic">metaheuristics</a> (see <a href="https://en.wikipedia.org/wiki/Simulated_annealing" id="mwAa4" rel="mw:WikiLink" title="Simulated annealing">simulated annealing</a>).<link about="#mwt138" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwAa8" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt138" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt138" class="noprint Inline-Template Template-Fact" id="mwAbA" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwAbE">An early variant of the Monte Carlo method was devised to solve the <a href="https://en.wikipedia.org/wiki/Buffon's_needle_problem" id="mwAbI" rel="mw:WikiLink" title="Buffon's needle problem">Buffon's needle problem</a>, in which <span about="#mwt139" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"pi","href":"./Template:Pi"},"params":{},"i":0}}]}' id="mwAbM" style="font-style:italic;" typeof="mw:Transclusion">π</span> can be estimated by dropping needles on a floor made of parallel equidistant strips. In the 1930s, <a href="https://en.wikipedia.org/wiki/Enrico_Fermi" id="mwAbQ" rel="mw:WikiLink" title="Enrico Fermi">Enrico Fermi</a> first experimented with the Monte Carlo method while studying neutron diffusion, but he did not publish this work.<sup about="#mwt140" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEMetropolis1987"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEMetropolis1987-20"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Metropolis"},"2":{"wt":"1987"}},"i":0}}]}' id="cite_ref-FOOTNOTEMetropolis1987_20-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEMetropolis1987-20" id="mwAbU"><span class="mw-reflink-text" id="mwAbY"><span class="cite-bracket" id="mwAbc">[</span>20<span class="cite-bracket" id="mwAbg">]</span></span></a></sup></p>
+<p id="mwAbk">In the late 1940s, <a href="https://en.wikipedia.org/wiki/Stanisław_Ulam" id="mwAbo" rel="mw:WikiLink" title="Stanisław Ulam">Stanisław Ulam</a> invented the modern version of the Markov Chain Monte Carlo method while he was working on nuclear weapons projects at the <a href="https://en.wikipedia.org/wiki/Los_Alamos_National_Laboratory" id="mwAbs" rel="mw:WikiLink" title="Los Alamos National Laboratory">Los Alamos National Laboratory</a>. In 1946, nuclear weapons physicists at Los Alamos were investigating neutron diffusion in the core of a nuclear weapon.<sup about="#mwt143" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEMetropolis1987"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEMetropolis1987-20"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Metropolis"},"2":{"wt":"1987"}},"i":0}}]}' id="cite_ref-FOOTNOTEMetropolis1987_20-1" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEMetropolis1987-20" id="mwAbw"><span class="mw-reflink-text" id="mwAb0"><span class="cite-bracket" id="mwAb4">[</span>20<span class="cite-bracket" id="mwAb8">]</span></span></a></sup></p>
+<p id="mwAcA">Despite having most of the necessary data, such as the average distance a neutron would travel in a substance before it collided with an atomic nucleus and how much energy the neutron was likely to give off following a collision, the Los Alamos physicists were unable to solve the problem using conventional, deterministic mathematical methods. Ulam proposed using random experiments. He recounts his inspiration as follows:</p>
+<p>The first thoughts and attempts I made to practice [the Monte Carlo Method] were suggested by a question which occurred to me in 1946 as I was convalescing from an illness and playing solitaires. The question was what are the chances that a <a href="https://en.wikipedia.org/wiki/Canfield_(solitaire)" rel="mw:WikiLink" title="Canfield (solitaire)">Canfield solitaire</a> laid out with 52 cards will come out successfully? After spending a lot of time trying to estimate them by pure combinatorial calculations, I wondered whether a more practical method than "abstract thinking" might not be to lay it out say one hundred times and simply observe and count the number of successful plays. This was already possible to envisage with the beginning of the new era of fast computers, and I immediately thought of problems of neutron diffusion and other questions of mathematical physics, and more generally how to change processes described by certain differential equations into an equivalent form interpretable as a succession of random operations. Later [in 1946], I described the idea to <a href="https://en.wikipedia.org/wiki/John_von_Neumann" rel="mw:WikiLink" title="John von Neumann">John von Neumann</a>, and we began to plan actual calculations.<sup about="#mwt148" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEEckhardt1987"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEEckhardt1987-21"}}' id="cite_ref-FOOTNOTEEckhardt1987_21-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-FOOTNOTEEckhardt1987-21" id="mwAcM"><span class="mw-reflink-text" id="mwAcQ"><span class="cite-bracket" id="mwAcU">[</span>21<span class="cite-bracket" id="mwAcY">]</span></span></a></sup></p>
+<p id="mwAcc">Being secret, the work of von Neumann and Ulam required a code name.<sup about="#mwt150" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEMazhdrakovBenovValkanov2018250"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEMazhdrakovBenovValkanov2018250-22"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Mazhdrakov"},"2":{"wt":"Benov"},"3":{"wt":"Valkanov"},"4":{"wt":"2018"},"p":{"wt":"250"}},"i":0}}]}' id="cite_ref-FOOTNOTEMazhdrakovBenovValkanov2018250_22-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEMazhdrakovBenovValkanov2018250-22" id="mwAcg"><span class="mw-reflink-text" id="mwAck"><span class="cite-bracket" id="mwAco">[</span>22<span class="cite-bracket" id="mwAcs">]</span></span></a></sup> A colleague of von Neumann and Ulam, <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" id="mwAcw" rel="mw:WikiLink" title="Nicholas Metropolis">Nicholas Metropolis</a>, suggested using the name <i id="mwAc0">Monte Carlo</i>, which refers to the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_Casino" id="mwAc4" rel="mw:WikiLink" title="Monte Carlo Casino">Monte Carlo Casino</a> in <a href="https://en.wikipedia.org/wiki/Monaco" id="mwAc8" rel="mw:WikiLink" title="Monaco">Monaco</a> where Ulam's uncle would borrow money from relatives to gamble.<sup about="#mwt153" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEMetropolis1987"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEMetropolis1987-20"},"parts":[{"template":{"target":{"wt":"sfn","href":"./Template:Sfn"},"params":{"1":{"wt":"Metropolis"},"2":{"wt":"1987"}},"i":0}}]}' id="cite_ref-FOOTNOTEMetropolis1987_20-2" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEMetropolis1987-20" id="mwAdA"><span class="mw-reflink-text" id="mwAdE"><span class="cite-bracket" id="mwAdI">[</span>20<span class="cite-bracket" id="mwAdM">]</span></span></a></sup>
+Monte Carlo methods were central to the <a href="https://en.wikipedia.org/wiki/Simulation" id="mwAdQ" rel="mw:WikiLink" title="Simulation">simulations</a> required for further postwar development of nuclear weapons, including the design of the H-bomb, though severely limited by the computational tools at the time. Von Neumann, <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" id="mwAdU" rel="mw:WikiLink" title="Nicholas Metropolis">Nicholas Metropolis</a> and others programmed the <a href="https://en.wikipedia.org/wiki/ENIAC" id="mwAdY" rel="mw:WikiLink" title="ENIAC">ENIAC</a> computer to perform the first fully automated Monte Carlo calculations, of a <a href="https://en.wikipedia.org/wiki/Nuclear_weapon_design#Pure_fission_weapons" id="mwAdc" rel="mw:WikiLink" title="Nuclear weapon design">fission weapon</a> core, in the spring of 1948.<sup about="#mwt158" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ENIAC"},"body":{"id":"mw-reference-text-cite_note-ENIAC-23"}}' id="cite_ref-ENIAC_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ENIAC-23" id="mwAdg"><span class="mw-reflink-text" id="mwAdk"><span class="cite-bracket" id="mwAdo">[</span>23<span class="cite-bracket" id="mwAds">]</span></span></a></sup></p>
+<p id="mwAdw">In the 1950s Monte Carlo methods were used at <a href="https://en.wikipedia.org/wiki/Los_Alamos_National_Laboratory" id="mwAd0" rel="mw:WikiLink" title="Los Alamos National Laboratory">Los Alamos</a> for the development of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hydrogen_bomb" id="mwAd4" rel="mw:WikiLink" title="Hydrogen bomb">hydrogen bomb</a>, and became popularized in the fields of <a href="https://en.wikipedia.org/wiki/Physics" id="mwAd8" rel="mw:WikiLink" title="Physics">physics</a>, <a href="https://en.wikipedia.org/wiki/Physical_chemistry" id="mwAeA" rel="mw:WikiLink" title="Physical chemistry">physical chemistry</a>, and <a href="https://en.wikipedia.org/wiki/Operations_research" id="mwAeE" rel="mw:WikiLink" title="Operations research">operations research</a>. The <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rand_Corporation" id="mwAeI" rel="mw:WikiLink" title="Rand Corporation">Rand Corporation</a> and the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/U.S._Air_Force" id="mwAeM" rel="mw:WikiLink" title="U.S. Air Force">U.S. Air Force</a> were two of the major organizations responsible for funding and disseminating information on Monte Carlo methods during this time, and they began to find a wide application in many different fields.<link about="#mwt159" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"January 2026"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwAeQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt159" href="./Category:Articles_with_unsourced_statements_from_January_2026" rel="mw:PageProp/Category"/><sup about="#mwt159" class="noprint Inline-Template Template-Fact" id="mwAeU" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (January 2026)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwAeY">The theory of more sophisticated mean-field type particle Monte Carlo methods had certainly started by the mid-1960s, with the work of <a href="https://en.wikipedia.org/wiki/Henry_McKean" id="mwAec" rel="mw:WikiLink" title="Henry McKean">Henry P. McKean Jr.</a> on Markov interpretations of a class of nonlinear parabolic partial differential equations arising in fluid mechanics.<sup about="#mwt162" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mck67"},"body":{"id":"mw-reference-text-cite_note-mck67-24"}}' id="cite_ref-mck67_24-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mck67-24" id="mwAeg"><span class="mw-reflink-text" id="mwAek"><span class="cite-bracket" id="mwAeo">[</span>24<span class="cite-bracket" id="mwAes">]</span></span></a></sup><sup about="#mwt165" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwAew"><span class="mw-reflink-text" id="mwAe0"><span class="cite-bracket" id="mwAe4">[</span>25<span class="cite-bracket" id="mwAe8">]</span></span></a></sup> An earlier pioneering article by <a href="https://en.wikipedia.org/wiki/Ted_Harris_(mathematician)" id="mwAfA" rel="mw:WikiLink" title="Ted Harris (mathematician)">Theodore E. Harris</a> and Herman Kahn, published in 1951, used mean-field <a href="https://en.wikipedia.org/wiki/Genetic_algorithm" id="mwAfE" rel="mw:WikiLink" title="Genetic algorithm">genetic</a>-type Monte Carlo methods for estimating particle transmission energies.<sup about="#mwt168" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAfI"><span class="mw-reflink-text" id="mwAfM"><span class="cite-bracket" id="mwAfQ">[</span>26<span class="cite-bracket" id="mwAfU">]</span></span></a></sup></p>
+<p id="mwAfY">Mean-field genetic type Monte Carlo methodologies are also used as heuristic natural search algorithms (a.k.a. <a href="https://en.wikipedia.org/wiki/Metaheuristic" id="mwAfc" rel="mw:WikiLink" title="Metaheuristic">metaheuristic</a>) in evolutionary computing. The origins of these mean-field computational techniques can be traced to 1950 and 1954 with the work of <a href="https://en.wikipedia.org/wiki/Alan_Turing" id="mwAfg" rel="mw:WikiLink" title="Alan Turing">Alan Turing</a> on genetic type mutation-selection learning machines<sup about="#mwt171" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwAfk"><span class="mw-reflink-text" id="mwAfo"><span class="cite-bracket" id="mwAfs">[</span>27<span class="cite-bracket" id="mwAfw">]</span></span></a></sup> and the articles by <a href="https://en.wikipedia.org/wiki/Nils_Aall_Barricelli" id="mwAf0" rel="mw:WikiLink" title="Nils Aall Barricelli">Nils Aall Barricelli</a> at the <a href="https://en.wikipedia.org/wiki/Institute_for_Advanced_Study" id="mwAf4" rel="mw:WikiLink" title="Institute for Advanced Study">Institute for Advanced Study</a> in <a href="https://en.wikipedia.org/wiki/Princeton,_New_Jersey" id="mwAf8" rel="mw:WikiLink" title="Princeton, New Jersey">Princeton, New Jersey</a>.<sup about="#mwt174" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAgA"><span class="mw-reflink-text" id="mwAgE"><span class="cite-bracket" id="mwAgI">[</span>28<span class="cite-bracket" id="mwAgM">]</span></span></a></sup><sup about="#mwt177" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAgQ"><span class="mw-reflink-text" id="mwAgU"><span class="cite-bracket" id="mwAgY">[</span>29<span class="cite-bracket" id="mwAgc">]</span></span></a></sup></p>
+<p id="mwAgg"><a href="https://en.wikipedia.org/wiki/Quantum_Monte_Carlo" id="mwAgk" rel="mw:WikiLink" title="Quantum Monte Carlo">Quantum Monte Carlo</a>, and more specifically <a href="https://en.wikipedia.org/wiki/Diffusion_Monte_Carlo" id="mwAgo" rel="mw:WikiLink" title="Diffusion Monte Carlo">diffusion Monte Carlo methods</a> can also be interpreted as a mean-field particle Monte Carlo approximation of <a href="https://en.wikipedia.org/wiki/Richard_Feynman" id="mwAgs" rel="mw:WikiLink" title="Richard Feynman">Feynman</a>–<a href="https://en.wikipedia.org/wiki/Mark_Kac" id="mwAgw" rel="mw:WikiLink" title="Mark Kac">Kac</a> path integrals.<sup about="#mwt180" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dp04"},"body":{"id":"mw-reference-text-cite_note-dp04-30"}}' id="cite_ref-dp04_30-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dp04-30" id="mwAg0"><span class="mw-reflink-text" id="mwAg4"><span class="cite-bracket" id="mwAg8">[</span>30<span class="cite-bracket" id="mwAhA">]</span></span></a></sup><sup about="#mwt183" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dmm002"},"body":{"id":"mw-reference-text-cite_note-dmm002-31"}}' id="cite_ref-dmm002_31-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dmm002-31" id="mwAhE"><span class="mw-reflink-text" id="mwAhI"><span class="cite-bracket" id="mwAhM">[</span>31<span class="cite-bracket" id="mwAhQ">]</span></span></a></sup><sup about="#mwt186" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dmm00m"},"body":{"id":"mw-reference-text-cite_note-dmm00m-32"}}' id="cite_ref-dmm00m_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dmm00m-32" id="mwAhU"><span class="mw-reflink-text" id="mwAhY"><span class="cite-bracket" id="mwAhc">[</span>32<span class="cite-bracket" id="mwAhg">]</span></span></a></sup><sup about="#mwt189" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dm-esaim03"},"body":{"id":"mw-reference-text-cite_note-dm-esaim03-33"}}' id="cite_ref-dm-esaim03_33-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dm-esaim03-33" id="mwAhk"><span class="mw-reflink-text" id="mwAho"><span class="cite-bracket" id="mwAhs">[</span>33<span class="cite-bracket" id="mwAhw">]</span></span></a></sup><sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"caffarel1"},"body":{"id":"mw-reference-text-cite_note-caffarel1-34"}}' id="cite_ref-caffarel1_34-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-caffarel1-34" id="mwAh0"><span class="mw-reflink-text" id="mwAh4"><span class="cite-bracket" id="mwAh8">[</span>34<span class="cite-bracket" id="mwAiA">]</span></span></a></sup><sup about="#mwt195" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"caffarel2"},"body":{"id":"mw-reference-text-cite_note-caffarel2-35"}}' id="cite_ref-caffarel2_35-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-caffarel2-35" id="mwAiE"><span class="mw-reflink-text" id="mwAiI"><span class="cite-bracket" id="mwAiM">[</span>35<span class="cite-bracket" id="mwAiQ">]</span></span></a></sup><sup about="#mwt198" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"h84"},"body":{"id":"mw-reference-text-cite_note-h84-36"}}' id="cite_ref-h84_36-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-h84-36" id="mwAiU"><span class="mw-reflink-text" id="mwAiY"><span class="cite-bracket" id="mwAic">[</span>36<span class="cite-bracket" id="mwAig">]</span></span></a></sup> The origins of Quantum Monte Carlo methods are often attributed to Enrico Fermi and <a href="https://en.wikipedia.org/wiki/Robert_D._Richtmyer" id="mwAik" rel="mw:WikiLink" title="Robert D. Richtmyer">Robert Richtmyer</a> who developed in 1948 a mean-field particle interpretation of neutron-chain reactions,<sup about="#mwt201" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-37"}}' id="cite_ref-37" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-37" id="mwAio"><span class="mw-reflink-text" id="mwAis"><span class="cite-bracket" id="mwAiw">[</span>37<span class="cite-bracket" id="mwAi0">]</span></span></a></sup> but the first heuristic-like and genetic type particle algorithm (a.k.a. Resampled or Reconfiguration Monte Carlo methods) for estimating ground state energies of quantum systems (in reduced matrix models) is due to Jack H. Hetherington in 1984.<sup about="#mwt202" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"h84"}}' id="cite_ref-h84_36-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-h84-36" id="mwAi4"><span class="mw-reflink-text" id="mwAi8"><span class="cite-bracket" id="mwAjA">[</span>36<span class="cite-bracket" id="mwAjE">]</span></span></a></sup> In molecular chemistry, the use of genetic heuristic-like particle methodologies (a.k.a. pruning and enrichment strategies) can be traced back to 1955 with the seminal work of <a href="https://en.wikipedia.org/wiki/Marshall_Rosenbluth" id="mwAjI" rel="mw:WikiLink" title="Marshall Rosenbluth">Marshall N. Rosenbluth</a> and <a href="https://en.wikipedia.org/wiki/Arianna_W._Rosenbluth" id="mwAjM" rel="mw:WikiLink" title="Arianna W. Rosenbluth">Arianna W. Rosenbluth</a>.<sup about="#mwt205" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-38"}}' id="cite_ref-:0_38-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-38" id="mwAjQ"><span class="mw-reflink-text" id="mwAjU"><span class="cite-bracket" id="mwAjY">[</span>38<span class="cite-bracket" id="mwAjc">]</span></span></a></sup></p>
+<p id="mwAjg">The use of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sequential_Monte_Carlo_method" id="mwAjk" rel="mw:WikiLink" title="Sequential Monte Carlo method">sequential Monte Carlo</a> in advanced <a href="https://en.wikipedia.org/wiki/Signal_processing" id="mwAjo" rel="mw:WikiLink" title="Signal processing">signal processing</a> and <a href="https://en.wikipedia.org/wiki/Bayesian_inference" id="mwAjs" rel="mw:WikiLink" title="Bayesian inference">Bayesian inference</a> is more recent. It was in 1993, that Gordon et al., published in their seminal work<sup about="#mwt208" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-39"}}' id="cite_ref-39" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-39" id="mwAjw"><span class="mw-reflink-text" id="mwAj0"><span class="cite-bracket" id="mwAj4">[</span>39<span class="cite-bracket" id="mwAj8">]</span></span></a></sup> the first application of a Monte Carlo <a href="https://en.wikipedia.org/wiki/Resampling_(statistics)" id="mwAkA" rel="mw:WikiLink" title="Resampling (statistics)">resampling</a> algorithm in Bayesian statistical inference. The authors named their algorithm 'the bootstrap filter', and demonstrated that compared to other filtering methods, their bootstrap algorithm does not require any assumption about that state-space or the noise of the system. Another pioneering article in this field was Genshiro Kitagawa's, on a related "Monte Carlo filter",<sup about="#mwt211" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-40"}}' id="cite_ref-40" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-40" id="mwAkE"><span class="mw-reflink-text" id="mwAkI"><span class="cite-bracket" id="mwAkM">[</span>40<span class="cite-bracket" id="mwAkQ">]</span></span></a></sup> and the ones by Pierre Del Moral<sup about="#mwt214" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dm9622"},"body":{"id":"mw-reference-text-cite_note-dm9622-41"}}' id="cite_ref-dm9622_41-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dm9622-41" id="mwAkU"><span class="mw-reflink-text" id="mwAkY"><span class="cite-bracket" id="mwAkc">[</span>41<span class="cite-bracket" id="mwAkg">]</span></span></a></sup> and Himilcon Carvalho, Pierre Del Moral, André Monin and Gérard Salut<sup about="#mwt217" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-42"}}' id="cite_ref-42" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-42" id="mwAkk"><span class="mw-reflink-text" id="mwAko"><span class="cite-bracket" id="mwAks">[</span>42<span class="cite-bracket" id="mwAkw">]</span></span></a></sup> on particle filters published in the mid-1990s. Particle filters were also developed in signal processing in 1989–1992 by P. Del Moral, J. C. Noyer, G. Rigal, and G. Salut in the LAAS-CNRS in a series of restricted and classified research reports with STCAN (Service Technique des Constructions et Armes Navales), the IT company DIGILOG, and the <a class="external text" href="https://www.laas.fr/public/en" id="mwAk0" rel="mw:ExtLink nofollow">LAAS-CNRS</a> (the Laboratory for Analysis and Architecture of Systems) on radar/sonar and GPS signal processing problems.<sup about="#mwt218" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-43"}}' id="cite_ref-43" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-43" id="mwAk4"><span class="mw-reflink-text" id="mwAk8"><span class="cite-bracket" id="mwAlA">[</span>43<span class="cite-bracket" id="mwAlE">]</span></span></a></sup><sup about="#mwt219" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-44"}}' id="cite_ref-44" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-44" id="mwAlI"><span class="mw-reflink-text" id="mwAlM"><span class="cite-bracket" id="mwAlQ">[</span>44<span class="cite-bracket" id="mwAlU">]</span></span></a></sup><sup about="#mwt220" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-45"}}' id="cite_ref-45" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-45" id="mwAlY"><span class="mw-reflink-text" id="mwAlc"><span class="cite-bracket" id="mwAlg">[</span>45<span class="cite-bracket" id="mwAlk">]</span></span></a></sup><sup about="#mwt221" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-46"}}' id="cite_ref-46" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-46" id="mwAlo"><span class="mw-reflink-text" id="mwAls"><span class="cite-bracket" id="mwAlw">[</span>46<span class="cite-bracket" id="mwAl0">]</span></span></a></sup><sup about="#mwt222" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-47"}}' id="cite_ref-47" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-47" id="mwAl4"><span class="mw-reflink-text" id="mwAl8"><span class="cite-bracket" id="mwAmA">[</span>47<span class="cite-bracket" id="mwAmE">]</span></span></a></sup><sup about="#mwt223" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-48"}}' id="cite_ref-48" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-48" id="mwAmI"><span class="mw-reflink-text" id="mwAmM"><span class="cite-bracket" id="mwAmQ">[</span>48<span class="cite-bracket" id="mwAmU">]</span></span></a></sup> These Sequential Monte Carlo methodologies can be interpreted as an acceptance-rejection sampler equipped with an interacting recycling mechanism.</p>
+<p id="mwAmY">From 1950 to 1996, all the publications on sequential Monte Carlo methodologies, including the pruning and resample Monte Carlo methods introduced in computational physics and molecular chemistry, present natural and heuristic-like algorithms applied to different situations without a single proof of their consistency, nor a discussion on the bias of the estimates and on genealogical and ancestral tree based algorithms. The mathematical foundations and the first rigorous analysis of these particle algorithms were written by Pierre Del Moral in 1996.<sup about="#mwt224" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dm9622"}}' id="cite_ref-dm9622_41-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dm9622-41" id="mwAmc"><span class="mw-reflink-text" id="mwAmg"><span class="cite-bracket" id="mwAmk">[</span>41<span class="cite-bracket" id="mwAmo">]</span></span></a></sup><sup about="#mwt228" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":22"},"body":{"id":"mw-reference-text-cite_note-:22-49"}}' id="cite_ref-:22_49-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:22-49" id="mwAms"><span class="mw-reflink-text" id="mwAmw"><span class="cite-bracket" id="mwAm0">[</span>49<span class="cite-bracket" id="mwAm4">]</span></span></a></sup></p>
+<p id="mwAm8">Branching type particle methodologies with varying population sizes were also developed in the end of the 1990s by Dan Crisan, Jessica Gaines and Terry Lyons,<sup about="#mwt231" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":42"},"body":{"id":"mw-reference-text-cite_note-:42-50"}}' id="cite_ref-:42_50-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:42-50" id="mwAnA"><span class="mw-reflink-text" id="mwAnE"><span class="cite-bracket" id="mwAnI">[</span>50<span class="cite-bracket" id="mwAnM">]</span></span></a></sup><sup about="#mwt234" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-51"}}' id="cite_ref-51" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-51" id="mwAnQ"><span class="mw-reflink-text" id="mwAnU"><span class="cite-bracket" id="mwAnY">[</span>51<span class="cite-bracket" id="mwAnc">]</span></span></a></sup><sup about="#mwt237" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-52"}}' id="cite_ref-52" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-52" id="mwAng"><span class="mw-reflink-text" id="mwAnk"><span class="cite-bracket" id="mwAno">[</span>52<span class="cite-bracket" id="mwAns">]</span></span></a></sup> and by Dan Crisan, Pierre Del Moral and Terry Lyons.<sup about="#mwt240" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":52"},"body":{"id":"mw-reference-text-cite_note-:52-53"}}' id="cite_ref-:52_53-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:52-53" id="mwAnw"><span class="mw-reflink-text" id="mwAn0"><span class="cite-bracket" id="mwAn4">[</span>53<span class="cite-bracket" id="mwAn8">]</span></span></a></sup> Further developments in this field were described in 1999 to 2001 by P. Del Moral, A. Guionnet and L. Miclo.<sup about="#mwt241" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dmm002"}}' id="cite_ref-dmm002_31-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dmm002-31" id="mwAoA"><span class="mw-reflink-text" id="mwAoE"><span class="cite-bracket" id="mwAoI">[</span>31<span class="cite-bracket" id="mwAoM">]</span></span></a></sup><sup about="#mwt244" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dg99"},"body":{"id":"mw-reference-text-cite_note-dg99-54"}}' id="cite_ref-dg99_54-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dg99-54" id="mwAoQ"><span class="mw-reflink-text" id="mwAoU"><span class="cite-bracket" id="mwAoY">[</span>54<span class="cite-bracket" id="mwAoc">]</span></span></a></sup><sup about="#mwt247" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"dg01"},"body":{"id":"mw-reference-text-cite_note-dg01-55"}}' id="cite_ref-dg01_55-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-dg01-55" id="mwAog"><span class="mw-reflink-text" id="mwAok"><span class="cite-bracket" id="mwAoo">[</span>55<span class="cite-bracket" id="mwAos">]</span></span></a></sup></p>
+<p id="mwAo0">There is no consensus on how <i id="mwAo4">Monte Carlo</i> should be defined. For example, Ripley<sup about="#mwt249" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Ripley"},"body":{"id":"mw-reference-text-cite_note-Ripley-56"}}' id="cite_ref-Ripley_56-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Ripley-56" id="mwAo8"><span class="mw-reflink-text" id="mwApA"><span class="cite-bracket" id="mwApE">[</span>56<span class="cite-bracket" id="mwApI">]</span></span></a></sup> defines most probabilistic modeling as <i id="mwApM"><a href="https://en.wikipedia.org/wiki/Stochastic_simulation" id="mwApQ" rel="mw:WikiLink" title="Stochastic simulation">stochastic simulation</a></i>, with <i id="mwApU">Monte Carlo</i> being reserved for <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration" id="mwApY" rel="mw:WikiLink" title="Monte Carlo integration">Monte Carlo integration</a> and Monte Carlo statistical tests. <a href="https://en.wikipedia.org/wiki/Shlomo_Sawilowsky" id="mwApc" rel="mw:WikiLink" title="Shlomo Sawilowsky">Sawilowsky</a><sup about="#mwt251" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Sawilowsky"},"body":{"id":"mw-reference-text-cite_note-Sawilowsky-57"}}' id="cite_ref-Sawilowsky_57-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Sawilowsky-57" id="mwApg"><span class="mw-reflink-text" id="mwApk"><span class="cite-bracket" id="mwApo">[</span>57<span class="cite-bracket" id="mwAps">]</span></span></a></sup> distinguishes between a <a href="https://en.wikipedia.org/wiki/Simulation" id="mwApw" rel="mw:WikiLink" title="Simulation">simulation</a>, a Monte Carlo method, and a Monte Carlo simulation: a simulation is a fictitious representation of reality, a Monte Carlo method is a technique that can be used to solve a mathematical or statistical problem. A Monte Carlo simulation uses repeated sampling to obtain the statistical properties of some phenomena. Here are some examples:</p>
+</div></div>
+</body></html>

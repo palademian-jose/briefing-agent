@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 85
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Tf–idf",
+    "pageid": 2057290,
+    "size": 25566,
+    "wordcount": 3268,
+    "snippet": "In information retrieval, <span class=\"searchmatch\">tf</span>–<span class=\"searchmatch\">idf</span> (term frequency–inverse document frequency, <span class=\"searchmatch\">TF</span>*<span class=\"searchmatch\">IDF</span>, TFIDF, <span class=\"searchmatch\">TF</span>–<span class=\"searchmatch\">IDF</span>, or <span class=\"searchmatch\">Tf</span>–<span class=\"searchmatch\">idf</span>) is a measure of importance of a word to",
+    "timestamp": "2026-08-17T12:14:15Z"
+   },
+   {
+    "ns": 0,
+    "title": "Okapi BM25",
+    "pageid": 9511414,
+    "size": 9735,
+    "wordcount": 1308,
+    "snippet": "that can take document structure and anchor text into account), represent <span class=\"searchmatch\">TF</span>-<span class=\"searchmatch\">IDF</span>-like retrieval functions used in document retrieval. BM25 is a bag-of-words",
+    "timestamp": "2026-08-31T04:58:15Z"
+   },
+   {
+    "ns": 0,
+    "title": "Vector space model",
+    "pageid": 20948989,
+    "size": 12280,
+    "wordcount": 1639,
+    "snippet": "as (term) weights, have been developed. One of the best known schemes is <span class=\"searchmatch\">tf</span>-<span class=\"searchmatch\">idf</span> weighting (see the example below). The definition of term depends on the",
+    "timestamp": "2026-04-17T03:45:53Z"
+   },
+   {
+    "ns": 0,
+    "title": "IDF (disambiguation)",
+    "pageid": 15478,
+    "size": 1244,
+    "wordcount": 195,
+    "snippet": "factor in the <span class=\"searchmatch\">tf</span>–<span class=\"searchmatch\">idf</span> principle Indirect fire International Day of Forests IDF1, a French TV channel All pages with titles beginning with <span class=\"searchmatch\">IDF</span> All pages with",
+    "timestamp": "2026-09-17T01:23:49Z"
+   },
+   {
+    "ns": 0,
+    "title": "Nearest centroid classifier",
+    "pageid": 35250304,
+    "size": 2657,
+    "wordcount": 289,
+    "snippet": "observation. When applied to text classification using word vectors containing <span class=\"searchmatch\">tf</span>*<span class=\"searchmatch\">idf</span> weights to represent documents, the nearest centroid classifier is known",
+    "timestamp": "2025-12-25T00:34:39Z"
+   }
+  ]
+ }
+}

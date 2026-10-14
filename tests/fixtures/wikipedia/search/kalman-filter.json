@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 419
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Kalman filter",
+    "pageid": 180855,
+    "size": 135001,
+    "wordcount": 20662,
+    "snippet": "In statistics and control theory, <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filtering</span> (also known as linear quadratic estimation) is an algorithm that uses a series of measurements observed",
+    "timestamp": "2026-10-07T05:00:07Z"
+   },
+   {
+    "ns": 0,
+    "title": "Extended Kalman filter",
+    "pageid": 18436459,
+    "size": 28828,
+    "wordcount": 3834,
+    "snippet": "In estimation theory, the extended <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filter</span> (EKF) is the nonlinear version of the <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filter</span> which linearizes about an estimate of the current",
+    "timestamp": "2026-09-27T08:19:43Z"
+   },
+   {
+    "ns": 0,
+    "title": "Rudolf E. Kálmán",
+    "pageid": 396498,
+    "size": 13537,
+    "wordcount": 1234,
+    "snippet": "inventor. He is most noted for his co-invention and development of the <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filter</span>, a mathematical algorithm that is widely used in signal processing,",
+    "timestamp": "2026-08-29T19:20:05Z"
+   },
+   {
+    "ns": 0,
+    "title": "Schmidt–Kalman filter",
+    "pageid": 35575382,
+    "size": 3040,
+    "wordcount": 325,
+    "snippet": "The Schmidt–<span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">Filter</span> is a modification of the <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filter</span> for reducing the dimensionality of the state estimate, while still considering the effects",
+    "timestamp": "2026-09-05T18:00:01Z"
+   },
+   {
+    "ns": 0,
+    "title": "Ensemble Kalman filter",
+    "pageid": 9553738,
+    "size": 26671,
+    "wordcount": 4013,
+    "snippet": "The ensemble <span class=\"searchmatch\">Kalman</span> <span class=\"searchmatch\">filter</span> (EnKF) is a recursive <span class=\"searchmatch\">filter</span> suitable for problems with a large number of variables, such as discretizations of partial differential",
+    "timestamp": "2026-09-27T08:04:30Z"
+   }
+  ]
+ }
+}

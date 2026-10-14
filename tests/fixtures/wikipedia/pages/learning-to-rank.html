@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Learning to rank - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Learning to rank</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBQ"><b id="mwBg">Learning to rank</b><sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"liu"},"body":{"id":"mw-reference-text-cite_note-liu-1"}}' id="cite_ref-liu_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-liu-1" id="mwBw"><span class="mw-reflink-text" id="mwCA"><span class="cite-bracket" id="mwCQ">[</span>1<span class="cite-bracket" id="mwCg">]</span></span></a></sup> (<b id="mwCw">LTR</b>) or <b id="mwDA">machine-learned ranking</b> (<b id="mwDQ">MLR</b>) is the application of <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwDg" rel="mw:WikiLink" title="Machine learning">machine learning</a>, often <a href="https://en.wikipedia.org/wiki/Supervised_learning" id="mwDw" rel="mw:WikiLink" title="Supervised learning">supervised</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Semi-supervised_learning" id="mwEA" rel="mw:WikiLink" title="Semi-supervised learning">semi-supervised</a> or <a href="https://en.wikipedia.org/wiki/Reinforcement_learning" id="mwEQ" rel="mw:WikiLink" title="Reinforcement learning">reinforcement learning</a>, in the construction of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Ranking_function" id="mwEg" rel="mw:WikiLink" title="Ranking function">ranking models</a> for <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwEw" rel="mw:WikiLink" title="Information retrieval">information retrieval</a> and <a href="https://en.wikipedia.org/wiki/Recommender_system" id="mwFA" rel="mw:WikiLink" title="Recommender system">recommender</a> systems.<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>2<span class="cite-bracket" id="mwGA">]</span></span></a></sup> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Training_data" id="mwGQ" rel="mw:WikiLink" title="Training data">Training data</a> may, for example, consist of lists of items with some <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Partial_order" id="mwGg" rel="mw:WikiLink" title="Partial order">partial order</a> specified between items in each list. This order is typically induced by giving a numerical or ordinal score or a binary judgment (e.g. "relevant" or "not relevant") for each item. The goal of constructing the ranking model is to rank new, unseen lists in a similar way to rankings in the training data.</p>
+<p id="mwIg">Ranking is a central part of many <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwIw" rel="mw:WikiLink" title="Information retrieval">information retrieval</a> problems, such as <a href="https://en.wikipedia.org/wiki/Document_retrieval" id="mwJA" rel="mw:WikiLink" title="Document retrieval">document retrieval</a>, <a href="https://en.wikipedia.org/wiki/Collaborative_filtering" id="mwJQ" rel="mw:WikiLink" title="Collaborative filtering">collaborative filtering</a>, <a href="https://en.wikipedia.org/wiki/Sentiment_analysis" id="mwJg" rel="mw:WikiLink" title="Sentiment analysis">sentiment analysis</a>, and <a href="https://en.wikipedia.org/wiki/Online_advertising" id="mwJw" rel="mw:WikiLink" title="Online advertising">online advertising</a>.</p>
+<p id="mwKA">A possible architecture of a machine-learned search engine is shown in the accompanying figure.</p>
+<p id="mwKQ">Training data consists of queries and documents matching them together with the relevance degree of each match. It may be prepared manually by human <i id="mwKg">assessors</i> (or <i id="mwKw">raters</i>, as <a href="https://en.wikipedia.org/wiki/Google" id="mwLA" rel="mw:WikiLink" title="Google">Google</a> calls them), who check results for some queries and determine <a href="https://en.wikipedia.org/wiki/Relevance_(information_retrieval)" id="mwLQ" rel="mw:WikiLink" title="Relevance (information retrieval)">relevance</a> of each result. It is not feasible to check the relevance of all documents, and so typically a technique called pooling is used — only the top few documents, retrieved by some existing ranking models are checked. This technique may introduce selection bias. Alternatively, training data may be derived automatically by analyzing <i id="mwLg">clickthrough logs</i> (i.e. search results which got clicks from users),<sup about="#mwt18" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Joachims2002"},"body":{"id":"mw-reference-text-cite_note-Joachims2002-3"}}' id="cite_ref-Joachims2002_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Joachims2002-3" id="mwLw"><span class="mw-reflink-text" id="mwMA"><span class="cite-bracket" id="mwMQ">[</span>3<span class="cite-bracket" id="mwMg">]</span></span></a></sup> <i id="mwMw">query chains</i>,<sup about="#mwt21" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwNA"><span class="mw-reflink-text" id="mwNQ"><span class="cite-bracket" id="mwNg">[</span>4<span class="cite-bracket" id="mwNw">]</span></span></a></sup> or such search engines' features as Google's (since-replaced) <a href="https://en.wikipedia.org/wiki/Google_SearchWiki" id="mwOA" rel="mw:WikiLink" title="Google SearchWiki">SearchWiki</a>. Clickthrough logs can be biased by the tendency of users to click on the top search results on the assumption that they are already well-ranked.</p>
+<p id="mwOQ">Training data is used by a learning algorithm to produce a ranking model which computes the relevance of documents for actual queries.</p>
+<p id="mwOg">Typically, users expect a search query to complete in a short time (such as a few hundred milliseconds for web search), which makes it impossible to evaluate a complex ranking model on each document in the corpus, and so a two-phase scheme is used.<sup about="#mwt24" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwOw"><span class="mw-reflink-text" id="mwPA"><span class="cite-bracket" id="mwPQ">[</span>5<span class="cite-bracket" id="mwPg">]</span></span></a></sup> First, a small number of potentially relevant documents are identified using simpler retrieval models which permit fast query evaluation, such as the <a href="https://en.wikipedia.org/wiki/Vector_space_model" id="mwPw" rel="mw:WikiLink" title="Vector space model">vector space model</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Standard_Boolean_model" id="mwQA" rel="mw:WikiLink" title="Standard Boolean model">Boolean model</a>, weighted AND,<sup about="#mwt27" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwQQ"><span class="mw-reflink-text" id="mwQg"><span class="cite-bracket" id="mwQw">[</span>6<span class="cite-bracket" id="mwRA">]</span></span></a></sup> or <a href="https://en.wikipedia.org/wiki/Okapi_BM25" id="mwRQ" rel="mw:WikiLink" title="Okapi BM25">BM25</a>. This phase is called <i id="mwRg">top-<span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwRw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> document retrieval</i> and many heuristics were proposed in the literature to accelerate it, such as using a document's static quality score and tiered indexes.<sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"manning-q-eval"},"body":{"id":"mw-reference-text-cite_note-manning-q-eval-7"}}' id="cite_ref-manning-q-eval_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-manning-q-eval-7" id="mwSA"><span class="mw-reflink-text" id="mwSQ"><span class="cite-bracket" id="mwSg">[</span>7<span class="cite-bracket" id="mwSw">]</span></span></a></sup> In the second phase, a more accurate but computationally expensive machine-learned model is used to re-rank these documents.</p>
+<p id="mwTQ">Learning to rank algorithms have been applied in areas other than information retrieval:</p>
+<p id="mwYg">For the convenience of MLR algorithms, query-document pairs are usually represented by numerical vectors, which are called <i id="mwYw"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Feature_vector" id="mwZA" rel="mw:WikiLink" title="Feature vector">feature vectors</a></i>. Such an approach is sometimes called <i id="mwZQ">bag of features</i> and is analogous to the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Bag_of_words" id="mwZg" rel="mw:WikiLink" title="Bag of words">bag of words</a> model and <a href="https://en.wikipedia.org/wiki/Vector_space_model" id="mwZw" rel="mw:WikiLink" title="Vector space model">vector space model</a> used in information retrieval for representation of documents.</p>
+<p id="mwaA">Components of such vectors are called <i id="mwaQ"><a href="https://en.wikipedia.org/wiki/Feature_(machine_learning)" id="mwag" rel="mw:WikiLink" title="Feature (machine learning)">features</a></i>, <i id="mwaw">factors</i> or <i id="mwbA">ranking signals</i>. They may be divided into three groups (features from <a href="https://en.wikipedia.org/wiki/Document_retrieval" id="mwbQ" rel="mw:WikiLink" title="Document retrieval">document retrieval</a> are shown as examples):</p>
+<p id="mwhQ">Some examples of features, which were used in the well-known <a class="external text" href="https://www.microsoft.com/en-us/research/project/letor-learning-rank-information-retrieval/" id="mwhg" rel="mw:ExtLink nofollow">LETOR</a> dataset:</p>
+<p id="mwkg">Selecting and designing good features is an important area in machine learning, which is called <a href="https://en.wikipedia.org/wiki/Feature_engineering" id="mwkw" rel="mw:WikiLink" title="Feature engineering">feature engineering</a>.</p>
+<p id="mwlw">There are several measures (metrics) which are commonly used to judge how well an algorithm is doing on training data and to compare the performance of different MLR algorithms. Often a learning-to-rank problem is reformulated as an optimization problem with respect to one of these metrics.</p>
+<p id="mwmA">Examples of ranking quality measures:</p>
+<p id="mwqw">DCG and its normalized variant NDCG are usually preferred in academic research when multiple levels of relevance are used.<sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwrA"><span class="mw-reflink-text" id="mwrQ"><span class="cite-bracket" id="mwrg">[</span>11<span class="cite-bracket" id="mwrw">]</span></span></a></sup> Other metrics such as MAP, MRR and precision, are defined only for binary judgments.</p>
+<p id="mwsA">Recently, there have been proposed several new evaluation metrics which claim to model user's satisfaction with search results better than the DCG metric:</p>
+<p id="mwvQ">Both of these metrics are based on the assumption that the user is more likely to stop looking at search results after examining a more relevant document, than after a less relevant document.</p>
+<p id="mwvw">Learning to Rank approaches are often categorized using one of three approaches: pointwise (where individual documents are ranked), pairwise (where pairs of documents are ranked into a relative order), and listwise (where an entire list of documents are ordered).</p>
+<p id="mwwA"><a href="https://en.wikipedia.org/wiki/Tie-Yan_Liu" id="mwwQ" rel="mw:WikiLink" title="Tie-Yan Liu">Tie-Yan Liu</a> of Microsoft Research Asia has analyzed existing algorithms for learning to rank problems in his book <i id="mwwg">Learning to Rank for Information Retrieval</i>.<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"liu"}}' id="cite_ref-liu_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-liu-1" id="mwww"><span class="mw-reflink-text" id="mwxA"><span class="cite-bracket" id="mwxQ">[</span>1<span class="cite-bracket" id="mwxg">]</span></span></a></sup> He categorized them into three groups by their input spaces, output spaces, hypothesis spaces (the core function of the model) and <a href="https://en.wikipedia.org/wiki/Loss_function" id="mwxw" rel="mw:WikiLink" title="Loss function">loss functions</a>: the pointwise, pairwise, and listwise approach. In practice, listwise approaches often outperform pairwise approaches and pointwise approaches. This statement was further supported by a large scale experiment on the performance of different learning-to-rank methods on a large collection of benchmark data sets.<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Tax2015"},"body":{"id":"mw-reference-text-cite_note-Tax2015-14"}}' id="cite_ref-Tax2015_14-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Tax2015-14" id="mwyA"><span class="mw-reflink-text" id="mwyQ"><span class="cite-bracket" id="mwyg">[</span>14<span class="cite-bracket" id="mwyw">]</span></span></a></sup></p>
+<p id="mwzA">In this section, without further notice, <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwzQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> denotes an object to be evaluated, for example, a document or an image, <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(x)"}}' id="mwzg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/202945cce41ecebb6f643f31d119c514bec7a074" style="vertical-align: -0.838ex; width:4.418ex; height:2.843ex;"/></span> denotes a single-value hypothesis, <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(\\cdot)"}}' id="mwzw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a4e42ce33810cdad2ae2f1f5695206f73000a34" style="vertical-align: -0.838ex; width:3.795ex; height:2.843ex;"/></span> denotes a bi-variate or multi-variate function and <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L(\\cdot)"}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L(\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo stretchy="false">(</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L(\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L(\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54540ae517d68ea2f9a84a10b80380d90adea96e" style="vertical-align: -0.838ex; width:4.039ex; height:2.843ex;"/></span> denotes the loss function.</p>
+<p id="mw0g">In this case, it is assumed that each query-document pair in the training data has a numerical or ordinal score. Then the learning-to-rank problem can be approximated by a regression problem — given a single query-document pair, predict its score. Formally speaking, the pointwise approach aims at learning a function <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(x)"}}' id="mw0w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/202945cce41ecebb6f643f31d119c514bec7a074" style="vertical-align: -0.838ex; width:4.418ex; height:2.843ex;"/></span> predicting the real-value or ordinal score of a document <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mw1A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> using the loss function <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L(f; x_j, y_j)"}}' id="mw1Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L(f;x_{j},y_{j})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo stretchy="false">(</mo>
+<mi>f</mi>
+<mo>;</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L(f;x_{j},y_{j})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L(f;x_{j},y_{j})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffd85d5f4e49c74c9d70fadb4a1765ee3d262392" style="vertical-align: -1.005ex; width:11.027ex; height:3.009ex;"/></span>.</p>
+<p id="mw1g">A number of existing <a href="https://en.wikipedia.org/wiki/Supervised_learning" id="mw1w" rel="mw:WikiLink" title="Supervised learning">supervised</a> machine learning algorithms can be readily used for this purpose. <a href="https://en.wikipedia.org/wiki/Ordinal_regression" id="mw2A" rel="mw:WikiLink" title="Ordinal regression">Ordinal regression</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Classification_(machine_learning)" id="mw2Q" rel="mw:WikiLink" title="Classification (machine learning)">classification</a> algorithms can also be used in pointwise approach when they are used to predict the score of a single query-document pair, and it takes a small, finite number of values.</p>
+<p id="mw2w">In this case, the learning-to-rank problem is approximated by a classification problem — learning a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Binary_classifier" id="mw3A" rel="mw:WikiLink" title="Binary classifier">binary classifier</a> <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x_u, x_v)"}}' id="mw3Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x_{u},x_{v})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x_{u},x_{v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x_{u},x_{v})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dc955ff4f15a5cc2a6b5d43dd7efcf873408236a" style="vertical-align: -0.838ex; width:9.044ex; height:2.843ex;"/></span> that can tell which document is better in a given pair of documents. The classifier shall take two documents as its input and the goal is to minimize a loss function <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L(h; x_u, x_v, y_{u,v})"}}' id="mw3g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L(h;x_{u},x_{v},y_{u,v})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo stretchy="false">(</mo>
+<mi>h</mi>
+<mo>;</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+<mo>,</mo>
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L(h;x_{u},x_{v},y_{u,v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L(h;x_{u},x_{v},y_{u,v})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e8c5cbe80f97b808fac5d434168639ebbb1a7f7b" style="vertical-align: -1.005ex; width:16.261ex; height:3.009ex;"/></span>. The loss function typically reflects the number and magnitude of <a href="https://en.wikipedia.org/wiki/Permutation#Inversions" id="mw3w" rel="mw:WikiLink" title="Permutation">inversions</a> in the induced ranking.</p>
+<p id="mw4A">In many cases, the binary classifier <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x_u, x_v)"}}' id="mw4Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x_{u},x_{v})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x_{u},x_{v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x_{u},x_{v})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dc955ff4f15a5cc2a6b5d43dd7efcf873408236a" style="vertical-align: -0.838ex; width:9.044ex; height:2.843ex;"/></span> is implemented with a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Scoring_function" id="mw4g" rel="mw:WikiLink" title="Scoring function">scoring function</a> <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(x)"}}' id="mw4w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/202945cce41ecebb6f643f31d119c514bec7a074" style="vertical-align: -0.838ex; width:4.418ex; height:2.843ex;"/></span>. As an example, RankNet <sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mw5A"><span class="mw-reflink-text" id="mw5Q"><span class="cite-bracket" id="mw5g">[</span>15<span class="cite-bracket" id="mw5w">]</span></span></a></sup> adapts a probability model and defines <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x_u, x_v)"}}' id="mw6A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x_{u},x_{v})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x_{u},x_{v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x_{u},x_{v})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dc955ff4f15a5cc2a6b5d43dd7efcf873408236a" style="vertical-align: -0.838ex; width:9.044ex; height:2.843ex;"/></span> as the estimated probability of the document <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_u"}}' id="mw6Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{u}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{u}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{u}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff6c0f0d784f2e277242165b878ab5d272267e07" style="vertical-align: -0.671ex; width:2.502ex; height:2.009ex;"/></span> has higher quality than <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_v"}}' id="mw6g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{v}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{v}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{v}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/971dcbf2d12e5533b22c0a7b979d7b9040f35982" style="vertical-align: -0.671ex; width:2.359ex; height:2.009ex;"/></span>:</p>
+<p id="mw7g">where <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\text{CDF}(\\cdot)"}}' id="mw7w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{CDF}}(\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>CDF</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{CDF}}(\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{CDF}}(\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b918aea4c33e0d52178ae3c0fb9d2ee91bef33f" style="vertical-align: -0.838ex; width:7.428ex; height:2.843ex;"/></span> is a <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function" id="mw8A" rel="mw:WikiLink" title="Cumulative distribution function">cumulative distribution function</a>, for example, the <a href="https://en.wikipedia.org/wiki/Logistic_distribution#Cumulative_distribution_function" id="mw8Q" rel="mw:WikiLink" title="Logistic distribution">standard logistic CDF</a>, i.e.</p>
+<p id="mw9g">These algorithms try to directly optimize the value of one of the above evaluation measures, averaged over all queries in the training data. This is often difficult in practice because most evaluation measures are not continuous functions with respect to ranking model's parameters, and so continuous approximations or bounds on evaluation measures have to be used. For example the SoftRank algorithm.<sup about="#mwt79" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mw9w"><span class="mw-reflink-text" id="mw-A"><span class="cite-bracket" id="mw-Q">[</span>16<span class="cite-bracket" id="mw-g">]</span></span></a></sup> LambdaMART is a pairwise algorithm which has been empirically shown to approximate listwise objective functions.<sup about="#mwt82" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Burges2010"},"body":{"id":"mw-reference-text-cite_note-Burges2010-17"}}' id="cite_ref-Burges2010_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Burges2010-17" id="mw-w"><span class="mw-reflink-text" id="mw_A"><span class="cite-bracket" id="mw_Q">[</span>17<span class="cite-bracket" id="mw_g">]</span></span></a></sup></p>
+<p id="mwAQA">A partial list of published learning-to-rank algorithms is shown below with years of first publication of each method:</p>
+<p id="mwAvs">Note: as most supervised learning-to-rank algorithms can be applied to pointwise, pairwise and listwise case, only those methods which are specifically designed with ranking in mind are shown above.</p>
+<p id="mwAv0"><a href="https://en.wikipedia.org/wiki/Norbert_Fuhr" id="mwAv4" rel="mw:WikiLink" title="Norbert Fuhr">Norbert Fuhr</a> introduced the general idea of MLR in 1992, describing learning approaches in information retrieval as a generalization of parameter estimation;<sup about="#mwt176" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Fuhr1992"},"body":{"id":"mw-reference-text-cite_note-Fuhr1992-49"}}' id="cite_ref-Fuhr1992_49-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Fuhr1992-49" id="mwAv8"><span class="mw-reflink-text" id="mwAwA"><span class="cite-bracket" id="mwAwE">[</span>49<span class="cite-bracket" id="mwAwI">]</span></span></a></sup> a specific variant of this approach (using <a href="https://en.wikipedia.org/wiki/Polynomial_regression" id="mwAwM" rel="mw:WikiLink" title="Polynomial regression">polynomial regression</a>) had been published by him three years earlier.<sup about="#mwt177" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Fuhr1989"}}' id="cite_ref-Fuhr1989_18-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Fuhr1989-18" id="mwAwQ"><span class="mw-reflink-text" id="mwAwU"><span class="cite-bracket" id="mwAwY">[</span>18<span class="cite-bracket" id="mwAwc">]</span></span></a></sup> Bill Cooper proposed <a href="https://en.wikipedia.org/wiki/Logistic_regression" id="mwAwg" rel="mw:WikiLink" title="Logistic regression">logistic regression</a> for the same purpose in 1992 <sup about="#mwt178" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Cooperetal1992"}}' id="cite_ref-Cooperetal1992_19-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Cooperetal1992-19" id="mwAwk"><span class="mw-reflink-text" id="mwAwo"><span class="cite-bracket" id="mwAws">[</span>19<span class="cite-bracket" id="mwAww">]</span></span></a></sup> and used it with his <a class="mw-redirect" href="https://en.wikipedia.org/wiki/University_of_California_at_Berkeley" id="mwAw0" rel="mw:WikiLink" title="University of California at Berkeley">Berkeley</a> research group to train a successful ranking function for <a href="https://en.wikipedia.org/wiki/Text_Retrieval_Conference" id="mwAw4" rel="mw:WikiLink" title="Text Retrieval Conference">TREC</a>. Manning et al.<sup about="#mwt183" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-50"}}' id="cite_ref-50" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-50" id="mwAw8"><span class="mw-reflink-text" id="mwAxA"><span class="cite-bracket" id="mwAxE">[</span>50<span class="cite-bracket" id="mwAxI">]</span></span></a></sup> suggest that these early works achieved limited results in their time due to little available training data and poor machine learning techniques.</p>
+<p id="mwAxM">Several conferences, such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Neural_Information_Processing_Systems" id="mwAxQ" rel="mw:WikiLink" title="Neural Information Processing Systems">NeurIPS</a>, <a href="https://en.wikipedia.org/wiki/Special_Interest_Group_on_Information_Retrieval" id="mwAxU" rel="mw:WikiLink" title="Special Interest Group on Information Retrieval">SIGIR</a> and <a href="https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning" id="mwAxY" rel="mw:WikiLink" title="International Conference on Machine Learning">ICML</a> have had workshops devoted to the learning-to-rank problem since the mid-2000s (decade).</p>
+<p id="mwAxg">Commercial <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Web_search_engine" id="mwAxk" rel="mw:WikiLink" title="Web search engine">web search engines</a> began using machine-learned ranking systems since the 2000s (decade). One of the first search engines to start using it was <a href="https://en.wikipedia.org/wiki/AltaVista" id="mwAxo" rel="mw:WikiLink" title="AltaVista">AltaVista</a> (later its technology was acquired by <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Overture_Services,_Inc." id="mwAxs" rel="mw:WikiLink" title="Overture Services, Inc.">Overture</a>, and then <a href="https://en.wikipedia.org/wiki/Yahoo" id="mwAxw" rel="mw:WikiLink" title="Yahoo">Yahoo</a>), which launched a <a href="https://en.wikipedia.org/wiki/Gradient_boosting" id="mwAx0" rel="mw:WikiLink" title="Gradient boosting">gradient boosting</a>-trained ranking function in April 2003.<sup about="#mwt185" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-51"}}' id="cite_ref-51" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-51" id="mwAx4"><span class="mw-reflink-text" id="mwAx8"><span class="cite-bracket" id="mwAyA">[</span>51<span class="cite-bracket" id="mwAyE">]</span></span></a></sup><sup about="#mwt187" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-52"}}' id="cite_ref-52" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-52" id="mwAyI"><span class="mw-reflink-text" id="mwAyM"><span class="cite-bracket" id="mwAyQ">[</span>52<span class="cite-bracket" id="mwAyU">]</span></span></a></sup></p>
+<p id="mwAyY">At its launch in 2009, <a href="https://en.wikipedia.org/wiki/Microsoft_Bing" id="mwAyc" rel="mw:WikiLink" title="Microsoft Bing">Microsoft Bing</a>'s search engine was powered by the RankNet algorithm,<sup about="#mwt190" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-53"}}' id="cite_ref-53" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-53" id="mwAyg"><span class="mw-reflink-text" id="mwAyk"><span class="cite-bracket" id="mwAyo">[</span>53<span class="cite-bracket" id="mwAys">]</span></span></a></sup> which was invented at <a href="https://en.wikipedia.org/wiki/Microsoft_Research" id="mwAyw" rel="mw:WikiLink" title="Microsoft Research">Microsoft Research</a> in 2005.</p>
+<p id="mwAy0">In November 2009 a Russian search engine <a href="https://en.wikipedia.org/wiki/Yandex" id="mwAy4" rel="mw:WikiLink" title="Yandex">Yandex</a> announced<sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"snezhinsk"},"body":{"id":"mw-reference-text-cite_note-snezhinsk-54"}}' id="cite_ref-snezhinsk_54-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-snezhinsk-54" id="mwAy8"><span class="mw-reflink-text" id="mwAzA"><span class="cite-bracket" id="mwAzE">[</span>54<span class="cite-bracket" id="mwAzI">]</span></span></a></sup> that it had significantly increased its search quality due to deployment of a new proprietary <a href="https://en.wikipedia.org/wiki/MatrixNet" id="mwAzM" rel="mw:WikiLink" title="MatrixNet">MatrixNet</a> algorithm, a variant of <a href="https://en.wikipedia.org/wiki/Gradient_boosting" id="mwAzQ" rel="mw:WikiLink" title="Gradient boosting">gradient boosting</a> method which uses oblivious decision trees.<sup about="#mwt195" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-55"}}' id="cite_ref-55" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-55" id="mwAzU"><span class="mw-reflink-text" id="mwAzY"><span class="cite-bracket" id="mwAzc">[</span>55<span class="cite-bracket" id="mwAzg">]</span></span></a></sup> Recently they have also sponsored a machine-learned ranking competition "Internet Mathematics 2009"<sup about="#mwt198" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-56"}}' id="cite_ref-56" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-56" id="mwAzk"><span class="mw-reflink-text" id="mwAzo"><span class="cite-bracket" id="mwAzs">[</span>56<span class="cite-bracket" id="mwAzw">]</span></span></a></sup> based on their own search engine's production data. Yahoo has announced a similar competition in 2010.<sup about="#mwt201" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-57"}}' id="cite_ref-57" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-57" id="mwAz0"><span class="mw-reflink-text" id="mwAz4"><span class="cite-bracket" id="mwAz8">[</span>57<span class="cite-bracket" id="mwA0A">]</span></span></a></sup></p>
+<p id="mwA0E">As of 2008, <a href="https://en.wikipedia.org/wiki/Google" id="mwA0I" rel="mw:WikiLink" title="Google">Google</a>'s <a href="https://en.wikipedia.org/wiki/Peter_Norvig" id="mwA0M" rel="mw:WikiLink" title="Peter Norvig">Peter Norvig</a> denied that their search engine exclusively relies on machine-learned ranking.<sup about="#mwt205" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-58"}}' id="cite_ref-58" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-58" id="mwA0Q"><span class="mw-reflink-text" id="mwA0U"><span class="cite-bracket" id="mwA0Y">[</span>58<span class="cite-bracket" id="mwA0c">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Cuil" id="mwA0g" rel="mw:WikiLink" title="Cuil">Cuil</a>'s CEO, Tom Costello, suggests that they prefer hand-built models because they can outperform machine-learned models when measured against metrics like click-through rate or time on landing page, which is because machine-learned models "learn what people say they like, not what people actually like".<sup about="#mwt209" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-59"}}' id="cite_ref-59" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-59" id="mwA0k"><span class="mw-reflink-text" id="mwA0o"><span class="cite-bracket" id="mwA0s">[</span>59<span class="cite-bracket" id="mwA0w">]</span></span></a></sup></p>
+<p id="mwA00">In January 2017, the technology was included in the <a href="https://en.wikipedia.org/wiki/Open-source_software" id="mwA04" rel="mw:WikiLink" title="Open-source software">open source</a> search engine <a href="https://en.wikipedia.org/wiki/Apache_Solr" id="mwA08" rel="mw:WikiLink" title="Apache Solr">Apache Solr</a>.<sup about="#mwt212" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-60"}}' id="cite_ref-60" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-60" id="mwA1A"><span class="mw-reflink-text" id="mwA1E"><span class="cite-bracket" id="mwA1I">[</span>60<span class="cite-bracket" id="mwA1M">]</span></span></a></sup> It is also available in the open source <a href="https://en.wikipedia.org/wiki/OpenSearch_(software)" id="mwA1Q" rel="mw:WikiLink" title="OpenSearch (software)">OpenSearch</a> and <a href="https://en.wikipedia.org/wiki/Elasticsearch" id="mwA1U" rel="mw:WikiLink" title="Elasticsearch">Elasticsearch</a>.<sup about="#mwt215" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-61"}}' id="cite_ref-61" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-61" id="mwA1Y"><span class="mw-reflink-text" id="mwA1c"><span class="cite-bracket" id="mwA1g">[</span>61<span class="cite-bracket" id="mwA1k">]</span></span></a></sup><sup about="#mwt218" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-62"}}' id="cite_ref-62" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-62" id="mwA1o"><span class="mw-reflink-text" id="mwA1s"><span class="cite-bracket" id="mwA1w">[</span>62<span class="cite-bracket" id="mwA10">]</span></span></a></sup> These implementations make learning to rank widely accessible for enterprise search.</p>
+<p id="mwA18">Similar to recognition applications in <a href="https://en.wikipedia.org/wiki/Computer_vision" id="mwA2A" rel="mw:WikiLink" title="Computer vision">computer vision</a>, recent neural network based ranking algorithms are also found to be susceptible to covert <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" id="mwA2E" rel="mw:WikiLink" title="Generative adversarial network">adversarial attacks</a>, both on the candidates and the queries.<sup about="#mwt221" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhou Niu Wang Zhang 2020"},"body":{"id":"mw-reference-text-cite_note-Zhou_Niu_Wang_Zhang_2020-63"}}' id="cite_ref-Zhou_Niu_Wang_Zhang_2020_63-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhou_Niu_Wang_Zhang_2020-63" id="mwA2I"><span class="mw-reflink-text" id="mwA2M"><span class="cite-bracket" id="mwA2Q">[</span>63<span class="cite-bracket" id="mwA2U">]</span></span></a></sup> With small perturbations imperceptible to human beings, ranking order could be arbitrarily altered. In addition, model-agnostic transferable adversarial examples are found to be possible, which enables black-box adversarial attacks on deep ranking systems without requiring access to their underlying implementations.<sup about="#mwt222" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhou Niu Wang Zhang 2020"}}' id="cite_ref-Zhou_Niu_Wang_Zhang_2020_63-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhou_Niu_Wang_Zhang_2020-63" id="mwA2Y"><span class="mw-reflink-text" id="mwA2c"><span class="cite-bracket" id="mwA2g">[</span>63<span class="cite-bracket" id="mwA2k">]</span></span></a></sup><sup about="#mwt225" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Li Ji Liu Hong pp. 4899–4908"},"body":{"id":"mw-reference-text-cite_note-Li_Ji_Liu_Hong_pp._4899–4908-64"}}' id="cite_ref-Li_Ji_Liu_Hong_pp._4899–4908_64-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Li_Ji_Liu_Hong_pp._4899–4908-64" id="mwA2o"><span class="mw-reflink-text" id="mwA2s"><span class="cite-bracket" id="mwA2w">[</span>64<span class="cite-bracket" id="mwA20">]</span></span></a></sup></p>
+<p id="mwA24">Conversely, the robustness of such ranking systems can be improved via adversarial defenses such as the Madry defense.<sup about="#mwt228" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Madry Makelov Schmidt Tsipras 2017"},"body":{"id":"mw-reference-text-cite_note-Madry_Makelov_Schmidt_Tsipras_2017-65"}}' id="cite_ref-Madry_Makelov_Schmidt_Tsipras_2017_65-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Madry_Makelov_Schmidt_Tsipras_2017-65" id="mwA28"><span class="mw-reflink-text" id="mwA3A"><span class="cite-bracket" id="mwA3E">[</span>65<span class="cite-bracket" id="mwA3I">]</span></span></a></sup></p>
+</div></div>
+</body></html>

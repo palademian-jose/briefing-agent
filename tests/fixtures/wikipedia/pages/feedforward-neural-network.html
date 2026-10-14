@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Feedforward neural network - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Feedforward neural network</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwCg">A <b id="mwCw">feedforward neural network</b> is an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mwDA" rel="mw:WikiLink" title="Artificial neural network">artificial neural network</a> in which information flows in a single direction – inputs are multiplied by weights to obtain outputs (inputs-to-output).<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zell1994p73"},"body":{"id":"mw-reference-text-cite_note-Zell1994p73-1"}}' id="cite_ref-Zell1994p73_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zell1994p73-1" id="mwDQ"><span class="mw-reflink-text" id="mwDg"><span class="cite-bracket" id="mwDw">[</span>1<span class="cite-bracket" id="mwEA">]</span></span></a></sup> It contrasts with a <a href="https://en.wikipedia.org/wiki/Recurrent_neural_network" id="mwEQ" rel="mw:WikiLink" title="Recurrent neural network">recurrent neural network</a>, in which loops allow information from later processing stages to feed back to earlier stages.<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwEg"><span class="mw-reflink-text" id="mwEw"><span class="cite-bracket" id="mwFA">[</span>2<span class="cite-bracket" id="mwFQ">]</span></span></a></sup> Feedforward multiplication is essential for <a href="https://en.wikipedia.org/wiki/Backpropagation" id="mwFg" rel="mw:WikiLink" title="Backpropagation">backpropagation</a>,<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"lin1970"},"body":{"id":"mw-reference-text-cite_note-lin1970-3"}}' id="cite_ref-lin1970_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-lin1970-3" id="mwFw"><span class="mw-reflink-text" id="mwGA"><span class="cite-bracket" id="mwGQ">[</span>3<span class="cite-bracket" id="mwGg">]</span></span></a></sup><sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"kelley1960"},"body":{"id":"mw-reference-text-cite_note-kelley1960-4"}}' id="cite_ref-kelley1960_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-kelley1960-4" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>4<span class="cite-bracket" id="mwHg">]</span></span></a></sup><sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwHw"><span class="mw-reflink-text" id="mwIA"><span class="cite-bracket" id="mwIQ">[</span>5<span class="cite-bracket" id="mwIg">]</span></span></a></sup><sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"werbos1982"},"body":{"id":"mw-reference-text-cite_note-werbos1982-6"}}' id="cite_ref-werbos1982_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-werbos1982-6" id="mwIw"><span class="mw-reflink-text" id="mwJA"><span class="cite-bracket" id="mwJQ">[</span>6<span class="cite-bracket" id="mwJg">]</span></span></a></sup><sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"rumelhart1986"},"body":{"id":"mw-reference-text-cite_note-rumelhart1986-7"}}' id="cite_ref-rumelhart1986_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-rumelhart1986-7" id="mwJw"><span class="mw-reflink-text" id="mwKA"><span class="cite-bracket" id="mwKQ">[</span>7<span class="cite-bracket" id="mwKg">]</span></span></a></sup> because <a href="https://en.wikipedia.org/wiki/Feedback" id="mwKw" rel="mw:WikiLink" title="Feedback">feedback</a>, where the outputs feed back to the very same inputs and modify them, forms an infinite loop which is not possible to differentiate through backpropagation. This nomenclature appears to be a point of confusion between some computer scientists and scientists in other fields studying <a href="https://en.wikipedia.org/wiki/Neural_network_(biology)" id="mwLA" rel="mw:WikiLink" title="Neural network (biology)">brain networks</a>.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"AINeuroCog"},"body":{"id":"mw-reference-text-cite_note-AINeuroCog-8"}}' id="cite_ref-AINeuroCog_8-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-AINeuroCog-8" id="mwLQ"><span class="mw-reflink-text" id="mwLg"><span class="cite-bracket" id="mwLw">[</span>8<span class="cite-bracket" id="mwMA">]</span></span></a></sup></p>
+<p id="mwTw">In reality, such textures and outlines would not be represented by single nodes, but rather by associated weight patterns of multiple nodes.</p>
+<p id="mwUw">The two historically common <a href="https://en.wikipedia.org/wiki/Activation_function" id="mwVA" rel="mw:WikiLink" title="Activation function">activation functions</a> are both <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sigmoids" id="mwVQ" rel="mw:WikiLink" title="Sigmoids">sigmoids</a>, and are described by</p>
+<p id="mwVg"><span about="#mwt37" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"y(v_i) = \\tanh(v_i) ~~ \\text{and} ~~ y(v_i) = (1+e^{-v_i})^{-1}."}}' id="mwVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y(v_{i})=\tanh(v_{i})~~{\text{and}}~~y(v_{i})=(1+e^{-v_{i}})^{-1}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>y</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>tanh</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mtext> </mtext>
+<mtext> </mtext>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>and</mtext>
+</mrow>
+<mtext> </mtext>
+<mtext> </mtext>
+<mi>y</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>+</mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y(v_{i})=\tanh(v_{i})~~{\text{and}}~~y(v_{i})=(1+e^{-v_{i}})^{-1}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y(v_{i})=\tanh(v_{i})~~{\text{and}}~~y(v_{i})=(1+e^{-v_{i}})^{-1}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2c262d3150c923540d4fe3692fb11198309a87de" style="vertical-align: -0.838ex; width:43.248ex; height:3.176ex;"/></span></p>
+<p id="mwWA">The first is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hyperbolic_tangent" id="mwWQ" rel="mw:WikiLink" title="Hyperbolic tangent">hyperbolic tangent</a> that ranges from -1 to 1, while the other is the <a href="https://en.wikipedia.org/wiki/Logistic_function" id="mwWg" rel="mw:WikiLink" title="Logistic function">logistic function</a>, which is similar in shape but ranges from 0 to 1. Here <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_i"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67d30d30b6c2dbe4d6f150d699de040937ecc95f" style="vertical-align: -0.671ex; width:1.939ex; height:2.009ex;"/></span> is the output of the <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>-th node (neuron) and <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"v_i"}}' id="mwXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle v_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle v_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle v_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7dffe5726650f6daac54829972a94f38eb8ec127" style="vertical-align: -0.671ex; width:1.927ex; height:2.009ex;"/></span> is the weighted sum of the input connections. Alternative activation functions have been proposed, including the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)" id="mwXg" rel="mw:WikiLink" title="Rectifier (neural networks)">rectifier and softplus</a> functions. More specialized activation functions include <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Radial_basis_functions" id="mwXw" rel="mw:WikiLink" title="Radial basis functions">radial basis functions</a> (used in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Radial_basis_network" id="mwYA" rel="mw:WikiLink" title="Radial basis network">radial basis networks</a>, another class of supervised neural network models).</p>
+<p id="mwYQ">In recent developments of <a href="https://en.wikipedia.org/wiki/Deep_learning" id="mwYg" rel="mw:WikiLink" title="Deep learning">deep learning</a>, the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)" id="mwYw" rel="mw:WikiLink" title="Rectifier (neural networks)">rectified linear unit (ReLU)</a> is more frequently used as one of the possible ways to overcome the numerical <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" id="mwZA" rel="mw:WikiLink" title="Vanishing gradient problem">problems</a> related to the sigmoids.</p>
+<p id="mwZg"><span id="mwZw" typeof="mw:File"><a class="mw-file-description" href="https://en.wikipedia.org/wiki/File:Artificial_neuron-2.gif" id="mwaA"><img class="mw-file-element" data-file-height="458" data-file-type="bitmap" data-file-width="845" decoding="async" height="217" id="mwaQ" loading="lazy" resource="https://en.wikipedia.org/wiki/File:Artificial_neuron-2.gif" src="//thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Artificial_neuron-2.gif/500px-Artificial_neuron-2.gif?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail" srcset="//upload.wikimedia.org/wikipedia/commons/7/7d/Artificial_neuron-2.gif?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail_unscaled 2x" width="400"/></a></span></p>
+<p id="mwag">Learning occurs by changing connection weights after each piece of data is processed, based on the amount of error in the output compared to the expected result. This is an example of <a href="https://en.wikipedia.org/wiki/Supervised_learning" id="mwaw" rel="mw:WikiLink" title="Supervised learning">supervised learning</a>, and is carried out through backpropagation.</p>
+<p id="mwbA">We can represent the degree of error in an output node <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span> in the <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwbg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>-th data point (training example) by <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"e_j(n)=d_j(n)-y_j(n)"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle e_{j}(n)=d_{j}(n)-y_{j}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle e_{j}(n)=d_{j}(n)-y_{j}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle e_{j}(n)=d_{j}(n)-y_{j}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7ae245b407e23f310e793e20e6a88655b43f03c3" style="vertical-align: -1.005ex; width:21.712ex; height:3.009ex;"/></span>, where <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d_j(n)"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle d_{j}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle d_{j}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle d_{j}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aa7f02ee5d160f392198ca93416214a4b2695b6e" style="vertical-align: -1.005ex; width:5.323ex; height:3.009ex;"/></span> is the desired target value for <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwcQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>-th data point at node <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span>, and <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_j(n)"}}' id="mwcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{j}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{j}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{j}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f4d7b309ca93e6874e870245dea09e03f481937c" style="vertical-align: -1.005ex; width:5.253ex; height:3.009ex;"/></span> is the value produced at node <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwdA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span> when the <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwdQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>-th data point is given as an input.</p>
+<p id="mwdg">The node weights can then be adjusted based on corrections that minimize the error in the entire output for the <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwdw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>-th data point, given by</p>
+<p id="mweA"><span about="#mwt51" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\mathcal{E}(n)=\\frac{1}{2}\\sum_{\\text{output node }j} e_j^2(n)."}}' id="mweQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {E}}(n)={\frac {1}{2}}\sum _{{\text{output node }}j}e_{j}^{2}(n).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+</mrow>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>output node </mtext>
+</mrow>
+<mi>j</mi>
+</mrow>
+</munder>
+<msubsup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msubsup>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {E}}(n)={\frac {1}{2}}\sum _{{\text{output node }}j}e_{j}^{2}(n).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {E}}(n)={\frac {1}{2}}\sum _{{\text{output node }}j}e_{j}^{2}(n).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/35e29a6a36a867dd1b598667bafb5336a20540f0" style="vertical-align: -3.338ex; width:26.437ex; height:6.676ex;"/></span></p>
+<p id="mweg">Using <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwew" rel="mw:WikiLink" title="Gradient descent">gradient descent</a>, the change in each weight <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_{ij}"}}' id="mwfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{ij}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{ij}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{ij}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d3302ff355269436b43bc2fbe180303881c09321" style="vertical-align: -1.005ex; width:3.141ex; height:2.343ex;"/></span> is</p>
+<p id="mwfQ"><span about="#mwt53" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\Delta w_{ji} (n) = -\\eta\\frac{\\partial\\mathcal{E}(n)}{\\partial v_j(n)} y_i(n)"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \Delta w_{ji}(n)=-\eta {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}y_{i}(n)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">Δ<!-- Δ --></mi>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \Delta w_{ji}(n)=-\eta {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}y_{i}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \Delta w_{ji}(n)=-\eta {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}y_{i}(n)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e775e1fd516ec50eaf45344d5429657686c6985c" style="vertical-align: -2.671ex; width:26.896ex; height:6.509ex;"/></span></p>
+<p id="mwfw">where <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_i(n)"}}' id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{i}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{i}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{i}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/19e3d5ebf4f1ee077a51272c7fa460bc3a3b6cfe" style="vertical-align: -0.838ex; width:5.143ex; height:2.843ex;"/></span> is the output of the previous neuron <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>, and <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> is the <i id="mwgw"><a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwhA" rel="mw:WikiLink" title="Learning rate">learning rate</a></i>, which is selected to ensure that the weights quickly converge to a response, without oscillations. In the previous expression, <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{\\partial\\mathcal{E}(n)}{\\partial v_j(n)}"}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/425e3c3740ef19567aad60c42f73a44a733f18d3" style="vertical-align: -2.671ex; width:7.396ex; height:6.509ex;"/></span> denotes the partial derivative of the error <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal{E}(n)"}}' id="mwhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {E}}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {E}}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {E}}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5f50c8923a7523d0202bc45dbf9ad3d8762eace9" style="vertical-align: -0.838ex; width:4.515ex; height:2.843ex;"/></span> according to the weighted sum <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"v_j(n)"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle v_{j}(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle v_{j}(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle v_{j}(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa46f124ff295c8bfebb576c5eb810aa4fcc12b3" style="vertical-align: -1.005ex; width:5.241ex; height:3.009ex;"/></span> of the input connections of neuron <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>.</p>
+<p id="mwiQ">The derivative to be calculated depends on the induced local field <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"v_j"}}' id="mwig" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle v_{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle v_{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle v_{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/73fffa4919c0d6268f6a8d9f38c04dd3296fd0a5" style="vertical-align: -1.005ex; width:2.037ex; height:2.343ex;"/></span>, which itself varies. It is easy to prove that for an output node this derivative can be simplified to</p>
+<p id="mwiw"><span about="#mwt62" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"-\\frac{\\partial\\mathcal{E}(n)}{\\partial v_j(n)} = e_j(n)\\phi^\\prime (v_j(n))"}}' id="mwjA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=e_{j}(n)\phi ^{\prime }(v_{j}(n))}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<msub>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<msup>
+<mi>ϕ<!-- ϕ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-variant" mathvariant="normal">′<!-- ′ --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=e_{j}(n)\phi ^{\prime }(v_{j}(n))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=e_{j}(n)\phi ^{\prime }(v_{j}(n))}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/056be9bc7c738ade1a15914654576d0de972594b" style="vertical-align: -2.671ex; width:26.62ex; height:6.509ex;"/></span></p>
+<p id="mwjQ">where <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\phi^\\prime"}}' id="mwjg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \phi ^{\prime }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>ϕ<!-- ϕ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-variant" mathvariant="normal">′<!-- ′ --></mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \phi ^{\prime }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \phi ^{\prime }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a85fb8b93a9d888be883514370288e637780e04" style="vertical-align: -0.671ex; width:2.07ex; height:2.843ex;"/></span> is the derivative of the activation function described above, which itself does not vary. The analysis is more difficult for the change in weights to a hidden node, but it can be shown that the relevant derivative is</p>
+<p id="mwjw"><span about="#mwt64" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"-\\frac{\\partial\\mathcal{E}(n)}{\\partial v_j(n)} = \\phi^\\prime (v_j(n))\\sum_k -\\frac{\\partial\\mathcal{E}(n)}{\\partial v_k(n)} w_{kj}(n)."}}' id="mwkA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=\phi ^{\prime }(v_{j}(n))\sum _{k}-{\frac {\partial {\mathcal {E}}(n)}{\partial v_{k}(n)}}w_{kj}(n).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<msup>
+<mi>ϕ<!-- ϕ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-variant" mathvariant="normal">′<!-- ′ --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</munder>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">E</mi>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=\phi ^{\prime }(v_{j}(n))\sum _{k}-{\frac {\partial {\mathcal {E}}(n)}{\partial v_{k}(n)}}w_{kj}(n).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle -{\frac {\partial {\mathcal {E}}(n)}{\partial v_{j}(n)}}=\phi ^{\prime }(v_{j}(n))\sum _{k}-{\frac {\partial {\mathcal {E}}(n)}{\partial v_{k}(n)}}w_{kj}(n).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d64aadfab380b741d0e5fba0de46667b65a30c19" style="vertical-align: -3.005ex; width:42.216ex; height:6.843ex;"/></span></p>
+<p id="mwkQ">This depends on the change in weights of the <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>th nodes, which represent the output layer. So to change the hidden layer weights, the output layer weights change according to the derivative of the activation function, and so this algorithm represents a backpropagation of the activation function.<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwkw"><span class="mw-reflink-text" id="mwlA"><span class="cite-bracket" id="mwlQ">[</span>10<span class="cite-bracket" id="mwlg">]</span></span></a></sup></p>
+<p id="mwAS4">If using a threshold, i.e. a linear <a href="https://en.wikipedia.org/wiki/Activation_function" id="mwAS8" rel="mw:WikiLink" title="Activation function">activation</a> function,  the resulting <i id="mwATA">linear threshold unit</i> is called a <i id="mwATE"><a href="https://en.wikipedia.org/wiki/Perceptron" id="mwATI" rel="mw:WikiLink" title="Perceptron">perceptron</a></i>. (Often the term is used to denote just one of these units.) Multiple parallel non-linear units are able to <a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem" id="mwATM" rel="mw:WikiLink" title="Universal approximation theorem">approximate any continuous function</a> from a compact interval of the real numbers into the interval [−1,1] despite the limited computational power of single unit with a linear threshold function.<sup about="#mwt138" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Auer2008"},"body":{"id":"mw-reference-text-cite_note-Auer2008-31"}}' id="cite_ref-Auer2008_31-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Auer2008-31" id="mwATQ"><span class="mw-reflink-text" id="mwATU"><span class="cite-bracket" id="mwATY">[</span>31<span class="cite-bracket" id="mwATc">]</span></span></a></sup></p>
+<p id="mwAT0">Perceptrons can be trained by a simple learning algorithm that is usually called the <i id="mwAT4"><a href="https://en.wikipedia.org/wiki/Delta_rule" id="mwAT8" rel="mw:WikiLink" title="Delta rule">delta rule</a></i>. It calculates the errors between calculated output and sample output data, and uses this to create an adjustment to the weights, thus implementing a form of <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwAUA" rel="mw:WikiLink" title="Gradient descent">gradient descent</a>.</p>
+<p id="mwAUI">A <b id="mwAUM">multilayer perceptron</b> (<b id="mwAUQ">MLP</b>) is a <a href="https://en.wikipedia.org/wiki/Misnomer" id="mwAUU" rel="mw:WikiLink" title="Misnomer">misnomer</a> for a modern feedforward artificial neural network, consisting of fully connected neurons (hence the synonym sometimes used of <i id="mwAUY">fully connected network</i> (<i id="mwAUc">FCN</i>)), often with a nonlinear kind of activation function, organized in at least three layers, notable for being able to distinguish data that is not <a href="https://en.wikipedia.org/wiki/Linear_separability" id="mwAUg" rel="mw:WikiLink" title="Linear separability">linearly separable</a>.<sup about="#mwt139" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Cybenko1989"},"body":{"id":"mw-reference-text-cite_note-Cybenko1989-32"}}' id="cite_ref-Cybenko1989_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Cybenko1989-32" id="mwAUk"><span class="mw-reflink-text" id="mwAUo"><span class="cite-bracket" id="mwAUs">[</span>32<span class="cite-bracket" id="mwAUw">]</span></span></a></sup></p>
+<p id="mwAVI">Examples of other feedforward networks include <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" id="mwAVM" rel="mw:WikiLink" title="Convolutional neural network">convolutional neural networks</a> and <a href="https://en.wikipedia.org/wiki/Radial_basis_function_network" id="mwAVQ" rel="mw:WikiLink" title="Radial basis function network">radial basis function networks</a>, which use a different activation function.</p>
+</div></div>
+</body></html>

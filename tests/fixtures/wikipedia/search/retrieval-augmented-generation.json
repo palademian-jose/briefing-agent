@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 204
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Retrieval-augmented generation",
+    "pageid": 75229858,
+    "size": 20861,
+    "wordcount": 2228,
+    "snippet": "<span class=\"searchmatch\">Retrieval</span>-<span class=\"searchmatch\">augmented</span> <span class=\"searchmatch\">generation</span> (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external",
+    "timestamp": "2026-09-28T11:20:51Z"
+   },
+   {
+    "ns": 0,
+    "title": "Vector database",
+    "pageid": 74020014,
+    "size": 27323,
+    "wordcount": 1898,
+    "snippet": "detection, and <span class=\"searchmatch\">retrieval</span>-<span class=\"searchmatch\">augmented</span> <span class=\"searchmatch\">generation</span>. An especially common use-case for vector databases is in <span class=\"searchmatch\">retrieval</span>-<span class=\"searchmatch\">augmented</span> <span class=\"searchmatch\">generation</span> (RAG), a method",
+    "timestamp": "2026-09-10T19:31:06Z"
+   },
+   {
+    "ns": 0,
+    "title": "Prompt engineering",
+    "pageid": 69071767,
+    "size": 57712,
+    "wordcount": 5657,
+    "snippet": "assigning roles to the model. Automated prompt <span class=\"searchmatch\">generation</span> methods, such as <span class=\"searchmatch\">retrieval</span>-<span class=\"searchmatch\">augmented</span> <span class=\"searchmatch\">generation</span> (RAG), provide for greater accuracy and a wider",
+    "timestamp": "2026-10-06T19:06:52Z"
+   },
+   {
+    "ns": 0,
+    "title": "Knowledge cutoff",
+    "pageid": 80445288,
+    "size": 11823,
+    "wordcount": 1285,
+    "snippet": "later events without a system for real-time data access such as <span class=\"searchmatch\">retrieval</span>-<span class=\"searchmatch\">augmented</span> <span class=\"searchmatch\">generation</span>, which fetches new information from an external database. Knowledge",
+    "timestamp": "2026-09-19T03:12:35Z"
+   },
+   {
+    "ns": 0,
+    "title": "Douwe Kiela",
+    "pageid": 81451909,
+    "size": 15080,
+    "wordcount": 1268,
+    "snippet": "research team that introduced <span class=\"searchmatch\">Retrieval</span>-<span class=\"searchmatch\">Augmented</span> <span class=\"searchmatch\">Generation</span> (RAG), co-authoring the influential paper &quot;<span class=\"searchmatch\">Retrieval</span>-<span class=\"searchmatch\">Augmented</span> <span class=\"searchmatch\">Generation</span> for Knowledge-Intensive",
+    "timestamp": "2026-10-08T14:47:21Z"
+   }
+  ]
+ }
+}

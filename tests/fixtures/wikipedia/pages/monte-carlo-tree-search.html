@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Monte Carlo tree search - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Monte Carlo tree search</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBQ">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwBg" rel="mw:WikiLink" title="Computer science">computer science</a>, <b id="mwBw">Monte Carlo tree search</b> (<b id="mwCA">MCTS</b>) is a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)" id="mwCQ" rel="mw:WikiLink" title="Heuristic (computer science)">heuristic</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tree_search_algorithm" id="mwCg" rel="mw:WikiLink" title="Tree search algorithm">tree search algorithm</a> for some kinds of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Decision_process" id="mwCw" rel="mw:WikiLink" title="Decision process">decision processes</a>, most notably those employed in <a href="https://en.wikipedia.org/wiki/Software" id="mwDA" rel="mw:WikiLink" title="Software">software</a> that plays <a href="https://en.wikipedia.org/wiki/Board_game" id="mwDQ" rel="mw:WikiLink" title="Board game">board games</a>. In that context MCTS is used to solve the <a href="https://en.wikipedia.org/wiki/Game_tree" id="mwDg" rel="mw:WikiLink" title="Game tree">game tree</a>.</p>
+<p id="mwDw">MCTS was combined with neural networks in 2016<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"alphago"},"body":{"id":"mw-reference-text-cite_note-alphago-1"}}' id="cite_ref-alphago_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-alphago-1" id="mwEA"><span class="mw-reflink-text" id="mwEQ"><span class="cite-bracket" id="mwEg">[</span>1<span class="cite-bracket" id="mwEw">]</span></span></a></sup> and has been used in multiple board games like <a href="https://en.wikipedia.org/wiki/Chess" id="mwFA" rel="mw:WikiLink" title="Chess">Chess</a>, <a href="https://en.wikipedia.org/wiki/Shogi" id="mwFQ" rel="mw:WikiLink" title="Shogi">Shogi</a>,<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-2"}}' id="cite_ref-:0_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-2" id="mwFg"><span class="mw-reflink-text" id="mwFw"><span class="cite-bracket" id="mwGA">[</span>2<span class="cite-bracket" id="mwGQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Checkers" id="mwGg" rel="mw:WikiLink" title="Checkers">Checkers</a>, <a href="https://en.wikipedia.org/wiki/Backgammon" id="mwGw" rel="mw:WikiLink" title="Backgammon">Backgammon</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Contract_Bridge" id="mwHA" rel="mw:WikiLink" title="Contract Bridge">Contract Bridge</a>, <a href="https://en.wikipedia.org/wiki/Go_(game)" id="mwHQ" rel="mw:WikiLink" title="Go (game)">Go</a>, <i id="mwHg"><a href="https://en.wikipedia.org/wiki/Scrabble" id="mwHw" rel="mw:WikiLink" title="Scrabble">Scrabble</a></i>, and <a href="https://en.wikipedia.org/wiki/Clobber" id="mwIA" rel="mw:WikiLink" title="Clobber">Clobber</a><sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwIQ"><span class="mw-reflink-text" id="mwIg"><span class="cite-bracket" id="mwIw">[</span>3<span class="cite-bracket" id="mwJA">]</span></span></a></sup> as well as in turn-based-strategy video games (such as <a href="https://en.wikipedia.org/wiki/Total_War:_Rome_II" id="mwJQ" rel="mw:WikiLink" title="Total War: Rome II">Total War: Rome II</a>'s implementation in the high level campaign AI<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwJg"><span class="mw-reflink-text" id="mwJw"><span class="cite-bracket" id="mwKA">[</span>4<span class="cite-bracket" id="mwKQ">]</span></span></a></sup>) and applications outside of games.<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"beyondgames"},"body":{"id":"mw-reference-text-cite_note-beyondgames-5"}}' id="cite_ref-beyondgames_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-beyondgames-5" id="mwKg"><span class="mw-reflink-text" id="mwKw"><span class="cite-bracket" id="mwLA">[</span>5<span class="cite-bracket" id="mwLQ">]</span></span></a></sup></p>
+<p id="mwMQ">The <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" id="mwMg" rel="mw:WikiLink" title="Monte Carlo method">Monte Carlo method</a>, which uses random sampling for deterministic problems which are difficult or impossible to solve using other approaches, dates back to the 1940s.<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwMw"><span class="mw-reflink-text" id="mwNA"><span class="cite-bracket" id="mwNQ">[</span>6<span class="cite-bracket" id="mwNg">]</span></span></a></sup> In his 1987 PhD thesis, Bruce Abramson combined <a href="https://en.wikipedia.org/wiki/Minimax" id="mwNw" rel="mw:WikiLink" title="Minimax">minimax search</a> with an <i id="mwOA">expected-outcome model</i> based on random game playouts to the end, instead of the usual <a href="https://en.wikipedia.org/wiki/Evaluation_function" id="mwOQ" rel="mw:WikiLink" title="Evaluation function">static evaluation function</a>. Abramson said the expected-outcome model "is shown to be precise, accurate, easily estimable, efficiently calculable, and domain-independent."<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Abramson"},"body":{"id":"mw-reference-text-cite_note-Abramson-7"}}' id="cite_ref-Abramson_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Abramson-7" id="mwOg"><span class="mw-reflink-text" id="mwOw"><span class="cite-bracket" id="mwPA">[</span>7<span class="cite-bracket" id="mwPQ">]</span></span></a></sup>  He experimented in-depth with <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" id="mwPg" rel="mw:WikiLink" title="Tic-tac-toe">tic-tac-toe</a> and then with machine-generated evaluation functions for <a href="https://en.wikipedia.org/wiki/Reversi" id="mwPw" rel="mw:WikiLink" title="Reversi">Othello</a> and <a href="https://en.wikipedia.org/wiki/Chess" id="mwQA" rel="mw:WikiLink" title="Chess">chess</a>.</p>
+<p id="mwQQ">Such methods were then explored and successfully applied to heuristic search in the field of <a href="https://en.wikipedia.org/wiki/Automated_theorem_proving" id="mwQg" rel="mw:WikiLink" title="Automated theorem proving">automated theorem proving</a> by W. Ertel, J. Schumann and C. Suttner in 1989,<sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwQw"><span class="mw-reflink-text" id="mwRA"><span class="cite-bracket" id="mwRQ">[</span>8<span class="cite-bracket" id="mwRg">]</span></span></a></sup><sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwRw"><span class="mw-reflink-text" id="mwSA"><span class="cite-bracket" id="mwSQ">[</span>9<span class="cite-bracket" id="mwSg">]</span></span></a></sup><sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwSw"><span class="mw-reflink-text" id="mwTA"><span class="cite-bracket" id="mwTQ">[</span>10<span class="cite-bracket" id="mwTg">]</span></span></a></sup> thus improving the exponential search times of uninformed search algorithms such as e.g. breadth-first search, depth-first search or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Iterative_deepening" id="mwTw" rel="mw:WikiLink" title="Iterative deepening">iterative deepening</a>.</p>
+<p id="mwUA">In 1992, B. Brügmann employed it for the first time in a <a href="https://en.wikipedia.org/wiki/Computer_Go" id="mwUQ" rel="mw:WikiLink" title="Computer Go">Go-playing program</a>.<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bruegmann"}}' id="cite_ref-Bruegmann_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bruegmann-11" id="mwUg"><span class="mw-reflink-text" id="mwUw"><span class="cite-bracket" id="mwVA">[</span>11<span class="cite-bracket" id="mwVQ">]</span></span></a></sup> In 2002, Chang et al.<sup about="#mwt36" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chang2005"}}' id="cite_ref-Chang2005_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chang2005-12" id="mwVg"><span class="mw-reflink-text" id="mwVw"><span class="cite-bracket" id="mwWA">[</span>12<span class="cite-bracket" id="mwWQ">]</span></span></a></sup> proposed the idea of "recursive rolling out and backtracking" with "adaptive" sampling choices in their Adaptive Multi-stage Sampling (AMS) algorithm for the model of <a href="https://en.wikipedia.org/wiki/Markov_decision_process" id="mwWg" rel="mw:WikiLink" title="Markov decision process">Markov decision processes</a>. AMS was the first work to explore the idea of <a href="https://en.wikipedia.org/wiki/Thompson_sampling#Upper-Confidence-Bound_(UCB)_Algorithms" id="mwWw" rel="mw:WikiLink" title="Thompson sampling">UCB</a>-based exploration and exploitation in constructing sampled/simulated (Monte Carlo) trees and was the main seed for UCT (Upper Confidence Trees).<sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"changORMStoday"}}' id="cite_ref-changORMStoday_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-changORMStoday-13" id="mwXA"><span class="mw-reflink-text" id="mwXQ"><span class="cite-bracket" id="mwXg">[</span>13<span class="cite-bracket" id="mwXw">]</span></span></a></sup></p>
+<p id="mwaQ">In 2006, inspired by its predecessors,<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwag"><span class="mw-reflink-text" id="mwaw"><span class="cite-bracket" id="mwbA">[</span>15<span class="cite-bracket" id="mwbQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Rémi_Coulom" id="mwbg" rel="mw:WikiLink" title="Rémi Coulom">Rémi Coulom</a> described the application of the Monte Carlo method to game-tree search and coined the name Monte Carlo tree search,<sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwbw"><span class="mw-reflink-text" id="mwcA"><span class="cite-bracket" id="mwcQ">[</span>16<span class="cite-bracket" id="mwcg">]</span></span></a></sup> L. Kocsis and Cs. Szepesvári developed the UCT (Upper Confidence bounds applied to Trees) algorithm,<sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kocsis-Szepesvari"}}' id="cite_ref-Kocsis-Szepesvari_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kocsis-Szepesvari-17" id="mwcw"><span class="mw-reflink-text" id="mwdA"><span class="cite-bracket" id="mwdQ">[</span>17<span class="cite-bracket" id="mwdg">]</span></span></a></sup> and S. Gelly et al. implemented UCT in their program MoGo.<sup about="#mwt49" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Gelly-et-al"}}' id="cite_ref-Gelly-et-al_18-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Gelly-et-al-18" id="mwdw"><span class="mw-reflink-text" id="mweA"><span class="cite-bracket" id="mweQ">[</span>18<span class="cite-bracket" id="mweg">]</span></span></a></sup> In 2008, MoGo achieved <a href="https://en.wikipedia.org/wiki/Dan_(rank)" id="mwew" rel="mw:WikiLink" title="Dan (rank)">dan</a> (master) level in 9×9 Go,<sup about="#mwt52" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwfA"><span class="mw-reflink-text" id="mwfQ"><span class="cite-bracket" id="mwfg">[</span>19<span class="cite-bracket" id="mwfw">]</span></span></a></sup> and the Fuego program began to win against strong amateur players in 9×9 Go.<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwgA"><span class="mw-reflink-text" id="mwgQ"><span class="cite-bracket" id="mwgg">[</span>20<span class="cite-bracket" id="mwgw">]</span></span></a></sup></p>
+<p id="mwhA">In January 2012, the Zen program won 3:1 in a Go match on a 19×19 board with an <a href="https://en.wikipedia.org/wiki/Go_ranks_and_ratings" id="mwhQ" rel="mw:WikiLink" title="Go ranks and ratings">amateur 2 dan</a> player.<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mwhg"><span class="mw-reflink-text" id="mwhw"><span class="cite-bracket" id="mwiA">[</span>21<span class="cite-bracket" id="mwiQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Google_DeepMind" id="mwig" rel="mw:WikiLink" title="Google DeepMind">Google Deepmind</a> developed the program <a href="https://en.wikipedia.org/wiki/AlphaGo" id="mwiw" rel="mw:WikiLink" title="AlphaGo">AlphaGo</a>, which in October 2015 became the first Computer Go program to beat a professional human Go player without <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Go_handicaps" id="mwjA" rel="mw:WikiLink" title="Go handicaps">handicaps</a> on a full-sized 19x19 board.<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"alphago"}}' id="cite_ref-alphago_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-alphago-1" id="mwjQ"><span class="mw-reflink-text" id="mwjg"><span class="cite-bracket" id="mwjw">[</span>1<span class="cite-bracket" id="mwkA">]</span></span></a></sup><sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mwkQ"><span class="mw-reflink-text" id="mwkg"><span class="cite-bracket" id="mwkw">[</span>22<span class="cite-bracket" id="mwlA">]</span></span></a></sup><sup about="#mwt65" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mwlQ"><span class="mw-reflink-text" id="mwlg"><span class="cite-bracket" id="mwlw">[</span>23<span class="cite-bracket" id="mwmA">]</span></span></a></sup> In March 2016, AlphaGo was awarded an honorary 9-dan (master) level in 19×19 Go for defeating <a href="https://en.wikipedia.org/wiki/Lee_Sedol" id="mwmQ" rel="mw:WikiLink" title="Lee Sedol">Lee Sedol</a> in <a href="https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol" id="mwmg" rel="mw:WikiLink" title="AlphaGo versus Lee Sedol">a five-game match</a> with a final score of four games to one.<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mwmw"><span class="mw-reflink-text" id="mwnA"><span class="cite-bracket" id="mwnQ">[</span>24<span class="cite-bracket" id="mwng">]</span></span></a></sup> AlphaGo represents a significant improvement over previous Go programs as well as a milestone in <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwnw" rel="mw:WikiLink" title="Machine learning">machine learning</a> as it uses Monte Carlo tree search with <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mwoA" rel="mw:WikiLink" title="Artificial neural network">artificial neural networks</a> (a <a href="https://en.wikipedia.org/wiki/Deep_learning" id="mwoQ" rel="mw:WikiLink" title="Deep learning">deep learning</a> method) for policy (move selection) and value, giving it efficiency far surpassing previous programs.<sup about="#mwt71" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwog"><span class="mw-reflink-text" id="mwow"><span class="cite-bracket" id="mwpA">[</span>25<span class="cite-bracket" id="mwpQ">]</span></span></a></sup></p>
+<p id="mwpg">The MCTS algorithm has also been used in programs that play other <a href="https://en.wikipedia.org/wiki/Board_game" id="mwpw" rel="mw:WikiLink" title="Board game">board games</a> (for example <a href="https://en.wikipedia.org/wiki/Hex_(board_game)" id="mwqA" rel="mw:WikiLink" title="Hex (board game)">Hex</a>,<sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwqQ"><span class="mw-reflink-text" id="mwqg"><span class="cite-bracket" id="mwqw">[</span>26<span class="cite-bracket" id="mwrA">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Havannah_(board_game)" id="mwrQ" rel="mw:WikiLink" title="Havannah (board game)">Havannah</a>,<sup about="#mwt77" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwrg"><span class="mw-reflink-text" id="mwrw"><span class="cite-bracket" id="mwsA">[</span>27<span class="cite-bracket" id="mwsQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Game_of_the_Amazons" id="mwsg" rel="mw:WikiLink" title="Game of the Amazons">Game of the Amazons</a>,<sup about="#mwt80" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwsw"><span class="mw-reflink-text" id="mwtA"><span class="cite-bracket" id="mwtQ">[</span>28<span class="cite-bracket" id="mwtg">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Arimaa" id="mwtw" rel="mw:WikiLink" title="Arimaa">Arimaa</a><sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwuA"><span class="mw-reflink-text" id="mwuQ"><span class="cite-bracket" id="mwug">[</span>29<span class="cite-bracket" id="mwuw">]</span></span></a></sup>), real-time video games (for instance <a href="https://en.wikipedia.org/wiki/Ms._Pac-Man" id="mwvA" rel="mw:WikiLink" title="Ms. Pac-Man">Ms. Pac-Man</a><sup about="#mwt86" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwvQ"><span class="mw-reflink-text" id="mwvg"><span class="cite-bracket" id="mwvw">[</span>30<span class="cite-bracket" id="mwwA">]</span></span></a></sup><sup about="#mwt89" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwwQ"><span class="mw-reflink-text" id="mwwg"><span class="cite-bracket" id="mwww">[</span>31<span class="cite-bracket" id="mwxA">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Fable_Legends" id="mwxQ" rel="mw:WikiLink" title="Fable Legends">Fable Legends</a><sup about="#mwt92" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-32"}}' id="cite_ref-32" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-32" id="mwxg"><span class="mw-reflink-text" id="mwxw"><span class="cite-bracket" id="mwyA">[</span>32<span class="cite-bracket" id="mwyQ">]</span></span></a></sup>), and nondeterministic games (such as <a href="https://en.wikipedia.org/wiki/Skat_(card_game)" id="mwyg" rel="mw:WikiLink" title="Skat (card game)">skat</a>,<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-33"}}' id="cite_ref-33" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-33" id="mwyw"><span class="mw-reflink-text" id="mwzA"><span class="cite-bracket" id="mwzQ">[</span>33<span class="cite-bracket" id="mwzg">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Poker" id="mwzw" rel="mw:WikiLink" title="Poker">poker</a>,<sup about="#mwt99" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cpr"},"body":{"id":"mw-reference-text-cite_note-cpr-34"}}' id="cite_ref-cpr_34-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cpr-34" id="mw0A"><span class="mw-reflink-text" id="mw0Q"><span class="cite-bracket" id="mw0g">[</span>34<span class="cite-bracket" id="mw0w">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Magic:_The_Gathering" id="mw1A" rel="mw:WikiLink" title="Magic: The Gathering">Magic: The Gathering</a>,<sup about="#mwt102" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-35"}}' id="cite_ref-35" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-35" id="mw1Q"><span class="mw-reflink-text" id="mw1g"><span class="cite-bracket" id="mw1w">[</span>35<span class="cite-bracket" id="mw2A">]</span></span></a></sup> or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Settlers_of_Catan" id="mw2Q" rel="mw:WikiLink" title="Settlers of Catan">Settlers of Catan</a><sup about="#mwt105" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-36"}}' id="cite_ref-36" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-36" id="mw2g"><span class="mw-reflink-text" id="mw2w"><span class="cite-bracket" id="mw3A">[</span>36<span class="cite-bracket" id="mw3Q">]</span></span></a></sup>).</p>
+<p id="mw3w">The focus of MCTS is on the analysis of the most promising moves, expanding the <a href="https://en.wikipedia.org/wiki/Search_tree" id="mw4A" rel="mw:WikiLink" title="Search tree">search tree</a> based on <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" id="mw4Q" rel="mw:WikiLink" title="Monte Carlo method">random sampling</a> of the search space.
+The application of Monte Carlo tree search in games is based on many <i id="mw4g">playouts,</i> also called <i id="mw4w">roll-outs</i>. In each playout, the game is played out to the very end by selecting moves at random. The final game result of each playout is then used to weight the nodes in the game tree so that better nodes are more likely to be chosen in future playouts.</p>
+<p id="mw5A">The most basic way to use playouts is to apply the same number of playouts after each legal move of the current player, then choose the move which led to the most victories.<sup about="#mwt108" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bruegmann"},"body":{"id":"mw-reference-text-cite_note-Bruegmann-11"}}' id="cite_ref-Bruegmann_11-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bruegmann-11" id="mw5Q"><span class="mw-reflink-text" id="mw5g"><span class="cite-bracket" id="mw5w">[</span>11<span class="cite-bracket" id="mw6A">]</span></span></a></sup> The efficiency of this method—called <i id="mw6Q">Pure Monte Carlo Game Search</i>—often increases with time as more playouts are assigned to the moves that have frequently resulted in the current player's victory according to previous playouts. Each round of Monte Carlo tree search consists of four steps:<sup about="#mwt111" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"chaslot2008"},"body":{"id":"mw-reference-text-cite_note-chaslot2008-37"}}' id="cite_ref-chaslot2008_37-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-chaslot2008-37" id="mw6g"><span class="mw-reflink-text" id="mw6w"><span class="cite-bracket" id="mw7A">[</span>37<span class="cite-bracket" id="mw7Q">]</span></span></a></sup></p>
+<p id="mwAQQ">This graph shows the steps involved in one decision in a game of chess (without considering ties), with each node showing the ratio of wins to total playouts from that point in the game tree for the player that the node represents.<sup about="#mwt122" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-38"}}' id="cite_ref-38" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-38" id="mwAQU"><span class="mw-reflink-text" id="mwAQY"><span class="cite-bracket" id="mwAQc">[</span>38<span class="cite-bracket" id="mwAQg">]</span></span></a></sup> In the Selection diagram, black is about to move. The root node shows there are 11 wins out of 21 playouts for white from this position so far. It complements the total of 10/21 black wins shown along the three black nodes under it, each of which represents a possible black move. Note that this graph does not follow the UCT algorithm described below.</p>
+<p id="mwAQk">If white loses the simulation, all nodes along the selection incremented their simulation count (the denominator), but among them only the black nodes were credited with wins (the numerator). If instead white wins, all nodes along the selection would still increment their simulation count, but among them only the white nodes would be credited with wins. In games where draws are possible, a draw causes the numerator for both black and white to be incremented by 0.5 and the denominator by 1. This ensures that during selection, each player's choices expand towards the most promising moves for that player, which mirrors the goal of each player to maximize the value of their move.</p>
+<p id="mwAQo">Rounds of search are repeated as long as the time allotted to a move remains. Then the move with the most simulations made (i.e. the highest denominator) is chosen as the final answer.</p>
+<p id="mwAQw">This basic procedure can be applied to any game whose positions necessarily have a finite number of moves and finite length. For each position, all feasible moves are determined: <i id="mwAQ0">k</i> random games are played out to the very end, and the scores are recorded. The move leading to the best score is chosen. Ties are broken by <a href="https://en.wikipedia.org/wiki/Fair_coin" id="mwAQ4" rel="mw:WikiLink" title="Fair coin">fair coin</a> flips. Pure Monte Carlo Game Search results in strong play in several games with random elements, as in the game <i id="mwAQ8"><a href="https://en.wikipedia.org/wiki/EinStein_würfelt_nicht!" id="mwARA" rel="mw:WikiLink" title="EinStein würfelt nicht!">EinStein würfelt nicht!</a></i>. It converges to optimal play (as <i id="mwARE">k</i> tends to infinity) in board filling games with random turn order, for instance in the game <a href="https://en.wikipedia.org/wiki/Hex_(board_game)" id="mwARI" rel="mw:WikiLink" title="Hex (board game)">Hex</a> with random turn order.<sup about="#mwt125" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-39"}}' id="cite_ref-39" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-39" id="mwARM"><span class="mw-reflink-text" id="mwARQ"><span class="cite-bracket" id="mwARU">[</span>39<span class="cite-bracket" id="mwARY">]</span></span></a></sup> DeepMind's AlphaZero replaces the simulation step with an evaluation based on a neural network.<sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-2" id="mwARc"><span class="mw-reflink-text" id="mwARg"><span class="cite-bracket" id="mwARk">[</span>2<span class="cite-bracket" id="mwARo">]</span></span></a></sup></p>
+<p id="mwARw">The main difficulty in selecting child nodes is maintaining some balance between the <i id="mwAR0">exploitation</i> of deep variants after moves with high average win rate and the <i id="mwAR4">exploration</i> of moves with few simulations. The first formula for balancing exploitation and exploration in games, called UCT (<i id="mwAR8">Upper Confidence Bound</i> 1 <i id="mwASA">applied to trees</i>), was introduced by <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Levente Kocsis"]}}' href="https://en.wikipedia.org/wiki/Levente_Kocsis?action=edit&amp;redlink=1" id="mwASE" rel="mw:WikiLink" title="Levente Kocsis (page does not exist)" typeof="mw:LocalizedAttrs">Levente Kocsis</a> and <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Csaba Szepesvári"]}}' href="https://en.wikipedia.org/wiki/Csaba_Szepesvári?action=edit&amp;redlink=1" id="mwASI" rel="mw:WikiLink" title="Csaba Szepesvári (page does not exist)" typeof="mw:LocalizedAttrs">Csaba Szepesvári</a>.<sup about="#mwt129" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kocsis-Szepesvari"},"body":{"id":"mw-reference-text-cite_note-Kocsis-Szepesvari-17"}}' id="cite_ref-Kocsis-Szepesvari_17-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kocsis-Szepesvari-17" id="mwASM"><span class="mw-reflink-text" id="mwASQ"><span class="cite-bracket" id="mwASU">[</span>17<span class="cite-bracket" id="mwASY">]</span></span></a></sup> UCT is based on the UCB1 formula derived by Auer, Cesa-Bianchi, and Fischer<sup about="#mwt132" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-40"}}' id="cite_ref-40" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-40" id="mwASc"><span class="mw-reflink-text" id="mwASg"><span class="cite-bracket" id="mwASk">[</span>40<span class="cite-bracket" id="mwASo">]</span></span></a></sup> and the probably convergent AMS (Adaptive Multi-stage Sampling) algorithm first applied to multi-stage decision-making models (specifically, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Markov_Decision_Processes" id="mwASs" rel="mw:WikiLink" title="Markov Decision Processes">Markov Decision Processes</a>) by Chang, Fu, Hu, and Marcus.<sup about="#mwt135" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chang2005"},"body":{"id":"mw-reference-text-cite_note-Chang2005-12"}}' id="cite_ref-Chang2005_12-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chang2005-12" id="mwASw"><span class="mw-reflink-text" id="mwAS0"><span class="cite-bracket" id="mwAS4">[</span>12<span class="cite-bracket" id="mwAS8">]</span></span></a></sup> Kocsis and Szepesvári recommend to choose in each node of the game tree the move for which the expression <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{w_i}{n_i} + c\\sqrt{\\frac{\\ln N_i}{n_i}}"}}' id="mwATA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {w_{i}}{n_{i}}}+c{\sqrt {\frac {\ln N_{i}}{n_{i}}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+<mo>+</mo>
+<mi>c</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msqrt>
+<mfrac>
+<mrow>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>N</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</msqrt>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {w_{i}}{n_{i}}}+c{\sqrt {\frac {\ln N_{i}}{n_{i}}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {w_{i}}{n_{i}}}+c{\sqrt {\frac {\ln N_{i}}{n_{i}}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b607bd848f08876b247148bad27c3c26a1066a0d" style="vertical-align: -3.171ex; width:15.299ex; height:7.676ex;"/></span> has the highest value. In this formula:</p>
+<p id="mwAT4">The first component of the formula above corresponds to exploitation; it is high for moves with high average win ratio. The second component corresponds to exploration; it is high for moves with few simulations.</p>
+<p id="mwAT8">Most contemporary implementations of Monte Carlo tree search are based on some variant of UCT that traces its roots back to the AMS simulation optimization algorithm for estimating the value function in finite-horizon <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Markov_Decision_Processes" id="mwAUA" rel="mw:WikiLink" title="Markov Decision Processes">Markov Decision Processes</a> (MDPs) introduced by Chang et al.<sup about="#mwt145" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chang2005"}}' id="cite_ref-Chang2005_12-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chang2005-12" id="mwAUE"><span class="mw-reflink-text" id="mwAUI"><span class="cite-bracket" id="mwAUM">[</span>12<span class="cite-bracket" id="mwAUQ">]</span></span></a></sup> (2005) in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Operations_Research" id="mwAUU" rel="mw:WikiLink" title="Operations Research">Operations Research</a>. (AMS was the first work to explore the idea of UCB-based exploration and exploitation in constructing sampled/simulated (Monte Carlo) trees and was the main seed for UCT.<sup about="#mwt148" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"changORMStoday"},"body":{"id":"mw-reference-text-cite_note-changORMStoday-13"}}' id="cite_ref-changORMStoday_13-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-changORMStoday-13" id="mwAUY"><span class="mw-reflink-text" id="mwAUc"><span class="cite-bracket" id="mwAUg">[</span>13<span class="cite-bracket" id="mwAUk">]</span></span></a></sup>)</p>
+<p id="mwAUs">Although it has been proven that the evaluation of moves in Monte Carlo tree search converges to <a href="https://en.wikipedia.org/wiki/Minimax" id="mwAUw" rel="mw:WikiLink" title="Minimax">minimax</a> when using UCT,<sup about="#mwt149" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kocsis-Szepesvari"}}' id="cite_ref-Kocsis-Szepesvari_17-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kocsis-Szepesvari-17" id="mwAU0"><span class="mw-reflink-text" id="mwAU4"><span class="cite-bracket" id="mwAU8">[</span>17<span class="cite-bracket" id="mwAVA">]</span></span></a></sup><sup about="#mwt152" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-41"}}' id="cite_ref-41" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-41" id="mwAVE"><span class="mw-reflink-text" id="mwAVI"><span class="cite-bracket" id="mwAVM">[</span>41<span class="cite-bracket" id="mwAVQ">]</span></span></a></sup> the basic version of Monte Carlo tree search converges only in so called "Monte Carlo Perfect" games.<sup about="#mwt155" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-42"}}' id="cite_ref-42" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-42" id="mwAVU"><span class="mw-reflink-text" id="mwAVY"><span class="cite-bracket" id="mwAVc">[</span>42<span class="cite-bracket" id="mwAVg">]</span></span></a></sup> However, Monte Carlo tree search does offer significant advantages over <a href="https://en.wikipedia.org/wiki/Alpha–beta_pruning" id="mwAVk" rel="mw:WikiLink" title="Alpha–beta pruning">alpha–beta pruning</a> and similar algorithms that minimize the search space.</p>
+<p id="mwAVo">In particular, pure Monte Carlo tree search does not need an explicit <a href="https://en.wikipedia.org/wiki/Evaluation_function" id="mwAVs" rel="mw:WikiLink" title="Evaluation function">evaluation function</a>. Simply implementing the game's mechanics is sufficient to explore the search space (i.e. the generating of allowed moves in a given position and the game-end conditions). As such, Monte Carlo tree search can be employed in games without a developed theory or in <a href="https://en.wikipedia.org/wiki/General_game_playing" id="mwAVw" rel="mw:WikiLink" title="General game playing">general game playing</a>.</p>
+<p id="mwAV0">The game tree in Monte Carlo tree search grows asymmetrically as the method concentrates on the more promising subtrees. Thus<link about="#mwt156" data-mw='{"parts":[{"template":{"target":{"wt":"dubious","href":"./Template:Dubious"},"params":{"date":{"wt":"June 2019"}},"i":0}}]}' href="./Category:All_accuracy_disputes" id="mwAV4" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt156" href="./Category:Articles_with_disputed_statements_from_June_2019" rel="mw:PageProp/Category"/><sup about="#mwt156" class="noprint Inline-Template" id="mwAV8" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Accuracy_dispute#Disputed_statement" rel="mw:WikiLink" title="Wikipedia:Accuracy dispute"><span title="The material near this tag is possibly inaccurate or nonfactual. (June 2019)">dubious</span></a><span typeof="mw:Entity"> </span><span typeof="mw:Entity">–</span> <a href="https://en.wikipedia.org/wiki/Talk:Monte_Carlo_tree_search#Dubious" rel="mw:WikiLink" title="Talk:Monte Carlo tree search">discuss</a></i><span typeof="mw:Entity">]</span></sup>, it achieves better results than classical algorithms in games with a high <a href="https://en.wikipedia.org/wiki/Branching_factor" id="mwAWA" rel="mw:WikiLink" title="Branching factor">branching factor</a>.</p>
+<p id="mwAWE">A disadvantage is that in certain positions, there may be moves that look superficially strong, but that actually lead to a loss via a subtle line of play. Such "trap states" require thorough analysis to be handled correctly, particularly when playing against an expert player; however, MCTS may not "see" such lines due to its policy of selective node expansion.<sup about="#mwt159" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-43"}}' id="cite_ref-43" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-43" id="mwAWI"><span class="mw-reflink-text" id="mwAWM"><span class="cite-bracket" id="mwAWQ">[</span>43<span class="cite-bracket" id="mwAWU">]</span></span></a></sup><sup about="#mwt162" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-44"}}' id="cite_ref-44" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-44" id="mwAWY"><span class="mw-reflink-text" id="mwAWc"><span class="cite-bracket" id="mwAWg">[</span>44<span class="cite-bracket" id="mwAWk">]</span></span></a></sup> It is believed that this may have been part of the reason for <a href="https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol#Game_4" id="mwAWo" rel="mw:WikiLink" title="AlphaGo versus Lee Sedol">AlphaGo's loss in its fourth game against Lee Sedol</a>. In essence, the search attempts to prune sequences which are less relevant. In some cases, a play can lead to a very specific line of play which is significant, but which is overlooked when the tree is pruned, and this outcome is therefore "off the search radar".<sup about="#mwt165" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-45"}}' id="cite_ref-45" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-45" id="mwAWs"><span class="mw-reflink-text" id="mwAWw"><span class="cite-bracket" id="mwAW0">[</span>45<span class="cite-bracket" id="mwAW4">]</span></span></a></sup></p>
+<p id="mwAXA">Various modifications of the basic Monte Carlo tree search method have been proposed to shorten the search time. Some employ domain-specific expert knowledge, others do not.</p>
+<p id="mwAXE">Monte Carlo tree search can use either <i id="mwAXI">light</i> or <i id="mwAXM">heavy</i> playouts. Light playouts consist of random moves while heavy playouts apply various heuristics to influence the choice of moves. These heuristics may employ the results of previous playouts (e.g. the Last Good Reply heuristic<sup about="#mwt168" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-46"}}' id="cite_ref-46" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-46" id="mwAXQ"><span class="mw-reflink-text" id="mwAXU"><span class="cite-bracket" id="mwAXY">[</span>46<span class="cite-bracket" id="mwAXc">]</span></span></a></sup>) or expert knowledge of a given game. For instance, in many Go-playing programs certain stone patterns in a portion of the board influence the probability of moving into that area.<sup about="#mwt171" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Gelly-et-al"},"body":{"id":"mw-reference-text-cite_note-Gelly-et-al-18"}}' id="cite_ref-Gelly-et-al_18-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Gelly-et-al-18" id="mwAXg"><span class="mw-reflink-text" id="mwAXk"><span class="cite-bracket" id="mwAXo">[</span>18<span class="cite-bracket" id="mwAXs">]</span></span></a></sup> Paradoxically, playing suboptimally in simulations sometimes makes a Monte Carlo tree search program play stronger overall.<sup about="#mwt174" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-47"}}' id="cite_ref-47" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-47" id="mwAXw"><span class="mw-reflink-text" id="mwAX0"><span class="cite-bracket" id="mwAX4">[</span>47<span class="cite-bracket" id="mwAX8">]</span></span></a></sup></p>
+<p id="mwAYk">Domain-specific knowledge may be employed when building the game tree to help the exploitation of some variants. One such method assigns nonzero <i id="mwAYo">priors</i> to the number of won and played simulations when creating each child node, leading to artificially raised or lowered average win rates that cause the node to be chosen more or less frequently, respectively, in the selection step.<sup about="#mwt180" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Gelly-Silver"},"body":{"id":"mw-reference-text-cite_note-Gelly-Silver-48"}}' id="cite_ref-Gelly-Silver_48-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Gelly-Silver-48" id="mwAYs"><span class="mw-reflink-text" id="mwAYw"><span class="cite-bracket" id="mwAY0">[</span>48<span class="cite-bracket" id="mwAY4">]</span></span></a></sup> A related method, called <i id="mwAY8">progressive bias</i>, consists in adding to the UCB1 formula a <span about="#mwt181" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{b_i}{n_i}"}}' id="mwAZA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {b_{i}}{n_{i}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {b_{i}}{n_{i}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {b_{i}}{n_{i}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0b8d204678b182abcc9ca7a2a242d7c4f3e6bfe6" style="vertical-align: -2.171ex; width:3.031ex; height:5.676ex;"/></span> element, where <span about="#mwt176" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''b''&lt;sub&gt;''i''&lt;/sub&gt;&quot;}},&quot;i&quot;:0}}]}" id="mwAZE" typeof="mw:Transclusion"><i>b</i><sub><i>i</i></sub></span> is a heuristic score of the  <span about="#mwt177" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''i''&quot;}},&quot;i&quot;:0}}]}" id="mwAZI" typeof="mw:Transclusion"><i>i</i></span>-th move.<sup about="#mwt182" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"chaslot2008"}}' id="cite_ref-chaslot2008_37-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-chaslot2008-37" id="mwAZM"><span class="mw-reflink-text" id="mwAZQ"><span class="cite-bracket" id="mwAZU">[</span>37<span class="cite-bracket" id="mwAZY">]</span></span></a></sup></p>
+<p id="mwAZc">The basic Monte Carlo tree search collects enough information to find the most promising moves only after many rounds; until then its moves are essentially random. This exploratory phase may be reduced significantly in a certain class of games using RAVE (<i id="mwAZg">Rapid Action Value Estimation</i>).<sup about="#mwt183" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Gelly-Silver"}}' id="cite_ref-Gelly-Silver_48-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Gelly-Silver-48" id="mwAZk"><span class="mw-reflink-text" id="mwAZo"><span class="cite-bracket" id="mwAZs">[</span>48<span class="cite-bracket" id="mwAZw">]</span></span></a></sup> In these games, permutations of a sequence of moves lead to the same position. Typically, they are board games in which a move involves placement of a piece or a stone on the board. In such games the value of each move is often only slightly influenced by other moves.</p>
+<p id="mwAZ0">In RAVE, for a given game tree node <span about="#mwt184" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''N''&quot;}},&quot;i&quot;:0}}]}" id="mwAZ4" typeof="mw:Transclusion"><i>N</i></span>, its child nodes <span about="#mwt185" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''C''&lt;sub&gt;''i''&lt;/sub&gt;&quot;}},&quot;i&quot;:0}}]}" id="mwAZ8" typeof="mw:Transclusion"><i>C</i><sub><i>i</i></sub></span> store not only the statistics of wins in playouts started in node <span about="#mwt186" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''N''&quot;}},&quot;i&quot;:0}}]}" id="mwAaA" typeof="mw:Transclusion"><i>N</i></span> but also the statistics of wins in all playouts started in node <span about="#mwt187" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''N''&quot;}},&quot;i&quot;:0}}]}" id="mwAaE" typeof="mw:Transclusion"><i>N</i></span> and below it, if they contain move <span about="#mwt188" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''i''&quot;}},&quot;i&quot;:0}}]}" id="mwAaI" typeof="mw:Transclusion"><i>i</i></span> (also when the move was played in the tree, between node <span about="#mwt189" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''N''&quot;}},&quot;i&quot;:0}}]}" id="mwAaM" typeof="mw:Transclusion"><i>N</i></span> and a playout). This way the contents of tree nodes are influenced not only by moves played immediately in a given position but also by the same moves played later.</p>
+<p id="mwAag">When using RAVE, the selection step selects the node, for which the modified UCB1 formula <span about="#mwt194" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(1-\\beta(n_i, \\tilde{n}_i))\\frac{w_i}{n_i} + \\beta(n_i, \\tilde{n}_i)\\frac{\\tilde{w}_i}{\\tilde{n}_i} + c\\sqrt{\\frac{\\ln t}{n_i}}"}}' id="mwAak" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (1-\beta (n_{i},{\tilde {n}}_{i})){\frac {w_{i}}{n_{i}}}+\beta (n_{i},{\tilde {n}}_{i}){\frac {{\tilde {w}}_{i}}{{\tilde {n}}_{i}}}+c{\sqrt {\frac {\ln t}{n_{i}}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>β<!-- β --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+<mo>+</mo>
+<mi>β<!-- β --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+<mo>+</mo>
+<mi>c</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msqrt>
+<mfrac>
+<mrow>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>t</mi>
+</mrow>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</msqrt>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (1-\beta (n_{i},{\tilde {n}}_{i})){\frac {w_{i}}{n_{i}}}+\beta (n_{i},{\tilde {n}}_{i}){\frac {{\tilde {w}}_{i}}{{\tilde {n}}_{i}}}+c{\sqrt {\frac {\ln t}{n_{i}}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (1-\beta (n_{i},{\tilde {n}}_{i})){\frac {w_{i}}{n_{i}}}+\beta (n_{i},{\tilde {n}}_{i}){\frac {{\tilde {w}}_{i}}{{\tilde {n}}_{i}}}+c{\sqrt {\frac {\ln t}{n_{i}}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efbb9b43358835c7c5aa81a7f8b9822a962bd807" style="vertical-align: -3.171ex; width:42.554ex; height:7.676ex;"/></span> has the highest value. In this formula, <span about="#mwt195" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\tilde{w}_i"}}' id="mwAao" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/214ca375bfbaf1ac7c72eed96e70ba0a3d27a636" style="vertical-align: -0.671ex; width:2.464ex; height:2.509ex;"/></span> and <span about="#mwt196" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\tilde{n}_i"}}' id="mwAas" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\tilde {n}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\tilde {n}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\tilde {n}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a6e600ae5c3e7149ac2d835b5d81baf1e92d184a" style="vertical-align: -0.671ex; width:2.194ex; height:2.509ex;"/></span> stand for the number of won playouts containing move <span about="#mwt190" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''i''&quot;}},&quot;i&quot;:0}}]}" id="mwAaw" typeof="mw:Transclusion"><i>i</i></span> and the number of all playouts containing move <span about="#mwt191" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''i''&quot;}},&quot;i&quot;:0}}]}" id="mwAa0" typeof="mw:Transclusion"><i>i</i></span>, and the <span about="#mwt197" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta(n_i, \\tilde{n}_i)"}}' id="mwAa4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/62ecf97c8cf956c8a37e2eab5dca753168826fd2" style="vertical-align: -0.838ex; width:8.564ex; height:2.843ex;"/></span> function should be close to one and to zero for relatively small and relatively big <span about="#mwt192" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''n''&lt;sub&gt;''i''&lt;/sub&gt;&quot;}},&quot;i&quot;:0}}]}" id="mwAa8" typeof="mw:Transclusion"><i>n</i><sub><i>i</i></sub></span> and <span about="#mwt198" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\tilde{n}_i"}}' id="mwAbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\tilde {n}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\tilde {n}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\tilde {n}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a6e600ae5c3e7149ac2d835b5d81baf1e92d184a" style="vertical-align: -0.671ex; width:2.194ex; height:2.509ex;"/></span>, respectively. One of many formulas for <span about="#mwt199" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta(n_i, \\tilde{n}_i)"}}' id="mwAbE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/62ecf97c8cf956c8a37e2eab5dca753168826fd2" style="vertical-align: -0.838ex; width:8.564ex; height:2.843ex;"/></span>, proposed by D. Silver,<sup about="#mwt202" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-49"}}' id="cite_ref-49" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-49" id="mwAbI"><span class="mw-reflink-text" id="mwAbM"><span class="cite-bracket" id="mwAbQ">[</span>49<span class="cite-bracket" id="mwAbU">]</span></span></a></sup> says that in balanced positions one can take <span about="#mwt203" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta(n_i, \\tilde{n}_i)=\\frac{\\tilde{n}_i}{n_i+\\tilde{n}_i+4b^2 n_i\\tilde{n}_i}"}}' id="mwAbY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})={\frac {{\tilde {n}}_{i}}{n_{i}+{\tilde {n}}_{i}+4b^{2}n_{i}{\tilde {n}}_{i}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mrow>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<mn>4</mn>
+<msup>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<msub>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>n</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta (n_{i},{\tilde {n}}_{i})={\frac {{\tilde {n}}_{i}}{n_{i}+{\tilde {n}}_{i}+4b^{2}n_{i}{\tilde {n}}_{i}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta (n_{i},{\tilde {n}}_{i})={\frac {{\tilde {n}}_{i}}{n_{i}+{\tilde {n}}_{i}+4b^{2}n_{i}{\tilde {n}}_{i}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8d584bcb31eb6f6e051be555c83caf5baa4f4ad4" style="vertical-align: -2.505ex; width:30.171ex; height:5.843ex;"/></span>, where <span about="#mwt193" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''b''&quot;}},&quot;i&quot;:0}}]}" id="mwAbc" typeof="mw:Transclusion"><i>b</i></span> is an empirically chosen constant.</p>
+<p id="mwAbg">Heuristics used in Monte Carlo tree search often require many parameters. There are automated methods to tune the parameters to maximize the win rate.<sup about="#mwt206" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-50"}}' id="cite_ref-50" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-50" id="mwAbk"><span class="mw-reflink-text" id="mwAbo"><span class="cite-bracket" id="mwAbs">[</span>50<span class="cite-bracket" id="mwAbw">]</span></span></a></sup></p>
+<p id="mwAb0">Monte Carlo tree search can be concurrently executed by many <a href="https://en.wikipedia.org/wiki/Thread_(computing)" id="mwAb4" rel="mw:WikiLink" title="Thread (computing)">threads</a> or <a href="https://en.wikipedia.org/wiki/Process_(computing)" id="mwAb8" rel="mw:WikiLink" title="Process (computing)">processes</a>. There are several fundamentally different methods of its <a href="https://en.wikipedia.org/wiki/Parallel_computing" id="mwAcA" rel="mw:WikiLink" title="Parallel computing">parallel</a> execution:<sup about="#mwt210" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-51"}}' id="cite_ref-51" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-51" id="mwAcE"><span class="mw-reflink-text" id="mwAcI"><span class="cite-bracket" id="mwAcM">[</span>51<span class="cite-bracket" id="mwAcQ">]</span></span></a></sup></p>
+</div></div>
+</body></html>

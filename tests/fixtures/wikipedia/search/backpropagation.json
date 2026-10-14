@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 228,
+   "suggestion": "back propagation",
+   "suggestionsnippet": "back propagation"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Backpropagation",
+    "pageid": 1360091,
+    "size": 56481,
+    "wordcount": 7905,
+    "snippet": "In machine learning, <span class=\"searchmatch\">backpropagation</span> is a gradient computation method commonly used for training a neural network in computing parameter updates. It is",
+    "timestamp": "2026-09-07T06:21:10Z"
+   },
+   {
+    "ns": 0,
+    "title": "Neural backpropagation",
+    "pageid": 14338608,
+    "size": 18523,
+    "wordcount": 2250,
+    "snippet": "Neural <span class=\"searchmatch\">backpropagation</span> is the phenomenon in which, after the action potential of a neuron creates a voltage spike down the axon (normal propagation),",
+    "timestamp": "2026-09-11T12:49:55Z"
+   },
+   {
+    "ns": 0,
+    "title": "Feedforward neural network",
+    "pageid": 1706332,
+    "size": 21407,
+    "wordcount": 2411,
+    "snippet": "back to earlier stages. Feedforward multiplication is essential for <span class=\"searchmatch\">backpropagation</span>, because feedback, where the outputs feed back to the very same inputs",
+    "timestamp": "2026-09-08T15:55:43Z"
+   },
+   {
+    "ns": 0,
+    "title": "Geoffrey Hinton",
+    "pageid": 507174,
+    "size": 74709,
+    "wordcount": 6427,
+    "snippet": "co-authored a highly cited paper published in 1986 that popularised the <span class=\"searchmatch\">backpropagation</span> algorithm for training multi-layer neural networks, although they were",
+    "timestamp": "2026-10-14T11:25:30Z"
+   },
+   {
+    "ns": 0,
+    "title": "Seppo Linnainmaa",
+    "pageid": 49957034,
+    "size": 4804,
+    "wordcount": 347,
+    "snippet": "mathematician and computer scientist known for creating the modern version of <span class=\"searchmatch\">backpropagation</span>. He was born in Pori. He received his MSc in 1970 and introduced a",
+    "timestamp": "2026-09-18T08:04:50Z"
+   }
+  ]
+ }
+}

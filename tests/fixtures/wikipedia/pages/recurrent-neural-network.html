@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Recurrent neural network - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Recurrent neural network</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBw">In <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_networks" id="mwCA" rel="mw:WikiLink" title="Artificial neural networks">artificial neural networks</a>, <b id="mwCQ">recurrent neural networks</b> (<b id="mwCg">RNNs</b>) are designed for processing sequential data, such as text, speech, and <a href="https://en.wikipedia.org/wiki/Time_series" id="mwCw" rel="mw:WikiLink" title="Time series">time series</a>,<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwDA"><span class="mw-reflink-text" id="mwDQ"><span class="cite-bracket" id="mwDg">[</span>1<span class="cite-bracket" id="mwDw">]</span></span></a></sup> where the order of elements is important. Unlike <a href="https://en.wikipedia.org/wiki/Feedforward_neural_network" id="mwEA" rel="mw:WikiLink" title="Feedforward neural network">feedforward neural networks</a>, which process inputs independently, RNNs utilize recurrent connections, where the output of a neuron at one time step is fed back as input to the network at the next time step. This enables RNNs to capture temporal dependencies and patterns within sequences.</p>
+<p id="mwEQ">The fundamental building block of RNN is the <i id="mwEg">recurrent unit</i>, which maintains a <i id="mwEw">hidden state</i>—a form of memory that is updated at each time step based on the current input and the previous hidden state. This feedback mechanism allows the network to learn from past inputs and incorporate that knowledge into its current processing. RNNs have been successfully applied to tasks such as unsegmented, connected <a href="https://en.wikipedia.org/wiki/Handwriting_recognition" id="mwFA" rel="mw:WikiLink" title="Handwriting recognition">handwriting recognition</a>,<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>2<span class="cite-bracket" id="mwGA">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Speech_recognition" id="mwGQ" rel="mw:WikiLink" title="Speech recognition">speech recognition</a>,<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"sak2014"},"body":{"id":"mw-reference-text-cite_note-sak2014-3"}}' id="cite_ref-sak2014_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-sak2014-3" id="mwGg"><span class="mw-reflink-text" id="mwGw"><span class="cite-bracket" id="mwHA">[</span>3<span class="cite-bracket" id="mwHQ">]</span></span></a></sup><sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"liwu2015"},"body":{"id":"mw-reference-text-cite_note-liwu2015-4"}}' id="cite_ref-liwu2015_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-liwu2015-4" id="mwHg"><span class="mw-reflink-text" id="mwHw"><span class="cite-bracket" id="mwIA">[</span>4<span class="cite-bracket" id="mwIQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwIg" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>, and <a href="https://en.wikipedia.org/wiki/Neural_machine_translation" id="mwIw" rel="mw:WikiLink" title="Neural machine translation">neural machine translation</a>.<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwJA"><span class="mw-reflink-text" id="mwJQ"><span class="cite-bracket" id="mwJg">[</span>5<span class="cite-bracket" id="mwJw">]</span></span></a></sup><sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwKA"><span class="mw-reflink-text" id="mwKQ"><span class="cite-bracket" id="mwKg">[</span>6<span class="cite-bracket" id="mwKw">]</span></span></a></sup></p>
+<p id="mwLA">However, traditional RNNs suffer from the <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" id="mwLQ" rel="mw:WikiLink" title="Vanishing gradient problem">vanishing gradient problem</a>, which limits their ability to learn long-range dependencies. This issue was addressed by the development of the <a href="https://en.wikipedia.org/wiki/Long_short-term_memory" id="mwLg" rel="mw:WikiLink" title="Long short-term memory">long short-term memory</a> (LSTM) architecture in 1997, making it the standard RNN variant for handling long-term dependencies. Later, <a href="https://en.wikipedia.org/wiki/Gated_recurrent_unit" id="mwLw" rel="mw:WikiLink" title="Gated recurrent unit">gated recurrent units</a> (GRUs) were introduced as a more computationally efficient alternative.</p>
+<p id="mwMA">In recent years, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" id="mwMQ" rel="mw:WikiLink" title="Transformer (deep learning architecture)">transformers</a>, which rely on self-attention mechanisms instead of recurrence, have become the dominant architecture for many sequence-processing tasks, particularly in natural language processing, due to their superior handling of long-range dependencies and greater parallelizability. Nevertheless, RNNs remain relevant for applications where computational efficiency, real-time processing, or the inherent sequential nature of data is crucial.</p>
+<p id="mwNQ">
+One origin of RNN was neuroscience. The word "recurrent" is used to describe loop-like structures in <a href="https://en.wikipedia.org/wiki/Anatomy" id="mwNg" rel="mw:WikiLink" title="Anatomy">anatomy</a>. In 1901, <a href="https://en.wikipedia.org/wiki/Santiago_Ramón_y_Cajal" id="mwNw" rel="mw:WikiLink" title="Santiago Ramón y Cajal">Cajal</a> observed "recurrent semicircles" in the <a href="https://en.wikipedia.org/wiki/Cerebellum" id="mwOA" rel="mw:WikiLink" title="Cerebellum">cerebellar cortex</a> formed by <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Parallel_fiber" id="mwOQ" rel="mw:WikiLink" title="Parallel fiber">parallel fiber</a>, <a href="https://en.wikipedia.org/wiki/Purkinje_cell" id="mwOg" rel="mw:WikiLink" title="Purkinje cell">Purkinje cells</a>, and <a href="https://en.wikipedia.org/wiki/Granule_cell" id="mwOw" rel="mw:WikiLink" title="Granule cell">granule cells</a>.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>7<span class="cite-bracket" id="mwPw">]</span></span></a></sup><sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwQA"><span class="mw-reflink-text" id="mwQQ"><span class="cite-bracket" id="mwQg">[</span>8<span class="cite-bracket" id="mwQw">]</span></span></a></sup> In 1933, <a href="https://en.wikipedia.org/wiki/Rafael_Lorente_de_Nó" id="mwRA" rel="mw:WikiLink" title="Rafael Lorente de Nó">Lorente de Nó</a> discovered "recurrent, reciprocal connections" by <a href="https://en.wikipedia.org/wiki/Golgi's_method" id="mwRQ" rel="mw:WikiLink" title="Golgi's method">Golgi's method</a>, and proposed that excitatory loops explain certain aspects of the <a href="https://en.wikipedia.org/wiki/Vestibulo-ocular_reflex" id="mwRg" rel="mw:WikiLink" title="Vestibulo-ocular reflex">vestibulo-ocular reflex</a>.<sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwRw"><span class="mw-reflink-text" id="mwSA"><span class="cite-bracket" id="mwSQ">[</span>9<span class="cite-bracket" id="mwSg">]</span></span></a></sup><sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwSw"><span class="mw-reflink-text" id="mwTA"><span class="cite-bracket" id="mwTQ">[</span>10<span class="cite-bracket" id="mwTg">]</span></span></a></sup> During 1940s, multiple people proposed the existence of feedback in the brain, which was a contrast to the previous understanding of the neural system as a purely feedforward structure. <a href="https://en.wikipedia.org/wiki/Donald_O._Hebb" id="mwTw" rel="mw:WikiLink" title="Donald O. Hebb">Hebb</a> considered "reverberating circuit" as an explanation for short-term memory.<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwUA"><span class="mw-reflink-text" id="mwUQ"><span class="cite-bracket" id="mwUg">[</span>11<span class="cite-bracket" id="mwUw">]</span></span></a></sup> The McCulloch and Pitts paper (1943), which proposed the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/McCulloch-Pitts_neuron" id="mwVA" rel="mw:WikiLink" title="McCulloch-Pitts neuron">McCulloch-Pitts neuron</a> model, considered networks that contains cycles. The current activity of such networks can be affected by activity indefinitely far in the past.<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwVQ"><span class="mw-reflink-text" id="mwVg"><span class="cite-bracket" id="mwVw">[</span>12<span class="cite-bracket" id="mwWA">]</span></span></a></sup> They were both interested in closed loops as possible explanations for e.g. <a href="https://en.wikipedia.org/wiki/Epilepsy" id="mwWQ" rel="mw:WikiLink" title="Epilepsy">epilepsy</a> and <a href="https://en.wikipedia.org/wiki/Complex_regional_pain_syndrome" id="mwWg" rel="mw:WikiLink" title="Complex regional pain syndrome">causalgia</a>.<sup about="#mwt49" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwWw"><span class="mw-reflink-text" id="mwXA"><span class="cite-bracket" id="mwXQ">[</span>13<span class="cite-bracket" id="mwXg">]</span></span></a></sup><sup about="#mwt52" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwXw"><span class="mw-reflink-text" id="mwYA"><span class="cite-bracket" id="mwYQ">[</span>14<span class="cite-bracket" id="mwYg">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Renshaw_cell" id="mwYw" rel="mw:WikiLink" title="Renshaw cell">Recurrent inhibition</a> was proposed in 1946 as a negative feedback mechanism in motor control. Neural feedback loops were a common topic of discussion at the <a href="https://en.wikipedia.org/wiki/Macy_conferences" id="mwZA" rel="mw:WikiLink" title="Macy conferences">Macy conferences</a>.<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwZQ"><span class="mw-reflink-text" id="mwZg"><span class="cite-bracket" id="mwZw">[</span>15<span class="cite-bracket" id="mwaA">]</span></span></a></sup> See <sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-16"}}' id="cite_ref-:0_16-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-16" id="mwaQ"><span class="mw-reflink-text" id="mwag"><span class="cite-bracket" id="mwaw">[</span>16<span class="cite-bracket" id="mwbA">]</span></span></a></sup> for an extensive review of recurrent neural network models in neuroscience.</p>
+<p id="mwdg"><a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt" id="mwdw" rel="mw:WikiLink" title="Frank Rosenblatt">Frank Rosenblatt</a> in 1960 published "close-loop cross-coupled perceptrons", which are 3-layered <a href="https://en.wikipedia.org/wiki/Perceptron" id="mweA" rel="mw:WikiLink" title="Perceptron">perceptron</a> networks whose middle layer contains recurrent connections that change by a <a href="https://en.wikipedia.org/wiki/Hebbian_theory" id="mweQ" rel="mw:WikiLink" title="Hebbian theory">Hebbian learning</a> rule.<sup about="#mwt64" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mweg"><span class="mw-reflink-text" id="mwew"><span class="cite-bracket" id="mwfA">[</span>18<span class="cite-bracket" id="mwfQ">]</span></span></a></sup><sup about="#mwt61" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Pg","href":"./Template:Pg"},"params":{"pages":{"wt":"73-75"}},"i":0}}]}' id="mwfg" typeof="mw:Transclusion"><span title="Pages: 73–75"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>73–75<span typeof="mw:Entity"> </span></span></sup> Later, in <i id="mwfw">Principles of Neurodynamics</i> (1961), he described "closed-loop cross-coupled" and "back-coupled" perceptron networks, and made theoretical and experimental studies for Hebbian learning in these networks,<sup about="#mwt67" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-17"}}' id="cite_ref-:1_17-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-17" id="mwgA"><span class="mw-reflink-text" id="mwgQ"><span class="cite-bracket" id="mwgg">[</span>17<span class="cite-bracket" id="mwgw">]</span></span></a></sup><sup about="#mwt62" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Pg","href":"./Template:Pg"},"params":{"location":{"wt":"Chapter 19, 21"}},"i":0}}]}' id="mwhA" typeof="mw:Transclusion"><span title="Location: Chapter 19, 21"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>Chapter 19, 21<span typeof="mw:Entity"> </span></span></sup> and noted that a fully cross-coupled perceptron network is equivalent to an infinitely deep feedforward network.<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_17-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-17" id="mwhQ"><span class="mw-reflink-text" id="mwhg"><span class="cite-bracket" id="mwhw">[</span>17<span class="cite-bracket" id="mwiA">]</span></span></a></sup><sup about="#mwt63" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Pg","href":"./Template:Pg"},"params":{"location":{"wt":"Section 19.11"}},"i":0}}]}' id="mwiQ" typeof="mw:Transclusion"><span title="Location: Section 19.11"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>Section 19.11<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwig">Similar networks were published by Kaoru Nakano in 1971,<sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Nakano1971"},"body":{"id":"mw-reference-text-cite_note-Nakano1971-19"}}' id="cite_ref-Nakano1971_19-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Nakano1971-19" id="mwiw"><span class="mw-reflink-text" id="mwjA"><span class="cite-bracket" id="mwjQ">[</span>19<span class="cite-bracket" id="mwjg">]</span></span></a></sup><sup about="#mwt75" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Nakano1972"},"body":{"id":"mw-reference-text-cite_note-Nakano1972-20"}}' id="cite_ref-Nakano1972_20-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Nakano1972-20" id="mwjw"><span class="mw-reflink-text" id="mwkA"><span class="cite-bracket" id="mwkQ">[</span>20<span class="cite-bracket" id="mwkg">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Shun'ichi_Amari" id="mwkw" rel="mw:WikiLink" title="Shun'ichi Amari">Shun'ichi Amari</a> in 1972,<sup about="#mwt78" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Amari1972"},"body":{"id":"mw-reference-text-cite_note-Amari1972-21"}}' id="cite_ref-Amari1972_21-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Amari1972-21" id="mwlA"><span class="mw-reflink-text" id="mwlQ"><span class="cite-bracket" id="mwlg">[</span>21<span class="cite-bracket" id="mwlw">]</span></span></a></sup> and <a about="#mwt69" data-mw='{"parts":[{"template":{"target":{"wt":"ill","href":"./Template:Ill"},"params":{"1":{"wt":"William A. Little (physicist)"},"lt":{"wt":"William A. Little"},"2":{"wt":"de"},"3":{"wt":"William A. Little"}},"i":0}}]}' href="https://en.wikipedia.org/wiki/William_A._Little_(physicist)" id="mwmA" rel="mw:WikiLink" title="William A. Little (physicist)" typeof="mw:Transclusion">William A. Little</a><link about="#mwt69" href="./Category:Interlanguage_link_template_existing_link" rel="mw:PageProp/Category"/><span about="#mwt69" typeof="mw:Nowiki"></span> in 1974,<sup about="#mwt81" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"little74"},"body":{"id":"mw-reference-text-cite_note-little74-22"}}' id="cite_ref-little74_22-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-little74-22" id="mwmQ"><span class="mw-reflink-text" id="mwmg"><span class="cite-bracket" id="mwmw">[</span>22<span class="cite-bracket" id="mwnA">]</span></span></a></sup> who was acknowledged by Hopfield in his 1982 paper.</p>
+<p id="mwnQ">Another origin of RNN was <a href="https://en.wikipedia.org/wiki/Statistical_mechanics" id="mwng" rel="mw:WikiLink" title="Statistical mechanics">statistical mechanics</a>. The <a href="https://en.wikipedia.org/wiki/Ising_model" id="mwnw" rel="mw:WikiLink" title="Ising model">Ising model</a> was developed by <a href="https://en.wikipedia.org/wiki/Wilhelm_Lenz" id="mwoA" rel="mw:WikiLink" title="Wilhelm Lenz">Wilhelm Lenz</a><sup about="#mwt84" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"lenz1920"},"body":{"id":"mw-reference-text-cite_note-lenz1920-23"}}' id="cite_ref-lenz1920_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-lenz1920-23" id="mwoQ"><span class="mw-reflink-text" id="mwog"><span class="cite-bracket" id="mwow">[</span>23<span class="cite-bracket" id="mwpA">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Ernst_Ising" id="mwpQ" rel="mw:WikiLink" title="Ernst Ising">Ernst Ising</a><sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ising1925"},"body":{"id":"mw-reference-text-cite_note-ising1925-24"}}' id="cite_ref-ising1925_24-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ising1925-24" id="mwpg"><span class="mw-reflink-text" id="mwpw"><span class="cite-bracket" id="mwqA">[</span>24<span class="cite-bracket" id="mwqQ">]</span></span></a></sup> in the 1920s<sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwqg"><span class="mw-reflink-text" id="mwqw"><span class="cite-bracket" id="mwrA">[</span>25<span class="cite-bracket" id="mwrQ">]</span></span></a></sup> as a simple statistical mechanical model of magnets at equilibrium. <a href="https://en.wikipedia.org/wiki/Roy_J._Glauber" id="mwrg" rel="mw:WikiLink" title="Roy J. Glauber">Glauber</a> in 1963 studied the Ising model evolving in time, as a process towards equilibrium (<a href="https://en.wikipedia.org/wiki/Glauber_dynamics" id="mwrw" rel="mw:WikiLink" title="Glauber dynamics">Glauber dynamics</a>), adding in the component of time.<sup about="#mwt93" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":22"},"body":{"id":"mw-reference-text-cite_note-:22-26"}}' id="cite_ref-:22_26-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:22-26" id="mwsA"><span class="mw-reflink-text" id="mwsQ"><span class="cite-bracket" id="mwsg">[</span>26<span class="cite-bracket" id="mwsw">]</span></span></a></sup></p>
+<p id="mwtA">The <a href="https://en.wikipedia.org/wiki/Spin_glass" id="mwtQ" rel="mw:WikiLink" title="Spin glass">Sherrington–Kirkpatrick model</a> of spin glass, published in 1975,<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwtg"><span class="mw-reflink-text" id="mwtw"><span class="cite-bracket" id="mwuA">[</span>27<span class="cite-bracket" id="mwuQ">]</span></span></a></sup> is the Hopfield network with random initialization. Sherrington and Kirkpatrick found that it is highly likely for the energy function of the SK model to have many local minima. In the 1982 paper, Hopfield applied this recently developed theory to study the Hopfield network with binary activation functions.<sup about="#mwt99" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Hopfield19822"},"body":{"id":"mw-reference-text-cite_note-Hopfield19822-28"}}' id="cite_ref-Hopfield19822_28-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Hopfield19822-28" id="mwug"><span class="mw-reflink-text" id="mwuw"><span class="cite-bracket" id="mwvA">[</span>28<span class="cite-bracket" id="mwvQ">]</span></span></a></sup> In a 1984 paper he extended this to continuous activation functions.<sup about="#mwt102" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":02"},"body":{"id":"mw-reference-text-cite_note-:02-29"}}' id="cite_ref-:02_29-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:02-29" id="mwvg"><span class="mw-reflink-text" id="mwvw"><span class="cite-bracket" id="mwwA">[</span>29<span class="cite-bracket" id="mwwQ">]</span></span></a></sup> It became a standard model for the study of neural networks through statistical mechanics.<sup about="#mwt105" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwwg"><span class="mw-reflink-text" id="mwww"><span class="cite-bracket" id="mwxA">[</span>30<span class="cite-bracket" id="mwxQ">]</span></span></a></sup><sup about="#mwt108" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwxg"><span class="mw-reflink-text" id="mwxw"><span class="cite-bracket" id="mwyA">[</span>31<span class="cite-bracket" id="mwyQ">]</span></span></a></sup></p>
+<p id="mwyw">During the resurgence of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mwzA" rel="mw:WikiLink" title="Artificial neural network">neural networks</a> in the 1980s, recurrent networks were studied again. Two influential architectures from this period were the Jordan network, proposed by <a href="https://en.wikipedia.org/wiki/Michael_I._Jordan" id="mwzQ" rel="mw:WikiLink" title="Michael I. Jordan">Michael I. Jordan</a> in 1986, and the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Elman_network" id="mwzg" rel="mw:WikiLink" title="Elman network">Elman network</a>, introduced by <a href="https://en.wikipedia.org/wiki/Jeffrey_Elman" id="mwzw" rel="mw:WikiLink" title="Jeffrey Elman">Jeffrey Elman</a> in 1990.<sup about="#mwt111" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-32"}}' id="cite_ref-32" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-32" id="mw0A"><span class="mw-reflink-text" id="mw0Q"><span class="cite-bracket" id="mw0g">[</span>32<span class="cite-bracket" id="mw0w">]</span></span></a></sup><sup about="#mwt114" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-33"}}' id="cite_ref-33" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-33" id="mw1A"><span class="mw-reflink-text" id="mw1Q"><span class="cite-bracket" id="mw1g">[</span>33<span class="cite-bracket" id="mw1w">]</span></span></a></sup></p>
+<p id="mw2A"><a href="https://en.wikipedia.org/wiki/Long_short-term_memory" id="mw2Q" rel="mw:WikiLink" title="Long short-term memory">Long short-term memory</a> (LSTM) was introduced by <a href="https://en.wikipedia.org/wiki/Sepp_Hochreiter" id="mw2g" rel="mw:WikiLink" title="Sepp Hochreiter">Sepp Hochreiter</a> and <a href="https://en.wikipedia.org/wiki/Jürgen_Schmidhuber" id="mw2w" rel="mw:WikiLink" title="Jürgen Schmidhuber">Jürgen Schmidhuber</a> in 1997 to address difficulties in learning long-range dependencies with recurrent networks.<sup about="#mwt117" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-34"}}' id="cite_ref-34" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-34" id="mw3A"><span class="mw-reflink-text" id="mw3Q"><span class="cite-bracket" id="mw3g">[</span>34<span class="cite-bracket" id="mw3w">]</span></span></a></sup> The same year, Mike Schuster and Kuldip K. Paliwal introduced <a href="https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks" id="mw4A" rel="mw:WikiLink" title="Bidirectional recurrent neural networks">bidirectional recurrent neural networks</a> (BRNNs), which process a sequence in both forward and backward directions.<sup about="#mwt120" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-35"}}' id="cite_ref-35" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-35" id="mw4Q"><span class="mw-reflink-text" id="mw4g"><span class="cite-bracket" id="mw4w">[</span>35<span class="cite-bracket" id="mw5A">]</span></span></a></sup></p>
+<p id="mw5Q">Bidirectionality was subsequently combined with LSTM, and by the mid-2000s bidirectional LSTM networks had achieved strong results in <a href="https://en.wikipedia.org/wiki/Speech_recognition" id="mw5g" rel="mw:WikiLink" title="Speech recognition">speech recognition</a>.<sup about="#mwt123" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-36"}}' id="cite_ref-36" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-36" id="mw5w"><span class="mw-reflink-text" id="mw6A"><span class="cite-bracket" id="mw6Q">[</span>36<span class="cite-bracket" id="mw6g">]</span></span></a></sup> They improved large-vocabulary speech recognition<sup about="#mwt124" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"sak2014"}}' id="cite_ref-sak2014_3-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-sak2014-3" id="mw6w"><span class="mw-reflink-text" id="mw7A"><span class="cite-bracket" id="mw7Q">[</span>3<span class="cite-bracket" id="mw7g">]</span></span></a></sup><sup about="#mwt125" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"liwu2015"}}' id="cite_ref-liwu2015_4-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-liwu2015-4" id="mw7w"><span class="mw-reflink-text" id="mw8A"><span class="cite-bracket" id="mw8Q">[</span>4<span class="cite-bracket" id="mw8g">]</span></span></a></sup> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Text-to-speech" id="mw8w" rel="mw:WikiLink" title="Text-to-speech">text-to-speech</a> synthesis<sup about="#mwt128" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"fan2015"},"body":{"id":"mw-reference-text-cite_note-fan2015-37"}}' id="cite_ref-fan2015_37-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-fan2015-37" id="mw9A"><span class="mw-reflink-text" id="mw9Q"><span class="cite-bracket" id="mw9g">[</span>37<span class="cite-bracket" id="mw9w">]</span></span></a></sup> and were used in <a href="https://en.wikipedia.org/wiki/Google_Voice_Search" id="mw-A" rel="mw:WikiLink" title="Google Voice Search">Google voice search</a>.<sup about="#mwt131" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"sak2015"},"body":{"id":"mw-reference-text-cite_note-sak2015-38"}}' id="cite_ref-sak2015_38-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-sak2015-38" id="mw-Q"><span class="mw-reflink-text" id="mw-g"><span class="cite-bracket" id="mw-w">[</span>38<span class="cite-bracket" id="mw_A">]</span></span></a></sup></p>
+<p id="mw_Q">Recurrent networks also proved effective for <a href="https://en.wikipedia.org/wiki/Language_model" id="mw_g" rel="mw:WikiLink" title="Language model">language modeling</a>. In 2010, <a href="https://en.wikipedia.org/wiki/Tomáš_Mikolov" id="mw_w" rel="mw:WikiLink" title="Tomáš Mikolov">Tomáš Mikolov</a> and co-authors demonstrated that recurrent neural-network language models could substantially outperform conventional <a class="mw-redirect" href="https://en.wikipedia.org/wiki/N-gram_language_model" id="mwAQA" rel="mw:WikiLink" title="N-gram language model">n-gram models</a>.<sup about="#mwt134" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-39"}}' id="cite_ref-39" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-39" id="mwAQE"><span class="mw-reflink-text" id="mwAQI"><span class="cite-bracket" id="mwAQM">[</span>39<span class="cite-bracket" id="mwAQQ">]</span></span></a></sup></p>
+<p id="mwAQU">In 2014, <a href="https://en.wikipedia.org/wiki/Kyunghyun_Cho" id="mwAQY" rel="mw:WikiLink" title="Kyunghyun Cho">Kyunghyun Cho</a> and co-authors proposed an RNN encoder–decoder for <a href="https://en.wikipedia.org/wiki/Machine_translation" id="mwAQc" rel="mw:WikiLink" title="Machine translation">machine translation</a>,<sup about="#mwt137" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-40"}}' id="cite_ref-40" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-40" id="mwAQg"><span class="mw-reflink-text" id="mwAQk"><span class="cite-bracket" id="mwAQo">[</span>40<span class="cite-bracket" id="mwAQs">]</span></span></a></sup> while another 2014 study demonstrated <a href="https://en.wikipedia.org/wiki/Seq2seq" id="mwAQw" rel="mw:WikiLink" title="Seq2seq">sequence-to-sequence learning</a> using LSTMs.<sup about="#mwt140" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-41"}}' id="cite_ref-41" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-41" id="mwAQ0"><span class="mw-reflink-text" id="mwAQ4"><span class="cite-bracket" id="mwAQ8">[</span>41<span class="cite-bracket" id="mwARA">]</span></span></a></sup> They became state of the art in machine translation, and were instrumental in the development of <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" id="mwARE" rel="mw:WikiLink" title="Attention (machine learning)">attention mechanisms</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" id="mwARI" rel="mw:WikiLink" title="Transformer (deep learning architecture)">transformers</a>.</p>
+<p id="mwARY">An RNN-based model can be factored into two parts: configuration and architecture. Multiple RNNs can be combined in a data flow, and the data flow itself is the configuration. Each RNN itself may have any architecture, including LSTM, GRU, etc.</p>
+<p id="mwARw">RNNs come in many variants. Abstractly speaking, an RNN is a function <span about="#mwt143" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f_\\theta"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f_{\theta }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>θ<!-- θ --></mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f_{\theta }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f_{\theta }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9874ae06066a2250709085e0fb521eebff2c2fb7" style="vertical-align: -0.671ex; width:2.143ex; height:2.509ex;"/></span> of type <span about="#mwt144" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x_t, h_t) \\mapsto (y_t, h_{t+1})"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (x_{t},h_{t})\mapsto (y_{t},h_{t+1})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">↦<!-- ↦ --></mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (x_{t},h_{t})\mapsto (y_{t},h_{t+1})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (x_{t},h_{t})\mapsto (y_{t},h_{t+1})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/daede0f2ff9c38ad773254c9b68cdf2846a65de6" style="vertical-align: -0.838ex; width:19.852ex; height:2.843ex;"/></span>, where</p>
+<p id="mwASg">In words, it is a neural network that maps an input <span about="#mwt149" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_t"}}' id="mwASk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f279a30bc8eabc788f3fe81c9cfb674e72e858db" style="vertical-align: -0.671ex; width:2.156ex; height:2.009ex;"/></span> into an output <span about="#mwt150" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_t"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0fe9554452b93508c9d2479414a45981ecc75a2d" style="vertical-align: -0.671ex; width:1.965ex; height:2.009ex;"/></span>, with the hidden vector <span about="#mwt151" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_t"}}' id="mwASs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{t}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{t}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{t}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e8dbf3d8bfe322f68ff6400385578f8d78e1ba7c" style="vertical-align: -0.671ex; width:2.165ex; height:2.509ex;"/></span> playing the role of "memory", a partial record of all previous input-output pairs. At each step, it transforms input to an output, and modifies its "memory" to help it to better perform future processing.</p>
+<p id="mwASw">The illustration to the right may be misleading to many because practical neural network topologies are frequently organized in "layers" and the drawing gives that appearance. However, what appears to be <a href="https://en.wikipedia.org/wiki/Layer_(deep_learning)" id="mwAS0" rel="mw:WikiLink" title="Layer (deep learning)">layers</a> are, in fact, different steps in time, "unfolded" to produce the appearance of <a href="https://en.wikipedia.org/wiki/Layer_(deep_learning)" id="mwAS4" rel="mw:WikiLink" title="Layer (deep learning)">layers</a>.</p>
+<p id="mwATQ">A <b id="mwATU">stacked RNN</b>, or <b id="mwATY">deep RNN</b>, is composed of multiple RNNs stacked one above the other. Abstractly, it is structured as follows</p>
+<p id="mwAUY">Each layer operates as a stand-alone RNN, and each layer's output sequence is used as the input sequence to the layer above. There is no conceptual limit to the depth of stacked RNN.</p>
+<p id="mwAU4">A <b id="mwAU8">bidirectional RNN</b> (biRNN) is composed of two RNNs, one processing the input sequence in one direction, and another in the opposite direction. Abstractly, it is structured as follows:</p>
+<p id="mwAVU">The two output sequences are then concatenated to give the total output: <span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;((y_0, y_0'), (y_1, y_1'), \\dots, (y_N, y_N'))&quot;}}" id="mwAVY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle ((y_{0},y_{0}'),(y_{1},y_{1}'),\dots ,(y_{N},y_{N}'))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msubsup>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msubsup>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>N</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msubsup>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>N</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle ((y_{0},y_{0}'),(y_{1},y_{1}'),\dots ,(y_{N},y_{N}'))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle ((y_{0},y_{0}'),(y_{1},y_{1}'),\dots ,(y_{N},y_{N}'))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b4f2aede172075e4a2d3ef5c525448fb5e241ae" style="vertical-align: -1.005ex; width:30.986ex; height:3.009ex;"/></span>.</p>
+<p id="mwAVc">Bidirectional RNN allows the model to process a token both in the context of what came before it and what came after it. By stacking multiple bidirectional RNNs together, the model can process a token increasingly contextually. The <a href="https://en.wikipedia.org/wiki/ELMo" id="mwAVg" rel="mw:WikiLink" title="ELMo">ELMo</a> model (2018)<sup about="#mwt169" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-42"}}' id="cite_ref-42" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-42" id="mwAVk"><span class="mw-reflink-text" id="mwAVo"><span class="cite-bracket" id="mwAVs">[</span>42<span class="cite-bracket" id="mwAVw">]</span></span></a></sup> is a stacked bidirectional <a href="https://en.wikipedia.org/wiki/Long_short-term_memory" id="mwAV0" rel="mw:WikiLink" title="Long short-term memory">LSTM</a> which takes character-level as inputs and produces word-level embeddings.</p>
+<p id="mwAW0">Two RNNs can be run front-to-back in an <b id="mwAW4">encoder-decoder</b> configuration. The encoder RNN processes an input sequence into a sequence of hidden vectors, and the decoder RNN processes the sequence of hidden vectors to an output sequence, with an optional <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" id="mwAW8" rel="mw:WikiLink" title="Attention (machine learning)">attention mechanism</a>. This was used to construct state of the art <a href="https://en.wikipedia.org/wiki/Neural_machine_translation" id="mwAXA" rel="mw:WikiLink" title="Neural machine translation">neural machine translators</a> during the 2014–2017 period. This was an instrumental step towards the development of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" id="mwAXE" rel="mw:WikiLink" title="Transformer (deep learning architecture)">transformers</a>.<sup about="#mwt174" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-43"}}' id="cite_ref-43" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-43" id="mwAXI"><span class="mw-reflink-text" id="mwAXM"><span class="cite-bracket" id="mwAXQ">[</span>43<span class="cite-bracket" id="mwAXU">]</span></span></a></sup></p>
+<p id="mwAXc">An RNN may process data with more than one dimension. PixelRNN processes two-dimensional data, with many possible directions.<sup about="#mwt177" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-44"}}' id="cite_ref-44" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-44" id="mwAXg"><span class="mw-reflink-text" id="mwAXk"><span class="cite-bracket" id="mwAXo">[</span>44<span class="cite-bracket" id="mwAXs">]</span></span></a></sup> For example, the row-by-row direction processes an <span about="#mwt178" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n \\times n"}}' id="mwAXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n\times n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n\times n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n\times n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/59d2b4cb72e304526cf5b5887147729ea259da78" style="vertical-align: -0.338ex; width:5.63ex; height:1.676ex;"/></span> grid of vectors <span about="#mwt179" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_{i, j}"}}' id="mwAX0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i,j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i,j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i,j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd698068c9322e82d11cb2bc02cb2f51739a2cc0" style="vertical-align: -1.005ex; width:3.264ex; height:2.343ex;"/></span> in the following order: <span about="#mwt180" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"x_{1, 1}, x_{1, 2}, \\dots, x_{1, n}, x_{2, 1}, x_{2, 2}, \\dots, x_{2, n}, \\dots, x_{n, n}"}}' id="mwAX4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{1,1},x_{1,2},\dots ,x_{1,n},x_{2,1},x_{2,2},\dots ,x_{2,n},\dots ,x_{n,n}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+<mo>,</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+<mo>,</mo>
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mo>,</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mo>,</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mo>,</mo>
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>,</mo>
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{1,1},x_{1,2},\dots ,x_{1,n},x_{2,1},x_{2,2},\dots ,x_{2,n},\dots ,x_{n,n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{1,1},x_{1,2},\dots ,x_{1,n},x_{2,1},x_{2,2},\dots ,x_{2,n},\dots ,x_{n,n}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b9de0f040f133e51ec188e98ed9541a98705908" style="vertical-align: -1.005ex; width:44.936ex; height:2.343ex;"/></span>The <b id="mwAX8">diagonal BiLSTM</b> uses two LSTMs to process the same grid. One processes it from the top-left corner to the bottom-right, such that it processes <span about="#mwt181" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_{i, j}"}}' id="mwAYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i,j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i,j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i,j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd698068c9322e82d11cb2bc02cb2f51739a2cc0" style="vertical-align: -1.005ex; width:3.264ex; height:2.343ex;"/></span> depending on its hidden state and cell state on the top and the left side: <span about="#mwt182" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{i-1, j}, c_{i-1, j}"}}' id="mwAYE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{i-1,j},c_{i-1,j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo>,</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>c</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo>,</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{i-1,j},c_{i-1,j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{i-1,j},c_{i-1,j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec3abb324832ed758f9376976cae69702169a7df" style="vertical-align: -1.005ex; width:11.45ex; height:2.843ex;"/></span> and <span about="#mwt183" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{i, j-1}, c_{i, j-1}"}}' id="mwAYI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{i,j-1},c_{i,j-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>c</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{i,j-1},c_{i,j-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{i,j-1},c_{i,j-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82483890bf0f5558df1cee92b40c57d6c0e29228" style="vertical-align: -1.005ex; width:11.45ex; height:2.843ex;"/></span>. The other processes it from the top-right corner to the bottom-left.</p>
+<p id="mwAYk"><b id="mwAYo">Fully recurrent neural networks</b> (FRNN) connect the outputs of all neurons to the inputs of all neurons. In other words, it is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Fully_connected_network" id="mwAYs" rel="mw:WikiLink" title="Fully connected network">fully connected network</a>. This is the most general neural network topology, because all other topologies can be represented by setting some connection weights to zero to simulate the lack of connections between those neurons.</p>
+<p id="mwAZQ">The <b id="mwAZU">Hopfield network</b> is an RNN in which all connections across layers are equally sized. It requires <a href="https://en.wikipedia.org/wiki/Stationary_process" id="mwAZY" rel="mw:WikiLink" title="Stationary process">stationary</a> inputs and is thus not a general RNN, as it does not process sequences of patterns. However, it guarantees that it will converge. If the connections are trained using <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hebbian_learning" id="mwAZc" rel="mw:WikiLink" title="Hebbian learning">Hebbian learning</a>, then the Hopfield network can perform as <a href="https://en.wikipedia.org/wiki/Robustness_(computer_science)" id="mwAZg" rel="mw:WikiLink" title="Robustness (computer science)">robust</a> <a href="https://en.wikipedia.org/wiki/Content-addressable_memory" id="mwAZk" rel="mw:WikiLink" title="Content-addressable memory">content-addressable memory</a>, resistant to connection alteration.</p>
+<p id="mwAZ8">An <b id="mwAaA"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Jeff_Elman" id="mwAaE" rel="mw:WikiLink" title="Jeff Elman">Elman</a> network</b> is a three-layer network (arranged horizontally as <i id="mwAaI">x</i>, <i id="mwAaM">y</i>, and <i id="mwAaQ">z</i> in the illustration) with the addition of a set of context units (<i id="mwAaU">u</i> in the illustration). The middle (hidden) layer is connected to these context units fixed with a weight of one.<sup about="#mwt187" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"bmm615"},"body":{"id":"mw-reference-text-cite_note-bmm615-45"}}' id="cite_ref-bmm615_45-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-bmm615-45" id="mwAaY"><span class="mw-reflink-text" id="mwAac"><span class="cite-bracket" id="mwAag">[</span>45<span class="cite-bracket" id="mwAak">]</span></span></a></sup> At each time step, the input is fed forward and a <a href="https://en.wikipedia.org/wiki/Learning_rule" id="mwAao" rel="mw:WikiLink" title="Learning rule">learning rule</a> is applied. The fixed back-connections save a copy of the previous values of the hidden units in the context units (since they propagate over the connections before the learning rule is applied). Thus the network can maintain a sort of state, allowing it to perform tasks such as sequence-prediction that are beyond the power of a standard <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron" id="mwAas" rel="mw:WikiLink" title="Multilayer perceptron">multilayer perceptron</a>.</p>
+<p id="mwAaw"><b id="mwAa0"><a href="https://en.wikipedia.org/wiki/Michael_I._Jordan" id="mwAa4" rel="mw:WikiLink" title="Michael I. Jordan">Jordan</a> networks</b> are similar to Elman networks. The context units are fed from the output layer instead of the hidden layer. The context units in a Jordan network are also called the state layer. They have a recurrent connection to themselves.<sup about="#mwt188" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"bmm615"}}' id="cite_ref-bmm615_45-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-bmm615-45" id="mwAa8"><span class="mw-reflink-text" id="mwAbA"><span class="cite-bracket" id="mwAbE">[</span>45<span class="cite-bracket" id="mwAbI">]</span></span></a></sup></p>
+<p id="mwAbM">Elman and Jordan networks are also known as "Simple recurrent networks" (SRN).</p>
+<p id="mwAcM">Variables and functions</p>
+<p id="mwAds"><b id="mwAdw">Long short-term memory</b> (LSTM) is the most widely used RNN architecture. It was designed to solve the <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" id="mwAd0" rel="mw:WikiLink" title="Vanishing gradient problem">vanishing gradient problem</a>. LSTM is normally augmented by recurrent gates called "forget gates".<sup about="#mwt209" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"gers2002"},"body":{"id":"mw-reference-text-cite_note-gers2002-48"}}' id="cite_ref-gers2002_48-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-gers2002-48" id="mwAd4"><span class="mw-reflink-text" id="mwAd8"><span class="cite-bracket" id="mwAeA">[</span>48<span class="cite-bracket" id="mwAeE">]</span></span></a></sup> LSTM prevents backpropagated errors from vanishing or exploding.<sup about="#mwt210" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"hochreiter1991"}}' id="cite_ref-hochreiter1991_49-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hochreiter1991-49" id="mwAeI"><span class="mw-reflink-text" id="mwAeM"><span class="cite-bracket" id="mwAeQ">[</span>49<span class="cite-bracket" id="mwAeU">]</span></span></a></sup> Instead, errors can flow backward through unlimited numbers of virtual layers unfolded in space. That is, LSTM can learn tasks that require memories of events that happened thousands or even millions of discrete time steps earlier. Problem-specific LSTM-like topologies can be evolved.<sup about="#mwt213" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"bayer2009"},"body":{"id":"mw-reference-text-cite_note-bayer2009-50"}}' id="cite_ref-bayer2009_50-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-bayer2009-50" id="mwAeY"><span class="mw-reflink-text" id="mwAec"><span class="cite-bracket" id="mwAeg">[</span>50<span class="cite-bracket" id="mwAek">]</span></span></a></sup> LSTM works even given long delays between significant events and can handle signals that mix low and high-frequency components.</p>
+<p id="mwAeo">Many applications use stacks of LSTMs,<sup about="#mwt216" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"fernandez2007"},"body":{"id":"mw-reference-text-cite_note-fernandez2007-51"}}' id="cite_ref-fernandez2007_51-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-fernandez2007-51" id="mwAes"><span class="mw-reflink-text" id="mwAew"><span class="cite-bracket" id="mwAe0">[</span>51<span class="cite-bracket" id="mwAe4">]</span></span></a></sup> for which it is called "deep LSTM". LSTM can learn to recognize <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Context-sensitive_languages" id="mwAe8" rel="mw:WikiLink" title="Context-sensitive languages">context-sensitive languages</a> unlike previous models based on <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" id="mwAfA" rel="mw:WikiLink" title="Hidden Markov model">hidden Markov models</a> (HMM) and similar concepts.<sup about="#mwt217" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"peepholeLSTM"}}' id="cite_ref-peepholeLSTM_52-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-peepholeLSTM-52" id="mwAfE"><span class="mw-reflink-text" id="mwAfI"><span class="cite-bracket" id="mwAfM">[</span>52<span class="cite-bracket" id="mwAfQ">]</span></span></a></sup></p>
+<p id="mwAfw"><b id="mwAf0">Gated recurrent unit</b> (GRU), introduced in 2014, was designed as a simplification of LSTM. They are used in the full form and several further simplified variants.<sup about="#mwt222" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-53"}}' id="cite_ref-53" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-53" id="mwAf4"><span class="mw-reflink-text" id="mwAf8"><span class="cite-bracket" id="mwAgA">[</span>53<span class="cite-bracket" id="mwAgE">]</span></span></a></sup><sup about="#mwt225" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-54"}}' id="cite_ref-54" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-54" id="mwAgI"><span class="mw-reflink-text" id="mwAgM"><span class="cite-bracket" id="mwAgQ">[</span>54<span class="cite-bracket" id="mwAgU">]</span></span></a></sup> They have fewer parameters than LSTM, as they lack an output gate.<sup about="#mwt228" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MyUser_Wildml.com_May_18_2016c"},"body":{"id":"mw-reference-text-cite_note-MyUser_Wildml.com_May_18_2016c-55"}}' id="cite_ref-MyUser_Wildml.com_May_18_2016c_55-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MyUser_Wildml.com_May_18_2016c-55" id="mwAgY"><span class="mw-reflink-text" id="mwAgc"><span class="cite-bracket" id="mwAgg">[</span>55<span class="cite-bracket" id="mwAgk">]</span></span></a></sup></p>
+<p id="mwAgo">Their performance on polyphonic music modeling and speech signal modeling was found to be similar to that of long short-term memory.<sup about="#mwt231" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MyUser_Arxiv.org_May_18_2016c2"},"body":{"id":"mw-reference-text-cite_note-MyUser_Arxiv.org_May_18_2016c2-56"}}' id="cite_ref-MyUser_Arxiv.org_May_18_2016c2_56-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MyUser_Arxiv.org_May_18_2016c2-56" id="mwAgs"><span class="mw-reflink-text" id="mwAgw"><span class="cite-bracket" id="mwAg0">[</span>56<span class="cite-bracket" id="mwAg4">]</span></span></a></sup> There does not appear to be particular performance difference between LSTM and GRU.<sup about="#mwt232" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MyUser_Arxiv.org_May_18_2016c2"}}' id="cite_ref-MyUser_Arxiv.org_May_18_2016c2_56-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MyUser_Arxiv.org_May_18_2016c2-56" id="mwAg8"><span class="mw-reflink-text" id="mwAhA"><span class="cite-bracket" id="mwAhE">[</span>56<span class="cite-bracket" id="mwAhI">]</span></span></a></sup><sup about="#mwt235" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"gruber_jockisch"},"body":{"id":"mw-reference-text-cite_note-gruber_jockisch-57"}}' id="cite_ref-gruber_jockisch_57-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-gruber_jockisch-57" id="mwAhM"><span class="mw-reflink-text" id="mwAhQ"><span class="cite-bracket" id="mwAhU">[</span>57<span class="cite-bracket" id="mwAhY">]</span></span></a></sup></p>
+<p id="mwAho">Introduced by <a href="https://en.wikipedia.org/wiki/Bart_Kosko" id="mwAhs" rel="mw:WikiLink" title="Bart Kosko">Bart Kosko</a>,<sup about="#mwt240" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-58"}}' id="cite_ref-58" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-58" id="mwAhw"><span class="mw-reflink-text" id="mwAh0"><span class="cite-bracket" id="mwAh4">[</span>58<span class="cite-bracket" id="mwAh8">]</span></span></a></sup> a bidirectional associative memory (BAM) network is a variant of a Hopfield network that stores associative data as a vector. The bidirectionality comes from passing information through a matrix and its <a href="https://en.wikipedia.org/wiki/Transpose" id="mwAiA" rel="mw:WikiLink" title="Transpose">transpose</a>. Typically, <a href="https://en.wikipedia.org/wiki/Bipolar_encoding" id="mwAiE" rel="mw:WikiLink" title="Bipolar encoding">bipolar encoding</a> is preferred to binary encoding of the associative pairs. Recently, stochastic BAM models using <a href="https://en.wikipedia.org/wiki/Markov_chain" id="mwAiI" rel="mw:WikiLink" title="Markov chain">Markov</a> stepping are optimized for increased network stability and relevance to real-world applications.<sup about="#mwt243" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-59"}}' id="cite_ref-59" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-59" id="mwAiM"><span class="mw-reflink-text" id="mwAiQ"><span class="cite-bracket" id="mwAiU">[</span>59<span class="cite-bracket" id="mwAiY">]</span></span></a></sup></p>
+<p id="mwAic">A BAM network has two layers, either of which can be driven as an input to recall an association and produce an output on the other layer.<sup about="#mwt246" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-60"}}' id="cite_ref-60" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-60" id="mwAig"><span class="mw-reflink-text" id="mwAik"><span class="cite-bracket" id="mwAio">[</span>60<span class="cite-bracket" id="mwAis">]</span></span></a></sup></p>
+<p id="mwAi8"><a href="https://en.wikipedia.org/wiki/Echo_state_network" id="mwAjA" rel="mw:WikiLink" title="Echo state network"><b id="mwAjE">Echo state networks</b></a> (ESN) have a sparsely connected random hidden layer. The weights of output neurons are the only part of the network that can change (be trained). ESNs are good at reproducing certain <a href="https://en.wikipedia.org/wiki/Time_series" id="mwAjI" rel="mw:WikiLink" title="Time series">time series</a>.<sup about="#mwt251" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-61"}}' id="cite_ref-61" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-61" id="mwAjM"><span class="mw-reflink-text" id="mwAjQ"><span class="cite-bracket" id="mwAjU">[</span>61<span class="cite-bracket" id="mwAjY">]</span></span></a></sup> A variant for <a href="https://en.wikipedia.org/wiki/Spiking_neural_network" id="mwAjc" rel="mw:WikiLink" title="Spiking neural network">spiking neurons</a> is known as a <a href="https://en.wikipedia.org/wiki/Liquid_state_machine" id="mwAjg" rel="mw:WikiLink" title="Liquid state machine">liquid state machine</a>.<sup about="#mwt254" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-62"}}' id="cite_ref-62" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-62" id="mwAjk"><span class="mw-reflink-text" id="mwAjo"><span class="cite-bracket" id="mwAjs">[</span>62<span class="cite-bracket" id="mwAjw">]</span></span></a></sup></p>
+<p id="mwAkA">A <b id="mwAkE"><a href="https://en.wikipedia.org/wiki/Recursive_neural_network" id="mwAkI" rel="mw:WikiLink" title="Recursive neural network">recursive neural network</a></b><sup about="#mwt259" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-63"}}' id="cite_ref-63" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-63" id="mwAkM"><span class="mw-reflink-text" id="mwAkQ"><span class="cite-bracket" id="mwAkU">[</span>63<span class="cite-bracket" id="mwAkY">]</span></span></a></sup> is created by applying the same set of weights <a href="https://en.wikipedia.org/wiki/Recursion" id="mwAkc" rel="mw:WikiLink" title="Recursion">recursively</a> over a differentiable graph-like structure by traversing the structure in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Topological_sort" id="mwAkg" rel="mw:WikiLink" title="Topological sort">topological order</a>. Such networks are typically also trained by the reverse mode of <a href="https://en.wikipedia.org/wiki/Automatic_differentiation" id="mwAkk" rel="mw:WikiLink" title="Automatic differentiation">automatic differentiation</a>.<sup about="#mwt262" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"lin1970"},"body":{"id":"mw-reference-text-cite_note-lin1970-64"}}' id="cite_ref-lin1970_64-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-lin1970-64" id="mwAko"><span class="mw-reflink-text" id="mwAks"><span class="cite-bracket" id="mwAkw">[</span>64<span class="cite-bracket" id="mwAk0">]</span></span></a></sup><sup about="#mwt265" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"grie2008"},"body":{"id":"mw-reference-text-cite_note-grie2008-65"}}' id="cite_ref-grie2008_65-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-grie2008-65" id="mwAk4"><span class="mw-reflink-text" id="mwAk8"><span class="cite-bracket" id="mwAlA">[</span>65<span class="cite-bracket" id="mwAlE">]</span></span></a></sup> They can process <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Distributed_representation" id="mwAlI" rel="mw:WikiLink" title="Distributed representation">distributed representations</a> of structure, such as <a href="https://en.wikipedia.org/wiki/Mathematical_logic" id="mwAlM" rel="mw:WikiLink" title="Mathematical logic">logical terms</a>. A special case of recursive neural networks is the RNN whose structure corresponds to a linear chain. Recursive neural networks have been applied to <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwAlQ" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>.<sup about="#mwt268" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-66"}}' id="cite_ref-66" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-66" id="mwAlU"><span class="mw-reflink-text" id="mwAlY"><span class="cite-bracket" id="mwAlc">[</span>66<span class="cite-bracket" id="mwAlg">]</span></span></a></sup> The <i id="mwAlk">recursive neural tensor network</i> uses a <a href="https://en.wikipedia.org/wiki/Tensor" id="mwAlo" rel="mw:WikiLink" title="Tensor">tensor</a>-based composition function for all nodes in the tree.<sup about="#mwt271" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-67"}}' id="cite_ref-67" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-67" id="mwAls"><span class="mw-reflink-text" id="mwAlw"><span class="cite-bracket" id="mwAl0">[</span>67<span class="cite-bracket" id="mwAl4">]</span></span></a></sup></p>
+<p id="mwAmI"><b id="mwAmM">Neural Turing machines</b> (NTMs) are a method of extending recurrent neural networks by coupling them to external <a href="https://en.wikipedia.org/wiki/Memory" id="mwAmQ" rel="mw:WikiLink" title="Memory">memory</a> resources with which they interact. The combined system is analogous to a <a href="https://en.wikipedia.org/wiki/Turing_machine" id="mwAmU" rel="mw:WikiLink" title="Turing machine">Turing machine</a> or <a href="https://en.wikipedia.org/wiki/Von_Neumann_architecture" id="mwAmY" rel="mw:WikiLink" title="Von Neumann architecture">Von Neumann architecture</a> but is <a href="https://en.wikipedia.org/wiki/Differentiable_neural_computer" id="mwAmc" rel="mw:WikiLink" title="Differentiable neural computer">differentiable</a> end-to-end, allowing it to be efficiently trained with <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwAmg" rel="mw:WikiLink" title="Gradient descent">gradient descent</a>.<sup about="#mwt276" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-68"}}' id="cite_ref-68" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-68" id="mwAmk"><span class="mw-reflink-text" id="mwAmo"><span class="cite-bracket" id="mwAms">[</span>68<span class="cite-bracket" id="mwAmw">]</span></span></a></sup></p>
+</div></div>
+</body></html>

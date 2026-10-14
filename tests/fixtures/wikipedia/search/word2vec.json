@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 59
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Word2Vec",
+    "pageid": 47527969,
+    "size": 34755,
+    "wordcount": 4338,
+    "snippet": "In natural language processing, <span class=\"searchmatch\">Word2Vec</span> is a technique for obtaining vector representations of words as word embeddings. These vectors capture information",
+    "timestamp": "2026-09-26T06:38:59Z"
+   },
+   {
+    "ns": 0,
+    "title": "Word embedding",
+    "pageid": 43561218,
+    "size": 30749,
+    "wordcount": 3239,
+    "snippet": "Mikolov created <span class=\"searchmatch\">word2vec</span>, a word embedding toolkit that can train vector space models faster than previous approaches. The <span class=\"searchmatch\">word2vec</span> approach has been",
+    "timestamp": "2026-09-14T12:25:56Z"
+   },
+   {
+    "ns": 0,
+    "title": "Tomáš Mikolov",
+    "pageid": 60215641,
+    "size": 8450,
+    "wordcount": 653,
+    "snippet": "representations. He was the lead author of the 2013 paper that introduced the <span class=\"searchmatch\">word2vec</span> models, a technique for learning word embeddings from text. He later co-authored",
+    "timestamp": "2026-09-03T19:52:00Z"
+   },
+   {
+    "ns": 0,
+    "title": "Artificial intelligence",
+    "pageid": 1164,
+    "size": 282645,
+    "wordcount": 27936,
+    "snippet": "Neural-network approaches also advanced natural language processing. In 2013, <span class=\"searchmatch\">word2vec</span> introduced efficient methods for learning distributed word representations",
+    "timestamp": "2026-10-14T17:24:23Z"
+   },
+   {
+    "ns": 0,
+    "title": "GloVe",
+    "pageid": 49489032,
+    "size": 11920,
+    "wordcount": 1597,
+    "snippet": "was designed as a competitor to <span class=\"searchmatch\">word2vec</span>, and the original paper noted multiple improvements of GloVe over <span class=\"searchmatch\">word2vec</span>. As of 2022[update], both approaches",
+    "timestamp": "2026-08-18T07:01:49Z"
+   }
+  ]
+ }
+}

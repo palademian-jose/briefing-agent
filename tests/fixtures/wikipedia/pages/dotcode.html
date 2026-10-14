@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>DotCode - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">DotCode</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBw"><b id="mwCA">DotCode</b>  is a <a href="https://en.wikipedia.org/wiki/Barcode#Matrix_(2D)_codes" id="mwCQ" rel="mw:WikiLink" title="Barcode">two-dimensional (2D) matrix barcode</a> invented in 2008<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"patentUS20090200386A1"},"body":{"id":"mw-reference-text-cite_note-patentUS20090200386A1-1"}}' id="cite_ref-patentUS20090200386A1_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-patentUS20090200386A1-1" id="mwCg"><span class="mw-reflink-text" id="mwCw"><span class="cite-bracket" id="mwDA">[</span>1<span class="cite-bracket" id="mwDQ">]</span></span></a></sup> by <a href="https://en.wikipedia.org/wiki/Hand_Held_Products" id="mwDg" rel="mw:WikiLink" title="Hand Held Products">Hand Held Products</a> as a replacement for the outdated <a href="https://en.wikipedia.org/wiki/Code_128" id="mwDw" rel="mw:WikiLink" title="Code 128">Code 128</a>. At this time, it is issued by <a href="https://en.wikipedia.org/wiki/Association_for_Automatic_Identification_and_Mobility" id="mwEA" rel="mw:WikiLink" title="Association for Automatic Identification and Mobility">Association for Automatic Identification and Mobility (AIM)</a> as “ISS DotCode Symbology Specification 4.0”.<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"},"body":{"id":"mw-reference-text-cite_note-iss_dotcode-2"}}' id="cite_ref-iss_dotcode_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwEQ"><span class="mw-reflink-text" id="mwEg"><span class="cite-bracket" id="mwEw">[</span>2<span class="cite-bracket" id="mwFA">]</span></span></a></sup> DotCode consists of sparse black round dots and white spaces on white background. In case of a black background the dots can be white. DotCode was developed to be used with high-speed industrial printers<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>3<span class="cite-bracket" id="mwGA">]</span></span></a></sup> where printing accuracy can be low. Because DotCode by the standard does not require complicated elements like continuous lines or special shapes it can be applied with <a href="https://en.wikipedia.org/wiki/Laser_engraving" id="mwGQ" rel="mw:WikiLink" title="Laser engraving">laser engraving</a>  or industrial drills.</p>
+<p id="mwGg">DotCode can be represented as rectangular array with minimal size of each side 5X dots. Maximal size of DotCode is not limited by the standard<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>4<span class="cite-bracket" id="mwHg">]</span></span></a></sup> (as Code 128 is not limited) but practical limit is recommended as 100x99<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwHw"><span class="mw-reflink-text" id="mwIA"><span class="cite-bracket" id="mwIQ">[</span>2<span class="cite-bracket" id="mwIg">]</span></span></a></sup><sup about="#mwt11" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.4"}},"i":0}}]}' id="mwIw" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.4"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.4<span typeof="mw:Entity"> </span></span></sup> which can encode around 730 digits, 366 alphanumeric characters or 304 bytes.</p>
+<p id="mwJA">As an extension of Code 128 barcode, DotCode allows more compact encoding of 8-bit data array and <a href="https://en.wikipedia.org/wiki/Unicode" id="mwJQ" rel="mw:WikiLink" title="Unicode">Unicode</a> support with <a href="https://en.wikipedia.org/wiki/Extended_Channel_Interpretation" id="mwJg" rel="mw:WikiLink" title="Extended Channel Interpretation">Extended Channel Interpretation</a> feature. Additionally, DotCode provides much more data density and <a href="https://en.wikipedia.org/wiki/Reed–Solomon_error_correction" id="mwJw" rel="mw:WikiLink" title="Reed–Solomon error correction">Reed–Solomon error correction</a> which allows to restore partially damaged dotcodes. However, the main DotCode implementation, the same as Code 128, is effective encoding of <a href="https://en.wikipedia.org/wiki/GS1" id="mwKA" rel="mw:WikiLink" title="GS1">GS1</a> data<sup about="#mwt18" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"gs1ai"},"body":{"id":"mw-reference-text-cite_note-gs1ai-5"}}' id="cite_ref-gs1ai_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-gs1ai-5" id="mwKQ"><span class="mw-reflink-text" id="mwKg"><span class="cite-bracket" id="mwKw">[</span>5<span class="cite-bracket" id="mwLA">]</span></span></a></sup> which is used in worldwide shipping and packaging industry.</p>
+<p id="mwLw">DotCode barcode was invented in 2008<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"patentUS20090200386A1"}}' id="cite_ref-patentUS20090200386A1_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-patentUS20090200386A1-1" id="mwMA"><span class="mw-reflink-text" id="mwMQ"><span class="cite-bracket" id="mwMg">[</span>1<span class="cite-bracket" id="mwMw">]</span></span></a></sup> by Dr. Andrew Longacre from <a href="https://en.wikipedia.org/wiki/Hand_Held_Products" id="mwNA" rel="mw:WikiLink" title="Hand Held Products">Hand Held Products</a> company and standardized in 2009<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwNQ"><span class="mw-reflink-text" id="mwNg"><span class="cite-bracket" id="mwNw">[</span>6<span class="cite-bracket" id="mwOA">]</span></span></a></sup> by <a href="https://en.wikipedia.org/wiki/Association_for_Automatic_Identification_and_Mobility" id="mwOQ" rel="mw:WikiLink" title="Association for Automatic Identification and Mobility">AIM</a> as “Bar code symbology specification - DotCode”.<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwOg"><span class="mw-reflink-text" id="mwOw"><span class="cite-bracket" id="mwPA">[</span>7<span class="cite-bracket" id="mwPQ">]</span></span></a></sup> In 2019 DotCode was reviewed as “ISS DotCode Symbology Specification 4.0”.<sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwPg"><span class="mw-reflink-text" id="mwPw"><span class="cite-bracket" id="mwQA">[</span>2<span class="cite-bracket" id="mwQQ">]</span></span></a></sup></p>
+<p id="mwQg">Set of patents is registered, which are related with DotCode encoding and decoding:</p>
+<p id="mwVA">DotCode barcode can be used in the same way as <a href="https://en.wikipedia.org/wiki/Code_128" id="mwVQ" rel="mw:WikiLink" title="Code 128">Code 128</a> or any (2D) matrix barcode. At this time, it is used mostly to encode GS1 data in <a href="https://en.wikipedia.org/wiki/Tobacco_industry" id="mwVg" rel="mw:WikiLink" title="Tobacco industry">tobacco</a>,<sup about="#mwt36" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwVw"><span class="mw-reflink-text" id="mwWA"><span class="cite-bracket" id="mwWQ">[</span>10<span class="cite-bracket" id="mwWg">]</span></span></a></sup><sup about="#mwt39" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwWw"><span class="mw-reflink-text" id="mwXA"><span class="cite-bracket" id="mwXQ">[</span>11<span class="cite-bracket" id="mwXg">]</span></span></a></sup> alcoholic and non-alcoholic beverage,<sup about="#mwt42" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwXw"><span class="mw-reflink-text" id="mwYA"><span class="cite-bracket" id="mwYQ">[</span>12<span class="cite-bracket" id="mwYg">]</span></span></a></sup> pharmaceutical and grocery industries. The main implementation at this time is in tobacco industry.<sup about="#mwt45" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwYw"><span class="mw-reflink-text" id="mwZA"><span class="cite-bracket" id="mwZQ">[</span>13<span class="cite-bracket" id="mwZg">]</span></span></a></sup><sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwZw"><span class="mw-reflink-text" id="mwaA"><span class="cite-bracket" id="mwaQ">[</span>14<span class="cite-bracket" id="mwag">]</span></span></a></sup></p>
+<p id="mwaw">Main advantages of DotCode are:<sup about="#mwt51" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwbA"><span class="mw-reflink-text" id="mwbQ"><span class="cite-bracket" id="mwbg">[</span>15<span class="cite-bracket" id="mwbw">]</span></span></a></sup></p>
+<p id="mwfQ">DotCode represents data in rectangular structure which consists from black round dots and white spaces on white background or white round dots on black background. DotCode does not have finder pattern, like other 2D barcodes and it must be detected with slow <a href="https://en.wikipedia.org/wiki/Blob_detection" id="mwfg" rel="mw:WikiLink" title="Blob detection">blob detection algorithms</a> like <a href="https://en.wikipedia.org/wiki/Gabor_filter" id="mwfw" rel="mw:WikiLink" title="Gabor filter">Gabor filter</a> or <a href="https://en.wikipedia.org/wiki/Circle_Hough_Transform" id="mwgA" rel="mw:WikiLink" title="Circle Hough Transform">Circle Hough Transform</a>.<link about="#mwt52" data-mw='{"parts":[{"template":{"target":{"wt":"cn","href":"./Template:Cn"},"params":{"date":{"wt":"May 2024"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwgQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt52" href="./Category:Articles_with_unsourced_statements_from_May_2024" rel="mw:PageProp/Category"/><sup about="#mwt52" class="noprint Inline-Template Template-Fact" id="mwgg" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (May 2024)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup> All data, metadata and error correction codewords are encoded in the same dots array which does not have any visual difference.</p>
+<p id="mwgw">Here are some samples of DotCode: </p>
+<p id="mwmw">DotCode symbol is constructed from the following elements:<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwnA"><span class="mw-reflink-text" id="mwnQ"><span class="cite-bracket" id="mwng">[</span>2<span class="cite-bracket" id="mwnw">]</span></span></a></sup><sup about="#mwt54" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.1"}},"i":0}}]}' id="mwoA" typeof="mw:Transclusion"><span title="Page / location: 5.1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.1<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwpg">The DotCode bits array is represented as:
+<br id="mwpw"/><i id="mwqA">(Two mask bits: M2, M1)(Data bits)(Corner bits, can be data or padding bits: C1 – C6)</i></p>
+<p id="mwqQ">The data codewords in 0 – 112 range are encoded in 5-of-9 binary dot patterns<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwqg"><span class="mw-reflink-text" id="mwqw"><span class="cite-bracket" id="mwrA">[</span>2<span class="cite-bracket" id="mwrQ">]</span></span></a></sup><sup about="#mwt56" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2"}},"i":0}}]}' id="mwrg" typeof="mw:Transclusion"><span title="Page / location: 5.2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2<span typeof="mw:Entity"> </span></span></sup> which are encoded from 9 dots where 5 black dots and 4 white spaces. The rest of barcode matrix (rest from division on 9) is padded with black padding bits.<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwrw"><span class="mw-reflink-text" id="mwsA"><span class="cite-bracket" id="mwsQ">[</span>2<span class="cite-bracket" id="mwsg">]</span></span></a></sup><sup about="#mwt57" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.3"}},"i":0}}]}' id="mwsw" typeof="mw:Transclusion"><span title="Page / location: 5.2.3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.3<span typeof="mw:Entity"> </span></span></sup> The padding bits can be from 0 to 8. The logically DotCode bits array is represented as:
+<br id="mwtA"/><i id="mwtQ">(2 mask bits)(Data codewords 9 bits each)(Padding bits 0 – 8 bits)</i></p>
+<p id="mwtg">DotCode size has the following requirements:<sup about="#mwt61" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwtw"><span class="mw-reflink-text" id="mwuA"><span class="cite-bracket" id="mwuQ">[</span>2<span class="cite-bracket" id="mwug">]</span></span></a></sup><sup about="#mwt60" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.1"}},"i":0}}]}' id="mwuw" typeof="mw:Transclusion"><span title="Page / location: 5.1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.1<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwyA">To minimize DotCode problematic symbols, the data codewords are masked to create others visual sequences. The mask pattern is applied only to data sequence and does not affect error correction codewords. DotCode standard has 4 mask pattern which are codded into 2 bits and placed as the first 2 bits of symbol bits array.<sup about="#mwt67" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwyQ"><span class="mw-reflink-text" id="mwyg"><span class="cite-bracket" id="mwyw">[</span>2<span class="cite-bracket" id="mwzA">]</span></span></a></sup><sup about="#mwt66" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.4"}},"i":0}}]}' id="mwzQ" typeof="mw:Transclusion"><span title="Page / location: 5.2.4"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.4<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mw6w">DotCode uses <a href="https://en.wikipedia.org/wiki/Reed–Solomon_error_correction" id="mw7A" rel="mw:WikiLink" title="Reed–Solomon error correction">Reed–Solomon error correction</a><sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mw7Q"><span class="mw-reflink-text" id="mw7g"><span class="cite-bracket" id="mw7w">[</span>2<span class="cite-bracket" id="mw8A">]</span></span></a></sup><sup about="#mwt68" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.3"}},"i":0}}]}' id="mw8Q" typeof="mw:Transclusion"><span title="Page / location: 5.3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.3<span typeof="mw:Entity"> </span></span></sup> with <a href="https://en.wikipedia.org/wiki/Prime_power" id="mw8g" rel="mw:WikiLink" title="Prime power">prime power</a> of 3 and <a href="https://en.wikipedia.org/wiki/Finite_field" id="mw8w" rel="mw:WikiLink" title="Finite field">finite field</a> <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbb{F}_{113}"}}' id="mw9A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {F} _{113}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">F</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>113</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {F} _{113}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {F} _{113}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a826400bf4feb6c5e74206634f0824b9efd21fe1" style="vertical-align: -0.671ex; width:4.118ex; height:2.509ex;"/></span> or <span about="#mwt69" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"GF(113)"}},"i":0}}]}' id="mw9Q" typeof="mw:Transclusion">GF(113)</span>. The data codewords is represented with values from 0 to 112 and mask value is counted as leading data codeword from 0 to 3. In this way the data protected array length is (1 + ND). But amount of error correction codewords is calculated only from ND:
+<br id="mw9g"/><span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"NC = 3 + (ND / 2)"}}' id="mw9w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle NC=3+(ND/2)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>C</mi>
+<mo>=</mo>
+<mn>3</mn>
+<mo>+</mo>
+<mo stretchy="false">(</mo>
+<mi>N</mi>
+<mi>D</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle NC=3+(ND/2)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle NC=3+(ND/2)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f9b4748d37b9eb410aaeb113079bb7b0a4545684" style="vertical-align: -0.838ex; width:19.053ex; height:2.843ex;"/></span>,
+<br id="mw-A"/>where ND is data codewords and NC - error correction codewords.</p>
+<p id="mw-Q">The resulting codewords NW with error correction codewords is:
+<br id="mw-g"/><span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"NW = (1 + ND) + NC"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle NW=(1+ND)+NC}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>W</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>+</mo>
+<mi>N</mi>
+<mi>D</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>N</mi>
+<mi>C</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle NW=(1+ND)+NC}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle NW=(1+ND)+NC}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4e6413c655f497273820ae7f17faa31bb20905e4" style="vertical-align: -0.838ex; width:24.068ex; height:2.843ex;"/></span>,
+<br id="mw_A"/>where NW is all encoding codewords: 1 mask codeword + data codewords(ND) + error correction codewords(NC).</p>
+<p id="mw_Q">Because Reed–Solomon error correction cannot correct amount of codewords which are more than polynomial, if NW happens to exceed 112, the data is split into error correction blocks:
+<br id="mw_g"/><span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B = (NW + 111) / 112"}}' id="mw_w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B=(NW+111)/112}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mi>N</mi>
+<mi>W</mi>
+<mo>+</mo>
+<mn>111</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>112</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B=(NW+111)/112}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B=(NW+111)/112}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c0e66af02f6898acb399c147f3e6b6fcce5608c1" style="vertical-align: -0.838ex; width:22.148ex; height:2.843ex;"/></span>,
+<br id="mwAQA"/>where B is block counts.</p>
+<p id="mwAQE">The data can be split into block in the following way, for each block ‘’’n’’’, for n equals 1 to B:</p>
+<p id="mwAQk">The error correction data <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"NC"}}' id="mwAQo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle NC}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>C</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle NC}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle NC}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d01d5d050f3f5f55ffc77dc9a4bb8bb606d3abc0" style="vertical-align: -0.338ex; width:3.83ex; height:2.176ex;"/></span> is written after single data block <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"ND"}}' id="mwAQs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle ND}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle ND}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle ND}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/96e7e3fb323481307da1858d379c323ac54a3a7f" style="vertical-align: -0.338ex; width:3.988ex; height:2.176ex;"/></span> in scrambled mode:<sup about="#mwt82" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwAQw"><span class="mw-reflink-text" id="mwAQ0"><span class="cite-bracket" id="mwAQ4">[</span>16<span class="cite-bracket" id="mwAQ8">]</span></span></a></sup>
+<br id="mwARA"/><i id="mwARE">(ND)(NC1_1)(NC2_1)(NC3_1)...(NC1_n)(NC2_m)(NC3_k)</i></p>
+<p id="mwARM">DotCode encoding size is not limited by standard, but practical encoding size in 100x99 version which includes 4950 dots can encode 366 raw data codewords, 730 digits, 365 alphanumeric characters, or 304 bytes. The data message in DotCode is represented with data codewords from 0 to 112 which are encoded with 5-of-9 binary dot patterns.</p>
+<p id="mwARQ">DotCode supports the following features:<sup about="#mwt84" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwARU"><span class="mw-reflink-text" id="mwARY"><span class="cite-bracket" id="mwARc">[</span>2<span class="cite-bracket" id="mwARg">]</span></span></a></sup><sup about="#mwt83" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1"}},"i":0}}]}' id="mwARk" typeof="mw:Transclusion"><span title="Page / location: 5.2.1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwBHU">There three main rules at message encoding start:</p>
+<p id="mwBHw">DotCode can encode full 8-bit charset in two ways:<sup about="#mwt88" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBH0"><span class="mw-reflink-text" id="mwBH4"><span class="cite-bracket" id="mwBH8">[</span>2<span class="cite-bracket" id="mwBIA">]</span></span></a></sup><sup about="#mwt87" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.1"}},"i":0}}]}' id="mwBIE" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.1<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwBIU">Upper Shift modes can encode (128 to 255) extended ASCII characters in two codewords with returning to previous mode:</p>
+<p id="mwBJU">Binary Latch mode can encode 8-bit charset and ECI sequences from 1 to 5 symbols. It uses the following rules:</p>
+<p id="mwBMA">As we see in the following table, Binary Latch encodes data more effectively, starting from 3 bytes.</p>
+<p id="mwBOM">DotCode can encode <a href="https://en.wikipedia.org/wiki/Extended_Channel_Interpretation" id="mwBOQ" rel="mw:WikiLink" title="Extended Channel Interpretation">ECI</a> indicator int two ways:<sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBOU"><span class="mw-reflink-text" id="mwBOY"><span class="cite-bracket" id="mwBOc">[</span>2<span class="cite-bracket" id="mwBOg">]</span></span></a></sup><sup about="#mwt89" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.2"}},"i":0}}]}' id="mwBOk" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.2<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwBO0">FNC2 in any position except at the end of data signals the insertion of an ECI sequence – "\nnnnnn", which represents values between 000000 and 811799. The values can be encoded in 1 or 3 codewords:</p>
+<p id="mwBPM">Any two digits in the position of the first codeword identify a symbol as GS1 encoded (opposite to <a href="https://en.wikipedia.org/wiki/Code_128" id="mwBPQ" rel="mw:WikiLink" title="Code 128">Code 128</a>). In case of symbol with two digits in the position of the first codeword must be decoded as ordinary data, the FNC1 (omitted in decoded message) must be inserted at the place of the first codeword.<sup about="#mwt93" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBPU"><span class="mw-reflink-text" id="mwBPY"><span class="cite-bracket" id="mwBPc">[</span>2<span class="cite-bracket" id="mwBPg">]</span></span></a></sup><sup about="#mwt92" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.2"}},"i":0}}]}' id="mwBPk" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.2<span typeof="mw:Entity"> </span></span></sup> FNC1 in the other than the first position works as GS1 Application Identifier splitter and decoded as GS (ASCII value 29) character.</p>
+<p id="mwBPo">Codeword 100 in Code Set C encodes application GS1 AI (17)<sup about="#mwt94" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"gs1ai"}}' id="cite_ref-gs1ai_5-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-gs1ai-5" id="mwBPs"><span class="mw-reflink-text" id="mwBPw"><span class="cite-bracket" id="mwBP0">[</span>5<span class="cite-bracket" id="mwBP4">]</span></span></a></sup> the next 3 codewords is an expiration date and inserts GS1 AI (10) before decoding other codewords:
+<br id="mwBP8"/><i id="mwBQA">(100)(24)(12)(30)(56)(64) -&gt; 17241230105664</i></p>
+<p id="mwBQI">Some data codewords 97 – 100 in the lead data position in Code Set B can encode “Macros”.<sup about="#mwt98" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mwBQM"><span class="mw-reflink-text" id="mwBQQ"><span class="cite-bracket" id="mwBQU">[</span>17<span class="cite-bracket" id="mwBQY">]</span></span></a></sup><sup about="#mwt99" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBQc"><span class="mw-reflink-text" id="mwBQg"><span class="cite-bracket" id="mwBQk">[</span>2<span class="cite-bracket" id="mwBQo">]</span></span></a></sup><sup about="#mwt95" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.1"}},"i":0}}]}' id="mwBQs" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.1<span typeof="mw:Entity"> </span></span></sup> In any other position it encodes ASCII symbol:
+<br id="mwBQw"/><i id="mwBQ0">(Latch B)(HT) -&gt; [)&gt;RS05GS … RSEoT</i>
+<br id="mwBQ4"/><i id="mwBQ8">(Shift B)(HT) -&gt; [)&gt;RS05GS … RSEoT</i></p>
+<p id="mwBTQ">DotCode can create composite symbol, where data from multiple DotCode symbols can be logically united. This can be made with FNC2 symbol in last data position. When FNC2 is in the final data position,<sup about="#mwt101" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBTU"><span class="mw-reflink-text" id="mwBTY"><span class="cite-bracket" id="mwBTc">[</span>2<span class="cite-bracket" id="mwBTg">]</span></span></a></sup><sup about="#mwt100" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.2"}},"i":0}}]}' id="mwBTk" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.2<span typeof="mw:Entity"> </span></span></sup> then the preceding two message characters, digits and uppercase letters in order 1 to 9 then A to Z (for values 10 to 35) shall as "m" and "n" designate where this message belongs in a "m out of n" sequence. As an example, a symbol whose message ends "4 B FNC2" shall be the 4th symbol out of 11 that comprise the entire message.</p>
+<p id="mwBTs">FNC3 in the first codeword position indicates that the message<sup about="#mwt103" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBTw"><span class="mw-reflink-text" id="mwBT0"><span class="cite-bracket" id="mwBT4">[</span>2<span class="cite-bracket" id="mwBT8">]</span></span></a></sup><sup about="#mwt102" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.1.2"}},"i":0}}]}' id="mwBUA" typeof="mw:Transclusion"><span title="Page / location: 5.2.1.2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.1.2<span typeof="mw:Entity"> </span></span></sup> is the instructions for initialization or reprogramming of the bar code reader.</p>
+<p id="mwBUE">FNC3 in any other position than first indicates that encoded message must be logically separated into two distinct messages (before and after it);</p>
+<p id="mwBUM">DotCode symbol codewords capacity is:
+<br id="mwBUQ"/><span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"NW = ((H * W) / 2 - 2) \\pmod{9})"}}' id="mwBUU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle NW=((H*W)/2-2){\pmod {9}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>W</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mo>∗<!-- ∗ --></mo>
+<mi>W</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>2</mn>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mspace width="1em"></mspace>
+<mo stretchy="false">(</mo>
+<mi>mod</mi>
+<mspace width="0.333em"></mspace>
+<mn>9</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle NW=((H*W)/2-2){\pmod {9}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle NW=((H*W)/2-2){\pmod {9}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3896f3ea41cdc942910516086a160d5166c237f7" style="vertical-align: -0.838ex; width:35.988ex; height:2.843ex;"/></span></p>
+<p id="mwBUY">DotCode symbol data codewords capacity is:
+<br id="mwBUc"/><span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"ND = (NW - 3) - (NW - 3) / 3"}}' id="mwBUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle ND=(NW-3)-(NW-3)/3}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mi>D</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mi>N</mi>
+<mi>W</mi>
+<mo>−<!-- − --></mo>
+<mn>3</mn>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<mi>N</mi>
+<mi>W</mi>
+<mo>−<!-- − --></mo>
+<mn>3</mn>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>3</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle ND=(NW-3)-(NW-3)/3}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle ND=(NW-3)-(NW-3)/3}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8518e0e5cf375f655044fff0e07a640eeec609a7" style="vertical-align: -0.838ex; width:32.874ex; height:2.843ex;"/></span></p>
+<p id="mwBUk">In this way we need to pad data codewords in case with have free space. There are two rules:<sup about="#mwt107" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"iss_dotcode"}}' id="cite_ref-iss_dotcode_2-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-iss_dotcode-2" id="mwBUo"><span class="mw-reflink-text" id="mwBUs"><span class="cite-bracket" id="mwBUw">[</span>2<span class="cite-bracket" id="mwBU0">]</span></span></a></sup><sup about="#mwt106" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"5.2.3"}},"i":0}}]}' id="mwBU4" typeof="mw:Transclusion"><span title="Page / location: 5.2.3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>5.2.3<span typeof="mw:Entity"> </span></span></sup></p>
+</div></div>
+</body></html>

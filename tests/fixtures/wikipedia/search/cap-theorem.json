@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 1330
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "CAP theorem",
+    "pageid": 26411268,
+    "size": 11717,
+    "wordcount": 1225,
+    "snippet": "In database theory, the <span class=\"searchmatch\">CAP</span> <span class=\"searchmatch\">theorem</span>, also named Brewer&#039;s <span class=\"searchmatch\">theorem</span> after computer scientist Eric Brewer, states that any distributed data store can provide",
+    "timestamp": "2026-09-10T02:51:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "PACELC design principle",
+    "pageid": 51386205,
+    "size": 13011,
+    "wordcount": 1387,
+    "snippet": "database theory, the PACELC design principle is an extension to the <span class=\"searchmatch\">CAP</span> <span class=\"searchmatch\">theorem</span>. It states that in case of network partitioning (P) in a distributed",
+    "timestamp": "2025-12-14T09:56:09Z"
+   },
+   {
+    "ns": 0,
+    "title": "Bayes' theorem",
+    "pageid": 49569,
+    "size": 45149,
+    "wordcount": 5975,
+    "snippet": "In probability theory, Bayes&#039; <span class=\"searchmatch\">theorem</span> (alternatively Bayes&#039; law or Bayes&#039; rule), named after Thomas Bayes (/beɪz/), gives a mathematical rule for inverting",
+    "timestamp": "2026-10-14T11:27:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "ACID",
+    "pageid": 60776,
+    "size": 18721,
+    "wordcount": 2253,
+    "snippet": "either leans towards ACID or BASE, but it cannot be both (according to <span class=\"searchmatch\">CAP</span> <span class=\"searchmatch\">theorem</span>). For example, SQL databases (like MySQL, PostgreSQL, AWS RedShift) are",
+    "timestamp": "2026-10-13T13:55:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "NoSQL",
+    "pageid": 23968131,
+    "size": 30423,
+    "wordcount": 2442,
+    "snippet": "systems prioritize speed and availability over strict consistency (per the <span class=\"searchmatch\">CAP</span> <span class=\"searchmatch\">theorem</span>), using eventual consistency—where updates reach all nodes eventually",
+    "timestamp": "2026-06-03T15:59:29Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Backpropagation - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Backpropagation</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwCQ">In <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwCg" rel="mw:WikiLink" title="Machine learning">machine learning</a>, <b id="mwCw">backpropagation</b> is a <a href="https://en.wikipedia.org/wiki/Gradient" id="mwDA" rel="mw:WikiLink" title="Gradient">gradient</a> computation method commonly used for training a <a href="https://en.wikipedia.org/wiki/Neural_network_(machine_learning)" id="mwDQ" rel="mw:WikiLink" title="Neural network (machine learning)">neural network</a> in computing parameter updates.</p>
+<p id="mwDg">It is an efficient application of the <a href="https://en.wikipedia.org/wiki/Chain_rule" id="mwDw" rel="mw:WikiLink" title="Chain rule">chain rule</a> to neural networks. Backpropagation efficiently computes the gradient of the loss with respect to the network weights for a single input–output example. It does this by propagating derivatives backward, one layer at a time, from the output layer to the input layer, thereby avoiding redundant chain-rule calculations.</p>
+<p id="mwEA">Strictly speaking, the term <i id="mwEQ">backpropagation</i> refers only to an algorithm for efficiently computing the gradient, not how the gradient is used, but the term is often used loosely to refer to the entire learning algorithm. This includes changing model parameters in the negative direction of the gradient, such as by <a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent" id="mwEg" rel="mw:WikiLink" title="Stochastic gradient descent">stochastic gradient descent</a>, or as an intermediate step in a more complicated optimizer, such as <a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam" id="mwEw" rel="mw:WikiLink" title="Stochastic gradient descent">Adaptive Moment Estimation</a>.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwFA"><span class="mw-reflink-text" id="mwFQ"><span class="cite-bracket" id="mwFg">[</span>1<span class="cite-bracket" id="mwFw">]</span></span></a></sup></p>
+<p id="mwGA">Backpropagation had multiple discoveries and partial discoveries, with a tangled history and terminology (see <a about="#mwt15" class="mw-selflink-fragment" data-mw='{"parts":[{"template":{"target":{"wt":"section link","href":"./Template:Section_link"},"params":{"1":{"wt":""},"2":{"wt":"History"}},"i":0}}]}' href="#History" id="mwGQ" rel="mw:WikiLink" typeof="mw:Transclusion">§<span typeof="mw:Entity"> </span>History</a>). Some other names for the technique include "reverse mode of <a href="https://en.wikipedia.org/wiki/Automatic_differentiation" id="mwGg" rel="mw:WikiLink" title="Automatic differentiation">automatic differentiation</a>" or "<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Reverse_accumulation" id="mwGw" rel="mw:WikiLink" title="Reverse accumulation">reverse accumulation</a>".<sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"DL-reverse-mode"},"body":{"id":"mw-reference-text-cite_note-DL-reverse-mode-2"}}' id="cite_ref-DL-reverse-mode_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-DL-reverse-mode-2" id="mwHA"><span class="mw-reflink-text" id="mwHQ"><span class="cite-bracket" id="mwHg">[</span>2<span class="cite-bracket" id="mwHw">]</span></span></a></sup></p>
+<p id="mwIg">Backpropagation computes the gradient in <a href="https://en.wikipedia.org/wiki/Parameter_space" id="mwIw" rel="mw:WikiLink" title="Parameter space">weight space</a> of a feedforward neural network, with respect to a <a href="https://en.wikipedia.org/wiki/Loss_function" id="mwJA" rel="mw:WikiLink" title="Loss function">loss function</a>. Denote:</p>
+<p id="mwWw">In the derivation of backpropagation, other intermediate quantities are used by introducing them as needed below. Bias terms are not treated specially since they correspond to a weight with a fixed input of 1. For backpropagation the specific loss function and activation functions do not matter as long as they and their derivatives can be evaluated efficiently. Traditional activation functions include <a href="https://en.wikipedia.org/wiki/Sigmoid_function" id="mwXA" rel="mw:WikiLink" title="Sigmoid function">sigmoid</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tanh" id="mwXQ" rel="mw:WikiLink" title="Tanh">tanh</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)" id="mwXg" rel="mw:WikiLink" title="Rectifier (neural networks)">ReLU</a>, <a href="https://en.wikipedia.org/wiki/Swish_function" id="mwXw" rel="mw:WikiLink" title="Swish function">Swish</a>,<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwYA"><span class="mw-reflink-text" id="mwYQ"><span class="cite-bracket" id="mwYg">[</span>3<span class="cite-bracket" id="mwYw">]</span></span></a></sup> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)#Mish" id="mwZA" rel="mw:WikiLink" title="Rectifier (neural networks)">Mish</a>,<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwZQ"><span class="mw-reflink-text" id="mwZg"><span class="cite-bracket" id="mwZw">[</span>4<span class="cite-bracket" id="mwaA">]</span></span></a></sup> and many others.</p>
+<p id="mwaQ">The overall network is a combination of <a href="https://en.wikipedia.org/wiki/Function_composition" id="mwag" rel="mw:WikiLink" title="Function composition">function composition</a> and <a href="https://en.wikipedia.org/wiki/Matrix_multiplication" id="mwaw" rel="mw:WikiLink" title="Matrix multiplication">matrix multiplication</a>:</p>
+<p id="mwbw">For a training set there will be a set of input–output pairs, <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\left\\{(x_i, y_i)\\right\\}"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \left\{(x_{i},y_{i})\right\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow>
+<mo>{</mo>
+<mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+<mo>}</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \left\{(x_{i},y_{i})\right\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \left\{(x_{i},y_{i})\right\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/26d74b1e662ee0f0e1604f2e5a63fde1456bb19e" style="vertical-align: -0.838ex; width:9.236ex; height:2.843ex;"/></span>. For each input–output pair <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x_i, y_i)"}}' id="mwcQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (x_{i},y_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (x_{i},y_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (x_{i},y_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d6dbb919b91ccacf17ed47898048428a1baf9703" style="vertical-align: -0.838ex; width:6.912ex; height:2.843ex;"/></span> in the training set, the loss of the model on that pair is the cost of the difference between the predicted output <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(x_i)"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(x_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(x_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(x_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3badcf4ca3e9414821942baee2851b8f9bd27294" style="vertical-align: -0.838ex; width:5.055ex; height:2.843ex;"/></span> and the target output <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_i"}}' id="mwcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67d30d30b6c2dbe4d6f150d699de040937ecc95f" style="vertical-align: -0.671ex; width:1.939ex; height:2.009ex;"/></span>:</p>
+<p id="mwdw">Note the distinction: during model evaluation the weights are fixed while the inputs vary (and the target output may be unknown), and the network ends with the output layer (it does not include the loss function). During model training the input–output pair is fixed while the weights vary, and the network ends with the loss function.</p>
+<p id="mweA">Backpropagation computes the gradient for a <i id="mweQ">fixed</i> input–output pair <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x_i, y_i)"}}' id="mweg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (x_{i},y_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (x_{i},y_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (x_{i},y_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d6dbb919b91ccacf17ed47898048428a1baf9703" style="vertical-align: -0.838ex; width:6.912ex; height:2.843ex;"/></span>, where the weights <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w^l_{jk}"}}' id="mwew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{jk}^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>k</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{jk}^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{jk}^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8f47c5a00989f34da7a6cde720321223af36a019" style="vertical-align: -1.338ex; width:3.43ex; height:3.509ex;"/></span> can vary. Each individual component of the gradient, <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\partial C/\\partial w^l_{jk},"}}' id="mwfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \partial C/\partial w_{jk}^{l},}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>k</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \partial C/\partial w_{jk}^{l},}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \partial C/\partial w_{jk}^{l},}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/924218a6182ed0f43094ec9f5d8a66c4b9b9026f" style="vertical-align: -1.338ex; width:9.642ex; height:3.509ex;"/></span> can be computed by the chain rule; but doing this separately for each weight is inefficient. Backpropagation efficiently computes the gradient by avoiding duplicate calculations and not computing unnecessary intermediate values, by computing the gradient of each layer – specifically the gradient of the weighted <i id="mwfQ">input</i> of each layer, denoted by <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> – from back to front.</p>
+<p id="mwfw">Informally, the key point is that since the only way a weight in <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W^l"}}' id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/60b87bc8138a82f110491bb1abd0ea6eefe84c22" style="vertical-align: -0.338ex; width:3.23ex; height:2.676ex;"/></span> affects the loss is through its effect on the <i id="mwgQ">next</i> layer, and it does so <i id="mwgg">linearly</i>, <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> are the only data you need to compute the gradients of the weights at layer <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span>, and then the gradients of weights of previous layer can be computed by <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^{l-1}"}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4ff3faf90011d3ed813a4ac2fe31904765e2963" style="vertical-align: -0.338ex; width:3.877ex; height:2.676ex;"/></span> and repeated recursively. This avoids inefficiency in two ways. First, it avoids duplication because when computing the gradient at layer <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span>, it is unnecessary to recompute all derivatives on later layers <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l+1, l+2, \\ldots"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l+1,l+2,\ldots }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mi>l</mi>
+<mo>+</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l+1,l+2,\ldots }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l+1,l+2,\ldots }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/49f721be70a4213a6196f3d14f58eb5844eebb1a" style="vertical-align: -0.671ex; width:14.183ex; height:2.509ex;"/></span> each time. Second, it avoids unnecessary intermediate calculations, because at each stage it directly computes the gradient of the weights with respect to the ultimate output (the loss), rather than unnecessarily computing the derivatives of the values of hidden layers with respect to changes in weights <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;\\partial a^{l'}_{j'}/\\partial w^l_{jk}&quot;}}" id="mwiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \partial a_{j'}^{l'}/\partial w_{jk}^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>j</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>l</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+</msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>k</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \partial a_{j'}^{l'}/\partial w_{jk}^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \partial a_{j'}^{l'}/\partial w_{jk}^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67e885d69c5968ab173f51222b89d0701b3459d6" style="vertical-align: -1.505ex; width:9.9ex; height:4.009ex;"/></span>.</p>
+<p id="mwiQ">Backpropagation can be expressed for simple feedforward networks in terms of <a class="mw-selflink-fragment" href="#Matrix_multiplication" id="mwig" rel="mw:WikiLink">matrix multiplication</a>, or more generally in terms of the <a class="mw-selflink-fragment" href="#Adjoint_graph" id="mwiw" rel="mw:WikiLink">adjoint graph</a>.</p>
+<p id="mwjQ">For the basic case of a feedforward network, where nodes in each layer are connected only to nodes in the immediate next layer (without skipping any layers), and there is a loss function that computes a scalar loss for the final output, backpropagation can be understood simply by matrix multiplication.<sup about="#mwt76" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-7"},"parts":[{"template":{"target":{"wt":"efn","href":"./Template:Efn"},"params":{"1":{"wt":"This section largely follows and summarizes {{harvtxt|Nielsen|2015}}."}},"i":0}}]}' id="cite_ref-7" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-7" id="mwjg"><span class="mw-reflink-text" id="mwjw"><span class="cite-bracket" id="mwkA">[</span>c<span class="cite-bracket" id="mwkQ">]</span></span></a></sup> Essentially, backpropagation evaluates the expression for the derivative of the cost function as a product of derivatives between each layer <i id="mwkg">from right to left</i> – "backwards" – with the gradient of the weights between each layer being a simple modification of the partial products (the "backwards propagated error").</p>
+<p id="mwkw">Given an input–output pair <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x, y)"}}' id="mwlA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (x,y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (x,y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (x,y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/41cf50e4a314ca8e2c30964baa8d26e5be7a9386" style="vertical-align: -0.838ex; width:5.328ex; height:2.843ex;"/></span>, the loss is:</p>
+<p id="mwmA">To compute this, one starts with the input <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwmQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> and works forward; denote the weighted input of each hidden layer as <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"z^l"}}' id="mwmg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle z^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>z</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle z^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle z^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ea4d56d1c5e8fe66b402ea0d1b92368902531dd" style="vertical-align: -0.338ex; width:1.813ex; height:2.676ex;"/></span> and the output of hidden layer <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwmw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span> as the activation <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a^l"}}' id="mwnA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/975d9aa9ed78016e94e7438c5af2a6ec8b97a0e9" style="vertical-align: -0.338ex; width:1.952ex; height:2.676ex;"/></span>. For backpropagation, the activation <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a^l"}}' id="mwnQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/975d9aa9ed78016e94e7438c5af2a6ec8b97a0e9" style="vertical-align: -0.338ex; width:1.952ex; height:2.676ex;"/></span> as well as the derivatives <span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;(f^l)'&quot;}}" id="mwng" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (f^{l})'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msup>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+<msup>
+<mo stretchy="false">)</mo>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (f^{l})'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (f^{l})'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a2f054b20672fb790ed501c4a39873233d4745" style="vertical-align: -0.838ex; width:4.537ex; height:3.176ex;"/></span> (evaluated at <span about="#mwt87" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"z^l"}}' id="mwnw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle z^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>z</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle z^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle z^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ea4d56d1c5e8fe66b402ea0d1b92368902531dd" style="vertical-align: -0.338ex; width:1.813ex; height:2.676ex;"/></span>) must be cached for use during the backwards pass.</p>
+<p id="mwoA">The derivative of the loss in terms of the inputs is given by the chain rule; note that each term is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Total_derivative" id="mwoQ" rel="mw:WikiLink" title="Total derivative">total derivative</a>, evaluated at the value of the network (at each node) on the input <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwog" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span>:</p>
+<p id="mwpg">where <span about="#mwt90" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{d a^L}{d z^L}"}}' id="mwpw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {da^{L}}{dz^{L}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>d</mi>
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>L</mi>
+</mrow>
+</msup>
+</mrow>
+<mrow>
+<mi>d</mi>
+<msup>
+<mi>z</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>L</mi>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {da^{L}}{dz^{L}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {da^{L}}{dz^{L}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e72728161114c81bdf209852a4157264296326fb" style="vertical-align: -2.171ex; width:4.633ex; height:6.009ex;"/></span> is a <a href="https://en.wikipedia.org/wiki/Diagonal_matrix" id="mwqA" rel="mw:WikiLink" title="Diagonal matrix">diagonal matrix</a>.</p>
+<p id="mwqQ">These terms are: the derivative of the loss function;<sup about="#mwt91" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-8"},"parts":[{"template":{"target":{"wt":"efn","href":"./Template:Efn"},"params":{"1":{"wt":"The derivative of the loss function is a [[covector]], since the loss function is a [[scalar-valued function]] of several variables."}},"i":0}}]}' id="cite_ref-8" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-8" id="mwqg"><span class="mw-reflink-text" id="mwqw"><span class="cite-bracket" id="mwrA">[</span>d<span class="cite-bracket" id="mwrQ">]</span></span></a></sup> the derivatives of the activation functions;<sup about="#mwt94" class="mw-ref reference" data-mw="{&quot;name&quot;:&quot;ref&quot;,&quot;attrs&quot;:{&quot;group&quot;:&quot;lower-alpha&quot;},&quot;body&quot;:{&quot;id&quot;:&quot;mw-reference-text-cite_note-9&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;efn&quot;,&quot;href&quot;:&quot;./Template:Efn&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;The activation function is applied to each node separately, so the derivative is just the diagonal matrix of the derivative on each node. This is often represented as the [[Hadamard product (matrices)|Hadamard product]] with the vector of derivatives, denoted by &lt;math&gt;(f^l)'\\odot&lt;/math&gt;, which is mathematically identical but better matches the internal representation of the derivatives as a vector, rather than a diagonal matrix.&quot;}},&quot;i&quot;:0}}]}" id="cite_ref-9" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-9" id="mwrg"><span class="mw-reflink-text" id="mwrw"><span class="cite-bracket" id="mwsA">[</span>e<span class="cite-bracket" id="mwsQ">]</span></span></a></sup> and the matrices of weights:<sup about="#mwt99" class="mw-ref reference" data-mw="{&quot;name&quot;:&quot;ref&quot;,&quot;attrs&quot;:{&quot;group&quot;:&quot;lower-alpha&quot;},&quot;body&quot;:{&quot;id&quot;:&quot;mw-reference-text-cite_note-10&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;efn&quot;,&quot;href&quot;:&quot;./Template:Efn&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Since matrix multiplication is linear, the derivative of multiplying by a matrix is just the matrix: &lt;math&gt;(Wx)' = W&lt;/math&gt;.&quot;}},&quot;i&quot;:0}}]}" id="cite_ref-10" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-10" id="mwsg"><span class="mw-reflink-text" id="mwsw"><span class="cite-bracket" id="mwtA">[</span>f<span class="cite-bracket" id="mwtQ">]</span></span></a></sup></p>
+<p id="mwuQ">The gradient <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\nabla"}}' id="mwug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \nabla }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \nabla }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \nabla }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a3d0e93b78c50237f9ea83d027e4ebbdaef354b2" style="vertical-align: -0.338ex; width:1.936ex; height:2.176ex;"/></span> is the <a href="https://en.wikipedia.org/wiki/Transpose" id="mwuw" rel="mw:WikiLink" title="Transpose">transpose</a> of the derivative of the output in terms of the input, so the matrices are transposed and the order of multiplication is reversed, but the entries are the same:</p>
+<p id="mwvw">Backpropagation then consists essentially of evaluating this expression from right to left (equivalently, multiplying the previous expression for the derivative from left to right), computing the gradient at each layer on the way; there is an added step, because the gradient of the weights is not just a subexpression: there's an extra multiplication.</p>
+<p id="mwwA">Introducing the auxiliary quantity <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mwwQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> for the partial products (multiplying from right to left), interpreted as the "error at level <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwwg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span>" and defined as the gradient of the input values at level <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwww" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span>:</p>
+<p id="mwxw">Note that <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mwyA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> is a vector, of length equal to the number of nodes in level <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwyQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span>; each component is interpreted as the "cost attributable to (the value of) that node".</p>
+<p id="mwyg">The gradient of the weights in layer <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mwyw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span> is then:</p>
+<p id="mwzw">The factor of <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a^{l-1}"}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a^{l-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a^{l-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a^{l-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a66d0e6ecb4f486f7e1b63c6ae0a91448624163" style="vertical-align: -0.338ex; width:4.053ex; height:2.676ex;"/></span> is because the weights <span about="#mwt116" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W^l"}}' id="mw0Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/60b87bc8138a82f110491bb1abd0ea6eefe84c22" style="vertical-align: -0.338ex; width:3.23ex; height:2.676ex;"/></span> between level <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l - 1"}}' id="mw0g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4e0d448948a353d0b2469b88ca918f34e32c8752" style="vertical-align: -0.505ex; width:4.696ex; height:2.343ex;"/></span> and <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mw0w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span> affect level <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"l"}}' id="mw1A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle l}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>l</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle l}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle l}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/829091f745070b9eb97a80244129025440a1cfac" style="vertical-align: -0.338ex; width:0.693ex; height:2.176ex;"/></span> proportionally to the inputs (activations): the inputs are fixed, the weights vary.</p>
+<p id="mw1Q">The <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mw1g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> can easily be computed recursively, going from right to left, as:</p>
+<p id="mw2g">The gradients of the weights can thus be computed using a few matrix multiplications for each level; this is backpropagation.</p>
+<p id="mw2w">Compared with naively computing forwards (using the <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta^l"}}' id="mw3A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta ^{l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>δ<!-- δ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta ^{l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta ^{l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/249b787ef6af0149f7d71b951651c43633e0d56d" style="vertical-align: -0.338ex; width:1.776ex; height:2.676ex;"/></span> for illustration):</p>
+<p id="mw4A">There are two key differences with backpropagation:</p>
+<p id="mw9g">For more general graphs, and other advanced variations, backpropagation can be understood in terms of <a href="https://en.wikipedia.org/wiki/Automatic_differentiation" id="mw9w" rel="mw:WikiLink" title="Automatic differentiation">automatic differentiation</a>, where backpropagation is a special case of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Reverse_accumulation" id="mw-A" rel="mw:WikiLink" title="Reverse accumulation">reverse accumulation</a> (or "reverse mode").<sup about="#mwt138" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"DL-reverse-mode"}}' id="cite_ref-DL-reverse-mode_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-DL-reverse-mode-2" id="mw-Q"><span class="mw-reflink-text" id="mw-g"><span class="cite-bracket" id="mw-w">[</span>2<span class="cite-bracket" id="mw_A">]</span></span></a></sup></p>
+<p id="mw_w">The goal of any <a href="https://en.wikipedia.org/wiki/Supervised_learning" id="mwAQA" rel="mw:WikiLink" title="Supervised learning">supervised learning</a> algorithm is to find a function that best maps a set of inputs to their correct output. The motivation for backpropagation is to train a multi-layered neural network such that it can learn the appropriate internal representations to allow it to learn any arbitrary mapping of input to output.<sup about="#mwt141" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"RumelhartHintonWilliams1986a"},"body":{"id":"mw-reference-text-cite_note-RumelhartHintonWilliams1986a-11"}}' id="cite_ref-RumelhartHintonWilliams1986a_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-RumelhartHintonWilliams1986a-11" id="mwAQE"><span class="mw-reflink-text" id="mwAQI"><span class="cite-bracket" id="mwAQM">[</span>5<span class="cite-bracket" id="mwAQQ">]</span></span></a></sup></p>
+<p id="mwAQY">
+To understand the mathematical derivation of the backpropagation algorithm, it helps to first develop some intuition about the relationship between the actual output of a neuron and the correct output for a particular training example. Consider a simple neural network with two input units, one output unit and no hidden units, and in which each neuron uses a <a href="https://en.wikipedia.org/wiki/Artificial_neuron#Linear_combination" id="mwAQc" rel="mw:WikiLink" title="Artificial neuron">linear output</a> (unlike most work on neural networks, in which mapping from inputs to outputs is non-linear)<sup about="#mwt142" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-12"},"parts":[{"template":{"target":{"wt":"efn","href":"./Template:Efn"},"params":{"1":{"wt":"One may notice that multi-layer neural networks use non-linear activation functions, so an example with linear neurons seems obscure. However, even though the error surface of multi-layer networks are much more complicated, locally they can be approximated by a paraboloid. Therefore, linear neurons are used for simplicity and easier understanding."}},"i":0}}]}' id="cite_ref-12" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-12" id="mwAQg"><span class="mw-reflink-text" id="mwAQk"><span class="cite-bracket" id="mwAQo">[</span>g<span class="cite-bracket" id="mwAQs">]</span></span></a></sup> that is the weighted sum of its input. </p>
+<p id="mwARA">Initially, before training, the weights will be set randomly. Then the neuron learns from <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Training_set" id="mwARE" rel="mw:WikiLink" title="Training set">training examples</a>, which in this case consist of a set of <a href="https://en.wikipedia.org/wiki/Tuple" id="mwARI" rel="mw:WikiLink" title="Tuple">tuples</a> <span about="#mwt150" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x_1, x_2, t)"}}' id="mwARM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (x_{1},x_{2},t)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>t</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (x_{1},x_{2},t)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (x_{1},x_{2},t)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dbc9205ba047983879ece2f78ff0cf1f7525bdd5" style="vertical-align: -0.838ex; width:9.485ex; height:2.843ex;"/></span> where <span about="#mwt151" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_1"}}' id="mwARQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8788bf85d532fa88d1fb25eff6ae382a601c308" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span> and <span about="#mwt152" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_2"}}' id="mwARU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d7af1b928f06e4c7e3e8ebfd60704656719bd766" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span> are the inputs to the network and <span about="#mwt145" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwARY" style="font-style:italic;" typeof="mw:Transclusion">t</span> is the correct output (the output the network should produce given those inputs, when it has been trained). The initial network, given <span about="#mwt153" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_1"}}' id="mwARc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8788bf85d532fa88d1fb25eff6ae382a601c308" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span> and <span about="#mwt154" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_2"}}' id="mwARg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d7af1b928f06e4c7e3e8ebfd60704656719bd766" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span>, will compute an output <span about="#mwt146" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"y"}},"i":0}}]}' id="mwARk" style="font-style:italic;" typeof="mw:Transclusion">y</span> that likely differs from <span about="#mwt147" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwARo" style="font-style:italic;" typeof="mw:Transclusion">t</span> (given random weights). A <a href="https://en.wikipedia.org/wiki/Loss_function" id="mwARs" rel="mw:WikiLink" title="Loss function">loss function</a> <span about="#mwt155" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" L(t, y) "}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L(t,y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo stretchy="false">(</mo>
+<mi>t</mi>
+<mo>,</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L(t,y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L(t,y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a6d0d207e3b5787cffb4f86784345fe4393893fe" style="vertical-align: -0.838ex; width:6.421ex; height:2.843ex;"/></span> is used for measuring the discrepancy between the target output <span about="#mwt148" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwAR0" style="font-style:italic;" typeof="mw:Transclusion">t</span> and the computed output <span about="#mwt149" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"y"}},"i":0}}]}' id="mwAR4" style="font-style:italic;" typeof="mw:Transclusion">y</span>. For <a href="https://en.wikipedia.org/wiki/Regression_analysis" id="mwAR8" rel="mw:WikiLink" title="Regression analysis">regression analysis</a> problems the squared error can be used as a loss function, for <a href="https://en.wikipedia.org/wiki/Statistical_classification" id="mwASA" rel="mw:WikiLink" title="Statistical classification">classification</a> the <a href="https://en.wikipedia.org/wiki/Cross-entropy" id="mwASE" rel="mw:WikiLink" title="Cross-entropy">categorical cross-entropy</a> can be used.</p>
+<p id="mwASI">As an example consider a regression problem using the square error as a loss:</p>
+<p id="mwASY">where <span about="#mwt157" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"E"}},"i":0}}]}' id="mwASc" style="font-style:italic;" typeof="mw:Transclusion">E</span> is the discrepancy or error.</p>
+<p id="mwASg">Consider the network on a single training case: <span about="#mwt165" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(1, 1, 0)"}}' id="mwASk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (1,1,0)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (1,1,0)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (1,1,0)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5568de79a98cdcb48821cd81b670c095fa4c8b6f" style="vertical-align: -0.838ex; width:7.365ex; height:2.843ex;"/></span>. Thus, the input <span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_1"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8788bf85d532fa88d1fb25eff6ae382a601c308" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span> and <span about="#mwt167" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_2"}}' id="mwASs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d7af1b928f06e4c7e3e8ebfd60704656719bd766" style="vertical-align: -0.671ex; width:2.384ex; height:2.009ex;"/></span> are 1 and 1 respectively and the correct output, <span about="#mwt158" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwASw" style="font-style:italic;" typeof="mw:Transclusion">t</span> is 0. Now if the relation is plotted between the network's output <span about="#mwt159" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"y"}},"i":0}}]}' id="mwAS0" style="font-style:italic;" typeof="mw:Transclusion">y</span> on the horizontal axis and the error <span about="#mwt160" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"E"}},"i":0}}]}' id="mwAS4" style="font-style:italic;" typeof="mw:Transclusion">E</span> on the vertical axis, the result is a parabola. The <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Maxima_and_minima" id="mwAS8" rel="mw:WikiLink" title="Maxima and minima">minimum</a> of the <a href="https://en.wikipedia.org/wiki/Parabola" id="mwATA" rel="mw:WikiLink" title="Parabola">parabola</a> corresponds to the output <span about="#mwt161" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"y"}},"i":0}}]}' id="mwATE" style="font-style:italic;" typeof="mw:Transclusion">y</span> which minimizes the error <span about="#mwt162" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"E"}},"i":0}}]}' id="mwATI" style="font-style:italic;" typeof="mw:Transclusion">E</span>. For a single training case, the minimum also touches the horizontal axis, which means the error will be zero and the network can produce an output <span about="#mwt163" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"y"}},"i":0}}]}' id="mwATM" style="font-style:italic;" typeof="mw:Transclusion">y</span> that exactly matches the target output <span about="#mwt164" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwATQ" style="font-style:italic;" typeof="mw:Transclusion">t</span>. Therefore, the problem of mapping inputs to outputs can be reduced to an <a href="https://en.wikipedia.org/wiki/Optimization_problem" id="mwATU" rel="mw:WikiLink" title="Optimization problem">optimization problem</a> of finding a function that will produce the minimal error. </p>
+<p id="mwATo">However, the output of a neuron depends on the weighted sum of all its inputs:</p>
+<p id="mwAT4">where <span about="#mwt169" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_1"}}' id="mwAT8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f6728d2b30f42f88b52281be5ae0584fdc9df64" style="vertical-align: -0.671ex; width:2.718ex; height:2.009ex;"/></span> and <span about="#mwt170" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_2"}}' id="mwAUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8998e0957bb573a19e7d9d934ced62ee68ab8fb8" style="vertical-align: -0.671ex; width:2.718ex; height:2.009ex;"/></span> are the weights on the connection from the input units to the output unit. Therefore, the error also depends on the incoming weights to the neuron, which is ultimately what needs to be changed in the network to enable learning.</p>
+<p id="mwAUE">In this example, upon injecting the training data <span about="#mwt171" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(1, 1, 0)"}}' id="mwAUI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (1,1,0)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (1,1,0)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (1,1,0)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5568de79a98cdcb48821cd81b670c095fa4c8b6f" style="vertical-align: -0.838ex; width:7.365ex; height:2.843ex;"/></span>, the loss function becomes</p>
+<p id="mwAUM"><span about="#mwt172" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" E = (t-y)^2 = y^2 = (x_1w_1 + x_2w_2)^2 = (w_1 + w_2)^2."}}' id="mwAUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle E=(t-y)^{2}=y^{2}=(x_{1}w_{1}+x_{2}w_{2})^{2}=(w_{1}+w_{2})^{2}.}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>E</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mi>t</mi>
+<mo>−<!-- − --></mo>
+<mi>y</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle E=(t-y)^{2}=y^{2}=(x_{1}w_{1}+x_{2}w_{2})^{2}=(w_{1}+w_{2})^{2}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle E=(t-y)^{2}=y^{2}=(x_{1}w_{1}+x_{2}w_{2})^{2}=(w_{1}+w_{2})^{2}.}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9642579185c542b0e8312a7edeeacf6abbb8934f" style="vertical-align: -0.838ex; width:51.779ex; height:3.176ex;"/></span></p>
+<p id="mwAUU">Then, the loss function <span about="#mwt173" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}' id="mwAUY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle E}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>E</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle E}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;"/></span> takes the form of a parabolic cylinder with its base directed along <span about="#mwt174" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_1 = -w_2"}}' id="mwAUc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{1}=-w_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{1}=-w_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{1}=-w_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/839b25f7684ef2b1c6f960f962d64c0e993520b2" style="vertical-align: -0.671ex; width:10.343ex; height:2.343ex;"/></span>. Since all sets of weights that satisfy <span about="#mwt175" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_1 = -w_2"}}' id="mwAUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{1}=-w_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{1}=-w_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{1}=-w_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/839b25f7684ef2b1c6f960f962d64c0e993520b2" style="vertical-align: -0.671ex; width:10.343ex; height:2.343ex;"/></span> minimize the loss function, in this case additional constraints are required to converge to a unique solution. Additional constraints could either be generated by setting specific conditions to the weights, or by injecting additional training data.</p>
+</div></div>
+</body></html>

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 440
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Transformer (deep learning)",
+    "pageid": 61603971,
+    "size": 119214,
+    "wordcount": 14509,
+    "snippet": "In <span class=\"searchmatch\">deep</span> <span class=\"searchmatch\">learning</span>, the <span class=\"searchmatch\">transformer</span> is a family of artificial neural network <span class=\"searchmatch\">architectures</span> based on the multi-head attention mechanism, in which input data",
+    "timestamp": "2026-10-13T03:11:06Z"
+   },
+   {
+    "ns": 0,
+    "title": "Mamba (deep learning architecture)",
+    "pageid": 75795581,
+    "size": 6899,
+    "wordcount": 657,
+    "snippet": "Mamba is a <span class=\"searchmatch\">deep</span> <span class=\"searchmatch\">learning</span> <span class=\"searchmatch\">architecture</span> focused on sequence modeling. It was developed by two researchers Albert Gu from Carnegie Mellon University and Tri",
+    "timestamp": "2026-10-11T23:07:04Z"
+   },
+   {
+    "ns": 0,
+    "title": "Generative pre-trained transformer",
+    "pageid": 72970020,
+    "size": 42460,
+    "wordcount": 3742,
+    "snippet": "artificial intelligence chatbots. GPTs are based on a <span class=\"searchmatch\">deep</span> <span class=\"searchmatch\">learning</span> <span class=\"searchmatch\">architecture</span> called the <span class=\"searchmatch\">transformer</span>. They are pre-trained on large datasets of unlabeled",
+    "timestamp": "2026-10-04T11:21:45Z"
+   },
+   {
+    "ns": 0,
+    "title": "Attention (machine learning)",
+    "pageid": 66001552,
+    "size": 40899,
+    "wordcount": 3602,
+    "snippet": "masked self-attention&quot;. Recurrent neural network seq2seq <span class=\"searchmatch\">Transformer</span> (<span class=\"searchmatch\">deep</span> <span class=\"searchmatch\">learning</span> <span class=\"searchmatch\">architecture</span>) Attention Dynamic neural network Cherry, E. Colin (1953)",
+    "timestamp": "2026-10-13T01:12:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "Deep Learning Super Sampling",
+    "pageid": 63572796,
+    "size": 52388,
+    "wordcount": 5162,
+    "snippet": "<span class=\"searchmatch\">Deep</span> <span class=\"searchmatch\">Learning</span> Super Sampling (DLSS) is a suite of real-time <span class=\"searchmatch\">deep</span> <span class=\"searchmatch\">learning</span> image enhancement and upscaling technologies developed by Nvidia that are available",
+    "timestamp": "2026-10-06T06:42:18Z"
+   }
+  ]
+ }
+}

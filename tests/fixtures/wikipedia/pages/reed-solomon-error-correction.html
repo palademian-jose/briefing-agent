@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Reed–Solomon error correction - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Reed–Solomon error correction</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBg">In <a href="https://en.wikipedia.org/wiki/Information_theory" id="mwBw" rel="mw:WikiLink" title="Information theory">information theory</a> and <a href="https://en.wikipedia.org/wiki/Coding_theory" id="mwCA" rel="mw:WikiLink" title="Coding theory">coding theory</a>, <b id="mwCQ">Reed–Solomon codes</b> are a group of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Error-correcting_code" id="mwCg" rel="mw:WikiLink" title="Error-correcting code">error-correcting codes</a> that were introduced by <a href="https://en.wikipedia.org/wiki/Irving_S._Reed" id="mwCw" rel="mw:WikiLink" title="Irving S. Reed">Irving S. Reed</a> and <a href="https://en.wikipedia.org/wiki/Gustave_Solomon" id="mwDA" rel="mw:WikiLink" title="Gustave Solomon">Gustave Solomon</a> in 1960.<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ReedSolomon"},"body":{"id":"mw-reference-text-cite_note-ReedSolomon-1"}}' id="cite_ref-ReedSolomon_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ReedSolomon-1" id="mwDQ"><span class="mw-reflink-text" id="mwDg"><span class="cite-bracket" id="mwDw">[</span>1<span class="cite-bracket" id="mwEA">]</span></span></a></sup>
+They have many applications, including consumer technologies such as <a href="https://en.wikipedia.org/wiki/MiniDisc" id="mwEQ" rel="mw:WikiLink" title="MiniDisc">MiniDiscs</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/CD" id="mwEg" rel="mw:WikiLink" title="CD">CDs</a>, <a href="https://en.wikipedia.org/wiki/DVD" id="mwEw" rel="mw:WikiLink" title="DVD">DVDs</a>, <a href="https://en.wikipedia.org/wiki/Blu-ray" id="mwFA" rel="mw:WikiLink" title="Blu-ray">Blu-ray</a> discs, <a href="https://en.wikipedia.org/wiki/QR_code" id="mwFQ" rel="mw:WikiLink" title="QR code">QR codes</a>, <a href="https://en.wikipedia.org/wiki/Data_Matrix" id="mwFg" rel="mw:WikiLink" title="Data Matrix">Data Matrix</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_transmission" id="mwFw" rel="mw:WikiLink" title="Data transmission">data transmission</a> technologies such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/DSL" id="mwGA" rel="mw:WikiLink" title="DSL">DSL</a> and <a href="https://en.wikipedia.org/wiki/WiMAX" id="mwGQ" rel="mw:WikiLink" title="WiMAX">WiMAX</a>, <a href="https://en.wikipedia.org/wiki/Broadcasting" id="mwGg" rel="mw:WikiLink" title="Broadcasting">broadcast</a> systems such as satellite communications, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Digital_Video_Broadcasting" id="mwGw" rel="mw:WikiLink" title="Digital Video Broadcasting">DVB</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/ATSC_Standards" id="mwHA" rel="mw:WikiLink" title="ATSC Standards">ATSC</a>, and storage systems such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/RAID_6" id="mwHQ" rel="mw:WikiLink" title="RAID 6">RAID 6</a>.</p>
+<p id="mwHg">Reed–Solomon codes operate on a block of data treated as a set of <a href="https://en.wikipedia.org/wiki/Finite_field" id="mwHw" rel="mw:WikiLink" title="Finite field">finite-field</a> elements called symbols. Reed–Solomon codes <span about="#mwt11" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;RS(''n'', ''k'')&quot;}},&quot;i&quot;:0}}]}" id="mwIA" typeof="mw:Transclusion">RS(<i>n</i>, <i>k</i>)</span> are able to detect and correct multiple symbol errors. By adding <span about="#mwt12" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''t'' {{=}} ''n'' − ''k''&quot;}},&quot;i&quot;:0}}]}" id="mwIQ" typeof="mw:Transclusion"><i>t</i> = <i>n</i> − <i>k</i></span> check symbols to the data, a Reed–Solomon code can detect (but not correct) any combination of up to <span about="#mwt13" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwIg" style="font-style:italic;" typeof="mw:Transclusion">t</span> erroneous symbols, <i id="mwIw">or</i> locate and correct up to <span about="#mwt14" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;⌊''t''/2⌋&quot;}},&quot;i&quot;:0}}]}" id="mwJA" typeof="mw:Transclusion">⌊<i>t</i>/2⌋</span> erroneous symbols at unknown locations. As an <a href="https://en.wikipedia.org/wiki/Erasure_code" id="mwJQ" rel="mw:WikiLink" title="Erasure code">erasure code</a>, it can correct up to <span about="#mwt15" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwJg" style="font-style:italic;" typeof="mw:Transclusion">t</span> erasures at locations that are known and provided to the algorithm, or it can detect and correct combinations of errors and erasures. Reed–Solomon codes are also suitable as multiple-<a href="https://en.wikipedia.org/wiki/Burst_error" id="mwJw" rel="mw:WikiLink" title="Burst error">burst</a> bit-error correcting codes, since a sequence of <span about="#mwt16" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''b''&amp;nbsp;+&amp;nbsp;1&quot;}},&quot;i&quot;:0}}]}" id="mwKA" typeof="mw:Transclusion"><i>b</i><span typeof="mw:Entity"> </span>+<span typeof="mw:Entity"> </span>1</span> consecutive bit errors can affect at most two symbols of size <span about="#mwt17" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"b"}},"i":0}}]}' id="mwKQ" style="font-style:italic;" typeof="mw:Transclusion">b</span>. The choice of <span about="#mwt18" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwKg" style="font-style:italic;" typeof="mw:Transclusion">t</span> is up to the designer of the code and may be selected within wide limits.</p>
+<p id="mwKw">There are two different Reed-Solomon encoding schemes, called original view and BCH view in this article. The history section explains the origins of this.</p>
+<p id="mwLg">Reed–Solomon codes were developed in 1960 by <a href="https://en.wikipedia.org/wiki/Irving_S._Reed" id="mwLw" rel="mw:WikiLink" title="Irving S. Reed">Irving S. Reed</a> and <a href="https://en.wikipedia.org/wiki/Gustave_Solomon" id="mwMA" rel="mw:WikiLink" title="Gustave Solomon">Gustave Solomon</a>, who were then staff members of <a href="https://en.wikipedia.org/wiki/MIT_Lincoln_Laboratory" id="mwMQ" rel="mw:WikiLink" title="MIT Lincoln Laboratory">MIT Lincoln Laboratory</a>. Their seminal article was titled "Polynomial Codes over Certain Finite Fields".<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ReedSolomon"}}' id="cite_ref-ReedSolomon_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ReedSolomon-1" id="mwMg"><span class="mw-reflink-text" id="mwMw"><span class="cite-bracket" id="mwNA">[</span>1<span class="cite-bracket" id="mwNQ">]</span></span></a></sup> The original encoding scheme described in the Reed and Solomon article used a variable polynomial based on the message to be encoded where only a fixed set of values (evaluation points) to be encoded are known to encoder and decoder. The original theoretical decoder generated potential polynomials based on subsets of <i id="mwNg">k</i> (unencoded message length) out of <i id="mwNw">n</i> (encoded message length) values of a received message, choosing the most popular polynomial as the correct one, which was impractical for all but the simplest of cases. This was initially resolved by changing the original scheme to a <a href="https://en.wikipedia.org/wiki/BCH_code" id="mwOA" rel="mw:WikiLink" title="BCH code">BCH-code</a> compatible scheme based on a fixed polynomial known to both encoder and decoder, but later, practical decoders based on the original scheme were developed, although initially slower than the BCH schemes. The result of this is that there are two main types of Reed–Solomon codes: ones that use the original encoding scheme and ones that use the BCH encoding scheme.</p>
+<p id="mwOQ">Also in 1960, a practical fixed polynomial decoder for <a class="mw-redirect" href="https://en.wikipedia.org/wiki/BCH_codes" id="mwOg" rel="mw:WikiLink" title="BCH codes">BCH codes</a> developed by <a href="https://en.wikipedia.org/wiki/Daniel_Gorenstein" id="mwOw" rel="mw:WikiLink" title="Daniel Gorenstein">Daniel Gorenstein</a> and Neal Zierler was described in an <a href="https://en.wikipedia.org/wiki/MIT_Lincoln_Laboratory" id="mwPA" rel="mw:WikiLink" title="MIT Lincoln Laboratory">MIT Lincoln Laboratory</a> report by Zierler in January 1960 and later in an article in June 1961.<sup about="#mwt24" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwPQ"><span class="mw-reflink-text" id="mwPg"><span class="cite-bracket" id="mwPw">[</span>2<span class="cite-bracket" id="mwQA">]</span></span></a></sup> The Gorenstein–Zierler decoder and the related work on BCH codes are described in a book "Error-Correcting Codes" by <a href="https://en.wikipedia.org/wiki/W._Wesley_Peterson" id="mwQQ" rel="mw:WikiLink" title="W. Wesley Peterson">W. Wesley Peterson</a> (1961).<sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Peterson61"},"body":{"id":"mw-reference-text-cite_note-Peterson61-3"}}' id="cite_ref-Peterson61_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Peterson61-3" id="mwQg"><span class="mw-reflink-text" id="mwQw"><span class="cite-bracket" id="mwRA">[</span>3<span class="cite-bracket" id="mwRQ">]</span></span></a></sup><link about="#mwt20" data-mw='{"parts":[{"template":{"target":{"wt":"page needed","href":"./Template:Page_needed"},"params":{"date":{"wt":"March 2025"}},"i":0}}]}' href="./Category:Wikipedia_articles_needing_page_number_citations_from_March_2025" id="mwRg" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><sup about="#mwt20" class="noprint Inline-Template" id="mwRw" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citing_sources" rel="mw:WikiLink" title="Wikipedia:Citing sources"><span title="This citation requires a reference to the specific page or range of pages in which the material appears. (March 2025)">page<span typeof="mw:Entity"> </span>needed</span></a></i><span typeof="mw:Entity">]</span></sup> By 1963 (or possibly earlier), J.J. Stone (and others)<link about="#mwt21" data-mw='{"parts":[{"template":{"target":{"wt":"who?","href":"./Template:Who%3F"},"params":{"date":{"wt":"March 2025"}},"i":0}}]}' href="./Category:All_articles_with_specifically_marked_weasel-worded_phrases" id="mwSA" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt21" href="./Category:Articles_with_specifically_marked_weasel-worded_phrases_from_March_2025" rel="mw:PageProp/Category"/><sup about="#mwt21" class="noprint Inline-Template" id="mwSQ" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Words_to_watch#Unsupported_attributions" rel="mw:WikiLink" title="Wikipedia:Manual of Style/Words to watch"><span title="The material near this tag possibly uses too-vague attribution or weasel words. (March 2025)">who?</span></a></i><span typeof="mw:Entity">]</span></sup> recognized that Reed–Solomon codes could use the BCH scheme of using a fixed generator polynomial, making such codes a special class of BCH codes,<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Peterson96"},"body":{"id":"mw-reference-text-cite_note-Peterson96-4"}}' id="cite_ref-Peterson96_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Peterson96-4" id="mwSg"><span class="mw-reflink-text" id="mwSw"><span class="cite-bracket" id="mwTA">[</span>4<span class="cite-bracket" id="mwTQ">]</span></span></a></sup> but Reed–Solomon codes based on the original encoding scheme are not a class of BCH codes, and depending on the set of evaluation points, they are not even <a href="https://en.wikipedia.org/wiki/Cyclic_code" id="mwTg" rel="mw:WikiLink" title="Cyclic code">cyclic codes</a>.</p>
+<p id="mwTw">In 1969, an improved BCH scheme decoder was developed by <a href="https://en.wikipedia.org/wiki/Elwyn_Berlekamp" id="mwUA" rel="mw:WikiLink" title="Elwyn Berlekamp">Elwyn Berlekamp</a> and <a href="https://en.wikipedia.org/wiki/James_Massey" id="mwUQ" rel="mw:WikiLink" title="James Massey">James Massey</a> and has since been known as the <a href="https://en.wikipedia.org/wiki/Berlekamp–Massey_algorithm" id="mwUg" rel="mw:WikiLink" title="Berlekamp–Massey algorithm">Berlekamp–Massey decoding algorithm</a>.</p>
+<p id="mwUw">In 1975, another improved BCH scheme decoder was developed by Yasuo Sugiyama, based on the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm" id="mwVA" rel="mw:WikiLink" title="Extended Euclidean algorithm">extended Euclidean algorithm</a>.<sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwVQ"><span class="mw-reflink-text" id="mwVg"><span class="cite-bracket" id="mwVw">[</span>5<span class="cite-bracket" id="mwWA">]</span></span></a></sup></p>
+<p id="mwXQ">In 1977, Reed–Solomon codes were implemented in the <a href="https://en.wikipedia.org/wiki/Voyager_program" id="mwXg" rel="mw:WikiLink" title="Voyager program">Voyager program</a> in the form of <a href="https://en.wikipedia.org/wiki/Concatenated_error_correction_code" id="mwXw" rel="mw:WikiLink" title="Concatenated error correction code">concatenated error correction codes</a>. The first commercial application in mass-produced consumer products appeared in 1982 with the <a href="https://en.wikipedia.org/wiki/Compact_disc" id="mwYA" rel="mw:WikiLink" title="Compact disc">compact disc</a>, where two <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Forward_error_correction#Interleaving" id="mwYQ" rel="mw:WikiLink" title="Forward error correction">interleaved</a> Reed–Solomon codes are used. Today, Reed–Solomon codes are widely implemented in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_storage_device" id="mwYg" rel="mw:WikiLink" title="Data storage device">digital storage</a> devices and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_transmission" id="mwYw" rel="mw:WikiLink" title="Data transmission">digital communication</a> standards, though they are being slowly replaced by <a href="https://en.wikipedia.org/wiki/BCH_code" id="mwZA" rel="mw:WikiLink" title="BCH code">Bose–Chaudhuri–Hocquenghem (BCH) codes</a>. For example, Reed–Solomon codes are used in the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Digital_Video_Broadcasting" id="mwZQ" rel="mw:WikiLink" title="Digital Video Broadcasting">Digital Video Broadcasting</a> (DVB) standard <a href="https://en.wikipedia.org/wiki/DVB-S" id="mwZg" rel="mw:WikiLink" title="DVB-S">DVB-S</a>, in conjunction with a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Convolutional_coding" id="mwZw" rel="mw:WikiLink" title="Convolutional coding">convolutional</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Inner_code" id="mwaA" rel="mw:WikiLink" title="Inner code">inner code</a>, but BCH codes are used with <a href="https://en.wikipedia.org/wiki/Low-density_parity-check_code" id="mwaQ" rel="mw:WikiLink" title="Low-density parity-check code">LDPC</a> in its successor, <a href="https://en.wikipedia.org/wiki/DVB-S2" id="mwag" rel="mw:WikiLink" title="DVB-S2">DVB-S2</a>.</p>
+<p id="mwaw">In 1986, an original scheme decoder known as the <a href="https://en.wikipedia.org/wiki/Berlekamp–Welch_algorithm" id="mwbA" rel="mw:WikiLink" title="Berlekamp–Welch algorithm">Berlekamp–Welch algorithm</a> was developed.</p>
+<p id="mwbQ">In 1996, variations of original scheme decoders called list decoders or soft decoders were developed by Madhu Sudan and others, and work continues on these types of decoders (see <a href="https://en.wikipedia.org/wiki/Guruswami–Sudan_list_decoding_algorithm" id="mwbg" rel="mw:WikiLink" title="Guruswami–Sudan list decoding algorithm">Guruswami–Sudan list decoding algorithm</a>).</p>
+<p id="mwbw">In 2002, another original scheme decoder was developed by Shuhong Gao, based on the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm" id="mwcA" rel="mw:WikiLink" title="Extended Euclidean algorithm">extended Euclidean algorithm</a>.<sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"gao"},"body":{"id":"mw-reference-text-cite_note-gao-6"}}' id="cite_ref-gao_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-gao-6" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>6<span class="cite-bracket" id="mwdA">]</span></span></a></sup></p>
+<p id="mwdQ">Around 2015 an original scheme syndrome like decoder was developed (author unknown).<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwdg"><span class="mw-reflink-text" id="mwdw"><span class="cite-bracket" id="mweA">[</span>7<span class="cite-bracket" id="mweQ">]</span></span></a></sup></p>
+<p id="mwfA">Reed–Solomon coding is very widely used in <a href="https://en.wikipedia.org/wiki/Mass_storage" id="mwfQ" rel="mw:WikiLink" title="Mass storage">mass storage</a> systems to correct
+the burst errors associated with media defects.</p>
+<p id="mwfg">Reed–Solomon coding is a key component of the <a href="https://en.wikipedia.org/wiki/Compact_disc" id="mwfw" rel="mw:WikiLink" title="Compact disc">compact disc</a>. It was the first use of strong error correction coding in a mass-produced consumer product, and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Digital_audio_tape" id="mwgA" rel="mw:WikiLink" title="Digital audio tape">DAT</a> and <a href="https://en.wikipedia.org/wiki/DVD" id="mwgQ" rel="mw:WikiLink" title="DVD">DVD</a> use similar schemes. In the CD, two layers of Reed–Solomon coding separated by a 28-way <a href="https://en.wikipedia.org/wiki/Convolution" id="mwgg" rel="mw:WikiLink" title="Convolution">convolutional</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Interleaver" id="mwgw" rel="mw:WikiLink" title="Interleaver">interleaver</a> yields a scheme called Cross-Interleaved Reed–Solomon Coding (<a href="https://en.wikipedia.org/wiki/Cross-interleaved_Reed–Solomon_coding" id="mwhA" rel="mw:WikiLink" title="Cross-interleaved Reed–Solomon coding">CIRC</a>). The first element of a CIRC decoder is a relatively weak inner (32,28) Reed–Solomon code, shortened from a (255,251) code with 8-bit symbols. This code can correct up to 2 byte errors per 32-byte block. More importantly, it flags as erasures any uncorrectable blocks, i.e., blocks with more than 2 byte errors. The decoded 28-byte blocks, with erasure indications, are then spread by the deinterleaver to different blocks of the (28,24) outer code. Thanks to the deinterleaving, an erased 28-byte block from the inner code becomes a single erased byte in each of 28 outer code blocks. The outer code easily corrects this, since it can handle up to 4 such erasures per block.</p>
+<p id="mwhQ">The result is a CIRC that can completely correct error bursts up to 4000 bits, or about 2.5<span id="mwhg" typeof="mw:Entity"> </span>mm on the disc surface. This code is so strong that most CD playback errors are almost certainly caused by tracking errors that cause the laser to jump track, not by uncorrectable error bursts.<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwhw"><span class="mw-reflink-text" id="mwiA"><span class="cite-bracket" id="mwiQ">[</span>8<span class="cite-bracket" id="mwig">]</span></span></a></sup></p>
+<p id="mwiw">DVDs use a similar scheme, but with much larger blocks, a (208,192) inner code, and a (182,172) outer code.</p>
+<p id="mwjA">Reed–Solomon error correction is also used in <a href="https://en.wikipedia.org/wiki/Parchive" id="mwjQ" rel="mw:WikiLink" title="Parchive">parchive</a> files which are commonly posted accompanying multimedia files on <a class="mw-redirect" href="https://en.wikipedia.org/wiki/USENET" id="mwjg" rel="mw:WikiLink" title="USENET">USENET</a>. The distributed online storage service <a href="https://en.wikipedia.org/wiki/Wuala" id="mwjw" rel="mw:WikiLink" title="Wuala">Wuala</a> (discontinued in 2015) also used Reed–Solomon when breaking up files.</p>
+<p id="mwkQ">Almost all two-dimensional bar codes such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/PDF-417" id="mwkg" rel="mw:WikiLink" title="PDF-417">PDF-417</a>, <a href="https://en.wikipedia.org/wiki/MaxiCode" id="mwkw" rel="mw:WikiLink" title="MaxiCode">MaxiCode</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Datamatrix" id="mwlA" rel="mw:WikiLink" title="Datamatrix">Datamatrix</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/QR_Code" id="mwlQ" rel="mw:WikiLink" title="QR Code">QR Code</a>, <a href="https://en.wikipedia.org/wiki/Aztec_Code" id="mwlg" rel="mw:WikiLink" title="Aztec Code">Aztec Code</a> and <a href="https://en.wikipedia.org/wiki/Han_Xin_code" id="mwlw" rel="mw:WikiLink" title="Han Xin code">Han Xin code</a> use Reed–Solomon error correction to allow correct reading even if a portion of the bar code is damaged. When the bar code scanner cannot recognize a bar code symbol, it will treat it as an erasure.</p>
+<p id="mwmA">Reed–Solomon coding is less common in one-dimensional bar codes, but is used by the <a href="https://en.wikipedia.org/wiki/PostBar" id="mwmQ" rel="mw:WikiLink" title="PostBar">PostBar</a> symbology.</p>
+<p id="mwmw">Specialized forms of Reed–Solomon codes, specifically <a href="https://en.wikipedia.org/wiki/Cauchy_matrix" id="mwnA" rel="mw:WikiLink" title="Cauchy matrix">Cauchy</a>-RS and <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix" id="mwnQ" rel="mw:WikiLink" title="Vandermonde matrix">Vandermonde</a>-RS, can be used to overcome the unreliable nature of data transmission over <a href="https://en.wikipedia.org/wiki/Binary_erasure_channel" id="mwng" rel="mw:WikiLink" title="Binary erasure channel">erasure channels</a>. The encoding process assumes a code of RS(<i id="mwnw">N</i>,<span id="mwoA" typeof="mw:Entity"> </span><i id="mwoQ">K</i>) which results in <i id="mwog">N</i> codewords of length <i id="mwow">N</i> symbols each storing <i id="mwpA">K</i> symbols of data, being generated, that are then sent over an erasure channel.</p>
+<p id="mwpQ">Any combination of <i id="mwpg">K</i> codewords received at the other end is enough to reconstruct all of the <i id="mwpw">N</i> codewords. The <a href="https://en.wikipedia.org/wiki/Code_rate" id="mwqA" rel="mw:WikiLink" title="Code rate">code rate</a> is generally set to 1/2 unless the channel's erasure likelihood can be adequately modelled and is seen to be less. In conclusion, <i id="mwqQ">N</i> is usually 2<i id="mwqg">K</i>, meaning that at least half of all the codewords sent must be received in order to reconstruct all of the codewords sent.</p>
+<p id="mwqw">Reed–Solomon codes are also used in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/XDSL" id="mwrA" rel="mw:WikiLink" title="XDSL">xDSL</a> systems and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/CCSDS" id="mwrQ" rel="mw:WikiLink" title="CCSDS">CCSDS</a>'s <a href="https://en.wikipedia.org/wiki/Space_Communications_Protocol_Specifications" id="mwrg" rel="mw:WikiLink" title="Space Communications Protocol Specifications">Space Communications Protocol Specifications</a> as a form of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Forward_error_correction" id="mwrw" rel="mw:WikiLink" title="Forward error correction">forward error correction</a>.</p>
+<p id="mwug">One significant application of Reed–Solomon coding was to encode the digital pictures sent back by the <a href="https://en.wikipedia.org/wiki/Voyager_program" id="mwuw" rel="mw:WikiLink" title="Voyager program">Voyager program</a>.</p>
+<p id="mwvA">Voyager introduced Reed–Solomon coding <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Concatenated_code" id="mwvQ" rel="mw:WikiLink" title="Concatenated code">concatenated</a> with <a href="https://en.wikipedia.org/wiki/Convolutional_code" id="mwvg" rel="mw:WikiLink" title="Convolutional code">convolutional codes</a>, a practice that has since become very widespread in deep space and satellite (e.g., direct digital broadcasting) communications.</p>
+<p id="mwvw"><a href="https://en.wikipedia.org/wiki/Viterbi_decoder" id="mwwA" rel="mw:WikiLink" title="Viterbi decoder">Viterbi decoders</a> tend to produce errors in short bursts. Correcting these burst errors is a job best done by short or simplified Reed–Solomon codes.</p>
+<p id="mwwQ">Modern versions of concatenated Reed–Solomon/Viterbi-decoded convolutional coding were and are used on the <a href="https://en.wikipedia.org/wiki/Mars_Pathfinder" id="mwwg" rel="mw:WikiLink" title="Mars Pathfinder">Mars Pathfinder</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Galileo_probe" id="mwww" rel="mw:WikiLink" title="Galileo probe">Galileo</a>, <a href="https://en.wikipedia.org/wiki/Mars_Exploration_Rover" id="mwxA" rel="mw:WikiLink" title="Mars Exploration Rover">Mars Exploration Rover</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Cassini_probe" id="mwxQ" rel="mw:WikiLink" title="Cassini probe">Cassini</a> missions, where they perform within about 1–1.5 <a href="https://en.wikipedia.org/wiki/Decibel" id="mwxg" rel="mw:WikiLink" title="Decibel">dB</a> of the ultimate limit, the <a href="https://en.wikipedia.org/wiki/Channel_capacity" id="mwxw" rel="mw:WikiLink" title="Channel capacity">Shannon capacity</a>.</p>
+<p id="mwyA">These concatenated codes are now being replaced by more powerful <a href="https://en.wikipedia.org/wiki/Turbo_code" id="mwyQ" rel="mw:WikiLink" title="Turbo code">turbo codes</a>:</p>
+<p id="mwAQc">Shortened Reed–Solomon codes, <a href="https://en.wikipedia.org/wiki/Concatenated_error_correction_code" id="mwAQg" rel="mw:WikiLink" title="Concatenated error correction code">concatenated</a> with duplicated <a href="https://en.wikipedia.org/wiki/Reed–Muller_code" id="mwAQk" rel="mw:WikiLink" title="Reed–Muller code">Reed–Muller codes</a> are used in the Hamming Quasi-Cyclic (HQC),<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"HQCspec"},"body":{"id":"mw-reference-text-cite_note-HQCspec-12"}}' id="cite_ref-HQCspec_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-HQCspec-12" id="mwAQo"><span class="mw-reflink-text" id="mwAQs"><span class="cite-bracket" id="mwAQw">[</span>11<span class="cite-bracket" id="mwAQ0">]</span></span></a></sup> a code-based <a href="https://en.wikipedia.org/wiki/Key_encapsulation_mechanism" id="mwAQ4" rel="mw:WikiLink" title="Key encapsulation mechanism">key encapsulation mechanism</a> selected by <a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology" id="mwAQ8" rel="mw:WikiLink" title="National Institute of Standards and Technology">NIST</a> for standardization as an alternative <a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography" id="mwARA" rel="mw:WikiLink" title="Post-quantum cryptography">quantum-resistant</a> algorithm.<sup about="#mwt61" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwARE"><span class="mw-reflink-text" id="mwARI"><span class="cite-bracket" id="mwARM">[</span>12<span class="cite-bracket" id="mwARQ">]</span></span></a></sup></p>
+<p id="mwARU">The <a href="https://en.wikipedia.org/wiki/Signal_(software)" id="mwARY" rel="mw:WikiLink" title="Signal (software)">Signal</a> chat application also uses Reed–Solomon codes in the <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Sparse Post Quantum Ratchet"]}}' href="https://en.wikipedia.org/wiki/Sparse_Post_Quantum_Ratchet?action=edit&amp;redlink=1" id="mwARc" rel="mw:WikiLink" title="Sparse Post Quantum Ratchet (page does not exist)" typeof="mw:LocalizedAttrs">Sparse Post Quantum Ratchet</a>.<sup about="#mwt64" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwARg"><span class="mw-reflink-text" id="mwARk"><span class="cite-bracket" id="mwARo">[</span>13<span class="cite-bracket" id="mwARs">]</span></span></a></sup><sup about="#mwt67" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwARw"><span class="mw-reflink-text" id="mwAR0"><span class="cite-bracket" id="mwAR4">[</span>14<span class="cite-bracket" id="mwAR8">]</span></span></a></sup><sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwASA"><span class="mw-reflink-text" id="mwASE"><span class="cite-bracket" id="mwASI">[</span>15<span class="cite-bracket" id="mwASM">]</span></span></a></sup></p>
+<p id="mwASU">The Reed–Solomon code is actually a family of codes, where every code is characterised by three parameters: an <a href="https://en.wikipedia.org/wiki/Block_code#The_alphabet_.CE.A3" id="mwASY" rel="mw:WikiLink" title="Block code">alphabet</a> size <span about="#mwt71" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"q"}},"i":0}}]}' id="mwASc" style="font-style:italic;" typeof="mw:Transclusion">q</span>, a <a href="https://en.wikipedia.org/wiki/Block_code#The_block_length_n" id="mwASg" rel="mw:WikiLink" title="Block code">block length</a> <span about="#mwt72" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwASk" style="font-style:italic;" typeof="mw:Transclusion">n</span>, and a <a href="https://en.wikipedia.org/wiki/Block_code#The_message_length_k" id="mwASo" rel="mw:WikiLink" title="Block code">message length</a> <span about="#mwt73" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwASs" style="font-style:italic;" typeof="mw:Transclusion">k</span><i id="mwASw">,</i> with <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k &lt; n \\leq q"}}' id="mwAS0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k&lt;n\leq q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>&lt;</mo>
+<mi>n</mi>
+<mo>≤<!-- ≤ --></mo>
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k&lt;n\leq q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k&lt;n\leq q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/78b4f2248f86608e267c8d6e9bf9f38beb064fc8" style="vertical-align: -0.671ex; width:9.872ex; height:2.509ex;"/></span>. The set of alphabet symbols is interpreted as the <a href="https://en.wikipedia.org/wiki/Finite_field" id="mwAS4" rel="mw:WikiLink" title="Finite field">finite field</a> <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAS8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span> of order <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}' id="mwATA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;"/></span>, and thus, <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}' id="mwATE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;"/></span> must be a <a href="https://en.wikipedia.org/wiki/Prime_power" id="mwATI" rel="mw:WikiLink" title="Prime power">prime power</a>. In the most useful parameterizations of the Reed–Solomon code, the block length is usually some constant multiple of the message length, that is, the <a href="https://en.wikipedia.org/wiki/Block_code#The_rate_R" id="mwATM" rel="mw:WikiLink" title="Block code">rate</a> <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R = \\frac{k}{n}"}}' id="mwATQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R={\frac {k}{n}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>R</mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>k</mi>
+<mi>n</mi>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R={\frac {k}{n}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R={\frac {k}{n}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a8fb6f00490d6179856cc45e37f1bd60677f7ecf" style="vertical-align: -1.838ex; width:7.093ex; height:5.343ex;"/></span> is some constant, and furthermore, the block length is either equal to the alphabet size or one less than it, i.e., <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n=q"}}' id="mwATU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n=q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>=</mo>
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n=q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n=q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b88eedc2745402e0d99d3886e05ea683816aecf3" style="vertical-align: -0.671ex; width:5.563ex; height:2.009ex;"/></span> or <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n=q-1"}}' id="mwATY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n=q-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>=</mo>
+<mi>q</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n=q-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n=q-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b1989c9f290cfc2e56144b9fe0790657d730f0ee" style="vertical-align: -0.671ex; width:9.566ex; height:2.509ex;"/></span>.<link about="#mwt74" data-mw='{"parts":[{"template":{"target":{"wt":"citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"March 2017"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwATc" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt74" href="./Category:Articles_with_unsourced_statements_from_March_2017" rel="mw:PageProp/Category"/><sup about="#mwt74" class="noprint Inline-Template Template-Fact" id="mwATg" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (March 2017)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwATo">There are different encoding procedures for the Reed–Solomon code, and thus, there are different ways to describe the set of all codewords.
+In the original view of Reed and Solomon, every codeword of the Reed–Solomon code is a sequence of function values of a polynomial of degree less than <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwATs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>.<sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ReedSolomon"}}' id="cite_ref-ReedSolomon_1-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ReedSolomon-1" id="mwATw"><span class="mw-reflink-text" id="mwAT0"><span class="cite-bracket" id="mwAT4">[</span>1<span class="cite-bracket" id="mwAT8">]</span></span></a></sup> In order to obtain a codeword of the Reed–Solomon code, the message symbols (each within the q-sized alphabet) are treated as the coefficients of a polynomial <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p"}}' id="mwAUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>p</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/81eac1e205430d1f40810df36a0edffdc367af36" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:1.259ex; height:2.009ex;"/></span> of degree less than <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAUE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>, over the finite field <span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAUI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span> with <span about="#mwt87" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}' id="mwAUM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;"/></span> elements.
+In turn, the polynomial <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p"}}' id="mwAUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>p</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/81eac1e205430d1f40810df36a0edffdc367af36" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:1.259ex; height:2.009ex;"/></span> is evaluated at a set of <span about="#mwt89" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n \\leq q"}}' id="mwAUU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n\leq q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>≤<!-- ≤ --></mo>
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n\leq q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n\leq q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8a2267f3d1b2d1d38418583aa96e623c684ad359" style="vertical-align: -0.671ex; width:5.563ex; height:2.343ex;"/></span> distinct points in any order <span about="#mwt90" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a_1, \\dots, a_n"}}' id="mwAUY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a_{1},\dots ,a_{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a_{1},\dots ,a_{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a_{1},\dots ,a_{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/852381be25b656d697c7a4a9634d3dc4c182d833" style="vertical-align: -0.671ex; width:9.911ex; height:2.009ex;"/></span> of the field <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAUc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span>, and the sequence of values is the corresponding codeword. Common choices for a set of evaluation points include <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{ 0, 1, 2, \\dots, n - 1 \\}"}}' id="mwAUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{0,1,2,\dots ,n-1\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{0,1,2,\dots ,n-1\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{0,1,2,\dots ,n-1\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a274c78335c05b113ff9a19b66526a9da869fbfd" style="vertical-align: -0.838ex; width:18.456ex; height:2.843ex;"/></span>, <span about="#mwt93" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{0, 1, \\alpha, \\alpha^2, \\dots, \\alpha^{n-2} \\}"}}' id="mwAUk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{0,1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-2}\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mi>α<!-- α --></mi>
+<mo>,</mo>
+<msup>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msup>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+</mrow>
+</msup>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{0,1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-2}\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{0,1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-2}\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cb99dd9adcb2aa9fc800c86b8be528af7c2a657a" style="vertical-align: -0.838ex; width:21.766ex; height:3.176ex;"/></span>, or for <span about="#mwt94" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n &lt; q"}}' id="mwAUo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n&lt;q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>&lt;</mo>
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n&lt;q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n&lt;q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/145a4cb4ddb9a99b2a6263ed1420f60d130f7d35" style="vertical-align: -0.671ex; width:5.563ex; height:2.176ex;"/></span>, <span about="#mwt95" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{1, \\alpha, \\alpha^2, \\dots, \\alpha^{n-1} \\}"}}' id="mwAUs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-1}\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mi>α<!-- α --></mi>
+<mo>,</mo>
+<msup>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msup>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-1}\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{1,\alpha ,\alpha ^{2},\dots ,\alpha ^{n-1}\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8f9ba4dc7845fca2e4dcf9711e11994e1ae019ef" style="vertical-align: -0.838ex; width:19.57ex; height:3.176ex;"/></span>, ... , where <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwAUw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> is a <a href="https://en.wikipedia.org/wiki/Primitive_element_(finite_field)" id="mwAU0" rel="mw:WikiLink" title="Primitive element (finite field)">primitive element</a> of <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAU4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span>.</p>
+<p id="mwAU8">Formally, the set <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{C}"}}' id="mwAVA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {C} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">C</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {C} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {C} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/11de80478fce9090e43eed19100b37cc841661e8" style="vertical-align: -0.338ex; width:1.931ex; height:2.176ex;"/></span> of codewords of the Reed–Solomon code is defined as follows:
+<span about="#mwt99" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\mathbf{C}\n = \\Bigl\\{\\;\n     \\bigl( p(a_1), p(a_2), \\dots, p(a_n) \\bigr)\n     \\;\\Big|\\;\n     p \\text{ is a polynomial over } F \\text{ of degree } &lt;k\n   \\;\\Bigr\\}\\,.\n"}}' id="mwAVE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {C} ={\Bigl \{}\;{\bigl (}p(a_{1}),p(a_{2}),\dots ,p(a_{n}){\bigr )}\;{\Big |}\;p{\text{ is a polynomial over }}F{\text{ of degree }}&lt;k\;{\Bigr \}}\,.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">C</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-OPEN">
+<mo maxsize="1.623em" minsize="1.623em">{</mo>
+</mrow>
+</mrow>
+<mspace width="thickmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-OPEN">
+<mo maxsize="1.2em" minsize="1.2em">(</mo>
+</mrow>
+</mrow>
+<mi>p</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mi>p</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>p</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-CLOSE">
+<mo maxsize="1.2em" minsize="1.2em">)</mo>
+</mrow>
+</mrow>
+<mspace width="thickmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mo maxsize="1.623em" minsize="1.623em">|</mo>
+</mrow>
+</mrow>
+<mspace width="thickmathspace"></mspace>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> is a polynomial over </mtext>
+</mrow>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> of degree </mtext>
+</mrow>
+<mo>&lt;</mo>
+<mi>k</mi>
+<mspace width="thickmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-CLOSE">
+<mo maxsize="1.623em" minsize="1.623em">}</mo>
+</mrow>
+</mrow>
+<mspace width="thinmathspace"></mspace>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {C} ={\Bigl \{}\;{\bigl (}p(a_{1}),p(a_{2}),\dots ,p(a_{n}){\bigr )}\;{\Big |}\;p{\text{ is a polynomial over }}F{\text{ of degree }}&lt;k\;{\Bigr \}}\,.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {C} ={\Bigl \{}\;{\bigl (}p(a_{1}),p(a_{2}),\dots ,p(a_{n}){\bigr )}\;{\Big |}\;p{\text{ is a polynomial over }}F{\text{ of degree }}&lt;k\;{\Bigr \}}\,.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2e97b14d102072e8872be43fd3bfd4d25fdd33dd" style="vertical-align: -1.838ex; width:75.125ex; height:4.843ex;"/></span>
+Since any two <i id="mwAVI">distinct</i> polynomials of degree less than <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAVM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> agree in at most <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k-1"}}' id="mwAVQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/21363ebd7038c93aae93127e7d910fc1b2e2c745" style="vertical-align: -0.505ex; width:5.214ex; height:2.343ex;"/></span> points, this means that any two codewords of the Reed–Solomon code disagree in at least <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n - (k-1) = n-k+1"}}' id="mwAVU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n-(k-1)=n-k+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n-(k-1)=n-k+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n-(k-1)=n-k+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bce2721e0474c79220d2f7a13884fa48998ea3cb" style="vertical-align: -0.838ex; width:23.806ex; height:2.843ex;"/></span> positions. Furthermore, there are two polynomials that do agree in <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k-1"}}' id="mwAVY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/21363ebd7038c93aae93127e7d910fc1b2e2c745" style="vertical-align: -0.505ex; width:5.214ex; height:2.343ex;"/></span> points but are not equal, and thus, the <a href="https://en.wikipedia.org/wiki/Block_code#The_distance_d" id="mwAVc" rel="mw:WikiLink" title="Block code">distance</a> of the Reed–Solomon code is exactly <span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d=n-k+1"}}' id="mwAVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle d=n-k+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>d</mi>
+<mo>=</mo>
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle d=n-k+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle d=n-k+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0990fa9c410b95fed78e55519575a44021a19f19" style="vertical-align: -0.505ex; width:13.764ex; height:2.343ex;"/></span>. Then the relative distance is <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta = d/n = 1-k/n + 1/n = 1-R+1/n\\sim 1-R"}}' id="mwAVk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta =d/n=1-k/n+1/n=1-R+1/n\sim 1-R}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo>=</mo>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>R</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+<mo>∼<!-- ∼ --></mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta =d/n=1-k/n+1/n=1-R+1/n\sim 1-R}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta =d/n=1-k/n+1/n=1-R+1/n\sim 1-R}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/96b5b8c599a4e0dc72caf6470946e2d77b6df940" style="vertical-align: -0.838ex; width:49.641ex; height:2.843ex;"/></span>, where <span about="#mwt106" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R=k/n"}}' id="mwAVo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R=k/n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>R</mi>
+<mo>=</mo>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R=k/n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R=k/n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/413a3d4d51a7ee9b5b884497ab1dda55a18d0e99" style="vertical-align: -0.838ex; width:8.631ex; height:2.843ex;"/></span> is the rate. This trade-off between the relative distance and the rate is asymptotically optimal since, by the <a href="https://en.wikipedia.org/wiki/Singleton_bound" id="mwAVs" rel="mw:WikiLink" title="Singleton bound">Singleton bound</a>, <i id="mwAVw">every</i> code satisfies <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta+R\\leq 1+1/n"}}' id="mwAV0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta +R\leq 1+1/n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo>+</mo>
+<mi>R</mi>
+<mo>≤<!-- ≤ --></mo>
+<mn>1</mn>
+<mo>+</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta +R\leq 1+1/n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta +R\leq 1+1/n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9e1b7f3a86afa445a98c5433e0a86d1a34eb7ea5" style="vertical-align: -0.838ex; width:16.474ex; height:2.843ex;"/></span>.
+Being a code that achieves this optimal trade-off, the Reed–Solomon code belongs to the class of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Maximum_distance_separable_code" id="mwAV4" rel="mw:WikiLink" title="Maximum distance separable code">maximum distance separable codes</a>.</p>
+<p id="mwAV8">While the number of different polynomials of degree less than <i id="mwAWA">k</i> and the number of different messages are both equal to <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q^k"}}' id="mwAWE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q^{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q^{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q^{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fc9b1525f5a653e19f9fd37fd2701a768e171632" style="vertical-align: -0.671ex; width:2.168ex; height:3.009ex;"/></span>, and thus every message can be uniquely mapped to such a polynomial, there are different ways of doing this encoding. The original construction of Reed &amp; Solomon interprets the message <i id="mwAWI">x</i> as the <i id="mwAWM">coefficients</i> of the polynomial <i id="mwAWQ">p</i>, whereas subsequent constructions interpret the message as the <i id="mwAWU">values</i> of the polynomial at the first <i id="mwAWY">k</i> points <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a_1,\\dots,a_k"}}' id="mwAWc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a_{1},\dots ,a_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a_{1},\dots ,a_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a_{1},\dots ,a_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2ed5c6512d08d64873d79d51a42e6b057007d1f7" style="vertical-align: -0.671ex; width:9.781ex; height:2.009ex;"/></span> and obtain the polynomial <i id="mwAWg">p</i> by interpolating these values with a polynomial of degree less than <i id="mwAWk">k</i>. The latter encoding procedure, while being slightly less efficient, has the advantage that it gives rise to a <a href="https://en.wikipedia.org/wiki/Systematic_code" id="mwAWo" rel="mw:WikiLink" title="Systematic code">systematic code</a>, that is, the original message is always contained as a <a href="https://en.wikipedia.org/wiki/Subsequence" id="mwAWs" rel="mw:WikiLink" title="Subsequence">subsequence</a> of the codeword.<sup about="#mwt110" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ReedSolomon"}}' id="cite_ref-ReedSolomon_1-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ReedSolomon-1" id="mwAWw"><span class="mw-reflink-text" id="mwAW0"><span class="cite-bracket" id="mwAW4">[</span>1<span class="cite-bracket" id="mwAW8">]</span></span></a></sup></p>
+<p id="mwAXE">In the original construction of Reed and Solomon, the message <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m=(m_0,\\dots,m_{k-1}) \\in F^k\n"}}' id="mwAXI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m=(m_{0},\dots ,m_{k-1})\in F^{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m=(m_{0},\dots ,m_{k-1})\in F^{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m=(m_{0},\dots ,m_{k-1})\in F^{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c266019141a2b79dd9c25d79e6869f674b6f7566" style="vertical-align: -0.838ex; width:26.195ex; height:3.176ex;"/></span> is mapped to the polynomial <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p_m"}}' id="mwAXM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a9fdc3d9c861e438bc344ab483c1e5a896fc002d" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:2.934ex; height:2.009ex;"/></span> with
+<span about="#mwt113" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"p_m(a) = \\sum_{i=0}^{k-1} m_i a^{i} = m_0 + m_1 a + m_2 a^2 + \\cdots + m_{k-1} a^{k-1}"}}' id="mwAXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}(a)=\sum _{i=0}^{k-1}m_{i}a^{i}=m_{0}+m_{1}a+m_{2}a^{2}+\cdots +m_{k-1}a^{k-1}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</munderover>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msup>
+<mo>=</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mi>a</mi>
+<mo>+</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>+</mo>
+<mo>⋯<!-- ⋯ --></mo>
+<mo>+</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<msup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}(a)=\sum _{i=0}^{k-1}m_{i}a^{i}=m_{0}+m_{1}a+m_{2}a^{2}+\cdots +m_{k-1}a^{k-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}(a)=\sum _{i=0}^{k-1}m_{i}a^{i}=m_{0}+m_{1}a+m_{2}a^{2}+\cdots +m_{k-1}a^{k-1}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6135ed6fbc515a71cbf89b0090acc853994f3195" style="vertical-align: -3.005ex; margin-left: -0.089ex; width:57.313ex; height:7.343ex;"/></span>
+The codeword of <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAXU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is obtained by evaluating <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p_m"}}' id="mwAXY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a9fdc3d9c861e438bc344ab483c1e5a896fc002d" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:2.934ex; height:2.009ex;"/></span> at <span about="#mwt116" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAXc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> different points <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a_0, \\dots, a_{n-1}"}}' id="mwAXg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a_{0},\dots ,a_{n-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a_{0},\dots ,a_{n-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a_{0},\dots ,a_{n-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af329d1870192111e428e736710c7c169c650285" style="vertical-align: -0.671ex; width:12.011ex; height:2.009ex;"/></span> of the field <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAXk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span>.<sup about="#mwt119" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ReedSolomon"}}' id="cite_ref-ReedSolomon_1-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ReedSolomon-1" id="mwAXo"><span class="mw-reflink-text" id="mwAXs"><span class="cite-bracket" id="mwAXw">[</span>1<span class="cite-bracket" id="mwAX0">]</span></span></a></sup> Thus the classical encoding function <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C:F^k \\to F^n"}}' id="mwAX4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C:F^{k}\to F^{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo>:</mo>
+<msup>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+<mo stretchy="false">→<!-- → --></mo>
+<msup>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C:F^{k}\to F^{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C:F^{k}\to F^{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b0fe838801ac0e5736ce60f7e3c342c268de876c" style="vertical-align: -0.338ex; width:13.254ex; height:2.676ex;"/></span> for the Reed–Solomon code is defined as follows:
+<span about="#mwt121" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"C(m) = \\begin{bmatrix}\np_m(a_0) &amp; p_m(a_1) &amp; \\cdots &amp; p_m(a_{n-1})\n\\end{bmatrix}"}}' id="mwAX8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>m</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mo>⋯<!-- ⋯ --></mo>
+</mtd>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3d6feb100307f5e3e1606e5ab537d2804477614f" style="vertical-align: -0.838ex; width:43.529ex; height:2.843ex;"/></span></p>
+<p id="mwAYA">This function <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}' id="mwAYE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;"/></span> is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Linear_mapping" id="mwAYI" rel="mw:WikiLink" title="Linear mapping">linear mapping</a>, that is, it satisfies <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C(m) = mA\n"}}' id="mwAYM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(m)=mA}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>m</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>m</mi>
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(m)=mA}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(m)=mA}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82fc38da3552cae98ac3a3627d774e7e514f3ea3" style="vertical-align: -0.838ex; width:12.498ex; height:2.843ex;"/></span> for the following <span about="#mwt124" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k \\times n"}}' id="mwAYQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k\times n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k\times n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k\times n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8e173885ca0f29dd406df781144cd635276c68e1" style="vertical-align: -0.338ex; width:5.446ex; height:2.176ex;"/></span>-matrix <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAYU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> with elements from <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAYY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span>.</p>
+<p id="mwAYc"><span about="#mwt127" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"C(m) = mA = \\begin{bmatrix}\nm_0 &amp; m_1 &amp; m_2 &amp; \\cdots &amp; m_{k-1}\n\\end{bmatrix}\n\\begin{bmatrix}\n1         &amp; 1         &amp; 1         &amp; \\dots  &amp; 1            \\\\\na_0       &amp; a_1       &amp; a_2       &amp; \\dots  &amp; a_{n-1}      \\\\\na_0^2     &amp; a_1^2     &amp; a_2^2     &amp; \\dots  &amp; a_{n-1}^2    \\\\\n\\vdots    &amp; \\vdots    &amp; \\vdots    &amp; \\ddots &amp; \\vdots       \\\\\na_0^{k-1} &amp; a_1^{k-1} &amp; a_2^{k-1} &amp; \\dots  &amp; a_{n-1}^{k-1}\n\\end{bmatrix}\n"}}' id="mwAYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(m)=mA={\begin{bmatrix}m_{0}&amp;m_{1}&amp;m_{2}&amp;\cdots &amp;m_{k-1}\end{bmatrix}}{\begin{bmatrix}1&amp;1&amp;1&amp;\dots &amp;1\\a_{0}&amp;a_{1}&amp;a_{2}&amp;\dots &amp;a_{n-1}\\a_{0}^{2}&amp;a_{1}^{2}&amp;a_{2}^{2}&amp;\dots &amp;a_{n-1}^{2}\\\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \\a_{0}^{k-1}&amp;a_{1}^{k-1}&amp;a_{2}^{k-1}&amp;\dots &amp;a_{n-1}^{k-1}\end{bmatrix}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>m</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>m</mi>
+<mi>A</mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<mo>⋯<!-- ⋯ --></mo>
+</mtd>
+<mtd>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<mn>1</mn>
+</mtd>
+<mtd>
+<mn>1</mn>
+</mtd>
+<mtd>
+<mn>1</mn>
+</mtd>
+<mtd>
+<mo>…<!-- … --></mo>
+</mtd>
+<mtd>
+<mn>1</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mtd>
+<mtd>
+<mo>…<!-- … --></mo>
+</mtd>
+<mtd>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<mo>…<!-- … --></mo>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msubsup>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mo>⋮<!-- ⋮ --></mo>
+</mtd>
+<mtd>
+<mo>⋮<!-- ⋮ --></mo>
+</mtd>
+<mtd>
+<mo>⋮<!-- ⋮ --></mo>
+</mtd>
+<mtd>
+<mo>⋱<!-- ⋱ --></mo>
+</mtd>
+<mtd>
+<mo>⋮<!-- ⋮ --></mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msubsup>
+</mtd>
+<mtd>
+<mo>…<!-- … --></mo>
+</mtd>
+<mtd>
+<msubsup>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msubsup>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(m)=mA={\begin{bmatrix}m_{0}&amp;m_{1}&amp;m_{2}&amp;\cdots &amp;m_{k-1}\end{bmatrix}}{\begin{bmatrix}1&amp;1&amp;1&amp;\dots &amp;1\\a_{0}&amp;a_{1}&amp;a_{2}&amp;\dots &amp;a_{n-1}\\a_{0}^{2}&amp;a_{1}^{2}&amp;a_{2}^{2}&amp;\dots &amp;a_{n-1}^{2}\\\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \\a_{0}^{k-1}&amp;a_{1}^{k-1}&amp;a_{2}^{k-1}&amp;\dots &amp;a_{n-1}^{k-1}\end{bmatrix}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(m)=mA={\begin{bmatrix}m_{0}&amp;m_{1}&amp;m_{2}&amp;\cdots &amp;m_{k-1}\end{bmatrix}}{\begin{bmatrix}1&amp;1&amp;1&amp;\dots &amp;1\\a_{0}&amp;a_{1}&amp;a_{2}&amp;\dots &amp;a_{n-1}\\a_{0}^{2}&amp;a_{1}^{2}&amp;a_{2}^{2}&amp;\dots &amp;a_{n-1}^{2}\\\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \\a_{0}^{k-1}&amp;a_{1}^{k-1}&amp;a_{2}^{k-1}&amp;\dots &amp;a_{n-1}^{k-1}\end{bmatrix}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fc2dace4b30d3766079a0fad7cd4f9cded95abfa" style="vertical-align: -8.446ex; margin-bottom: -0.225ex; width:78.096ex; height:18.509ex;"/></span></p>
+<p id="mwAYk">This matrix is a <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix" id="mwAYo" rel="mw:WikiLink" title="Vandermonde matrix">Vandermonde matrix</a> over <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mwAYs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span>. In other words, the Reed–Solomon code is a <a href="https://en.wikipedia.org/wiki/Linear_code" id="mwAYw" rel="mw:WikiLink" title="Linear code">linear code</a>, and in the classical encoding procedure, its <a href="https://en.wikipedia.org/wiki/Linear_code#Properties" id="mwAY0" rel="mw:WikiLink" title="Linear code">generator matrix</a> is <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAY4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>.</p>
+<p id="mwAZA">There are alternative encoding procedures that produce a <a href="https://en.wikipedia.org/wiki/Systematic_code" id="mwAZE" rel="mw:WikiLink" title="Systematic code">systematic</a> Reed–Solomon code. One method uses <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Lagrange_interpolation" id="mwAZI" rel="mw:WikiLink" title="Lagrange interpolation">Lagrange interpolation</a> to compute polynomial <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p_m"}}' id="mwAZM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a9fdc3d9c861e438bc344ab483c1e5a896fc002d" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:2.934ex; height:2.009ex;"/></span> such that <span about="#mwt131" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"p_m(a_i) = m_i \\text{ for all } i\\in\\{0,\\dots,k - 1\\}.\n"}}' id="mwAZQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}(a_{i})=m_{i}{\text{ for all }}i\in \{0,\dots ,k-1\}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> for all </mtext>
+</mrow>
+<mi>i</mi>
+<mo>∈<!-- ∈ --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}(a_{i})=m_{i}{\text{ for all }}i\in \{0,\dots ,k-1\}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}(a_{i})=m_{i}{\text{ for all }}i\in \{0,\dots ,k-1\}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32126b3ed2a8a1e10359eb8d63c7978136556631" style="vertical-align: -0.838ex; margin-left: -0.089ex; width:37.865ex; height:2.843ex;"/></span> Then <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p_m"}}' id="mwAZU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a9fdc3d9c861e438bc344ab483c1e5a896fc002d" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:2.934ex; height:2.009ex;"/></span> is evaluated at the other points <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a_k, \\dots, a_{n - 1}"}}' id="mwAZY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a_{k},\dots ,a_{n-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a_{k},\dots ,a_{n-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a_{k},\dots ,a_{n-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/59e7379a678a38cf8bccf72f89ef8e1ee357341c" style="vertical-align: -0.671ex; width:12.046ex; height:2.009ex;"/></span>.</p>
+<p id="mwAZc"><span about="#mwt134" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"C(m) = \\begin{bmatrix}\np_m(a_0) &amp; p_m(a_1) &amp; \\cdots &amp; p_m(a_{n-1})\n\\end{bmatrix}"}}' id="mwAZg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+<mo stretchy="false">(</mo>
+<mi>m</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mo>⋯<!-- ⋯ --></mo>
+</mtd>
+<mtd>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>a</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C(m)={\begin{bmatrix}p_{m}(a_{0})&amp;p_{m}(a_{1})&amp;\cdots &amp;p_{m}(a_{n-1})\end{bmatrix}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3d6feb100307f5e3e1606e5ab537d2804477614f" style="vertical-align: -0.838ex; width:43.529ex; height:2.843ex;"/></span></p>
+<p id="mwAZk">This function <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}' id="mwAZo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;"/></span> is a linear mapping. To generate the corresponding systematic encoding matrix G, multiply the matrix A by the inverse of A's left square submatrix.</p>
+</div></div>
+</body></html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Hash table - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Hash table</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p class="mw-empty-elt" id="mwBw"><span about="#mwt6" data-mw='{"parts":[{"template":{"target":{"wt":"Use mdy dates","href":"./Template:Use_mdy_dates"},"params":{"date":{"wt":"January 2013"}},"i":0}}]}' id="mwCA" typeof="mw:Nowiki mw:Transclusion"></span><link about="#mwt6" href="./Category:Use_mdy_dates_from_January_2013" id="mwCQ" rel="mw:PageProp/Category"/></p>
+<p id="mwGA">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwGQ" rel="mw:WikiLink" title="Computer science">computer science</a>, a <b id="mwGg">hash table</b> is a <a href="https://en.wikipedia.org/wiki/Data_structure" id="mwGw" rel="mw:WikiLink" title="Data structure">data structure</a> that implements an <a href="https://en.wikipedia.org/wiki/Associative_array" id="mwHA" rel="mw:WikiLink" title="Associative array">associative array</a>, also called a <b id="mwHQ">dictionary</b> or simply <b id="mwHg">map</b>; an associative array is an <a href="https://en.wikipedia.org/wiki/Abstract_data_type" id="mwHw" rel="mw:WikiLink" title="Abstract data type">abstract data type</a> that maps <a href="https://en.wikipedia.org/wiki/Unique_key" id="mwIA" rel="mw:WikiLink" title="Unique key">keys</a> to <a href="https://en.wikipedia.org/wiki/Value_(computer_science)" id="mwIQ" rel="mw:WikiLink" title="Value (computer science)">values</a>.<sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ms"},"body":{"id":"mw-reference-text-cite_note-ms-4"}}' id="cite_ref-ms_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ms-4" id="mwIg"><span class="mw-reflink-text" id="mwIw"><span class="cite-bracket" id="mwJA">[</span>3<span class="cite-bracket" id="mwJQ">]</span></span></a></sup> A hash table uses a <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwJg" rel="mw:WikiLink" title="Hash function">hash function</a> to compute an <i id="mwJw">index</i>, also called a <i id="mwKA">hash code</i>, into an array of <i id="mwKQ">buckets</i> or <i id="mwKg">slots</i>, from which the desired value can be found. During lookup, the key is hashed and the resulting hash indicates where the corresponding value is stored. A map implemented by a hash table is called a <b id="mwKw">hash map</b>.</p>
+<p id="mwLA">Most hash table designs employ an <a href="https://en.wikipedia.org/wiki/Perfect_hash_function" id="mwLQ" rel="mw:WikiLink" title="Perfect hash function">imperfect hash function</a>. <a href="https://en.wikipedia.org/wiki/Hash_collision" id="mwLg" rel="mw:WikiLink" title="Hash collision">Hash collisions</a>, where the hash function generates the same index for more than one key, therefore typically must be accommodated in some way. Common strategies to handle hash collisions include separate chaining, which stores multiple elements in the same slot using linked lists, and open addressing, which searches for the next available slot according to a probing sequence.<sup about="#mwt29" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"knuth"},"body":{"id":"mw-reference-text-cite_note-knuth-5"}}' id="cite_ref-knuth_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwLw"><span class="mw-reflink-text" id="mwMA"><span class="cite-bracket" id="mwMQ">[</span>4<span class="cite-bracket" id="mwMg">]</span></span></a></sup></p>
+<p id="mwMw">In a well-dimensioned hash table, the average time complexity for each lookup is independent of the number of elements stored in the table. Many hash table designs also allow arbitrary insertions and deletions of <a href="https://en.wikipedia.org/wiki/Name–value_pair" id="mwNA" rel="mw:WikiLink" title="Name–value pair">key–value pairs</a>, at <a href="https://en.wikipedia.org/wiki/Amortized_analysis" id="mwNQ" rel="mw:WikiLink" title="Amortized analysis">amortized</a> constant average cost per operation.<sup about="#mwt33" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"leiser"},"body":{"id":"mw-reference-text-cite_note-leiser-6"}}' id="cite_ref-leiser_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-leiser-6" id="mwNg"><span class="mw-reflink-text" id="mwNw"><span class="cite-bracket" id="mwOA">[</span>5<span class="cite-bracket" id="mwOQ">]</span></span></a></sup><sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"knuth"}}' id="cite_ref-knuth_5-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwOg"><span class="mw-reflink-text" id="mwOw"><span class="cite-bracket" id="mwPA">[</span>4<span class="cite-bracket" id="mwPQ">]</span></span></a></sup><sup about="#mwt30" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"pages":{"wt":"513–558"}},"i":0}}]}' id="mwPg" typeof="mw:Transclusion"><span title="Pages: 513–558"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>513–558<span typeof="mw:Entity"> </span></span></sup><sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cormen"},"body":{"id":"mw-reference-text-cite_note-cormen-7"}}' id="cite_ref-cormen_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cormen-7" id="mwPw"><span class="mw-reflink-text" id="mwQA"><span class="cite-bracket" id="mwQQ">[</span>6<span class="cite-bracket" id="mwQg">]</span></span></a></sup></p>
+<p id="mwQw">Hashing is an example of a <a href="https://en.wikipedia.org/wiki/Space–time_tradeoff" id="mwRA" rel="mw:WikiLink" title="Space–time tradeoff">space–time tradeoff</a>. If <a href="https://en.wikipedia.org/wiki/Computer_memory" id="mwRQ" rel="mw:WikiLink" title="Computer memory">memory</a> is infinite, the entire key can be used directly as an index to locate its value with a single memory access. On the other hand, if infinite time is available, values can be stored without regard for their keys, and a <a href="https://en.wikipedia.org/wiki/Binary_search" id="mwRg" rel="mw:WikiLink" title="Binary search">binary search</a> or <a href="https://en.wikipedia.org/wiki/Linear_search" id="mwRw" rel="mw:WikiLink" title="Linear search">linear search</a> can be used to retrieve the element.<style about="#mwt38" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"algo1rob"},"p":{"wt":"458"}},"i":0}}]}' data-mw-deduplicate="TemplateStyles:r1333433106" id="mwSA" typeof="mw:Extension/templatestyles mw:Transclusion">.mw-parser-output cite.citation{font-style:inherit;word-wrap:break-word}.mw-parser-output .citation q{quotes:"\"""\"""'""'"}.mw-parser-output .citation:target{background-color:rgba(0,127,255,0.133)}.mw-parser-output .id-lock-free.id-lock-free a{background:url("//upload.wikimedia.org/wikipedia/commons/6/65/Lock-green.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-limited.id-lock-limited a,.mw-parser-output .id-lock-registration.id-lock-registration a{background:url("//upload.wikimedia.org/wikipedia/commons/d/d6/Lock-gray-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-subscription.id-lock-subscription a{background:url("//upload.wikimedia.org/wikipedia/commons/a/aa/Lock-red-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .cs1-ws-icon a{background:url("//upload.wikimedia.org/wikipedia/commons/4/4c/Wikisource-logo.svg")right 0.1em center/12px no-repeat}body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-free a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-limited a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-registration a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-subscription a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .cs1-ws-icon a{background-size:contain;padding:0 1em 0 0}.mw-parser-output .cs1-code{color:inherit;background:inherit;border:none;padding:inherit}.mw-parser-output .cs1-hidden-error{display:none;color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-visible-error{color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-maint{display:none;color:#085;margin-left:0.3em}.mw-parser-output .cs1-kern-left{padding-left:0.2em}.mw-parser-output .cs1-kern-right{padding-right:0.2em}.mw-parser-output .citation .mw-selflink{font-weight:inherit}@media screen{.mw-parser-output .cs1-format{font-size:95%}html.skin-theme-clientpref-night .mw-parser-output .cs1-maint{color:#18911f}}@media screen and (prefers-color-scheme:dark){html.skin-theme-clientpref-os .mw-parser-output .cs1-maint{color:#18911f}}</style><sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"algo1rob"},"body":{"html":""}}' id="cite_ref-algo1rob_8-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-algo1rob-8" id="mwSQ"><span class="mw-reflink-text" id="mwSg"><span class="cite-bracket" id="mwSw">[</span>7<span class="cite-bracket" id="mwTA">]</span></span></a></sup><sup about="#mwt38" class="reference nowrap" id="mwTQ"><span title="Page / location: 458"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>458<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwTg">In many situations, hash tables turn out to be on average more efficient than <a href="https://en.wikipedia.org/wiki/Search_tree" id="mwTw" rel="mw:WikiLink" title="Search tree">search trees</a> or any other <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Table_(computing)" id="mwUA" rel="mw:WikiLink" title="Table (computing)">table</a> lookup structure. For this reason, they are widely used in many kinds of computer <a href="https://en.wikipedia.org/wiki/Software" id="mwUQ" rel="mw:WikiLink" title="Software">software</a>, particularly for <a href="https://en.wikipedia.org/wiki/Associative_array" id="mwUg" rel="mw:WikiLink" title="Associative array">associative arrays</a>, <a href="https://en.wikipedia.org/wiki/Database_index" id="mwUw" rel="mw:WikiLink" title="Database index">database indexing</a>, <a href="https://en.wikipedia.org/wiki/Cache_(computing)" id="mwVA" rel="mw:WikiLink" title="Cache (computing)">caches</a>, and <a href="https://en.wikipedia.org/wiki/Set_(abstract_data_type)" id="mwVQ" rel="mw:WikiLink" title="Set (abstract data type)">sets</a>.<sup about="#mwt44" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwVg"><span class="mw-reflink-text" id="mwVw"><span class="cite-bracket" id="mwWA">[</span>8<span class="cite-bracket" id="mwWQ">]</span></span></a></sup> Many programming languages provide built-in hash table structures, such as Python’s dictionaries, Java’s HashMap, C++’s unordered_map, and Go maps, which abstract the complexity of hashing from the programmer.<sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwWg"><span class="mw-reflink-text" id="mwWw"><span class="cite-bracket" id="mwXA">[</span>9<span class="cite-bracket" id="mwXQ">]</span></span></a></sup></p>
+<p id="mwYA">The idea of hashing arose independently in different places. In January 1953, <a href="https://en.wikipedia.org/wiki/Hans_Peter_Luhn" id="mwYQ" rel="mw:WikiLink" title="Hans Peter Luhn">Hans Peter Luhn</a> wrote an internal <a href="https://en.wikipedia.org/wiki/IBM" id="mwYg" rel="mw:WikiLink" title="IBM">IBM</a> memorandum that used hashing with chaining.  The first example of <a href="https://en.wikipedia.org/wiki/Open_addressing" id="mwYw" rel="mw:WikiLink" title="Open addressing">open addressing</a> was proposed by A. D. Linh, building on Luhn's memorandum.<sup about="#mwt55" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"knuth"}}' id="cite_ref-knuth_5-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwZA"><span class="mw-reflink-text" id="mwZQ"><span class="cite-bracket" id="mwZg">[</span>4<span class="cite-bracket" id="mwZw">]</span></span></a></sup><sup about="#mwt48" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"547"}},"i":0}}]}' id="mwaA" typeof="mw:Transclusion"><span title="Page: 547"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>547<span typeof="mw:Entity"> </span></span></sup> Around the same time, <a href="https://en.wikipedia.org/wiki/Gene_Amdahl" id="mwaQ" rel="mw:WikiLink" title="Gene Amdahl">Gene Amdahl</a>, <a href="https://en.wikipedia.org/wiki/Elaine_M._McGraw" id="mwag" rel="mw:WikiLink" title="Elaine M. McGraw">Elaine M. McGraw</a>, <a href="https://en.wikipedia.org/wiki/Nathaniel_Rochester_(computer_scientist)" id="mwaw" rel="mw:WikiLink" title="Nathaniel Rochester (computer scientist)">Nathaniel Rochester</a>, and <a href="https://en.wikipedia.org/wiki/Arthur_Samuel_(computer_scientist)" id="mwbA" rel="mw:WikiLink" title="Arthur Samuel (computer scientist)">Arthur Samuel</a> of <a href="https://en.wikipedia.org/wiki/IBM_Research" id="mwbQ" rel="mw:WikiLink" title="IBM Research">IBM Research</a> implemented hashing for the <a href="https://en.wikipedia.org/wiki/IBM_701" id="mwbg" rel="mw:WikiLink" title="IBM 701">IBM 701</a> <a href="https://en.wikipedia.org/wiki/Assembly_language#Assembler" id="mwbw" rel="mw:WikiLink" title="Assembly language">assembler</a>.<link about="#mwt49" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"Konheim"},"p":{"wt":"124"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwcA" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt49" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"Konheim"},"body":{"html":""}}' id="cite_ref-Konheim_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Konheim-11" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>10<span class="cite-bracket" id="mwdA">]</span></span></a></sup><sup about="#mwt49" class="reference nowrap" id="mwdQ"><span title="Page / location: 124"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>124<span typeof="mw:Entity"> </span></span></sup> Open addressing with linear probing is credited to Amdahl, although <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Andrey_Ershov" id="mwdg" rel="mw:WikiLink" title="Andrey Ershov">Andrey Ershov</a> independently had the same idea.<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Konheim"},"body":{"id":"mw-reference-text-cite_note-Konheim-11"}}' id="cite_ref-Konheim_11-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Konheim-11" id="mwdw"><span class="mw-reflink-text" id="mweA"><span class="cite-bracket" id="mweQ">[</span>10<span class="cite-bracket" id="mweg">]</span></span></a></sup><sup about="#mwt53" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"pp":{"wt":"124–125"}},"i":0}}]}' id="mwew" typeof="mw:Transclusion"><span title="Pages: 124–125"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>124–125<span typeof="mw:Entity"> </span></span></sup> The term "open addressing" was coined by <a href="https://en.wikipedia.org/wiki/W._Wesley_Peterson" id="mwfA" rel="mw:WikiLink" title="W. Wesley Peterson">W. Wesley Peterson</a> in his article which discusses the problem of search in large files.<sup about="#mwt61" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"hashhist"},"body":{"id":"mw-reference-text-cite_note-hashhist-12"}}' id="cite_ref-hashhist_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwfQ"><span class="mw-reflink-text" id="mwfg"><span class="cite-bracket" id="mwfw">[</span>11<span class="cite-bracket" id="mwgA">]</span></span></a></sup><sup about="#mwt54" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"15"}},"i":0}}]}' id="mwgQ" typeof="mw:Transclusion"><span title="Page: 15"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>15<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwgg">The first published work on hashing with chaining is credited to <a href="https://en.wikipedia.org/wiki/Arnold_Dumey" id="mwgw" rel="mw:WikiLink" title="Arnold Dumey">Arnold Dumey</a>, who discussed the idea of using remainder modulo a prime as a hash function.<link about="#mwt62" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"15"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwhA" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwhQ"><span class="mw-reflink-text" id="mwhg"><span class="cite-bracket" id="mwhw">[</span>11<span class="cite-bracket" id="mwiA">]</span></span></a></sup><sup about="#mwt62" class="reference nowrap" id="mwiQ"><span title="Page / location: 15"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>15<span typeof="mw:Entity"> </span></span></sup> The word "hashing" was first published in an article by Robert Morris.<link about="#mwt66" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"Konheim"},"p":{"wt":"126"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwig" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt66" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"Konheim"},"body":{"html":""}}' id="cite_ref-Konheim_11-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Konheim-11" id="mwiw"><span class="mw-reflink-text" id="mwjA"><span class="cite-bracket" id="mwjQ">[</span>10<span class="cite-bracket" id="mwjg">]</span></span></a></sup><sup about="#mwt66" class="reference nowrap" id="mwjw"><span title="Page / location: 126"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>126<span typeof="mw:Entity"> </span></span></sup> A <a href="https://en.wikipedia.org/wiki/Analysis_of_algorithms" id="mwkA" rel="mw:WikiLink" title="Analysis of algorithms">theoretical analysis</a> of linear probing was submitted originally by Konheim and Weiss.<link about="#mwt70" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"15"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwkQ" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwkg"><span class="mw-reflink-text" id="mwkw"><span class="cite-bracket" id="mwlA">[</span>11<span class="cite-bracket" id="mwlQ">]</span></span></a></sup><sup about="#mwt70" class="reference nowrap" id="mwlg"><span title="Page / location: 15"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>15<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwmA">An <a href="https://en.wikipedia.org/wiki/Associative_array" id="mwmQ" rel="mw:WikiLink" title="Associative array">associative array</a> stores a <a href="https://en.wikipedia.org/wiki/Set_(abstract_data_type)" id="mwmg" rel="mw:WikiLink" title="Set (abstract data type)">set</a> of (key, value) pairs and allows insertion, deletion, and lookup (search), with the constraint of <a href="https://en.wikipedia.org/wiki/Unique_key" id="mwmw" rel="mw:WikiLink" title="Unique key">unique keys</a>. In the hash table implementation of associative arrays, an array <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwnA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> of length <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwnQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is partially filled with <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwng" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> elements, where <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m \\ge n"}}' id="mwnw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m\geq n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>≥<!-- ≥ --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m\geq n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m\geq n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b02f25e62da7fe3162ac80446437cdc1c0fd341" style="vertical-align: -0.505ex; width:6.534ex; height:2.176ex;"/></span>. A key <b id="mwoA"><span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwoQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span></b> is hashed using a hash function <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mwog" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> to compute an index location <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A[h(x)]"}}' id="mwow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A[h(x)]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo stretchy="false">[</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A[h(x)]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A[h(x)]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ac75d530b12267b829df7cff8b2ff01a24e61ab0" style="vertical-align: -0.838ex; width:7.515ex; height:2.843ex;"/></span> in the hash table, where <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x) &lt; m"}}' id="mwpA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)&lt;m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)&lt;m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)&lt;m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/809d7e044109ace3c1f807ba0679bb18c627d513" style="vertical-align: -0.838ex; width:9.617ex; height:2.843ex;"/></span>. At this index, both the key and its associated value are stored. Storing the key alongside the value ensures that lookups can verify the key at the index to retrieve the correct value, even in the presence of collisions. Under reasonable assumptions, hash tables have better <a href="https://en.wikipedia.org/wiki/Time_complexity" id="mwpQ" rel="mw:WikiLink" title="Time complexity">time complexity</a> bounds on search, delete, and insert operations in comparison to <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree" id="mwpg" rel="mw:WikiLink" title="Self-balancing binary search tree">self-balancing binary search trees</a>.<link about="#mwt74" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"1"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwpw" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwqA"><span class="mw-reflink-text" id="mwqQ"><span class="cite-bracket" id="mwqg">[</span>11<span class="cite-bracket" id="mwqw">]</span></span></a></sup><sup about="#mwt74" class="reference nowrap" id="mwrA"><span title="Page / location: 1"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>1<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwrg">The efficiency of a hash table depends on the <i id="mwrw">load factor</i> (<span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwsA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span>), defined as the ratio of the number of stored elements to the number of available slots, with lower load factors generally yielding faster operations.<sup about="#mwt89" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwsQ"><span class="mw-reflink-text" id="mwsg"><span class="cite-bracket" id="mwsw">[</span>12<span class="cite-bracket" id="mwtA">]</span></span></a></sup> Load factor is a critical statistic of a hash table, and is defined as follows:<sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Cormen et al"}}' id="cite_ref-Cormen_et_al_3-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Cormen_et_al-3" id="mwtQ"><span class="mw-reflink-text" id="mwtg"><span class="cite-bracket" id="mwtw">[</span>2<span class="cite-bracket" id="mwuA">]</span></span></a></sup>
+<span about="#mwt91" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\text{load factor}\\ (\\alpha) = \\frac{n}{m},"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{load factor}}\ (\alpha )={\frac {n}{m}},}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>load factor</mtext>
+</mrow>
+<mtext> </mtext>
+<mo stretchy="false">(</mo>
+<mi>α<!-- α --></mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>n</mi>
+<mi>m</mi>
+</mfrac>
+</mrow>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{load factor}}\ (\alpha )={\frac {n}{m}},}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{load factor}}\ (\alpha )={\frac {n}{m}},}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e3487807884a0c0748869a904c450c6c340f3533" style="vertical-align: -1.838ex; width:21.23ex; height:4.676ex;"/></span>
+where</p>
+<p id="mwvw">The performance of the hash table deteriorates in relation to the load factor <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwwA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span>.<link about="#mwt94" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"2"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwwQ" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt94" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwwg"><span class="mw-reflink-text" id="mwww"><span class="cite-bracket" id="mwxA">[</span>11<span class="cite-bracket" id="mwxQ">]</span></span></a></sup><sup about="#mwt94" class="reference nowrap" id="mwxg"><span title="Page / location: 2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2<span typeof="mw:Entity"> </span></span></sup>  In the limit of large <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwxw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> and <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwyA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>, each bucket statistically has a <a href="https://en.wikipedia.org/wiki/Poisson_distribution" id="mwyQ" rel="mw:WikiLink" title="Poisson distribution">Poisson distribution</a> with expectation <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\lambda=\\alpha"}}' id="mwyg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \lambda =\alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>λ<!-- λ --></mi>
+<mo>=</mo>
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \lambda =\alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \lambda =\alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/11bf25d8384a389167f48c90e2565cf3c34b80dc" style="vertical-align: -0.338ex; width:5.941ex; height:2.176ex;"/></span> for an ideally random <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwyw" rel="mw:WikiLink" title="Hash function">hash function</a>.</p>
+<p id="mwzA">The implementation of a hash table typically ensures that the load factor <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwzQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> remains below a certain constant, <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_{\\max}"}}' id="mwzg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{\max }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{\max }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{\max }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b0b1e00f2745ac1316702c4aae560ae371cb564" style="vertical-align: -0.671ex; width:4.779ex; height:2.009ex;"/></span>. This helps maintain good performance. Therefore, a common approach is to resize or "rehash" the hash table whenever the load factor <span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwzw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> reaches <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_{\\max}"}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{\max }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{\max }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{\max }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b0b1e00f2745ac1316702c4aae560ae371cb564" style="vertical-align: -0.671ex; width:4.779ex; height:2.009ex;"/></span>. Similarly the table may also be resized if the load factor drops below <span about="#mwt106" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_{\\max}/4"}}' id="mw0Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{\max }/4}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>4</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{\max }/4}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{\max }/4}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7e9dc23339801e7b502e6f862302bb55e0516bd4" style="vertical-align: -0.838ex; width:7.104ex; height:2.843ex;"/></span>.<sup about="#mwt109" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"},"body":{"id":"mw-reference-text-cite_note-cornell08-14"}}' id="cite_ref-cornell08_14-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mw0g"><span class="mw-reflink-text" id="mw0w"><span class="cite-bracket" id="mw1A">[</span>13<span class="cite-bracket" id="mw1Q">]</span></span></a></sup></p>
+<p id="mw1w">With open addressing, each slot of the bucket array holds exactly one item. Therefore an open-addressed hash table cannot have a load factor greater than 1.<sup about="#mwt110" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"plank"},"body":{"id":"mw-reference-text-cite_note-plank-15"}}' id="cite_ref-plank_15-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-plank-15" id="mw2A"><span class="mw-reflink-text" id="mw2Q"><span class="cite-bracket" id="mw2g">[</span>14<span class="cite-bracket" id="mw2w">]</span></span></a></sup></p>
+<p id="mw3A">The performance of open addressing becomes very bad when the load factor approaches 1.<sup about="#mwt111" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"}}' id="cite_ref-cornell08_14-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mw3Q"><span class="mw-reflink-text" id="mw3g"><span class="cite-bracket" id="mw3w">[</span>13<span class="cite-bracket" id="mw4A">]</span></span></a></sup> Therefore a hash table that uses open addressing <i id="mw4Q">must</i> be resized or <i id="mw4g">rehashed</i> if the load factor <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mw4w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> approaches 1.<sup about="#mwt113" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"}}' id="cite_ref-cornell08_14-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mw5A"><span class="mw-reflink-text" id="mw5Q"><span class="cite-bracket" id="mw5g">[</span>13<span class="cite-bracket" id="mw5w">]</span></span></a></sup></p>
+<p id="mw6A">With open addressing, acceptable figures of max load factor <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_{\\max}"}}' id="mw6Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{\max }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{\max }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{\max }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b0b1e00f2745ac1316702c4aae560ae371cb564" style="vertical-align: -0.671ex; width:4.779ex; height:2.009ex;"/></span> should range around 0.6 to 0.75.<sup about="#mwt121" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mw6g"><span class="mw-reflink-text" id="mw6w"><span class="cite-bracket" id="mw7A">[</span>15<span class="cite-bracket" id="mw7Q">]</span></span></a></sup><link about="#mwt114" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"owo03"},"p":{"wt":"110"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mw7g" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt114" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"owo03"},"body":{"html":""}}' id="cite_ref-owo03_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-owo03-17" id="mw7w"><span class="mw-reflink-text" id="mw8A"><span class="cite-bracket" id="mw8Q">[</span>16<span class="cite-bracket" id="mw8g">]</span></span></a></sup><sup about="#mwt114" class="reference nowrap" id="mw8w"><span title="Page / location: 110"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>110<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mw9Q">With separate chaining hash tables, each slot of the bucket array stores a pointer to a list or array of data.<sup about="#mwt122" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"plank"}}' id="cite_ref-plank_15-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-plank-15" id="mw9g"><span class="mw-reflink-text" id="mw9w"><span class="cite-bracket" id="mw-A">[</span>14<span class="cite-bracket" id="mw-Q">]</span></span></a></sup></p>
+<p id="mw-g">Separate chaining hash tables suffer gradually declining performance as the load factor grows, unlike the sharply decreasing performance of open addressing hash tables around <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha=1"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha =1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+<mo>=</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha =1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha =1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/03d67a45a44be8b8f15e99b7def2b0cf0aba1717" style="vertical-align: -0.338ex; width:5.749ex; height:2.176ex;"/></span>. There is not a fixed point with respect to load factor beyond which resizing is absolutely needed.<sup about="#mwt124" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"}}' id="cite_ref-cornell08_14-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mw_A"><span class="mw-reflink-text" id="mw_Q"><span class="cite-bracket" id="mw_g">[</span>13<span class="cite-bracket" id="mw_w">]</span></span></a></sup></p>
+<p id="mwAQA">With separate chaining, the value of <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_{\\max}"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{\max }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{\max }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{\max }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b0b1e00f2745ac1316702c4aae560ae371cb564" style="vertical-align: -0.671ex; width:4.779ex; height:2.009ex;"/></span> that gives best performance is typically between 1 and 3.<sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"}}' id="cite_ref-cornell08_14-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mwAQI"><span class="mw-reflink-text" id="mwAQM"><span class="cite-bracket" id="mwAQQ">[</span>13<span class="cite-bracket" id="mwAQU">]</span></span></a></sup></p>
+<p id="mwAQc">A <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwAQg" rel="mw:WikiLink" title="Hash function">hash function</a> <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h : U \\rightarrow \\{0, ..., m-1\\}"}}' id="mwAQk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h:U\rightarrow \{0,...,m-1\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo>:</mo>
+<mi>U</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mi>m</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h:U\rightarrow \{0,...,m-1\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h:U\rightarrow \{0,...,m-1\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4a0ce358cd0b459bddf9c03c5effe6afc700185b" style="vertical-align: -0.838ex; width:23.373ex; height:2.843ex;"/></span> maps the universe <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"U"}}' id="mwAQo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle U}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>U</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle U}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle U}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/458a728f53b9a0274f059cd695e067c430956025" style="vertical-align: -0.338ex; width:1.783ex; height:2.176ex;"/></span> of keys to indices or slots within the table, that is, <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x) \\in \\{0, ..., m-1\\}"}}' id="mwAQs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)\in \{0,...,m-1\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>∈<!-- ∈ --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mi>m</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)\in \{0,...,m-1\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)\in \{0,...,m-1\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bca89b54d7d94d29a9785be3b88bf3124387c8b7" style="vertical-align: -0.838ex; width:22.019ex; height:2.843ex;"/></span> for <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x \\in U"}}' id="mwAQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x\in U}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>U</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x\in U}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x\in U}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c32ddcb2941216f2980b950ce969dc15cba26906" style="vertical-align: -0.338ex; width:5.953ex; height:2.176ex;"/></span>. The conventional implementations of hash functions are based on the <i id="mwAQ0">integer universe assumption</i> that all elements of the table stem from the universe <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"U = \\{0, ..., u - 1\\}"}}' id="mwAQ4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle U=\{0,...,u-1\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>U</mi>
+<mo>=</mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mi>u</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle U=\{0,...,u-1\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle U=\{0,...,u-1\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/04ab3270bbe2fbecf3426b15516ced184a01311b" style="vertical-align: -0.838ex; width:18.871ex; height:2.843ex;"/></span>, where the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Bit_length" id="mwAQ8" rel="mw:WikiLink" title="Bit length">bit length</a> of <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"u"}}' id="mwARA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle u}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>u</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle u}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle u}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3e6bb763d22c20916ed4f0bb6bd49d7470cffd8" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> is confined within the <a href="https://en.wikipedia.org/wiki/Word_(computer_architecture)" id="mwARE" rel="mw:WikiLink" title="Word (computer architecture)">word size</a> of a <a href="https://en.wikipedia.org/wiki/Computer_architecture" id="mwARI" rel="mw:WikiLink" title="Computer architecture">computer architecture</a>.<link about="#mwt127" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"2"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwARM" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt127" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwARQ"><span class="mw-reflink-text" id="mwARU"><span class="cite-bracket" id="mwARY">[</span>11<span class="cite-bracket" id="mwARc">]</span></span></a></sup><sup about="#mwt127" class="reference nowrap" id="mwARg"><span title="Page / location: 2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwARk">A hash function <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> is said to be <a href="https://en.wikipedia.org/wiki/Perfect_hash_function" id="mwARs" rel="mw:WikiLink" title="Perfect hash function">perfect</a> for a given set <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span> if it is <a href="https://en.wikipedia.org/wiki/Injective_function" id="mwAR0" rel="mw:WikiLink" title="Injective function">injective</a> on <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span>, that is, if each element <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x \\in S"}}' id="mwAR8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x\in S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x\in S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x\in S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/51186ba8afb2067573a9082d55dd383df1ea9214" style="vertical-align: -0.338ex; width:5.67ex; height:2.176ex;"/></span> maps to a different value in <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"{0, ..., m-1}"}}' id="mwASA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {0,...,m-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mi>m</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {0,...,m-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {0,...,m-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5b007ad843a070921d2e670c0431ba02f649f16b" style="vertical-align: -0.671ex; width:12.375ex; height:2.509ex;"/></span>.<sup about="#mwt144" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Yi06"},"body":{"id":"mw-reference-text-cite_note-Yi06-18"}}' id="cite_ref-Yi06_18-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Yi06-18" id="mwASE"><span class="mw-reflink-text" id="mwASI"><span class="cite-bracket" id="mwASM">[</span>17<span class="cite-bracket" id="mwASQ">]</span></span></a></sup><sup about="#mwt148" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CHD"},"body":{"id":"mw-reference-text-cite_note-CHD-19"}}' id="cite_ref-CHD_19-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CHD-19" id="mwASU"><span class="mw-reflink-text" id="mwASY"><span class="cite-bracket" id="mwASc">[</span>18<span class="cite-bracket" id="mwASg">]</span></span></a></sup> A perfect hash function can be created if all the keys are known ahead of time.<sup about="#mwt149" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Yi06"}}' id="cite_ref-Yi06_18-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Yi06-18" id="mwASk"><span class="mw-reflink-text" id="mwASo"><span class="cite-bracket" id="mwASs">[</span>17<span class="cite-bracket" id="mwASw">]</span></span></a></sup></p>
+<p id="mwAS4">The schemes of hashing used in <i id="mwAS8">integer universe assumption</i> include hashing by division, hashing by multiplication, <a href="https://en.wikipedia.org/wiki/Universal_hashing" id="mwATA" rel="mw:WikiLink" title="Universal hashing">universal hashing</a>, <a href="https://en.wikipedia.org/wiki/Dynamic_perfect_hashing" id="mwATE" rel="mw:WikiLink" title="Dynamic perfect hashing">dynamic perfect hashing</a>, and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Static_Hashing" id="mwATI" rel="mw:WikiLink" title="Static Hashing">static perfect hashing</a>.<link about="#mwt150" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"2"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwATM" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt150" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwATQ"><span class="mw-reflink-text" id="mwATU"><span class="cite-bracket" id="mwATY">[</span>11<span class="cite-bracket" id="mwATc">]</span></span></a></sup><sup about="#mwt150" class="reference nowrap" id="mwATg"><span title="Page / location: 2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2<span typeof="mw:Entity"> </span></span></sup> However, hashing by division is the commonly used scheme.<link about="#mwt154" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"cormenalgo01"},"p":{"wt":"264"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwATk" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt154" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"cormenalgo01"},"body":{"html":""}}' id="cite_ref-cormenalgo01_20-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cormenalgo01-20" id="mwATo"><span class="mw-reflink-text" id="mwATs"><span class="cite-bracket" id="mwATw">[</span>19<span class="cite-bracket" id="mwAT0">]</span></span></a></sup><sup about="#mwt154" class="reference nowrap" id="mwAT4"><span title="Page / location: 264"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>264<span typeof="mw:Entity"> </span></span></sup><sup about="#mwt161" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"owo03"},"body":{"id":"mw-reference-text-cite_note-owo03-17"}}' id="cite_ref-owo03_17-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-owo03-17" id="mwAT8"><span class="mw-reflink-text" id="mwAUA"><span class="cite-bracket" id="mwAUE">[</span>16<span class="cite-bracket" id="mwAUI">]</span></span></a></sup><sup about="#mwt158" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"110"}},"i":0}}]}' id="mwAUM" typeof="mw:Transclusion"><span title="Page: 110"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>110<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAUU">The scheme in hashing by division is as follows:<link about="#mwt162" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"2"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAUY" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt162" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwAUc"><span class="mw-reflink-text" id="mwAUg"><span class="cite-bracket" id="mwAUk">[</span>11<span class="cite-bracket" id="mwAUo">]</span></span></a></sup><sup about="#mwt162" class="reference nowrap" id="mwAUs"><span title="Page / location: 2"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2<span typeof="mw:Entity"> </span></span></sup>
+<span about="#mwt166" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"h(x)\\ =\\ x\\, \\bmod\\, m,"}}' id="mwAUw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)\ =\ x\,{\bmod {\,}}m,}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mtext> </mtext>
+<mo>=</mo>
+<mtext> </mtext>
+<mi>x</mi>
+<mspace width="thinmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mo lspace="thickmathspace" rspace="thickmathspace">mod</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mspace width="thinmathspace"></mspace>
+</mrow>
+</mrow>
+<mi>m</mi>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)\ =\ x\,{\bmod {\,}}m,}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)\ =\ x\,{\bmod {\,}}m,}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c22155e49d56ce69ff1b49f37d9f139cd6da7ac6" style="vertical-align: -0.838ex; width:19.21ex; height:2.843ex;"/></span>
+where <span about="#mwt167" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x)"}}' id="mwAU0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/02c07825dae28705df03d15daeb8844d49c4dbd4" style="vertical-align: -0.838ex; width:4.478ex; height:2.843ex;"/></span> is the hash value of <span about="#mwt168" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x \\in S"}}' id="mwAU4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x\in S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x\in S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x\in S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/51186ba8afb2067573a9082d55dd383df1ea9214" style="vertical-align: -0.338ex; width:5.67ex; height:2.176ex;"/></span> and <span about="#mwt169" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAU8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is the size of the table.</p>
+<p id="mwAVE">The scheme in hashing by multiplication is as follows:<link about="#mwt170" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"pp":{"wt":"2-3"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAVI" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt170" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwAVM"><span class="mw-reflink-text" id="mwAVQ"><span class="cite-bracket" id="mwAVU">[</span>11<span class="cite-bracket" id="mwAVY">]</span></span></a></sup><sup about="#mwt170" class="reference nowrap" id="mwAVc"><span title="Page / location: 2–3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2–3<span typeof="mw:Entity"> </span></span></sup>
+<span about="#mwt174" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"h(x) = \\lfloor m \\bigl((xA) \\bmod 1\\bigr) \\rfloor"}}' id="mwAVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)=\lfloor m{\bigl (}(xA){\bmod {1}}{\bigr )}\rfloor }" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo fence="false" stretchy="false">⌊<!-- ⌊ --></mo>
+<mi>m</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-OPEN">
+<mo maxsize="1.2em" minsize="1.2em">(</mo>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo lspace="thickmathspace" rspace="thickmathspace">mod</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-CLOSE">
+<mo maxsize="1.2em" minsize="1.2em">)</mo>
+</mrow>
+</mrow>
+<mo fence="false" stretchy="false">⌋<!-- ⌋ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)=\lfloor m{\bigl (}(xA){\bmod {1}}{\bigr )}\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)=\lfloor m{\bigl (}(xA){\bmod {1}}{\bigr )}\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cdd58ba648176ddb2a7a3fdabae1d2fc40018dba" style="vertical-align: -1.005ex; width:25.537ex; height:3.176ex;"/></span>
+Where <span about="#mwt183" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAVk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> is a non-integer <a href="https://en.wikipedia.org/wiki/Real_number" id="mwAVo" rel="mw:WikiLink" title="Real number">real-valued constant</a> and <span about="#mwt184" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAVs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is the size of the table. An advantage of the hashing by multiplication is that the <span about="#mwt185" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is not critical.<link about="#mwt175" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"pp":{"wt":"2-3"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAV0" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt175" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwAV4"><span class="mw-reflink-text" id="mwAV8"><span class="cite-bracket" id="mwAWA">[</span>11<span class="cite-bracket" id="mwAWE">]</span></span></a></sup><sup about="#mwt175" class="reference nowrap" id="mwAWI"><span title="Page / location: 2–3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>2–3<span typeof="mw:Entity"> </span></span></sup> Although any value <span about="#mwt186" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAWM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> produces a hash function, <a href="https://en.wikipedia.org/wiki/Donald_Knuth" id="mwAWQ" rel="mw:WikiLink" title="Donald Knuth">Donald Knuth</a> suggests using the <a href="https://en.wikipedia.org/wiki/Golden_ratio" id="mwAWU" rel="mw:WikiLink" title="Golden ratio">golden ratio</a>.<link about="#mwt179" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"hashhist"},"p":{"wt":"3"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAWY" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt179" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"hashhist"},"body":{"html":""}}' id="cite_ref-hashhist_12-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hashhist-12" id="mwAWc"><span class="mw-reflink-text" id="mwAWg"><span class="cite-bracket" id="mwAWk">[</span>11<span class="cite-bracket" id="mwAWo">]</span></span></a></sup><sup about="#mwt179" class="reference nowrap" id="mwAWs"><span title="Page / location: 3"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>3<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAW0">Commonly a string is used as a key to the hash function. The third edition of <i id="mwAW4"><a href="https://en.wikipedia.org/wiki/The_C++_Programming_Language" id="mwAW8" rel="mw:WikiLink" title="The C++ Programming Language">The C++ Programming Language</a></i> describes a simple hash function in which an unsigned integer that is initially zero is repeatedly left shifted one bit and then xor'ed with the integer value of the next character.  This hash value is then taken modulo the table size.<sup about="#mwt189" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mwAXA"><span class="mw-reflink-text" id="mwAXE"><span class="cite-bracket" id="mwAXI">[</span>20<span class="cite-bracket" id="mwAXM">]</span></span></a></sup> If the left shift is not circular, then the string length should be at least eight bits less than the size of the unsigned integer in bits.  Another common way to hash a string to an integer is with a <a href="https://en.wikipedia.org/wiki/Rolling_hash" id="mwAXQ" rel="mw:WikiLink" title="Rolling hash"> polynomial rolling hash function</a>.</p>
+<p id="mwAXY"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Uniform_distribution_(discrete)" id="mwAXc" rel="mw:WikiLink" title="Uniform distribution (discrete)">Uniform distribution</a> of the hash values is a fundamental requirement of a hash function. A non-uniform distribution increases the number of collisions and the cost of resolving them. Uniformity is sometimes difficult to ensure by design, but may be evaluated empirically using statistical tests, e.g., a <a href="https://en.wikipedia.org/wiki/Pearson's_chi-squared_test#Discrete_uniform_distribution" id="mwAXg" rel="mw:WikiLink" title="Pearson's chi-squared test">Pearson's chi-squared test</a> for discrete uniform distributions.<sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"chernoff"},"body":{"id":"mw-reference-text-cite_note-chernoff-22"}}' id="cite_ref-chernoff_22-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-chernoff-22" id="mwAXk"><span class="mw-reflink-text" id="mwAXo"><span class="cite-bracket" id="mwAXs">[</span>21<span class="cite-bracket" id="mwAXw">]</span></span></a></sup><sup about="#mwt195" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"plackett"},"body":{"id":"mw-reference-text-cite_note-plackett-23"}}' id="cite_ref-plackett_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-plackett-23" id="mwAX0"><span class="mw-reflink-text" id="mwAX4"><span class="cite-bracket" id="mwAX8">[</span>22<span class="cite-bracket" id="mwAYA">]</span></span></a></sup></p>
+<p id="mwAYE">The distribution needs to be uniform only for table sizes that occur in the application. In particular, if one uses dynamic resizing with exact doubling and halving of the table size, then the hash function needs to be uniform only when the size is a <a href="https://en.wikipedia.org/wiki/Power_of_two" id="mwAYI" rel="mw:WikiLink" title="Power of two">power of two</a>. Here the index can be computed as some range of bits of the hash function. On the other hand, some hashing algorithms prefer to have the size be a <a href="https://en.wikipedia.org/wiki/Prime_number" id="mwAYM" rel="mw:WikiLink" title="Prime number">prime number</a>.<sup about="#mwt198" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-24"}}' id="cite_ref-:0_24-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-24" id="mwAYQ"><span class="mw-reflink-text" id="mwAYU"><span class="cite-bracket" id="mwAYY">[</span>23<span class="cite-bracket" id="mwAYc">]</span></span></a></sup></p>
+<p id="mwAYg">For <a href="https://en.wikipedia.org/wiki/Open_addressing" id="mwAYk" rel="mw:WikiLink" title="Open addressing">open addressing</a> schemes, the hash function should also avoid <i id="mwAYo"><a href="https://en.wikipedia.org/wiki/Primary_clustering" id="mwAYs" rel="mw:WikiLink" title="Primary clustering">runs</a></i>, the mapping of two or more keys to consecutive slots. Such runs may cause the lookup cost to skyrocket, even if the load factor is low and collisions are infrequent. The popular multiplicative hash is claimed to have particularly poor run behavior.<sup about="#mwt199" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_24-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-24" id="mwAYw"><span class="mw-reflink-text" id="mwAY0"><span class="cite-bracket" id="mwAY4">[</span>23<span class="cite-bracket" id="mwAY8">]</span></span></a></sup><sup about="#mwt200" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"knuth"}}' id="cite_ref-knuth_5-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwAZA"><span class="mw-reflink-text" id="mwAZE"><span class="cite-bracket" id="mwAZI">[</span>4<span class="cite-bracket" id="mwAZM">]</span></span></a></sup></p>
+<p id="mwAZQ"><a href="https://en.wikipedia.org/wiki/K-independent_hashing" id="mwAZU" rel="mw:WikiLink" title="K-independent hashing">K-independent hashing</a> offers a way to prove a certain hash function does not have bad keysets for a given type of hashtable. A number of K-independence results are known for collision resolution schemes such as linear probing and cuckoo hashing. Since K-independence can prove a hash function works, one can then focus on finding the fastest possible such hash function.<sup about="#mwt203" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwAZY"><span class="mw-reflink-text" id="mwAZc"><span class="cite-bracket" id="mwAZg">[</span>24<span class="cite-bracket" id="mwAZk">]</span></span></a></sup></p>
+<p id="mwAZ0">A search algorithm that uses hashing consists of two parts. The first part is computing a <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwAZ4" rel="mw:WikiLink" title="Hash function">hash function</a> which transforms the search key into an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Array_index" id="mwAZ8" rel="mw:WikiLink" title="Array index">array index</a>. The ideal case is such that no two search keys hash to the same array index. However, this is not always the case and impossible to guarantee for unseen given data.<sup about="#mwt208" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"knuth"}}' id="cite_ref-knuth_5-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwAaA"><span class="mw-reflink-text" id="mwAaE"><span class="cite-bracket" id="mwAaI">[</span>4<span class="cite-bracket" id="mwAaM">]</span></span></a></sup><sup about="#mwt206" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"515"}},"i":0}}]}' id="mwAaQ" typeof="mw:Transclusion"><span title="Page: 515"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>515<span typeof="mw:Entity"> </span></span></sup> Hence the second part of the algorithm is collision resolution. The two common methods for collision resolution are separate chaining and open addressing.<sup about="#mwt211" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"algo1rob"},"body":{"id":"mw-reference-text-cite_note-algo1rob-8"}}' id="cite_ref-algo1rob_8-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-algo1rob-8" id="mwAaU"><span class="mw-reflink-text" id="mwAaY"><span class="cite-bracket" id="mwAac">[</span>7<span class="cite-bracket" id="mwAag">]</span></span></a></sup><sup about="#mwt207" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"458"}},"i":0}}]}' id="mwAak" typeof="mw:Transclusion"><span title="Page: 458"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>458<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAbM">In separate chaining, the process involves building a <a href="https://en.wikipedia.org/wiki/Linked_list" id="mwAbQ" rel="mw:WikiLink" title="Linked list">linked list</a> of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Key–value_pair" id="mwAbU" rel="mw:WikiLink" title="Key–value pair">key–value pairs</a> for each search array index. The collided items are chained together through a single linked list, which can be traversed during lookup of a specific key.<link about="#mwt212" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"algo1rob"},"p":{"wt":"464"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAbY" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt212" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"algo1rob"},"body":{"html":""}}' id="cite_ref-algo1rob_8-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-algo1rob-8" id="mwAbc"><span class="mw-reflink-text" id="mwAbg"><span class="cite-bracket" id="mwAbk">[</span>7<span class="cite-bracket" id="mwAbo">]</span></span></a></sup><sup about="#mwt212" class="reference nowrap" id="mwAbs"><span title="Page / location: 464"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>464<span typeof="mw:Entity"> </span></span></sup> Collision resolution through chaining with linked lists is a common method of implementation of hash tables. Let <span about="#mwt217" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwAbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> be the hash table, <span about="#mwt218" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwAb0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> be an element <span about="#mwt219" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(k, v)"}}' id="mwAb4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (k,v)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mo>,</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (k,v)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (k,v)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2e53d880ba2e8ae5228182ba60d99a3cf11a9f71" style="vertical-align: -0.838ex; width:5.182ex; height:2.843ex;"/></span>, and <span about="#mwt220" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAb8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> be its key. The operations involved are as follows:<sup about="#mwt223" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cormenalgo01"},"body":{"id":"mw-reference-text-cite_note-cormenalgo01-20"}}' id="cite_ref-cormenalgo01_20-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cormenalgo01-20" id="mwAcA"><span class="mw-reflink-text" id="mwAcE"><span class="cite-bracket" id="mwAcI">[</span>19<span class="cite-bracket" id="mwAcM">]</span></span></a></sup><sup about="#mwt216" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"258"}},"i":0}}]}' id="mwAcQ" typeof="mw:Transclusion"><span title="Page: 258"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>258<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAd4">If the element is comparable either <a href="https://en.wikipedia.org/wiki/Sequence#Analysis" id="mwAd8" rel="mw:WikiLink" title="Sequence">numerically</a> or <a href="https://en.wikipedia.org/wiki/Lexicographic_order" id="mwAeA" rel="mw:WikiLink" title="Lexicographic order">lexically</a>, and inserted into the list by maintaining the <a href="https://en.wikipedia.org/wiki/Total_order" id="mwAeE" rel="mw:WikiLink" title="Total order">total order</a>, it results in faster termination of unsuccessful searches.<link about="#mwt224" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"knuth"},"pp":{"wt":"520-521"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAeI" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt224" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"knuth"},"body":{"html":""}}' id="cite_ref-knuth_5-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwAeM"><span class="mw-reflink-text" id="mwAeQ"><span class="cite-bracket" id="mwAeU">[</span>4<span class="cite-bracket" id="mwAeY">]</span></span></a></sup><sup about="#mwt224" class="reference nowrap" id="mwAec"><span title="Page / location: 520–521"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>520–521<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAek">If the keys are <a href="https://en.wikipedia.org/wiki/Total_order" id="mwAeo" rel="mw:WikiLink" title="Total order">ordered</a>, it could be efficient to use "<a href="https://en.wikipedia.org/wiki/Optimal_binary_search_tree" id="mwAes" rel="mw:WikiLink" title="Optimal binary search tree">self-organizing</a>" concepts such as using a <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree" id="mwAew" rel="mw:WikiLink" title="Self-balancing binary search tree">self-balancing binary search tree</a>, through which the <a href="https://en.wikipedia.org/wiki/Worst-case_complexity" id="mwAe0" rel="mw:WikiLink" title="Worst-case complexity">theoretical worst case</a> could be brought down to <span about="#mwt232" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log{n})"}}' id="mwAe4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log {n})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log {n})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log {n})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/653ab6d6fd99537d220f179d2591955ff4f37b99" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span>, although it introduces additional complexities.<link about="#mwt228" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"knuth"},"p":{"wt":"521"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAe8" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt228" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"knuth"},"body":{"html":""}}' id="cite_ref-knuth_5-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-knuth-5" id="mwAfA"><span class="mw-reflink-text" id="mwAfE"><span class="cite-bracket" id="mwAfI">[</span>4<span class="cite-bracket" id="mwAfM">]</span></span></a></sup><sup about="#mwt228" class="reference nowrap" id="mwAfQ"><span title="Page / location: 521"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>521<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAfU">In <a href="https://en.wikipedia.org/wiki/Dynamic_perfect_hashing" id="mwAfY" rel="mw:WikiLink" title="Dynamic perfect hashing">dynamic perfect hashing</a>, two-level hash tables are used to reduce the look-up complexity to be a guaranteed <span about="#mwt237" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwAfc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> in the worst case. In this technique, the buckets of <span about="#mwt238" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> entries are organized as <a href="https://en.wikipedia.org/wiki/Perfect_hash_function" id="mwAfk" rel="mw:WikiLink" title="Perfect hash function">perfect hash tables</a> with <span about="#mwt239" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k^2"}}' id="mwAfo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k^{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k^{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af6423cd00e3559de92c4bc497066ff1b12bbfc3" style="vertical-align: -0.338ex; width:2.265ex; height:2.676ex;"/></span> slots providing constant worst-case lookup time, and low amortized time for insertion.<sup about="#mwt242" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAfs"><span class="mw-reflink-text" id="mwAfw"><span class="cite-bracket" id="mwAf0">[</span>25<span class="cite-bracket" id="mwAf4">]</span></span></a></sup> A study shows array-based separate chaining to be 97% more performant when compared to the standard linked list method under heavy load.<link about="#mwt233" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"nick05"},"p":{"wt":"99"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAf8" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt233" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"nick05"},"body":{"html":""}}' id="cite_ref-nick05_27-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nick05-27" id="mwAgA"><span class="mw-reflink-text" id="mwAgE"><span class="cite-bracket" id="mwAgI">[</span>26<span class="cite-bracket" id="mwAgM">]</span></span></a></sup><sup about="#mwt233" class="reference nowrap" id="mwAgQ"><span title="Page / location: 99"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>99<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAgU">Techniques such as using <a href="https://en.wikipedia.org/wiki/Fusion_tree" id="mwAgY" rel="mw:WikiLink" title="Fusion tree">fusion tree</a> for each bucket also result in constant time for all operations with high probability.<sup about="#mwt245" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAgc"><span class="mw-reflink-text" id="mwAgg"><span class="cite-bracket" id="mwAgk">[</span>27<span class="cite-bracket" id="mwAgo">]</span></span></a></sup></p>
+<p id="mwAgw">Linked lists in separate chaining may not be <a href="https://en.wikipedia.org/wiki/Cache-oblivious_algorithm" id="mwAg0" rel="mw:WikiLink" title="Cache-oblivious algorithm">cache-conscious</a> due to <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Spatial_locality" id="mwAg4" rel="mw:WikiLink" title="Spatial locality">spatial locality</a>—<a href="https://en.wikipedia.org/wiki/Locality_of_reference" id="mwAg8" rel="mw:WikiLink" title="Locality of reference">locality of reference</a>—when the nodes of the linked list are scattered across memory, thus the list traversal during insert and search may entail <a href="https://en.wikipedia.org/wiki/CPU_cache" id="mwAhA" rel="mw:WikiLink" title="CPU cache">CPU cache</a> inefficiencies.<sup about="#mwt249" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nick05"},"body":{"id":"mw-reference-text-cite_note-nick05-27"}}' id="cite_ref-nick05_27-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nick05-27" id="mwAhE"><span class="mw-reflink-text" id="mwAhI"><span class="cite-bracket" id="mwAhM">[</span>26<span class="cite-bracket" id="mwAhQ">]</span></span></a></sup><sup about="#mwt246" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"p":{"wt":"91"}},"i":0}}]}' id="mwAhU" typeof="mw:Transclusion"><span title="Page: 91"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>91<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAhY">In <a href="https://en.wikipedia.org/wiki/Cache-oblivious_algorithm" id="mwAhc" rel="mw:WikiLink" title="Cache-oblivious algorithm">cache-conscious variants</a> of collision resolution through separate chaining, a <a href="https://en.wikipedia.org/wiki/Dynamic_array" id="mwAhg" rel="mw:WikiLink" title="Dynamic array">dynamic array</a> found to be more <a href="https://en.wikipedia.org/wiki/CPU_cache" id="mwAhk" rel="mw:WikiLink" title="CPU cache">cache-friendly</a> is used in the place where a linked list or self-balancing binary search tree is usually deployed, since the <a href="https://en.wikipedia.org/wiki/Memory_management_(operating_systems)#Single_contiguous_allocation" id="mwAho" rel="mw:WikiLink" title="Memory management (operating systems)">contiguous allocation</a> pattern of  the array could be exploited by <a href="https://en.wikipedia.org/wiki/Cache_prefetching" id="mwAhs" rel="mw:WikiLink" title="Cache prefetching">hardware-cache prefetchers</a>—such as <a href="https://en.wikipedia.org/wiki/Translation_lookaside_buffer" id="mwAhw" rel="mw:WikiLink" title="Translation lookaside buffer">translation lookaside buffers</a>—resulting in reduced access time and memory consumption.<sup about="#mwt252" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAh0"><span class="mw-reflink-text" id="mwAh4"><span class="cite-bracket" id="mwAh8">[</span>28<span class="cite-bracket" id="mwAiA">]</span></span></a></sup><sup about="#mwt255" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAiE"><span class="mw-reflink-text" id="mwAiI"><span class="cite-bracket" id="mwAiM">[</span>29<span class="cite-bracket" id="mwAiQ">]</span></span></a></sup><sup about="#mwt258" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAiU"><span class="mw-reflink-text" id="mwAiY"><span class="cite-bracket" id="mwAic">[</span>30<span class="cite-bracket" id="mwAig">]</span></span></a></sup></p>
+<p id="mwAjA"><a href="https://en.wikipedia.org/wiki/Open_addressing" id="mwAjE" rel="mw:WikiLink" title="Open addressing">Open addressing</a> is another collision resolution technique in which every entry record is stored in the bucket array itself, and the hash resolution is performed through <b id="mwAjI">probing</b>. When a new entry has to be inserted, the buckets are examined, starting with the hashed-to slot and proceeding in some <i id="mwAjM">probe sequence</i>, until an unoccupied slot is found. When searching for an entry, the buckets are scanned in the same sequence,  until either the target record is found, or an unused array slot is found, which indicates an unsuccessful search.<sup about="#mwt263" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"tenenbaum90"},"body":{"id":"mw-reference-text-cite_note-tenenbaum90-32"}}' id="cite_ref-tenenbaum90_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-tenenbaum90-32" id="mwAjQ"><span class="mw-reflink-text" id="mwAjU"><span class="cite-bracket" id="mwAjY">[</span>31<span class="cite-bracket" id="mwAjc">]</span></span></a></sup></p>
+<p id="mwAjg">Well-known probe sequences include:</p>
+<p id="mwAlA">The performance of open addressing may be slower compared to separate chaining since the probe sequence increases when the load factor <span about="#mwt288" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwAlE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> approaches 1.<sup about="#mwt289" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cornell08"}}' id="cite_ref-cornell08_14-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cornell08-14" id="mwAlI"><span class="mw-reflink-text" id="mwAlM"><span class="cite-bracket" id="mwAlQ">[</span>13<span class="cite-bracket" id="mwAlU">]</span></span></a></sup><link about="#mwt276" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"nick05"},"p":{"wt":"93"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAlY" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt276" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"nick05"},"body":{"html":""}}' id="cite_ref-nick05_27-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nick05-27" id="mwAlc"><span class="mw-reflink-text" id="mwAlg"><span class="cite-bracket" id="mwAlk">[</span>26<span class="cite-bracket" id="mwAlo">]</span></span></a></sup><sup about="#mwt276" class="reference nowrap" id="mwAls"><span title="Page / location: 93"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>93<span typeof="mw:Entity"> </span></span></sup> The probing results in an <a href="https://en.wikipedia.org/wiki/Infinite_loop" id="mwAlw" rel="mw:WikiLink" title="Infinite loop">infinite loop</a> if the load factor reaches 1, in the case of a completely filled table.<link about="#mwt280" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"algo1rob"},"p":{"wt":"471"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAl0" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt280" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"algo1rob"},"body":{"html":""}}' id="cite_ref-algo1rob_8-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-algo1rob-8" id="mwAl4"><span class="mw-reflink-text" id="mwAl8"><span class="cite-bracket" id="mwAmA">[</span>7<span class="cite-bracket" id="mwAmE">]</span></span></a></sup><sup about="#mwt280" class="reference nowrap" id="mwAmI"><span title="Page / location: 471"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>471<span typeof="mw:Entity"> </span></span></sup> The <a href="https://en.wikipedia.org/wiki/Average-case_complexity" id="mwAmM" rel="mw:WikiLink" title="Average-case complexity">average cost</a> of linear probing depends on the hash function's ability to <a href="https://en.wikipedia.org/wiki/Probability_distribution" id="mwAmQ" rel="mw:WikiLink" title="Probability distribution">distribute</a> the elements <a href="https://en.wikipedia.org/wiki/Continuous_uniform_distribution" id="mwAmU" rel="mw:WikiLink" title="Continuous uniform distribution">uniformly</a> throughout the table to avoid <a href="https://en.wikipedia.org/wiki/Primary_clustering" id="mwAmY" rel="mw:WikiLink" title="Primary clustering">runs</a>, since formation of runs would result in increased search time.<link about="#mwt284" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"algo1rob"},"p":{"wt":"472"}},"i":0}}]}' href="mw-data:TemplateStyles:r1333433106" id="mwAmc" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><sup about="#mwt284" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"algo1rob"},"body":{"html":""}}' id="cite_ref-algo1rob_8-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-algo1rob-8" id="mwAmg"><span class="mw-reflink-text" id="mwAmk"><span class="cite-bracket" id="mwAmo">[</span>7<span class="cite-bracket" id="mwAms">]</span></span></a></sup><sup about="#mwt284" class="reference nowrap" id="mwAmw"><span title="Page / location: 472"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>472<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAm4">Since the slots are located in successive locations, linear probing could lead to better utilization of <a href="https://en.wikipedia.org/wiki/CPU_cache" id="mwAm8" rel="mw:WikiLink" title="CPU cache">CPU cache</a> due to <a href="https://en.wikipedia.org/wiki/Locality_of_reference" id="mwAnA" rel="mw:WikiLink" title="Locality of reference">locality of references</a> resulting in reduced <a href="https://en.wikipedia.org/wiki/Memory_latency" id="mwAnE" rel="mw:WikiLink" title="Memory latency">memory latency</a>.<sup about="#mwt290" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Cuckoo"}}' id="cite_ref-Cuckoo_33-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Cuckoo-33" id="mwAnI"><span class="mw-reflink-text" id="mwAnM"><span class="cite-bracket" id="mwAnQ">[</span>32<span class="cite-bracket" id="mwAnU">]</span></span></a></sup></p>
+</div></div>
+</body></html>

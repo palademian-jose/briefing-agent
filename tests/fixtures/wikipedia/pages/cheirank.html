@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>CheiRank - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">CheiRank</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwCA">The <b id="mwCQ">CheiRank</b> is an <a href="https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors" id="mwCg" rel="mw:WikiLink" title="Eigenvalues and eigenvectors">eigenvector</a> with a maximal real eigenvalue of the <a href="https://en.wikipedia.org/wiki/Google_matrix" id="mwCw" rel="mw:WikiLink" title="Google matrix">Google matrix</a> <span about="#mwt7" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* "}}' id="mwDA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3885f050db0d7715ebeba11a07383eb252b2da6d" style="vertical-align: -0.338ex; width:2.881ex; height:2.343ex;"/></span> constructed for a directed network with inverted link directions. It is complementary to the <a href="https://en.wikipedia.org/wiki/PageRank" id="mwDQ" rel="mw:WikiLink" title="PageRank">PageRank</a> vector, which ranks nodes based on their number of incoming links. Due to the inversion of link directions, CheiRank measures a node's outgoing connectivity. Combining both vectors yields a two-dimensional ranking of information flow across a directed network.</p>
+<p id="mwGA">For a given directed network, the Google matrix is constructed as described in the article <a href="https://en.wikipedia.org/wiki/Google_matrix" id="mwGQ" rel="mw:WikiLink" title="Google matrix">Google matrix</a>. The <a href="https://en.wikipedia.org/wiki/PageRank" id="mwGg" rel="mw:WikiLink" title="PageRank">PageRank</a> vector is the eigenvector with the maximal real eigenvalue <span about="#mwt12" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\lambda=1 "}}' id="mwGw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \lambda =1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>λ<!-- λ --></mi>
+<mo>=</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \lambda =1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \lambda =1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/543b4490416437b7c80ea473bbcac0e4ab7a7f11" style="vertical-align: -0.338ex; width:5.616ex; height:2.176ex;"/></span>. It was introduced in<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwHA"><span class="mw-reflink-text" id="mwHQ"><span class="cite-bracket" id="mwHg">[</span>1<span class="cite-bracket" id="mwHw">]</span></span></a></sup> and is discussed in the article <a href="https://en.wikipedia.org/wiki/PageRank" id="mwIA" rel="mw:WikiLink" title="PageRank">PageRank</a>. In a similar way, the CheiRank is the eigenvector with the maximal real eigenvalue of the matrix <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* "}}' id="mwIQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3885f050db0d7715ebeba11a07383eb252b2da6d" style="vertical-align: -0.338ex; width:2.881ex; height:2.343ex;"/></span> built in the same way as <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G "}}' id="mwIg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> <i id="mwIw">but</i> using the inverted direction of links in the initially given <a href="https://en.wikipedia.org/wiki/Adjacency_matrix" id="mwJA" rel="mw:WikiLink" title="Adjacency matrix">adjacency matrix</a>. Both matrices <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G "}}' id="mwJQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> and <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* "}}' id="mwJg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3885f050db0d7715ebeba11a07383eb252b2da6d" style="vertical-align: -0.338ex; width:2.881ex; height:2.343ex;"/></span> belong to the class of Perron–Frobenius operators, and according to the <a href="https://en.wikipedia.org/wiki/Perron–Frobenius_theorem" id="mwJw" rel="mw:WikiLink" title="Perron–Frobenius theorem">Perron–Frobenius theorem</a> the CheiRank <span about="#mwt20" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P^*_i "}}' id="mwKA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f582c8a7a099a0fcc9622b183f27f46bf0f9afc0" style="vertical-align: -1.005ex; width:2.876ex; height:2.843ex;"/></span> and PageRank <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P_i "}}' id="mwKQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ba1396129f7be3c7f828a571b6649e6807d10d3" style="vertical-align: -0.671ex; width:2.292ex; height:2.509ex;"/></span> eigenvectors have nonnegative components which can be interpreted as probabilities.<sup about="#mwt24" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwKg"><span class="mw-reflink-text" id="mwKw"><span class="cite-bracket" id="mwLA">[</span>2<span class="cite-bracket" id="mwLQ">]</span></span></a></sup><sup about="#mwt27" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>3<span class="cite-bracket" id="mwMQ">]</span></span></a></sup> Thus all <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" N "}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle N}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle N}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle N}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5e3890c981ae85503089652feb48b191b57aae3" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> nodes <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" i "}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span> of the network can be ordered in decreasing probability order with ranks <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" K^*_i, K_i "}}' id="mwNA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle K_{i}^{*},K_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<msub>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle K_{i}^{*},K_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle K_{i}^{*},K_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cb6e91351ad3d720964d49453c89e8c5564072ca" style="vertical-align: -1.005ex; width:6.955ex; height:2.843ex;"/></span> for CheiRank and PageRank <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P^*_i, P_i "}}' id="mwNQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}^{*},P_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}^{*},P_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}^{*},P_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/93e59a7681496708f134788a1de23a0df11ec327" style="vertical-align: -1.005ex; width:6.202ex; height:2.843ex;"/></span> respectively. On average the PageRank probability <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P_i "}}' id="mwNg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ba1396129f7be3c7f828a571b6649e6807d10d3" style="vertical-align: -0.671ex; width:2.292ex; height:2.509ex;"/></span> is proportional to the number of ingoing links with <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P_i \\propto 1/{K_i}^\\beta "}}' id="mwNw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}\propto 1/{K_{i}}^{\beta }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>∝<!-- ∝ --></mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>β<!-- β --></mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}\propto 1/{K_{i}}^{\beta }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}\propto 1/{K_{i}}^{\beta }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8c494117f03c3c08f483d05b81c8b9f75abd463c" style="vertical-align: -0.838ex; width:11.662ex; height:3.176ex;"/></span>.<sup about="#mwt36" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Donato"},"body":{"id":"mw-reference-text-cite_note-Donato-4"}}' id="cite_ref-Donato_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Donato-4" id="mwOA"><span class="mw-reflink-text" id="mwOQ"><span class="cite-bracket" id="mwOg">[</span>4<span class="cite-bracket" id="mwOw">]</span></span></a></sup><sup about="#mwt39" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Pandurangan"},"body":{"id":"mw-reference-text-cite_note-Pandurangan-5"}}' id="cite_ref-Pandurangan_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Pandurangan-5" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>5<span class="cite-bracket" id="mwPw">]</span></span></a></sup><sup about="#mwt42" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwQA"><span class="mw-reflink-text" id="mwQQ"><span class="cite-bracket" id="mwQg">[</span>6<span class="cite-bracket" id="mwQw">]</span></span></a></sup> For the <a href="https://en.wikipedia.org/wiki/World_Wide_Web" id="mwRA" rel="mw:WikiLink" title="World Wide Web">World Wide Web</a> (WWW) network, the exponent <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\beta =1/(\\nu-1) \\approx 0.9 "}}' id="mwRQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta =1/(\nu -1)\approx 0.9}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+<mo>=</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>ν<!-- ν --></mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mo>≈<!-- ≈ --></mo>
+<mn>0.9</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta =1/(\nu -1)\approx 0.9}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta =1/(\nu -1)\approx 0.9}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/355797b1c2265b4b80546ab8483c74a596db3a7b" style="vertical-align: -0.838ex; width:19.87ex; height:2.843ex;"/></span> where <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\nu \\approx 2.1"}}' id="mwRg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \nu \approx 2.1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ν<!-- ν --></mi>
+<mo>≈<!-- ≈ --></mo>
+<mn>2.1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \nu \approx 2.1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \nu \approx 2.1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14c6777c7144738d18359bf86dac837c35d9ddd5" style="vertical-align: -0.338ex; width:7.302ex; height:2.176ex;"/></span> is the exponent for the ingoing links distribution.<sup about="#mwt45" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Donato"}}' id="cite_ref-Donato_4-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Donato-4" id="mwRw"><span class="mw-reflink-text" id="mwSA"><span class="cite-bracket" id="mwSQ">[</span>4<span class="cite-bracket" id="mwSg">]</span></span></a></sup><sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Pandurangan"}}' id="cite_ref-Pandurangan_5-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Pandurangan-5" id="mwSw"><span class="mw-reflink-text" id="mwTA"><span class="cite-bracket" id="mwTQ">[</span>5<span class="cite-bracket" id="mwTg">]</span></span></a></sup> In a similar way, the CheiRank probability is on average proportional to the number of outgoing links with 
+<span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P^*_i \\propto 1/{K^*_i}^{\\beta^*} "}}' id="mwTw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}^{*}\propto 1/{K_{i}^{*}}^{\beta ^{*}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+<mo>∝<!-- ∝ --></mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}^{*}\propto 1/{K_{i}^{*}}^{\beta ^{*}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}^{*}\propto 1/{K_{i}^{*}}^{\beta ^{*}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61bb6f958826791fd59989575a4d5ce38ab87057" style="vertical-align: -1.005ex; width:13.457ex; height:3.509ex;"/></span> with 
+<span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\beta^* =1/(\\nu^*-1) \\approx 0.6 "}}' id="mwUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta ^{*}=1/(\nu ^{*}-1)\approx 0.6}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>=</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>ν<!-- ν --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+<mo>≈<!-- ≈ --></mo>
+<mn>0.6</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta ^{*}=1/(\nu ^{*}-1)\approx 0.6}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta ^{*}=1/(\nu ^{*}-1)\approx 0.6}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c6e86a573d7b67f6b19e63da0c0a8e708f46aed8" style="vertical-align: -0.838ex; width:22.009ex; height:2.843ex;"/></span> where <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\nu^* \\approx 2.7 "}}' id="mwUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \nu ^{*}\approx 2.7}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>ν<!-- ν --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>≈<!-- ≈ --></mo>
+<mn>2.7</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \nu ^{*}\approx 2.7}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \nu ^{*}\approx 2.7}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/730b9da3d48d73610e1c69d7d7a6557a1b150eb2" style="vertical-align: -0.338ex; width:8.382ex; height:2.343ex;"/></span> is the exponent for the outgoing links distribution of the WWW.<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Donato"}}' id="cite_ref-Donato_4-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Donato-4" id="mwUg"><span class="mw-reflink-text" id="mwUw"><span class="cite-bracket" id="mwVA">[</span>4<span class="cite-bracket" id="mwVQ">]</span></span></a></sup><sup about="#mwt51" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Pandurangan"}}' id="cite_ref-Pandurangan_5-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Pandurangan-5" id="mwVg"><span class="mw-reflink-text" id="mwVw"><span class="cite-bracket" id="mwWA">[</span>5<span class="cite-bracket" id="mwWQ">]</span></span></a></sup> The CheiRank was introduced for the procedure call network of <a href="https://en.wikipedia.org/wiki/Linux_kernel" id="mwWg" rel="mw:WikiLink" title="Linux kernel">Linux kernel</a> software,<sup about="#mwt54" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chepelianskii"},"body":{"id":"mw-reference-text-cite_note-Chepelianskii-7"}}' id="cite_ref-Chepelianskii_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chepelianskii-7" id="mwWw"><span class="mw-reflink-text" id="mwXA"><span class="cite-bracket" id="mwXQ">[</span>7<span class="cite-bracket" id="mwXg">]</span></span></a></sup> and the term itself was used by Zhirov.<sup about="#mwt57" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhirov"},"body":{"id":"mw-reference-text-cite_note-Zhirov-8"}}' id="cite_ref-Zhirov_8-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhirov-8" id="mwXw"><span class="mw-reflink-text" id="mwYA"><span class="cite-bracket" id="mwYQ">[</span>8<span class="cite-bracket" id="mwYg">]</span></span></a></sup> While PageRank highlights very well known and popular nodes, the CheiRank highlights very communicative nodes. Top PageRank and CheiRank nodes have a certain analogy to authorities and hubs appearing in the <a href="https://en.wikipedia.org/wiki/HITS_algorithm" id="mwYw" rel="mw:WikiLink" title="HITS algorithm">HITS algorithm</a>,<sup about="#mwt60" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwZA"><span class="mw-reflink-text" id="mwZQ"><span class="cite-bracket" id="mwZg">[</span>9<span class="cite-bracket" id="mwZw">]</span></span></a></sup> but HITS is query dependent whereas the rank probabilities <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P_i "}}' id="mwaA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ba1396129f7be3c7f828a571b6649e6807d10d3" style="vertical-align: -0.671ex; width:2.292ex; height:2.509ex;"/></span> and <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P^*_i "}}' id="mwaQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{i}^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{i}^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{i}^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f582c8a7a099a0fcc9622b183f27f46bf0f9afc0" style="vertical-align: -1.005ex; width:2.876ex; height:2.843ex;"/></span> classify all nodes of the network. Since each node belongs both to CheiRank and PageRank, we obtain a two-dimensional ranking of network nodes. There have been early studies of PageRank in networks with inverted direction of links,<sup about="#mwt65" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwag"><span class="mw-reflink-text" id="mwaw"><span class="cite-bracket" id="mwbA">[</span>10<span class="cite-bracket" id="mwbQ">]</span></span></a></sup><sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwbg"><span class="mw-reflink-text" id="mwbw"><span class="cite-bracket" id="mwcA">[</span>11<span class="cite-bracket" id="mwcQ">]</span></span></a></sup> but the properties of two-dimensional ranking had not been analyzed in detail.</p>
+<p id="mwfQ">An example of node distribution in the plane of PageRank and CheiRank is shown in Fig. 1 for the procedure call network of Linux kernel software.<sup about="#mwt75" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chepelianskii"}}' id="cite_ref-Chepelianskii_7-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chepelianskii-7" id="mwfg"><span class="mw-reflink-text" id="mwfw"><span class="cite-bracket" id="mwgA">[</span>7<span class="cite-bracket" id="mwgQ">]</span></span></a></sup></p>
+<p id="mwiA">The dependence of <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" P, P^* "}}' id="mwiQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P,P^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo>,</mo>
+<msup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P,P^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P,P^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e7d8227948b66368df3753b7776a0e7b1a7b0448" style="vertical-align: -0.671ex; width:5.655ex; height:2.676ex;"/></span> on <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" K, K^* "}}' id="mwig" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle K,K^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>K</mi>
+<mo>,</mo>
+<msup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle K,K^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle K,K^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/64e2bf249401b2de5466223ae25752fe7bbe7d51" style="vertical-align: -0.671ex; width:6.248ex; height:2.676ex;"/></span> for the <a href="https://en.wikipedia.org/wiki/Hyperlink" id="mwiw" rel="mw:WikiLink" title="Hyperlink">hyperlink</a> network of Wikipedia English articles is shown in Fig. 2 from Zhirov. The distribution of these articles in the plane of PageRank and CheiRank is shown in Fig. 3 from Zhirov. The difference between PageRank and CheiRank is clearly seen from the names of Wikipedia articles (2009) with highest rank. At the top of PageRank we have 1. United States, 2. United Kingdom, 3. France, while for CheiRank we find 1. Portal:Contents/Outline of knowledge/Geography and places, 2. List of state leaders by year, 3. Portal:Contents/Index/Geography and places. Clearly, PageRank selects first articles on a broadly known subject with a large number of ingoing links, while CheiRank selects first highly communicative articles with many outgoing links. Since the articles are distributed in 2D, they can be ranked in various ways corresponding to projection of the 2D set on a line. The horizontal and vertical lines correspond to PageRank and CheiRank; 2DRank combines the properties of CheiRank and PageRank as discussed by Zhirov.<sup about="#mwt80" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhirov"}}' id="cite_ref-Zhirov_8-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhirov-8" id="mwjA"><span class="mw-reflink-text" id="mwjQ"><span class="cite-bracket" id="mwjg">[</span>8<span class="cite-bracket" id="mwjw">]</span></span></a></sup> It gives top Wikipedia articles 1. India, 2. Singapore, 3. Pakistan.</p>
+<p id="mwkA">The 2D ranking highlights the properties of Wikipedia articles in a new manner. According to PageRank, the top 100 personalities described in Wikipedia articles fall into five main categories of activity: 58 (politics), 10 (religion), 17 (arts), 15 (science), 0 (sport), and thus the importance of politicians is strongly overestimated. The CheiRank gives respectively 15, 1, 52, 16, 16, while for 2DRank one finds 24, 5, 62, 7, 2. This type of 2D ranking can find useful applications for various complex directed networks including the WWW.</p>
+<p id="mwkQ">CheiRank and PageRank naturally appear for the world trade network, or <a href="https://en.wikipedia.org/wiki/International_trade" id="mwkg" rel="mw:WikiLink" title="International trade">international trade</a>, where they are linked with export and import flows for a given country respectively.<sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwkw"><span class="mw-reflink-text" id="mwlA"><span class="cite-bracket" id="mwlQ">[</span>12<span class="cite-bracket" id="mwlg">]</span></span></a></sup></p>
+<p id="mwlw">Possibilities for the development of two-dimensional search engines based on PageRank and CheiRank are considered.<sup about="#mwt86" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Ermann"},"body":{"id":"mw-reference-text-cite_note-Ermann-13"}}' id="cite_ref-Ermann_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Ermann-13" id="mwmA"><span class="mw-reflink-text" id="mwmQ"><span class="cite-bracket" id="mwmg">[</span>13<span class="cite-bracket" id="mwmw">]</span></span></a></sup> Directed networks can be characterized by the correlator between PageRank and CheiRank vectors: in certain networks this correlator is close to zero (e.g., Linux kernel network), while other networks have large correlator values (e.g., Wikipedia or university networks).<sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chepelianskii"}}' id="cite_ref-Chepelianskii_7-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chepelianskii-7" id="mwnA"><span class="mw-reflink-text" id="mwnQ"><span class="cite-bracket" id="mwng">[</span>7<span class="cite-bracket" id="mwnw">]</span></span></a></sup><sup about="#mwt88" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Ermann"}}' id="cite_ref-Ermann_13-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Ermann-13" id="mwoA"><span class="mw-reflink-text" id="mwoQ"><span class="cite-bracket" id="mwog">[</span>13<span class="cite-bracket" id="mwow">]</span></span></a></sup></p>
+<p id="mwsw">A simple example of the construction of the Google matrices <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G "}}' id="mwtA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> and <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* "}}' id="mwtQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3885f050db0d7715ebeba11a07383eb252b2da6d" style="vertical-align: -0.338ex; width:2.881ex; height:2.343ex;"/></span>, used for determination of the related PageRank and CheiRank vectors, is given below. The directed network example with 7 nodes is shown in Fig. 4. The matrix <span about="#mwt93" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" S "}}' id="mwtg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span>, built with the rules described in the article <a href="https://en.wikipedia.org/wiki/Google_matrix" id="mwtw" rel="mw:WikiLink" title="Google matrix">Google matrix</a>, is shown in Fig. 5; the related Google matrix is <span about="#mwt94" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G=\\alpha S + (1-\\alpha)e e^{T}/N"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G=\alpha S+(1-\alpha )ee^{T}/N}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+<mo>=</mo>
+<mi>α<!-- α --></mi>
+<mi>S</mi>
+<mo>+</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>α<!-- α --></mi>
+<mo stretchy="false">)</mo>
+<mi>e</mi>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>N</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G=\alpha S+(1-\alpha )ee^{T}/N}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G=\alpha S+(1-\alpha )ee^{T}/N}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0c7665ac874ce868147dbb7774e01f27545bf757" style="vertical-align: -0.838ex; width:24.835ex; height:3.176ex;"/></span> and the PageRank vector is the right eigenvector of <span about="#mwt95" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G "}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> with the unit eigenvalue (<span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G P=P"}}' id="mwug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle GP=P}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+<mi>P</mi>
+<mo>=</mo>
+<mi>P</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle GP=P}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle GP=P}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bd8321a393818120c1ad619413b264cae3d5fc32" style="vertical-align: -0.338ex; width:8.416ex; height:2.176ex;"/></span>). In a similar way, to determine the CheiRank eigenvector all directions of links in Fig. 4 are inverted; then the matrix <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" S^* "}}' id="mwuw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b059338b0f6bc81c4edf97c51ce987e98f4bf23e" style="vertical-align: -0.338ex; width:2.576ex; height:2.343ex;"/></span> is built, according to the same rules applied for the network with inverted link directions, as shown in Fig. 6. The related Google matrix is 
+<span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^*=\\alpha S^* + (1-\\alpha)e e^{T}/N"}}' id="mwvA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}=\alpha S^{*}+(1-\alpha )ee^{T}/N}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>=</mo>
+<mi>α<!-- α --></mi>
+<msup>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>+</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>α<!-- α --></mi>
+<mo stretchy="false">)</mo>
+<mi>e</mi>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>N</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}=\alpha S^{*}+(1-\alpha )ee^{T}/N}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}=\alpha S^{*}+(1-\alpha )ee^{T}/N}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/85ca0e57d09337ea4026e0900428f36fd5d9f217" style="vertical-align: -0.838ex; width:26.965ex; height:3.176ex;"/></span> and the CheiRank vector
+is the right eigenvector of <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* "}}' id="mwvQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3885f050db0d7715ebeba11a07383eb252b2da6d" style="vertical-align: -0.338ex; width:2.881ex; height:2.343ex;"/></span>
+with the unit eigenvalue (<span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" G^* P^*=P^*"}}' id="mwvg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G^{*}P^{*}=P^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>G</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<msup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G^{*}P^{*}=P^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G^{*}P^{*}=P^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6ca8b7c30226840a129f447e499eb26d39b959a6" style="vertical-align: -0.338ex; width:11.731ex; height:2.343ex;"/></span>). Here <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\alpha \\approx 0.85 "}}' id="mwvw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha \approx 0.85}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+<mo>≈<!-- ≈ --></mo>
+<mn>0.85</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha \approx 0.85}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha \approx 0.85}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fc991a5cad9534aba07391a51f18c36af0a94228" style="vertical-align: -0.338ex; width:8.72ex; height:2.176ex;"/></span> is the damping factor taken at its usual value.</p>
+</div></div>
+</body></html>

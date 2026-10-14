@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Bayes' theorem - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Bayes' theorem</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBw">In <a href="https://en.wikipedia.org/wiki/Probability_theory" id="mwCA" rel="mw:WikiLink" title="Probability theory">probability theory</a>, <b id="mwCQ">Bayes' theorem</b> (alternatively <b id="mwCg">Bayes' law</b> or <b id="mwCw">Bayes' rule</b>), named after <a href="https://en.wikipedia.org/wiki/Thomas_Bayes" id="mwDA" rel="mw:WikiLink" title="Thomas Bayes">Thomas Bayes</a> (<span about="#mwt9" class="rt-commentedText nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"IPAc-en","href":"./Template:IPAc-en"},"params":{"1":{"wt":"b"},"2":{"wt":"eɪ"},"3":{"wt":"z"}},"i":0}}]}' id="mwDQ" typeof="mw:Transclusion"><span class="IPA nopopups noexcerpt" lang="en-fonipa"><a href="https://en.wikipedia.org/wiki/Help:IPA/English" rel="mw:WikiLink" title="Help:IPA/English">/<span style="border-bottom:1px dotted"><span title="'b' in 'buy'">b</span><span title="/eɪ/: 'a' in 'face'">eɪ</span><span title="'z' in 'zoom'">z</span></span>/</a></span></span>), gives a mathematical rule for inverting <a href="https://en.wikipedia.org/wiki/Conditional_probability" id="mwDg" rel="mw:WikiLink" title="Conditional probability">conditional probabilities</a>, allowing the probability of a cause to be found given its effect. For example, with Bayes' theorem, the probability that a patient has a disease given that they tested positive for that disease can be found using the probability that the test yields a positive result when the disease is present. The theorem was developed in the 18th century by Bayes and independently by <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace" id="mwDw" rel="mw:WikiLink" title="Pierre-Simon Laplace">Pierre-Simon Laplace</a>.</p>
+<p id="mwEA">One of Bayes' theorem's many applications is <a href="https://en.wikipedia.org/wiki/Bayesian_inference" id="mwEQ" rel="mw:WikiLink" title="Bayesian inference">Bayesian inference</a>, an approach to <a href="https://en.wikipedia.org/wiki/Statistical_inference" id="mwEg" rel="mw:WikiLink" title="Statistical inference">statistical inference</a>, where it is used to invert the probability of <a href="https://en.wikipedia.org/wiki/Realization_(probability)" id="mwEw" rel="mw:WikiLink" title="Realization (probability)">observations</a> given a model configuration (i.e., the <a href="https://en.wikipedia.org/wiki/Likelihood_function" id="mwFA" rel="mw:WikiLink" title="Likelihood function">likelihood function</a>) to obtain the probability of the model configuration given the observations (i.e., the <a href="https://en.wikipedia.org/wiki/Posterior_probability" id="mwFQ" rel="mw:WikiLink" title="Posterior probability">posterior probability</a>).</p>
+<p id="mwGA">Bayes' theorem is named after <a href="https://en.wikipedia.org/wiki/Thomas_Bayes" id="mwGQ" rel="mw:WikiLink" title="Thomas Bayes">Thomas Bayes</a>, a minister, statistician, and philosopher. Bayes used conditional probability to provide an algorithm (his Proposition 9) that uses evidence to calculate limits on an unknown parameter. His work was published in 1763 as <i id="mwGg"><a href="https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances" id="mwGw" rel="mw:WikiLink" title="An Essay Towards Solving a Problem in the Doctrine of Chances">An Essay Towards Solving a Problem in the Doctrine of Chances</a></i>. Bayes studied how to compute a distribution for the probability parameter of a <a href="https://en.wikipedia.org/wiki/Binomial_distribution" id="mwHA" rel="mw:WikiLink" title="Binomial distribution">binomial distribution</a> (in modern terminology). After Bayes's death, his family gave his papers to a friend, the minister, philosopher, and mathematician <a href="https://en.wikipedia.org/wiki/Richard_Price" id="mwHQ" rel="mw:WikiLink" title="Richard Price">Richard Price</a>.<sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwHg"><span class="mw-reflink-text" id="mwHw"><span class="cite-bracket" id="mwIA">[</span>1<span class="cite-bracket" id="mwIQ">]</span></span></a></sup></p>
+<p id="mwIg">Price significantly edited the unpublished manuscript for two years before sending it to a friend who read it aloud at the <a href="https://en.wikipedia.org/wiki/Royal_Society" id="mwIw" rel="mw:WikiLink" title="Royal Society">Royal Society</a> on 23 December 1763.<sup about="#mwt15" class="mw-ref reference" data-mw="{&quot;name&quot;:&quot;ref&quot;,&quot;attrs&quot;:{&quot;name&quot;:&quot;Liberty's Apostle&quot;},&quot;body&quot;:{&quot;id&quot;:&quot;mw-reference-text-cite_note-Liberty's_Apostle-2&quot;}}" id="cite_ref-Liberty's_Apostle_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Liberty's_Apostle-2" id="mwJA"><span class="mw-reflink-text" id="mwJQ"><span class="cite-bracket" id="mwJg">[</span>2<span class="cite-bracket" id="mwJw">]</span></span></a></sup> Price edited<sup about="#mwt18" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwKA"><span class="mw-reflink-text" id="mwKQ"><span class="cite-bracket" id="mwKg">[</span>3<span class="cite-bracket" id="mwKw">]</span></span></a></sup> Bayes's major work "An Essay Towards Solving a Problem in the Doctrine of Chances" (1763), which appeared in <i id="mwLA"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Philosophical_Transactions" id="mwLQ" rel="mw:WikiLink" title="Philosophical Transactions">Philosophical Transactions</a></i>,<sup about="#mwt21" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Price1763"},"body":{"id":"mw-reference-text-cite_note-Price1763-4"}}' id="cite_ref-Price1763_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Price1763-4" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>4<span class="cite-bracket" id="mwMQ">]</span></span></a></sup> and contains Bayes' theorem. Price wrote an introduction to the paper that provides some of the philosophical basis of <a href="https://en.wikipedia.org/wiki/Bayesian_statistics" id="mwMg" rel="mw:WikiLink" title="Bayesian statistics">Bayesian statistics</a> and chose one of the two solutions Bayes offered. In 1765, Price was elected a Fellow of the Royal Society in recognition of his work on Bayes's legacy.<sup about="#mwt24" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Holland46"},"body":{"id":"mw-reference-text-cite_note-Holland46-5"}}' id="cite_ref-Holland46_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Holland46-5" id="mwMw"><span class="mw-reflink-text" id="mwNA"><span class="cite-bracket" id="mwNQ">[</span>5<span class="cite-bracket" id="mwNg">]</span></span></a></sup><sup about="#mwt27" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwNw"><span class="mw-reflink-text" id="mwOA"><span class="cite-bracket" id="mwOQ">[</span>6<span class="cite-bracket" id="mwOg">]</span></span></a></sup> On 27 April, a letter sent to his friend <a href="https://en.wikipedia.org/wiki/Benjamin_Franklin" id="mwOw" rel="mw:WikiLink" title="Benjamin Franklin">Benjamin Franklin</a> was read out at the Royal Society, and later published, in which Price applies this work to population and computing 'life-annuities'.<sup about="#mwt29" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"EB1911"},"body":{"id":"mw-reference-text-cite_note-EB1911-7"}}' id="cite_ref-EB1911_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-EB1911-7" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>7<span class="cite-bracket" id="mwPw">]</span></span></a></sup></p>
+<p id="mwQA">Independently of Bayes, <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace" id="mwQQ" rel="mw:WikiLink" title="Pierre-Simon Laplace">Pierre-Simon Laplace</a> used conditional probability to formulate the relation of an updated <a href="https://en.wikipedia.org/wiki/Posterior_probability" id="mwQg" rel="mw:WikiLink" title="Posterior probability">posterior probability</a> from a <a href="https://en.wikipedia.org/wiki/Prior_probability" id="mwQw" rel="mw:WikiLink" title="Prior probability">prior probability</a>, given evidence. He reproduced and extended Bayes's results in 1774, apparently unaware of Bayes's work, and summarized his results in <i id="mwRA"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Théorie_analytique_des_probabilités" id="mwRQ" rel="mw:WikiLink" title="Théorie analytique des probabilités">Théorie analytique des probabilités</a></i> (1812).<sup about="#mwt30" class="mw-ref reference" data-mw="{&quot;name&quot;:&quot;ref&quot;,&quot;attrs&quot;:{&quot;group&quot;:&quot;note&quot;},&quot;body&quot;:{&quot;id&quot;:&quot;mw-reference-text-cite_note-8&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;NoteTag &quot;,&quot;href&quot;:&quot;./Template:NoteTag&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Laplace refined Bayes's theorem over a period of decades:\n* Laplace announced his independent discovery of Bayes' theorem in: Laplace (1774) \&quot;Mémoire sur la probabilité des causes par les événements\&quot;, \&quot;Mémoires de l'Académie royale des Sciences de MI (Savants étrangers)\&quot;, '''4''': 621–656. Reprinted in: Laplace, \&quot;Oeuvres complètes\&quot; (Paris, France: Gauthier-Villars et fils, 1841), vol. 8, pp.&amp;nbsp;27–65. Available on-line at: [http://gallica.bnf.fr/ark:/12148/bpt6k77596b/f32.image Gallica]. Bayes' theorem appears on p.&amp;nbsp;29.\n* Laplace presented a refinement of Bayes' theorem in: Laplace (read: 1783 / published: 1785) \&quot;Mémoire sur les approximations des formules qui sont fonctions de très grands nombres\&quot;, \&quot;Mémoires de l'Académie royale des Sciences de Paris\&quot;, 423–467. Reprinted in: Laplace, \&quot;Oeuvres complètes\&quot; (Paris, France: Gauthier-Villars et fils, 1844), vol. 10, pp.&amp;nbsp;295–338. Available on-line at: [http://gallica.bnf.fr/ark:/12148/bpt6k775981/f218.image.langEN Gallica]. Bayes' theorem is stated on page 301.\n* See also: Laplace, \&quot;Essai philosophique sur les probabilités\&quot; (Paris, France: Mme. Ve. Courcier [Madame veuve (i.e., widow) Courcier], 1814), [https://books.google.com/books?id=rDUJAAAAIAAJ&amp;pg=PA10 page 10]. English translation: Pierre Simon, Marquis de Laplace with F. W. Truscott and F. L. Emory, trans., [[:s:A Philosophical Essay on Probabilities|\&quot;A Philosophical Essay on Probabilities\&quot;]] (New York, New York: John Wiley &amp; Sons, 1902), [https://google.com/books?id=WxoPAAAAIAAJ&amp;pg=PA15#v=onepage p. 15].&quot;}},&quot;i&quot;:0}}]}" id="cite_ref-8" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="note" href="#cite_note-8" id="mwRg"><span class="mw-reflink-text" id="mwRw"><span class="cite-bracket" id="mwSA">[</span>note 1<span class="cite-bracket" id="mwSQ">]</span></span></a></sup><sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwSg"><span class="mw-reflink-text" id="mwSw"><span class="cite-bracket" id="mwTA">[</span>8<span class="cite-bracket" id="mwTQ">]</span></span></a></sup> The <a href="https://en.wikipedia.org/wiki/Bayesian_probability" id="mwTg" rel="mw:WikiLink" title="Bayesian probability">Bayesian interpretation</a> of probability was developed mainly by Laplace.<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwTw"><span class="mw-reflink-text" id="mwUA"><span class="cite-bracket" id="mwUQ">[</span>9<span class="cite-bracket" id="mwUg">]</span></span></a></sup></p>
+<p id="mwUw">About 200 years later, <a href="https://en.wikipedia.org/wiki/Harold_Jeffreys" id="mwVA" rel="mw:WikiLink" title="Harold Jeffreys">Sir Harold Jeffreys</a> put Bayes's algorithm and Laplace's formulation on an <a href="https://en.wikipedia.org/wiki/Axiomatic_system" id="mwVQ" rel="mw:WikiLink" title="Axiomatic system">axiomatic</a> basis, writing in a 1973 book that Bayes' theorem "is to the theory of probability what the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem" id="mwVg" rel="mw:WikiLink" title="Pythagorean theorem">Pythagorean theorem</a> is to geometry".<sup about="#mwt41" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Jeffreys1973"},"body":{"id":"mw-reference-text-cite_note-Jeffreys1973-11"}}' id="cite_ref-Jeffreys1973_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Jeffreys1973-11" id="mwVw"><span class="mw-reflink-text" id="mwWA"><span class="cite-bracket" id="mwWQ">[</span>10<span class="cite-bracket" id="mwWg">]</span></span></a></sup></p>
+<p id="mwWw"><a href="https://en.wikipedia.org/wiki/Stephen_Stigler" id="mwXA" rel="mw:WikiLink" title="Stephen Stigler">Stephen Stigler</a> used a Bayesian argument to conclude that Bayes' theorem was discovered by <a href="https://en.wikipedia.org/wiki/Nicholas_Saunderson" id="mwXQ" rel="mw:WikiLink" title="Nicholas Saunderson">Nicholas Saunderson</a>, a blind English mathematician, some time before Bayes,<sup about="#mwt44" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwXg"><span class="mw-reflink-text" id="mwXw"><span class="cite-bracket" id="mwYA">[</span>11<span class="cite-bracket" id="mwYQ">]</span></span></a></sup><sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Stats, Data and Models"},"body":{"id":"mw-reference-text-cite_note-Stats,_Data_and_Models-13"}}' id="cite_ref-Stats,_Data_and_Models_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Stats,_Data_and_Models-13" id="mwYg"><span class="mw-reflink-text" id="mwYw"><span class="cite-bracket" id="mwZA">[</span>12<span class="cite-bracket" id="mwZQ">]</span></span></a></sup> but that is disputed.<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwZg"><span class="mw-reflink-text" id="mwZw"><span class="cite-bracket" id="mwaA">[</span>13<span class="cite-bracket" id="mwaQ">]</span></span></a></sup> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/F._Thomas_Bruss" id="mwag" rel="mw:WikiLink" title="F. Thomas Bruss">F. Thomas Bruss</a> reviewed Bayes's "An essay towards solving a problem in the doctrine of chances" as communicated by Price.<sup about="#mwt53" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwaw"><span class="mw-reflink-text" id="mwbA"><span class="cite-bracket" id="mwbQ">[</span>14<span class="cite-bracket" id="mwbg">]</span></span></a></sup> He agreed with Stigler's analysis on many points, but not on the question of priority. Bruss underlined the intuitive part of Bayes's formula and added independent arguments about Bayes's probable motivation for his work. He concluded that, unless the contrary is proven, the name "Bayes' Theorem" or "Bayes' formula" is justifiable.</p>
+<p id="mwbw">Martyn Hooper<sup about="#mwt56" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwcA"><span class="mw-reflink-text" id="mwcQ"><span class="cite-bracket" id="mwcg">[</span>15<span class="cite-bracket" id="mwcw">]</span></span></a></sup> and Sharon McGrayne<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mcgrayne2011theory"},"body":{"id":"mw-reference-text-cite_note-mcgrayne2011theory-17"}}' id="cite_ref-mcgrayne2011theory_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mcgrayne2011theory-17" id="mwdA"><span class="mw-reflink-text" id="mwdQ"><span class="cite-bracket" id="mwdg">[</span>16<span class="cite-bracket" id="mwdw">]</span></span></a></sup> have argued that Price's contribution was substantial:</p>
+<p>By modern standards, we should refer to the Bayes–Price rule. Price discovered Bayes's work, recognized its importance, corrected it, contributed to the article, and found a use for it. The modern convention of employing Bayes's name alone is unfair but so entrenched that anything else makes little sense.<sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mcgrayne2011theory"}}' id="cite_ref-mcgrayne2011theory_17-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mcgrayne2011theory-17" id="mweg"><span class="mw-reflink-text" id="mwew"><span class="cite-bracket" id="mwfA">[</span>16<span class="cite-bracket" id="mwfQ">]</span></span></a></sup></p>
+<p id="mwfg">The "<a href="https://en.wikipedia.org/wiki/Bayes_factor" id="mwfw" rel="mw:WikiLink" title="Bayes factor">Bayes factor</a>" or "likelihood" that appears when writing Bayes' theorem in <a href="https://en.wikipedia.org/wiki/Odds" id="mwgA" rel="mw:WikiLink" title="Odds">odds form</a> appears in the early 1940s work of <a href="https://en.wikipedia.org/wiki/Alan_Turing" id="mwgQ" rel="mw:WikiLink" title="Alan Turing">Alan Turing</a>, who called it the "factor in favour of a proposition". In 1878, <a href="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce" id="mwgg" rel="mw:WikiLink" title="Charles Sanders Peirce">Charles Sanders Peirce</a> used the logarithm of this factor as the "weight of evidence" for a proposition.<sup about="#mwt66" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mwgw"><span class="mw-reflink-text" id="mwhA"><span class="cite-bracket" id="mwhQ">[</span>17<span class="cite-bracket" id="mwhg">]</span></span></a></sup></p>
+<p id="mwiA">Bayes' theorem is stated mathematically as the following equation:<sup about="#mwt69" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwiQ"><span class="mw-reflink-text" id="mwig"><span class="cite-bracket" id="mwiw">[</span>18<span class="cite-bracket" id="mwjA">]</span></span></a></sup></p>
+<p><span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4211e3e7c3482573cdfbc0653d48a6279104c899" style="vertical-align: -2.671ex; width:24.65ex; height:6.509ex;"/></span></p>
+<p id="mwjg">where <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwjw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> and <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwkA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> are <a href="https://en.wikipedia.org/wiki/Event_(probability_theory)" id="mwkQ" rel="mw:WikiLink" title="Event (probability theory)">events</a> and <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B) \\neq 0"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)\neq 0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>≠<!-- ≠ --></mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)\neq 0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)\neq 0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4696c4543d63622a09c29cbb00c0fea4e0b8d7b7" style="vertical-align: -0.838ex; width:9.58ex; height:2.843ex;"/></span>.</p>
+<p id="mwsQ">Bayes' theorem may be derived from the relation between <a href="https://en.wikipedia.org/wiki/Joint_probability_distribution" id="mwsg" rel="mw:WikiLink" title="Joint probability distribution">joint</a> and conditional probabilities.<sup about="#mwt95" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwsw"><span class="mw-reflink-text" id="mwtA"><span class="cite-bracket" id="mwtQ">[</span>19<span class="cite-bracket" id="mwtg">]</span></span></a></sup> The joint probability of the events <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwtw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> and <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> both happening, written <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(A \\cap B)"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\cap B)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo>∩<!-- ∩ --></mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\cap B)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\cap B)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f22276bc48d131dadc7e4dacbf38cee3ed05d536" style="vertical-align: -0.838ex; width:9.644ex; height:2.843ex;"/></span>, is equal to the conditional probability of <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> given <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwuw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> times the probability of <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwvA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span>:<span about="#mwt102" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A \\cap B) = P(A\\vert B) P(B)."}}' id="mwvQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\cap B)=P(A\vert B)P(B).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo>∩<!-- ∩ --></mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\cap B)=P(A\vert B)P(B).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\cap B)=P(A\vert B)P(B).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/243986ab6cd904f520faa95377a94b573287c352" style="vertical-align: -0.838ex; width:26.417ex; height:2.843ex;"/></span>Likewise,<span about="#mwt103" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A \\cap B) = P(B\\vert A) P(A)."}}' id="mwvg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\cap B)=P(B\vert A)P(A).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo>∩<!-- ∩ --></mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\cap B)=P(B\vert A)P(A).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\cap B)=P(B\vert A)P(A).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cfdd7d1b37ed23213363c3a0f9b81cae6a4bbf7f" style="vertical-align: -0.838ex; width:26.396ex; height:2.843ex;"/></span>The two products must therefore be equal to each other:<span about="#mwt104" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A\\vert B) P(B) = P(B\\vert A) P(A),"}}' id="mwvw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\vert B)P(B)=P(B\vert A)P(A),}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\vert B)P(B)=P(B\vert A)P(A),}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\vert B)P(B)=P(B\vert A)P(A),}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/477f76b04114f5a9c732e8e5dd91b0e91716d0d5" style="vertical-align: -0.838ex; width:29.779ex; height:2.843ex;"/></span>and dividing both sides by <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B)"}}' id="mwwA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e593d180a26fd68657ea50368dbfe1a661e652aa" style="vertical-align: -0.838ex; width:5.319ex; height:2.843ex;"/></span> gives Bayes' theorem:<span about="#mwt106" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A\\vert B) = \\frac{P(B\\vert A) P(A)}{P(B)}, \\text{ if } P(B) \\neq 0."}}' id="mwwQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}},{\text{ if }}P(B)\neq 0.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> if </mtext>
+</mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>≠<!-- ≠ --></mo>
+<mn>0.</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}},{\text{ if }}P(B)\neq 0.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A\vert B)={\frac {P(B\vert A)P(A)}{P(B)}},{\text{ if }}P(B)\neq 0.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6158075cb0aa165f426e663093f2a1351e447b3c" style="vertical-align: -2.671ex; width:38.43ex; height:6.509ex;"/></span></p>
+<p id="mwwg">If events <i id="mwww">A</i><sub id="mwxA">1</sub>, <i id="mwxQ">A</i><sub id="mwxg">2</sub>, ..., are mutually exclusive and exhaustive, i.e., one of them is certain to occur but no two can occur together, then, by the <a href="https://en.wikipedia.org/wiki/Law_of_total_probability" id="mwxw" rel="mw:WikiLink" title="Law of total probability">law of total probability</a>,<span about="#mwt108" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(B) = \\sum_i P(B|A_i) P(A_i)"}}' id="mwyA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)=\sum _{i}P(B|A_{i})P(A_{i})}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)=\sum _{i}P(B|A_{i})P(A_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)=\sum _{i}P(B|A_{i})P(A_{i})}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b2ec9a0e5219fa273112711dc50bfcd6da0a32" style="vertical-align: -3.005ex; width:26.765ex; height:5.509ex;"/></span>for any event <i id="mwyQ">B.</i> Substituting this expression for <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B)"}}' id="mwyg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e593d180a26fd68657ea50368dbfe1a661e652aa" style="vertical-align: -0.838ex; width:5.319ex; height:2.843ex;"/></span> into the denominator of the earlier equation gives:<sup about="#mwt110" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Lee2012"}}' id="cite_ref-Lee2012_21-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Lee2012-21" id="mwyw"><span class="mw-reflink-text" id="mwzA"><span class="cite-bracket" id="mwzQ">[</span>20<span class="cite-bracket" id="mwzg">]</span></span></a></sup><sup about="#mwt107" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"8–9"}},"i":0}}]}' id="mwzw" typeof="mw:Transclusion"><span title="Page / location: 8–9"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>8–9<span typeof="mw:Entity"> </span></span></sup><span about="#mwt111" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A_i|B) = \\frac{P(A_i) P(B|A_i)}{\\sum_j P(A_j) P(B|A_j)} ."}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A_{i}|B)={\frac {P(A_{i})P(B|A_{i})}{\sum _{j}P(A_{j})P(B|A_{j})}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</munder>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A_{i}|B)={\frac {P(A_{i})P(B|A_{i})}{\sum _{j}P(A_{j})P(B|A_{j})}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A_{i}|B)={\frac {P(A_{i})P(B|A_{i})}{\sum _{j}P(A_{j})P(B|A_{j})}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ddd102a11c5306adef6dd954db0b055ca714364e" style="vertical-align: -3.005ex; width:31.666ex; height:6.843ex;"/></span></p>
+<p id="mw0Q">The events <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mw0g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> and not-<span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mw0w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>, written <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\neg A"}}' id="mw1A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \neg A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \neg A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \neg A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/195aae731102b36b14a902a091d04ac5c6a5af49" style="vertical-align: -0.338ex; width:3.293ex; height:2.176ex;"/></span>, are a mutually exclusive and exhaustive pair. Therefore the previous formula can be applied, and the sum in the denominator will have only two terms:
+<span about="#mwt115" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A| B) = \\frac{P(B| A) P(A)}{ P(B| A) P(A) + P(B| \\neg A) P(\\neg A)}."}}' id="mw1Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B|A)P(A)+P(B|\neg A)P(\neg A)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B|A)P(A)+P(B|\neg A)P(\neg A)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B|A)P(A)+P(B|\neg A)P(\neg A)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b63653680275c0e1a910a0671dfd094eb2c84222" style="vertical-align: -2.671ex; width:44.244ex; height:6.509ex;"/></span></p>
+<p id="mw2A">Suppose that a doctor is testing a patient for the presence of a certain disease. The patient either has the disease or does not; the test returns either positive or negative. If the patient does not have the disease but the test returns a positive result, that is a <i id="mw2Q">false positive.</i> If the patient has the disease and the test returns a positive result, that is a <i id="mw2g">true positive.</i> Bayes' theorem gives the means to calculate the probability that the patient has the disease given a positive test result, using quantities that specify how prevalent the disease is in the population and how well the test works. Let <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}' id="mw2w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle E}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>E</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle E}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;"/></span> be the event that the patient has the disease. <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(E)"}}' id="mw3A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(E)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(E)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(E)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/687fe7f4688af755503fd00e7538f285e2a9954b" style="vertical-align: -0.838ex; width:5.33ex; height:2.843ex;"/></span> is the probability that the patient has the disease. Let <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"F"}}' id="mw3Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle F}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>F</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle F}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle F}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/545fd099af8541605f7ee55f08225526be88ce57" style="vertical-align: -0.338ex; width:1.741ex; height:2.176ex;"/></span> be the event that the patient tests positive. The probability that the patient has the disease given that they test positive is thus denoted <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(E|F)"}}' id="mw3g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(E|F)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>F</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(E|F)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(E|F)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/594e4c228334eca615b5f859d6ac63632ad7acb7" style="vertical-align: -0.838ex; width:7.718ex; height:2.843ex;"/></span>. Bayes' theorem states:<span about="#mwt121" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(E|F) = \\frac{P(F|E) P(E)}{P(F|E)P(E) + P(F|\\neg E) P(\\neg E)}."}}' id="mw3w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(E|F)={\frac {P(F|E)P(E)}{P(F|E)P(E)+P(F|\neg E)P(\neg E)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>F</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(E|F)={\frac {P(F|E)P(E)}{P(F|E)P(E)+P(F|\neg E)P(\neg E)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(E|F)={\frac {P(F|E)P(E)}{P(F|E)P(E)+P(F|\neg E)P(\neg E)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5bd9b4413ffd71d3b04461078bb9cdc47cdc281e" style="vertical-align: -2.671ex; width:44.337ex; height:6.509ex;"/></span>Here, <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(E)"}}' id="mw4A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(E)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(E)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(E)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/687fe7f4688af755503fd00e7538f285e2a9954b" style="vertical-align: -0.838ex; width:5.33ex; height:2.843ex;"/></span> is the <i id="mw4Q">prevalence rate</i> of the disease, and <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(F|E)"}}' id="mw4g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(F|E)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>F</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>E</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(F|E)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(F|E)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2ee22d8bda5cb1c187e37a48cf7385f734a5487d" style="vertical-align: -0.838ex; width:7.718ex; height:2.843ex;"/></span> is the <i id="mw4w">true positive rate</i> or <i id="mw5A">test sensitivity.</i><sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bernardo2000"},"body":{"id":"mw-reference-text-cite_note-Bernardo2000-22"}}' id="cite_ref-Bernardo2000_22-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bernardo2000-22" id="mw5Q"><span class="mw-reflink-text" id="mw5g"><span class="cite-bracket" id="mw5w">[</span>21<span class="cite-bracket" id="mw6A">]</span></span></a></sup><sup about="#mwt116" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"44–45"}},"i":0}}]}' id="mw6Q" typeof="mw:Transclusion"><span title="Page / location: 44–45"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>44–45<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mw6g">For example, if all patients with pancreatic cancer have certain symptoms, it does not follow that anyone who has those symptoms has pancreatic cancer. Assuming the incidence rate of pancreatic cancer is 1/100000, while 10/99999 healthy people have the symptoms, the probability that a person who has the symptoms has pancreatic cancer is 9.1%.</p>
+<p id="mw6w">Based on incidence rate, the following table presents the corresponding numbers per 100,000 people.</p>
+<p id="mwAQU">These numbers can then be used to calculate the probability that a patient who has the symptoms has cancer: 
+<span about="#mwt128" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\begin{align}\nP(\\text{Cancer}|\\text{Symptoms}) &amp;= \\frac{P(\\text{Symptoms}|\\text{Cancer}) P(\\text{Cancer})}{P(\\text{Symptoms})} \\\\\n &amp;= \\frac{P(\\text{Symptoms}|\\text{Cancer}) P(\\text{Cancer})}{P(\\text{Symptoms}|\\text{Cancer}) P(\\text{Cancer}) + P(\\text{Symptoms}|\\text{Non-Cancer}) P(\\text{Non-Cancer})} \\\\[8pt]\n&amp;= \\frac{1 \\times 0.00001}{1 \\times 0.00001 + (10/99999) \\times 0.99999} = \\frac1{11} \\approx 9.1\\%.\n\\end{align}"}}' id="mwAQY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}P({\text{Cancer}}|{\text{Symptoms}})&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}})}}\\&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})+P({\text{Symptoms}}|{\text{Non-Cancer}})P({\text{Non-Cancer}})}}\\[8pt]&amp;={\frac {1\times 0.00001}{1\times 0.00001+(10/99999)\times 0.99999}}={\frac {1}{11}}\approx 9.1\%.\end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt 1.1em 0.3em">
+<mtr>
+<mtd>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Symptoms</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Non-Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Non-Cancer</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mn>1</mn>
+<mo>×<!-- × --></mo>
+<mn>0.00001</mn>
+</mrow>
+<mrow>
+<mn>1</mn>
+<mo>×<!-- × --></mo>
+<mn>0.00001</mn>
+<mo>+</mo>
+<mo stretchy="false">(</mo>
+<mn>10</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>99999</mn>
+<mo stretchy="false">)</mo>
+<mo>×<!-- × --></mo>
+<mn>0.99999</mn>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mn>11</mn>
+</mfrac>
+</mrow>
+<mo>≈<!-- ≈ --></mo>
+<mn>9.1</mn>
+<mi mathvariant="normal">%<!-- % --></mi>
+<mo>.</mo>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}P({\text{Cancer}}|{\text{Symptoms}})&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}})}}\\&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})+P({\text{Symptoms}}|{\text{Non-Cancer}})P({\text{Non-Cancer}})}}\\[8pt]&amp;={\frac {1\times 0.00001}{1\times 0.00001+(10/99999)\times 0.99999}}={\frac {1}{11}}\approx 9.1\%.\end{aligned}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\begin{aligned}P({\text{Cancer}}|{\text{Symptoms}})&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}})}}\\&amp;={\frac {P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})}{P({\text{Symptoms}}|{\text{Cancer}})P({\text{Cancer}})+P({\text{Symptoms}}|{\text{Non-Cancer}})P({\text{Non-Cancer}})}}\\[8pt]&amp;={\frac {1\times 0.00001}{1\times 0.00001+(10/99999)\times 0.99999}}={\frac {1}{11}}\approx 9.1\%.\end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4e92af6f65e116d2e4e708b52e5b6d4263bb5771" style="vertical-align: -10.005ex; width:104.736ex; height:21.176ex;"/></span></p>
+<p id="mwAQg">Suppose a particular test for whether someone has been using a drug (e.g., <a href="https://en.wikipedia.org/wiki/A_Scanner_Darkly" id="mwAQk" rel="mw:WikiLink" title="A Scanner Darkly">Substance D</a>) is 99% <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sensitivity_(tests)" id="mwAQo" rel="mw:WikiLink" title="Sensitivity (tests)">sensitive</a>, meaning the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/True_positive_rate" id="mwAQs" rel="mw:WikiLink" title="True positive rate">true positive rate</a> (TPR) = 0.99. The test then has 99% true positive results (correct identification of drug use) for drug users. The test is also 99% <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Specificity_(tests)" id="mwAQw" rel="mw:WikiLink" title="Specificity (tests)">specific</a>, meaning its <a class="mw-redirect" href="https://en.wikipedia.org/wiki/True_negative_rate" id="mwAQ0" rel="mw:WikiLink" title="True negative rate">true negative rate</a> (TNR) = 0.99. Therefore, the test correctly identifies 99% of non-use for non-users, but also generates 1% false positives, or <a href="https://en.wikipedia.org/wiki/False_positive_rate" id="mwAQ4" rel="mw:WikiLink" title="False positive rate">false positive rate</a> (FPR) = 0.01, for non-users. Assuming 0.3% of people use the drug, Bayes' theorem gives the probability that a random person who tests positive is a drug user:<span about="#mwt129" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\begin{align}\nP(\\text{User}\\vert \\text{Positive}) &amp;= \\frac{P(\\text{Positive}\\vert \\text{User}) P(\\text{User})}{P(\\text{Positive})} \\\\\n &amp;= \\frac{P(\\text{Positive}\\vert\\text{User}) P(\\text{User})}{P(\\text{Positive}\\vert\\text{User}) P(\\text{User}) + P(\\text{Positive}\\vert\\text{Non-user}) P(\\text{Non-user})} \\\\[8pt] \n&amp;= \\frac{0.99 \\times 0.003}{0.99 \\times 0.003 + 0.01 \\times 0.997}\n \\approx 23\\%.\n\\end{align}"}}' id="mwAQ8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}P({\text{User}}\vert {\text{Positive}})&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}})}}\\&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}}\vert {\text{User}})P({\text{User}})+P({\text{Positive}}\vert {\text{Non-user}})P({\text{Non-user}})}}\\[8pt]&amp;={\frac {0.99\times 0.003}{0.99\times 0.003+0.01\times 0.997}}\approx 23\%.\end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt 1.1em 0.3em">
+<mtr>
+<mtd>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo fence="false" stretchy="false">|</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo fence="false" stretchy="false">|</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo fence="false" stretchy="false">|</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo fence="false" stretchy="false">|</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>User</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Positive</mtext>
+</mrow>
+<mo fence="false" stretchy="false">|</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Non-user</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Non-user</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mn>0.99</mn>
+<mo>×<!-- × --></mo>
+<mn>0.003</mn>
+</mrow>
+<mrow>
+<mn>0.99</mn>
+<mo>×<!-- × --></mo>
+<mn>0.003</mn>
+<mo>+</mo>
+<mn>0.01</mn>
+<mo>×<!-- × --></mo>
+<mn>0.997</mn>
+</mrow>
+</mfrac>
+</mrow>
+<mo>≈<!-- ≈ --></mo>
+<mn>23</mn>
+<mi mathvariant="normal">%<!-- % --></mi>
+<mo>.</mo>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}P({\text{User}}\vert {\text{Positive}})&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}})}}\\&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}}\vert {\text{User}})P({\text{User}})+P({\text{Positive}}\vert {\text{Non-user}})P({\text{Non-user}})}}\\[8pt]&amp;={\frac {0.99\times 0.003}{0.99\times 0.003+0.01\times 0.997}}\approx 23\%.\end{aligned}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\begin{aligned}P({\text{User}}\vert {\text{Positive}})&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}})}}\\&amp;={\frac {P({\text{Positive}}\vert {\text{User}})P({\text{User}})}{P({\text{Positive}}\vert {\text{User}})P({\text{User}})+P({\text{Positive}}\vert {\text{Non-user}})P({\text{Non-user}})}}\\[8pt]&amp;={\frac {0.99\times 0.003}{0.99\times 0.003+0.01\times 0.997}}\approx 23\%.\end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd73c6e7a6e8607cac65e13d4606c655214287e8" style="vertical-align: -9.671ex; width:83.661ex; height:20.509ex;"/></span>Consequently, even though the drug test is "99% accurate", most of its positive results will be false.<sup about="#mwt132" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mwARA"><span class="mw-reflink-text" id="mwARE"><span class="cite-bracket" id="mwARI">[</span>22<span class="cite-bracket" id="mwARM">]</span></span></a></sup></p>
+<p id="mwARU">An urn contains coins of three different types: A, B, and C. Coins of type A are fair and, when flipped, come up heads with probability 0.5. Coins of type B are biased and have probability 0.6 of turning up heads, and type-C coins come up heads with probability 0.9. The urn contains 2 type-A coins, 2 type-B coins and 1 type-C coin. A coin is drawn at random from the urn and flipped. Bayes' theorem gives the probability of a coin being of a given type given that it comes up heads:<span about="#mwt133" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A|H) = \\frac{P(H|A)P(A)}{P(H)},"}}' id="mwARY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|H)={\frac {P(H|A)P(A)}{P(H)}},}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|H)={\frac {P(H|A)P(A)}{P(H)}},}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|H)={\frac {P(H|A)P(A)}{P(H)}},}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7a4c0895e0ead14e1fa338bb7549712df7272b50" style="vertical-align: -2.671ex; width:25.896ex; height:6.509ex;"/></span>and likewise for <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B|H)"}}' id="mwARc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B|H)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B|H)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B|H)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54b8dc5fafed03d8737b474dcfaae273e693fe29" style="vertical-align: -0.838ex; width:8.029ex; height:2.843ex;"/></span> and <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(C|H)"}}' id="mwARg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(C|H)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(C|H)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(C|H)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a80044a94642e29c9665a2646f4a097a123293d" style="vertical-align: -0.838ex; width:8.032ex; height:2.843ex;"/></span>. The denominator can be found via the law of total probability:<span about="#mwt136" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(H) = P(H|A)P(A) + P(H|B)P(B) + P(H|C)P(C)."}}' id="mwARk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(H)=P(H|A)P(A)+P(H|B)P(B)+P(H|C)P(C).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>C</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>C</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(H)=P(H|A)P(A)+P(H|B)P(B)+P(H|C)P(C).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(H)=P(H|A)P(A)+P(H|B)P(B)+P(H|C)P(C).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c639347b4c1f52df72cfe2284243340157c3769a" style="vertical-align: -0.838ex; width:55.051ex; height:2.843ex;"/></span>Assuming the coins are drawn from the urn at random, <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(A) = 2/5"}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A)=2/5}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>5</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A)=2/5}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A)=2/5}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a3b7741b65764a28fdfd2e3632f24ec57448207" style="vertical-align: -0.838ex; width:11.884ex; height:2.843ex;"/></span>, <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B) = 2/5"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)=2/5}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>5</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)=2/5}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)=2/5}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/38c5351fc0c05bc0404f66d3324eb76219af4242" style="vertical-align: -0.838ex; width:11.905ex; height:2.843ex;"/></span>, and <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(C) = 1/5"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(C)=1/5}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>C</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>5</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(C)=1/5}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(C)=1/5}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3eece4761caa920bb69c5bb15a64dfea9e5f3afb" style="vertical-align: -0.838ex; width:11.907ex; height:2.843ex;"/></span>. It follows that <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(H) = 0.62"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(H)=0.62}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>0.62</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(H)=0.62}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(H)=0.62}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2805def0fa2f36944d7e91e8b2f81f9e27fe0ecb" style="vertical-align: -0.838ex; width:12.851ex; height:2.843ex;"/></span>, and<sup about="#mwt143" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mwAR4"><span class="mw-reflink-text" id="mwAR8"><span class="cite-bracket" id="mwASA">[</span>23<span class="cite-bracket" id="mwASE">]</span></span></a></sup><span about="#mwt144" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A|H) = 0.2/0.62 \\approx 32\\%."}}' id="mwASI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|H)=0.2/0.62\approx 32\%.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>H</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>0.2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>0.62</mn>
+<mo>≈<!-- ≈ --></mo>
+<mn>32</mn>
+<mi mathvariant="normal">%<!-- % --></mi>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|H)=0.2/0.62\approx 32\%.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|H)=0.2/0.62\approx 32\%.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d154624e09058cf049d366e113967e22ed538873" style="vertical-align: -0.838ex; width:27.381ex; height:2.843ex;"/></span></p>
+<p id="mwASQ">The interpretation of Bayes' rule depends on the <a href="https://en.wikipedia.org/wiki/Probability_interpretations" id="mwASU" rel="mw:WikiLink" title="Probability interpretations">interpretation of probability</a> ascribed to the terms. The two predominant classes of interpretation are described below.</p>
+<p id="mwASc">In <a href="https://en.wikipedia.org/wiki/Bayesian_probability" id="mwASg" rel="mw:WikiLink" title="Bayesian probability">Bayesian (or epistemological) interpretations</a>, probability measures a rational "degree of belief".<sup about="#mwt148" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwASk"><span class="mw-reflink-text" id="mwASo"><span class="cite-bracket" id="mwASs">[</span>24<span class="cite-bracket" id="mwASw">]</span></span></a></sup><sup about="#mwt151" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAS0"><span class="mw-reflink-text" id="mwAS4"><span class="cite-bracket" id="mwAS8">[</span>25<span class="cite-bracket" id="mwATA">]</span></span></a></sup> Bayes' theorem links the degree of belief in a proposition before and after rationally accounting for evidence. For example, in a medical testing scenario, if a patient tests positive for a disease, the doctor will find it more plausible that the patient has that disease.<sup about="#mwt152" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bernardo2000"}}' id="cite_ref-Bernardo2000_22-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bernardo2000-22" id="mwATE"><span class="mw-reflink-text" id="mwATI"><span class="cite-bracket" id="mwATM">[</span>21<span class="cite-bracket" id="mwATQ">]</span></span></a></sup><sup about="#mwt145" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"43–45"}},"i":0}}]}' id="mwATU" typeof="mw:Transclusion"><span title="Page / location: 43–45"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>43–45<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAWo">If <i id="mwAWs">A</i> denotes a proposition and <i id="mwAWw">B</i> the evidence or background <i id="mwAW0">B</i>, then<sup about="#mwt178" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwAW4"><span class="mw-reflink-text" id="mwAW8"><span class="cite-bracket" id="mwAXA">[</span>26<span class="cite-bracket" id="mwAXE">]</span></span></a></sup></p>
+<p id="mwAYo">For more on the application of Bayes' theorem under Bayesian interpretations of probability, see <a href="https://en.wikipedia.org/wiki/Bayesian_inference" id="mwAYs" rel="mw:WikiLink" title="Bayesian inference">Bayesian inference</a>.</p>
+<p id="mwAZI">In the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Frequentist_interpretation_of_probability" id="mwAZM" rel="mw:WikiLink" title="Frequentist interpretation of probability">frequentist interpretations</a>, probability measures a "proportion of outcomes".<sup about="#mwt187" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAZQ"><span class="mw-reflink-text" id="mwAZU"><span class="cite-bracket" id="mwAZY">[</span>27<span class="cite-bracket" id="mwAZc">]</span></span></a></sup> For example, suppose an experiment is performed many times. <i id="mwAZg">P</i>(<i id="mwAZk">A</i>) is the proportion of outcomes with property <i id="mwAZo">A</i> (the prior) and <i id="mwAZs">P</i>(<i id="mwAZw">B</i>) is the proportion with property <i id="mwAZ0">B</i>. <i id="mwAZ4">P</i>(<i id="mwAZ8">B</i>|<i id="mwAaA">A</i>) is the proportion of outcomes with property <i id="mwAaE">B</i> <i id="mwAaI">out of</i> outcomes with property <i id="mwAaM">A</i>, and <i id="mwAaQ">P</i>(<i id="mwAaU">A</i>|<i id="mwAaY">B</i>) is the proportion of those with <i id="mwAac">A</i> <i id="mwAag">out of</i> those with <i id="mwAak">B</i> (the posterior).</p>
+<p id="mwAaw">For events <i id="mwAa0">A</i> and <i id="mwAa4">B</i>, provided that <i id="mwAa8">P</i>(<i id="mwAbA">B</i>) ≠ 0,
+<span about="#mwt188" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A| B) = \\frac{P(B |  A) P(A)}{P(B)} . "}}' id="mwAbE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|B)={\frac {P(B|A)P(A)}{P(B)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1a7279a1639d92d751e0f2d3aa54e62a2ddb1e8" style="vertical-align: -2.671ex; width:25.297ex; height:6.509ex;"/></span></p>
+<p id="mwAbI">In many applications, for instance in <a href="https://en.wikipedia.org/wiki/Bayesian_inference" id="mwAbM" rel="mw:WikiLink" title="Bayesian inference">Bayesian inference</a>, the event <i id="mwAbQ">B</i> is fixed in the discussion and we wish to consider the effect of its having been observed on our belief in various possible events <i id="mwAbU">A</i>. In such situations the denominator of the last expression, the probability of the given evidence <i id="mwAbY">B</i>, is fixed; what we want to vary is <i id="mwAbc">A</i>. Bayes' theorem shows that the posterior probabilities are <a href="https://en.wikipedia.org/wiki/Proportionality_(mathematics)" id="mwAbg" rel="mw:WikiLink" title="Proportionality (mathematics)">proportional</a> to the numerator, so the last equation becomes:<sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Lee2012"},"body":{"id":"mw-reference-text-cite_note-Lee2012-21"}}' id="cite_ref-Lee2012_21-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Lee2012-21" id="mwAbk"><span class="mw-reflink-text" id="mwAbo"><span class="cite-bracket" id="mwAbs">[</span>20<span class="cite-bracket" id="mwAbw">]</span></span></a></sup><sup about="#mwt189" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"8"}},"i":0}}]}' id="mwAb0" typeof="mw:Transclusion"><span title="Page / location: 8"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>8<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAb4"><span about="#mwt193" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A| B) \\propto P(A) \\cdot P(B| A) ."}}' id="mwAb8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|B)\propto P(A)\cdot P(B|A).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>∝<!-- ∝ --></mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|B)\propto P(A)\cdot P(B|A).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|B)\propto P(A)\cdot P(B|A).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6112b2ccd1d0e2bc37aa571dc3e56c74370113c9" style="vertical-align: -0.838ex; width:26.14ex; height:2.843ex;"/></span></p>
+<p id="mwAcA">In other words, the posterior is proportional to the prior times the likelihood.<sup about="#mwt195" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Lee2012"}}' id="cite_ref-Lee2012_21-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Lee2012-21" id="mwAcE"><span class="mw-reflink-text" id="mwAcI"><span class="cite-bracket" id="mwAcM">[</span>20<span class="cite-bracket" id="mwAcQ">]</span></span></a></sup><sup about="#mwt194" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"37"}},"i":0}}]}' id="mwAcU" typeof="mw:Transclusion"><span title="Page / location: 37"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>37<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAdE">For two continuous <a href="https://en.wikipedia.org/wiki/Random_variable" id="mwAdI" rel="mw:WikiLink" title="Random variable">random variables</a> <i id="mwAdM">X</i> and <i id="mwAdQ">Y</i>, Bayes' theorem may be analogously derived from the definition of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Conditional_density" id="mwAdU" rel="mw:WikiLink" title="Conditional density">conditional density</a>:
+<span about="#mwt196" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\begin{align}\nf_{X \\vert  Y=y} (x) &amp;= \\frac{f_{X,Y}(x,y)}{f_Y(y)}  \\\\\nf_{Y \\vert  X=x}(y) &amp;= \\frac{f_{X,Y}(x,y)}{f_X(x)}\n\\end{align}\n"}}' id="mwAdY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}f_{X\vert Y=y}(x)&amp;={\frac {f_{X,Y}(x,y)}{f_{Y}(y)}}\\f_{Y\vert X=x}(y)&amp;={\frac {f_{X,Y}(x,y)}{f_{X}(x)}}\end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt">
+<mtr>
+<mtd>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>Y</mi>
+<mo>=</mo>
+<mi>y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+<mo>,</mo>
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>X</mi>
+<mo>=</mo>
+<mi>x</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+<mo>,</mo>
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}f_{X\vert Y=y}(x)&amp;={\frac {f_{X,Y}(x,y)}{f_{Y}(y)}}\\f_{Y\vert X=x}(y)&amp;={\frac {f_{X,Y}(x,y)}{f_{X}(x)}}\end{aligned}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\begin{aligned}f_{X\vert Y=y}(x)&amp;={\frac {f_{X,Y}(x,y)}{f_{Y}(y)}}\\f_{Y\vert X=x}(y)&amp;={\frac {f_{X,Y}(x,y)}{f_{X}(x)}}\end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8cf2037c39d896dd004c4ae35ca42a5725e80274" style="vertical-align: -6.005ex; width:24.215ex; height:13.176ex;"/></span></p>
+<p id="mwAdc">Bayes' theorem states:<sup about="#mwt198" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Lee2012"}}' id="cite_ref-Lee2012_21-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Lee2012-21" id="mwAdg"><span class="mw-reflink-text" id="mwAdk"><span class="cite-bracket" id="mwAdo">[</span>20<span class="cite-bracket" id="mwAds">]</span></span></a></sup><sup about="#mwt197" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"20–21"}},"i":0}}]}' id="mwAdw" typeof="mw:Transclusion"><span title="Page / location: 20–21"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>20–21<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAd0"><span about="#mwt199" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"f_{X \\vert Y=y}(x) = \\frac{f_{Y \\vert  X=x}(y) f_X(x)}{f_Y(y)}."}}' id="mwAd4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f_{X\vert Y=y}(x)={\frac {f_{Y\vert X=x}(y)f_{X}(x)}{f_{Y}(y)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>Y</mi>
+<mo>=</mo>
+<mi>y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+<mo fence="false" stretchy="false">|</mo>
+<mi>X</mi>
+<mo>=</mo>
+<mi>x</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f_{X\vert Y=y}(x)={\frac {f_{Y\vert X=x}(y)f_{X}(x)}{f_{Y}(y)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f_{X\vert Y=y}(x)={\frac {f_{Y\vert X=x}(y)f_{X}(x)}{f_{Y}(y)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/854fd5ed4411c1b9ba2b9ddaad3780ca1b934aab" style="vertical-align: -2.671ex; width:29.876ex; height:6.676ex;"/></span>
+This holds for values <span about="#mwt200" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwAd8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> and <span about="#mwt201" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y"}}' id="mwAeA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>y</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a6208ec717213d4317e666f1ae872e00620a0d" style="vertical-align: -0.671ex; width:1.155ex; height:2.009ex;"/></span> within the <a href="https://en.wikipedia.org/wiki/Support_(mathematics)" id="mwAeE" rel="mw:WikiLink" title="Support (mathematics)">support</a> of <i id="mwAeI">X</i> and <i id="mwAeM">Y</i>, ensuring <span about="#mwt202" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f_X(x) &gt; 0"}}' id="mwAeQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f_{X}(x)&gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f_{X}(x)&gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f_{X}(x)&gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b0a59e1d2780218984d906bee9f1c73c18f3f56f" style="vertical-align: -0.838ex; width:10.171ex; height:2.843ex;"/></span> and <span about="#mwt203" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f_Y(y)&gt;0"}}' id="mwAeU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f_{Y}(y)&gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>f</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f_{Y}(y)&gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f_{Y}(y)&gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a632bcc7016c1cc9a42bfda2d57f19587d8299d6" style="vertical-align: -0.838ex; width:9.851ex; height:2.843ex;"/></span>.</p>
+<p id="mwAec">Let <span about="#mwt204" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_Y^x "}}' id="mwAeg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{Y}^{x}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{Y}^{x}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{Y}^{x}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d92eb885c1778b36fe0ea7654f5fa17aacfa7d9d" style="vertical-align: -1.005ex; width:2.994ex; height:2.843ex;"/></span> be the conditional distribution of <span about="#mwt205" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Y"}}' id="mwAek" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Y}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Y</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Y}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Y}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/961d67d6b454b4df2301ac571808a3538b3a6d3f" style="vertical-align: -0.171ex; width:1.773ex; height:2.009ex;"/></span> given <span about="#mwt206" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X = x"}}' id="mwAeo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X=x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+<mo>=</mo>
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X=x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X=x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0661396d873679039ffe8e908a39f02402d4912d" style="vertical-align: -0.338ex; width:6.408ex; height:2.176ex;"/></span> and let <span about="#mwt207" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_X"}}' id="mwAes" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{X}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{X}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{X}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8348dd8ce7e6f7f4778ee01fa5bdc7b828afd98c" style="vertical-align: -0.671ex; width:3.125ex; height:2.509ex;"/></span> be the distribution of <span about="#mwt208" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X"}}' id="mwAew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/68baa052181f707c662844a465bfeeb135e82bab" style="vertical-align: -0.338ex; width:1.98ex; height:2.176ex;"/></span>. The joint distribution is then <span about="#mwt209" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_{X,Y} (dx,dy) = P_Y^x (dy) P_X (dx)"}}' id="mwAe0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{X,Y}(dx,dy)=P_{Y}^{x}(dy)P_{X}(dx)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+<mo>,</mo>
+<mi>Y</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>d</mi>
+<mi>x</mi>
+<mo>,</mo>
+<mi>d</mi>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Y</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msubsup>
+<mo stretchy="false">(</mo>
+<mi>d</mi>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>d</mi>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{X,Y}(dx,dy)=P_{Y}^{x}(dy)P_{X}(dx)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{X,Y}(dx,dy)=P_{Y}^{x}(dy)P_{X}(dx)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7fe44cedd3314ca245dfd53a2c11e3ed1c9aca" style="vertical-align: -1.005ex; width:30.349ex; height:3.009ex;"/></span>. The conditional distribution <span about="#mwt210" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_X^y "}}' id="mwAe4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{X}^{y}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>y</mi>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{X}^{y}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{X}^{y}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/40ad7fcb2df4aacda6af4df410c7e2259292cc7c" style="vertical-align: -1.005ex; width:3.125ex; height:3.176ex;"/></span> of <span about="#mwt211" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X"}}' id="mwAe8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/68baa052181f707c662844a465bfeeb135e82bab" style="vertical-align: -0.338ex; width:1.98ex; height:2.176ex;"/></span> given <span about="#mwt212" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Y=y"}}' id="mwAfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Y=y}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Y</mi>
+<mo>=</mo>
+<mi>y</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Y=y}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Y=y}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/678864c5e9a7ce08acfc22d0d7f726d2cade5b45" style="vertical-align: -0.671ex; width:6.027ex; height:2.509ex;"/></span> is then determined by</p>
+<p id="mwAfE"><span about="#mwt213" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P_X^y (A) = E (1_A (X) | Y = y)"}}' id="mwAfI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{X}^{y}(A)=E(1_{A}(X)|Y=y)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>X</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>y</mi>
+</mrow>
+</msubsup>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>E</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>A</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>X</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>Y</mi>
+<mo>=</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{X}^{y}(A)=E(1_{A}(X)|Y=y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{X}^{y}(A)=E(1_{A}(X)|Y=y)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ac77ab2aa324d8ef6653f6e5ff984e1fc0304fbb" style="vertical-align: -1.005ex; width:26.451ex; height:3.176ex;"/></span></p>
+<p id="mwAfM">Existence and uniqueness of the needed <a href="https://en.wikipedia.org/wiki/Conditional_expectation" id="mwAfQ" rel="mw:WikiLink" title="Conditional expectation">conditional expectation</a> is a consequence of the <a href="https://en.wikipedia.org/wiki/Radon–Nikodym_theorem" id="mwAfU" rel="mw:WikiLink" title="Radon–Nikodym theorem">Radon–Nikodym theorem</a>. <a href="https://en.wikipedia.org/wiki/Andrey_Kolmogorov" id="mwAfY" rel="mw:WikiLink" title="Andrey Kolmogorov">Andrey Kolmogorov</a> formulated this in 1933. He underlined the importance of conditional probability, writing, "I wish to call attention to ... the theory of conditional probabilities and conditional expectations".<sup about="#mwt216" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAfc"><span class="mw-reflink-text" id="mwAfg"><span class="cite-bracket" id="mwAfk">[</span>28<span class="cite-bracket" id="mwAfo">]</span></span></a></sup> Bayes' theorem determines the posterior distribution from the prior distribution. Uniqueness requires continuity assumptions.<sup about="#mwt219" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAfs"><span class="mw-reflink-text" id="mwAfw"><span class="cite-bracket" id="mwAf0">[</span>29<span class="cite-bracket" id="mwAf4">]</span></span></a></sup> Bayes' theorem can be generalized to include <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Improper_prior" id="mwAf8" rel="mw:WikiLink" title="Improper prior">improper prior</a> distributions such as the uniform distribution on the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Real_line" id="mwAgA" rel="mw:WikiLink" title="Real line">real line</a>.<sup about="#mwt222" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAgE"><span class="mw-reflink-text" id="mwAgI"><span class="cite-bracket" id="mwAgM">[</span>30<span class="cite-bracket" id="mwAgQ">]</span></span></a></sup> Modern <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo" id="mwAgU" rel="mw:WikiLink" title="Markov chain Monte Carlo">Markov chain Monte Carlo</a> methods have boosted the importance of Bayes' theorem, including in cases with improper priors.<sup about="#mwt225" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-32"}}' id="cite_ref-32" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-32" id="mwAgY"><span class="mw-reflink-text" id="mwAgc"><span class="cite-bracket" id="mwAgg">[</span>31<span class="cite-bracket" id="mwAgk">]</span></span></a></sup></p>
+<p id="mwAgs">Probabilities are sometimes specified in terms of <a href="https://en.wikipedia.org/wiki/Odds" id="mwAgw" rel="mw:WikiLink" title="Odds">odds</a>. For any proposition <span about="#mwt229" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAg0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>, the ratio of the probability that <span about="#mwt230" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAg4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> is true to the probability that <span about="#mwt231" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAg8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> is false is called the odds on <span about="#mwt232" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>.<sup about="#mwt235" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Jaynes2003"},"body":{"id":"mw-reference-text-cite_note-Jaynes2003-33"}}' id="cite_ref-Jaynes2003_33-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Jaynes2003-33" id="mwAhE"><span class="mw-reflink-text" id="mwAhI"><span class="cite-bracket" id="mwAhM">[</span>32<span class="cite-bracket" id="mwAhQ">]</span></span></a></sup><sup about="#mwt226" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"90"}},"i":0}}]}' id="mwAhU" typeof="mw:Transclusion"><span title="Page / location: 90"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>90<span typeof="mw:Entity"> </span></span></sup> Bayes' theorem can be written using odds as follows. First, apply Bayes' theorem to the probability that <span about="#mwt236" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAhY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> is true given some other proposition <span about="#mwt237" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwAhc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span>:<span about="#mwt238" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(A|B) = P(A) \\frac{P(B|A)}{P(B)}."}}' id="mwAhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(A|B)=P(A){\frac {P(B|A)}{P(B)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(A|B)=P(A){\frac {P(B|A)}{P(B)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(A|B)=P(A){\frac {P(B|A)}{P(B)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82a4a749759c1b021f39018e30faa0071f130cf5" style="vertical-align: -2.671ex; width:25.297ex; height:6.509ex;"/></span>Likewise, Bayes' theorem holds for the probability that <span about="#mwt239" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAhk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> is false:<span about="#mwt240" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(\\neg A|B) = P(\\neg A) \\frac{P(B|\\neg A)}{P(B)}."}}' id="mwAho" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(\neg A|B)=P(\neg A){\frac {P(B|\neg A)}{P(B)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(\neg A|B)=P(\neg A){\frac {P(B|\neg A)}{P(B)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(\neg A|B)=P(\neg A){\frac {P(B|\neg A)}{P(B)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5364f7a136b2c35b597e512bdc98d13a87942930" style="vertical-align: -2.671ex; width:29.948ex; height:6.509ex;"/></span>Dividing these two equations, the probability <span about="#mwt241" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B)"}}' id="mwAhs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e593d180a26fd68657ea50368dbfe1a661e652aa" style="vertical-align: -0.838ex; width:5.319ex; height:2.843ex;"/></span> drops out:<span about="#mwt242" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\frac{P(A|B)}{P(\\neg A|B)} = \\frac{P(A)}{P(\\neg A)} \\frac{P(B|A)}{P(B|\\neg A)}."}}' id="mwAhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {P(A|B)}{P(\neg A|B)}}={\frac {P(A)}{P(\neg A)}}{\frac {P(B|A)}{P(B|\neg A)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {P(A|B)}{P(\neg A|B)}}={\frac {P(A)}{P(\neg A)}}{\frac {P(B|A)}{P(B|\neg A)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {P(A|B)}{P(\neg A|B)}}={\frac {P(A)}{P(\neg A)}}{\frac {P(B|A)}{P(B|\neg A)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0d16b36df313199d24dc28878e0197311f601a56" style="vertical-align: -2.671ex; width:31.62ex; height:6.509ex;"/></span>Consequently, the odds of <span about="#mwt243" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAh0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> given <span about="#mwt244" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B"}}' id="mwAh4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47136aad860d145f75f3eed3022df827cee94d7a" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> are the odds of <span about="#mwt245" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwAh8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span> multiplied by the ratio <span about="#mwt246" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P(B|A)/P(B|\\neg A)"}}' id="mwAiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P(B|A)/P(B|\neg A)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P(B|A)/P(B|\neg A)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P(B|A)/P(B|\neg A)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/53636a30a2a0627235bcc4aef774e7dd1dc177ce" style="vertical-align: -0.838ex; width:18.13ex; height:2.843ex;"/></span>, a quantity called the <a href="https://en.wikipedia.org/wiki/Bayes_factor" id="mwAiE" rel="mw:WikiLink" title="Bayes factor">Bayes factor</a> or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Likelihood_ratio" id="mwAiI" rel="mw:WikiLink" title="Likelihood ratio">likelihood ratio</a>. In symbols:<span about="#mwt247" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"O(A|B) = O(A) \\frac{P(B|A)}{P(B|\\neg A)}."}}' id="mwAiM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(A|B)=O(A){\frac {P(B|A)}{P(B|\neg A)}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi mathvariant="normal">¬<!-- ¬ --></mi>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(A|B)=O(A){\frac {P(B|A)}{P(B|\neg A)}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(A|B)=O(A){\frac {P(B|A)}{P(B|\neg A)}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5798d8a16335e57c1b0a83a00edc8a4973b139fa" style="vertical-align: -2.671ex; width:26.903ex; height:6.509ex;"/></span>This is often summarized by saying that the <i id="mwAiQ">posterior odds</i> are the <i id="mwAiU">prior odds</i> times the likelihood.<sup about="#mwt248" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Jaynes2003"}}' id="cite_ref-Jaynes2003_33-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Jaynes2003-33" id="mwAiY"><span class="mw-reflink-text" id="mwAic"><span class="cite-bracket" id="mwAig">[</span>32<span class="cite-bracket" id="mwAik">]</span></span></a></sup><sup about="#mwt227" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"90"}},"i":0}}]}' id="mwAio" typeof="mw:Transclusion"><span title="Page / location: 90"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>90<span typeof="mw:Entity"> </span></span></sup><sup about="#mwt249" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bernardo2000"}}' id="cite_ref-Bernardo2000_22-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bernardo2000-22" id="mwAis"><span class="mw-reflink-text" id="mwAiw"><span class="cite-bracket" id="mwAi0">[</span>21<span class="cite-bracket" id="mwAi4">]</span></span></a></sup><sup about="#mwt228" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"49"}},"i":0}}]}' id="mwAi8" typeof="mw:Transclusion"><span title="Page / location: 49"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>49<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwAjA">For example, suppose that a disease has a prevalence of 1%, i.e., the probability that a randomly chosen person is infected is 0.01. And suppose that a test for the disease returns the correct result with 99% probability. The prior odds of being infected are<span about="#mwt250" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"O(\\text{infected}) = \\frac{P(\\text{infected})}{P(\\text{not infected})} = \\frac{0.01}{1-0.01} = \\frac{1}{99}."}}' id="mwAjE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{infected}})={\frac {P({\text{infected}})}{P({\text{not infected}})}}={\frac {0.01}{1-0.01}}={\frac {1}{99}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>not infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>0.01</mn>
+<mrow>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mn>0.01</mn>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mn>99</mn>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{infected}})={\frac {P({\text{infected}})}{P({\text{not infected}})}}={\frac {0.01}{1-0.01}}={\frac {1}{99}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{infected}})={\frac {P({\text{infected}})}{P({\text{not infected}})}}={\frac {0.01}{1-0.01}}={\frac {1}{99}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3b26ed0ee62abb4bf46b3d2a84793fa809c51106" style="vertical-align: -2.671ex; width:49.881ex; height:6.509ex;"/></span></p>
+<p id="mwAjI">The probability that the test is positive given an infection is 99%:<span about="#mwt251" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(\\text{positive}|\\text{infected}) = 0.99."}}' id="mwAjM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P({\text{positive}}|{\text{infected}})=0.99.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>positive</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>0.99.</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P({\text{positive}}|{\text{infected}})=0.99.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P({\text{positive}}|{\text{infected}})=0.99.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ddfd3d9ce484333366309a958fed9dc772c06b27" style="vertical-align: -0.838ex; width:27.856ex; height:2.843ex;"/></span>The probability that the test is negative given absence of an infection is also 99%, and so<span about="#mwt252" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P(\\text{positive}|\\text{not infected}) = 1 - P(\\text{negative}|\\text{not infected})\n= 1 - 0.99 = 0.01."}}' id="mwAjQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P({\text{positive}}|{\text{not infected}})=1-P({\text{negative}}|{\text{not infected}})=1-0.99=0.01.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>positive</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>not infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>negative</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>not infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mn>0.99</mn>
+<mo>=</mo>
+<mn>0.01.</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P({\text{positive}}|{\text{not infected}})=1-P({\text{negative}}|{\text{not infected}})=1-0.99=0.01.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P({\text{positive}}|{\text{not infected}})=1-P({\text{negative}}|{\text{not infected}})=1-0.99=0.01.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3fee8497e2ea1ef78f91a4a0fdad409b8e2d291c" style="vertical-align: -0.838ex; width:74.682ex; height:2.843ex;"/></span>The Bayes factor is the ratio<span about="#mwt253" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\frac{P(\\text{positive}|\\text{infected})}{P(\\text{positive}|\\text{not infected})}\n= \\frac{0.99}{0.01} = \\frac{99}{1}."}}' id="mwAjU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {P({\text{positive}}|{\text{infected}})}{P({\text{positive}}|{\text{not infected}})}}={\frac {0.99}{0.01}}={\frac {99}{1}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>positive</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>positive</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>not infected</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>0.99</mn>
+<mn>0.01</mn>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>99</mn>
+<mn>1</mn>
+</mfrac>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {P({\text{positive}}|{\text{infected}})}{P({\text{positive}}|{\text{not infected}})}}={\frac {0.99}{0.01}}={\frac {99}{1}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {P({\text{positive}}|{\text{infected}})}{P({\text{positive}}|{\text{not infected}})}}={\frac {0.99}{0.01}}={\frac {99}{1}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8924c1269dda39be437f8349a2521483f3c0422d" style="vertical-align: -2.671ex; width:39.728ex; height:6.509ex;"/></span>Therefore, the posterior odds of an infection given a positive test result are<span about="#mwt254" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\frac{1}{99} \\times \\frac{99}{1} = \\frac{1}{1};"}}' id="mwAjY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {1}{99}}\times {\frac {99}{1}}={\frac {1}{1}};}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mn>99</mn>
+</mfrac>
+</mrow>
+<mo>×<!-- × --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>99</mn>
+<mn>1</mn>
+</mfrac>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mn>1</mn>
+</mfrac>
+</mrow>
+<mo>;</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {1}{99}}\times {\frac {99}{1}}={\frac {1}{1}};}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {1}{99}}\times {\frac {99}{1}}={\frac {1}{1}};}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67556b919ac27ec28e43ee7d8ea75186a265f583" style="vertical-align: -1.838ex; width:14.906ex; height:5.176ex;"/></span>in other words, the posterior odds of infection are one to one, and the posterior probability of infection is 50%.<sup about="#mwt257" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-34"}}' id="cite_ref-34" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-34" id="mwAjc"><span class="mw-reflink-text" id="mwAjg"><span class="cite-bracket" id="mwAjk">[</span>33<span class="cite-bracket" id="mwAjo">]</span></span></a></sup></p>
+</div></div>
+</body></html>

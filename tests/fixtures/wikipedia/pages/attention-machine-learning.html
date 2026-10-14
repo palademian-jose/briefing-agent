@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Attention (machine learning) - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Attention (machine learning)</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwCQ">In <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwCg" rel="mw:WikiLink" title="Machine learning">machine learning</a>, <b id="mwCw">attention</b> is a method that determines the importance of each component in a sequence relative to the other components in that sequence. In <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwDA" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>, importance is represented by "soft" weights assigned to each word in a sentence. More generally, attention encodes <a href="https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)" id="mwDQ" rel="mw:WikiLink" title="Vector (mathematics and physics)">vectors</a> called <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Lexical_token" id="mwDg" rel="mw:WikiLink" title="Lexical token">token</a> <a href="https://en.wikipedia.org/wiki/Word_embedding" id="mwDw" rel="mw:WikiLink" title="Word embedding">embeddings</a> across a fixed-width <a href="https://en.wikipedia.org/wiki/Context_window" id="mwEA" rel="mw:WikiLink" title="Context window">sequence</a> that can range from tens to millions of tokens in size.</p>
+<p id="mwEQ">Unlike "hard" weights, which are computed during the backwards training pass, "soft" weights exist only in the forward pass and therefore change with every step of the input. Earlier designs implemented the attention mechanism in a serial <a href="https://en.wikipedia.org/wiki/Recurrent_neural_network" id="mwEg" rel="mw:WikiLink" title="Recurrent neural network">recurrent neural network</a> (RNN) language translation system, but a more recent design, namely the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)" id="mwEw" rel="mw:WikiLink" title="Transformer (machine learning model)">transformer</a>, removed the slower sequential RNN and relied more heavily on the faster parallel attention scheme.</p>
+<p id="mwFA">Inspired by ideas about <a href="https://en.wikipedia.org/wiki/Attention" id="mwFQ" rel="mw:WikiLink" title="Attention">attention in humans</a>, the attention mechanism was developed to address the weaknesses of using information from the <a href="https://en.wikipedia.org/wiki/Hidden_layer" id="mwFg" rel="mw:WikiLink" title="Hidden layer">hidden layers</a> of recurrent neural networks. Recurrent neural networks favor information contained in words at the end of a sentence and thus deemed more recent, thereby tending to <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" id="mwFw" rel="mw:WikiLink" title="Vanishing gradient problem">attenuate</a> the significance and associated predictive weight assigned to information earlier in the sentence. Attention allows a token equal access to any part of a sentence directly, rather than only through the previous state.</p>
+<p id="mw1Q">Additional surveys of the attention mechanism in deep learning are provided by Niu et al.<sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-33"}}' id="cite_ref-:0_33-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-33" id="mw1g"><span class="mw-reflink-text" id="mw1w"><span class="cite-bracket" id="mw2A">[</span>33<span class="cite-bracket" id="mw2Q">]</span></span></a></sup> and Soydaner.<sup about="#mwt51" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-34"}}' id="cite_ref-:1_34-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-34" id="mw2g"><span class="mw-reflink-text" id="mw2w"><span class="cite-bracket" id="mw3A">[</span>34<span class="cite-bracket" id="mw3Q">]</span></span></a></sup></p>
+<p id="mw3g">The major breakthrough came with self-attention, where each element in the input sequence attends to all others, enabling the model to capture global dependencies. This idea was central to the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_architecture" id="mw3w" rel="mw:WikiLink" title="Transformer architecture">Transformer architecture</a>, which replaced recurrence with attention mechanisms. As a result, Transformers became the foundation for models like <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" id="mw4A" rel="mw:WikiLink" title="BERT (language model)">BERT</a>, <a href="https://en.wikipedia.org/wiki/T5_(language_model)" id="mw4Q" rel="mw:WikiLink" title="T5 (language model)">T5</a> and <a href="https://en.wikipedia.org/wiki/Generative_pre-trained_transformer" id="mw4g" rel="mw:WikiLink" title="Generative pre-trained transformer">generative pre-trained transformers</a> (GPT).<sup about="#mwt52" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"allyouneed"}}' id="cite_ref-allyouneed_19-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-allyouneed-19" id="mw4w"><span class="mw-reflink-text" id="mw5A"><span class="cite-bracket" id="mw5Q">[</span>19<span class="cite-bracket" id="mw5g">]</span></span></a></sup></p>
+<p id="mw6Q">The modern era of machine attention was revitalized by grafting an attention mechanism (Fig 1. orange) to an Encoder-Decoder.<sup about="#mwt57" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-35"}}' id="cite_ref-35" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-35" id="mw6g"><span class="mw-reflink-text" id="mw6w"><span class="cite-bracket" id="mw7A">[</span>35<span class="cite-bracket" id="mw7Q">]</span></span></a></sup></p>
+<p id="mwAUo">Figure 2 shows the internal step-by-step operation of the attention block (A) in Fig 1.</p>
+<p id="mwAU0">In translating between languages, alignment is the process of matching words from the source sentence to words of the translated sentence. Networks that perform verbatim translation without regard to word order would show the highest scores along the (dominant) diagonal of the matrix. The off-diagonal dominance shows that the attention mechanism is more nuanced.</p>
+<p id="mwAU4">Consider an example of translating <i id="mwAU8">I love you</i> to French. On the first pass through the decoder, 94% of the attention weight is on the first English word <i id="mwAVA">I</i>, so the network offers the word <i id="mwAVE">je</i>. On the second pass of the decoder, 88% of the attention weight is on the third English word <i id="mwAVI">you</i>, so it offers <i id="mwAVM">t'</i>. On the last pass, 95% of the attention weight is on the second English word <i id="mwAVQ">love</i>, so it offers <i id="mwAVU">aime</i>.</p>
+<p id="mwAVY">In the <i id="mwAVc">I love you</i> example, the second word <i id="mwAVg">love</i> is aligned with the third word <i id="mwAVk">aime</i>. Stacking soft row vectors together for <i id="mwAVo">je</i>, <i id="mwAVs">t'</i>, and <i id="mwAVw">aime</i> yields an <a href="https://en.wikipedia.org/wiki/Statistical_machine_translation#Word_alignment" id="mwAV0" rel="mw:WikiLink" title="Statistical machine translation">alignment matrix</a>:</p>
+<p id="mwAXQ">Sometimes, alignment can be multiple-to-multiple. For example, the English phrase <i id="mwAXU">look it up</i> corresponds to <i id="mwAXY">cherchez-le</i>. Thus, "soft" attention weights work better than "hard" attention weights (setting one attention weight to 1, and the others to 0), as we would like the model to make a context vector consisting of a weighted sum of the hidden vectors, rather than "the best one", as there may not be a best hidden vector.</p>
+<p id="mwAXw">Many variants of attention implement soft weights, such as</p>
+<p id="mwAZ0">For <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" id="mwAZ4" rel="mw:WikiLink" title="Convolutional neural network">convolutional neural networks</a>, attention mechanisms can be distinguished by the dimension on which they operate, namely: spatial attention,<sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"xzhu1"}}' id="cite_ref-xzhu1_41-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-xzhu1-41" id="mwAZ8"><span class="mw-reflink-text" id="mwAaA"><span class="cite-bracket" id="mwAaE">[</span>41<span class="cite-bracket" id="mwAaI">]</span></span></a></sup> channel attention,<sup about="#mwt73" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"jhu1"}}' id="cite_ref-jhu1_42-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-jhu1-42" id="mwAaM"><span class="mw-reflink-text" id="mwAaQ"><span class="cite-bracket" id="mwAaU">[</span>42<span class="cite-bracket" id="mwAaY">]</span></span></a></sup> or combinations.<sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"psanghyun1"}}' id="cite_ref-psanghyun1_43-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-psanghyun1-43" id="mwAac"><span class="mw-reflink-text" id="mwAag"><span class="cite-bracket" id="mwAak">[</span>43<span class="cite-bracket" id="mwAao">]</span></span></a></sup><sup about="#mwt75" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mgeorgescu"}}' id="cite_ref-mgeorgescu_44-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mgeorgescu-44" id="mwAas"><span class="mw-reflink-text" id="mwAaw"><span class="cite-bracket" id="mwAa0">[</span>44<span class="cite-bracket" id="mwAa4">]</span></span></a></sup></p>
+<p id="mwAa8">These variants recombine the encoder-side inputs to redistribute those effects to each target output. Often, a correlation-style matrix of dot products provides the re-weighting coefficients.  In the figures below, W is the matrix of context attention weights, similar to the formula in Overview section above.</p>
+<p id="mwAiE">The size of the attention matrix is proportional to the square of the number of input tokens. Therefore, when the input is long, calculating the attention matrix requires a lot of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/GPU" id="mwAiI" rel="mw:WikiLink" title="GPU">GPU</a> memory. Flash attention is an implementation that reduces the memory needs and increases efficiency without sacrificing accuracy. It achieves this by partitioning the attention computation into smaller blocks that fit into the GPU's faster on-chip memory, reducing the need to store large intermediate matrices and thus lowering memory usage while increasing computational efficiency.<sup about="#mwt85" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-49"}}' id="cite_ref-49" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-49" id="mwAiM"><span class="mw-reflink-text" id="mwAiQ"><span class="cite-bracket" id="mwAiU">[</span>49<span class="cite-bracket" id="mwAiY">]</span></span></a></sup></p>
+<p id="mwAig">FlexAttention<sup about="#mwt88" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-50"}}' id="cite_ref-50" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-50" id="mwAik"><span class="mw-reflink-text" id="mwAio"><span class="cite-bracket" id="mwAis">[</span>50<span class="cite-bracket" id="mwAiw">]</span></span></a></sup> is an attention kernel developed by <a href="https://en.wikipedia.org/wiki/Meta_Platforms" id="mwAi0" rel="mw:WikiLink" title="Meta Platforms">Meta</a> that allows users to modify attention scores prior to <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Softmax" id="mwAi4" rel="mw:WikiLink" title="Softmax">softmax</a> and dynamically chooses the optimal attention algorithm.</p>
+<p id="mwAjA">Attention is widely used in <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwAjE" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>, <a href="https://en.wikipedia.org/wiki/Computer_vision" id="mwAjI" rel="mw:WikiLink" title="Computer vision">computer vision</a>, and <a href="https://en.wikipedia.org/wiki/Speech_recognition" id="mwAjM" rel="mw:WikiLink" title="Speech recognition">speech recognition</a>. In natural language processing, it improves context understanding in tasks like question answering and summarization. In vision, visual attention helps models focus on relevant image regions, enhancing object detection and image captioning.</p>
+<p id="mwAjc">From the original paper on <a href="https://en.wikipedia.org/wiki/Vision_transformer" id="mwAjg" rel="mw:WikiLink" title="Vision transformer">vision transformers</a> (ViT), visualizing attention scores as a heat map (called <a href="https://en.wikipedia.org/wiki/Saliency_map" id="mwAjk" rel="mw:WikiLink" title="Saliency map">saliency maps</a> or attention maps) has become an important and routine way to inspect the decision making process of ViT models.<sup about="#mwt93" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-51"}}' id="cite_ref-51" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-51" id="mwAjo"><span class="mw-reflink-text" id="mwAjs"><span class="cite-bracket" id="mwAjw">[</span>51<span class="cite-bracket" id="mwAj0">]</span></span></a></sup> One can compute the attention maps with respect to any attention head at any layer, while the deeper layers tend to show more semantically meaningful visualization. Attention rollout is a recursive algorithm to combine attention scores across all layers, by computing the dot product of successive attention maps.<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-52"}}' id="cite_ref-52" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-52" id="mwAj4"><span class="mw-reflink-text" id="mwAj8"><span class="cite-bracket" id="mwAkA">[</span>52<span class="cite-bracket" id="mwAkE">]</span></span></a></sup></p>
+<p id="mwAkI">Because vision transformers are typically trained in a <a href="https://en.wikipedia.org/wiki/Self-supervised_learning" id="mwAkM" rel="mw:WikiLink" title="Self-supervised learning">self-supervised</a> manner, attention maps are generally not class-sensitive. When a classification head is attached to the ViT backbone, class-discriminative attention maps (CDAM) combines attention maps and gradients with respect to the class <code id="mwAkQ">[CLS]</code> token.<sup about="#mwt99" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-53"}}' id="cite_ref-53" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-53" id="mwAkU"><span class="mw-reflink-text" id="mwAkY"><span class="cite-bracket" id="mwAkc">[</span>53<span class="cite-bracket" id="mwAkg">]</span></span></a></sup> Some class-sensitive <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Interpretability_(machine_learning)" id="mwAkk" rel="mw:WikiLink" title="Interpretability (machine learning)">interpretability</a> methods originally developed for <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" id="mwAko" rel="mw:WikiLink" title="Convolutional neural network">convolutional neural networks</a> can be also applied to ViT, such as GradCAM, which <a href="https://en.wikipedia.org/wiki/Backpropagation" id="mwAks" rel="mw:WikiLink" title="Backpropagation">back-propagates</a> the gradients to the outputs of the final attention layer.<sup about="#mwt102" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-54"}}' id="cite_ref-54" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-54" id="mwAkw"><span class="mw-reflink-text" id="mwAk0"><span class="cite-bracket" id="mwAk4">[</span>54<span class="cite-bracket" id="mwAk8">]</span></span></a></sup></p>
+<p id="mwAlA">Using attention as basis of explanation for the transformers in language and vision is not without debate. While some pioneering papers analyzed and framed attention scores as explanations,<sup about="#mwt105" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-55"}}' id="cite_ref-55" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-55" id="mwAlE"><span class="mw-reflink-text" id="mwAlI"><span class="cite-bracket" id="mwAlM">[</span>55<span class="cite-bracket" id="mwAlQ">]</span></span></a></sup><sup about="#mwt108" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-56"}}' id="cite_ref-56" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-56" id="mwAlU"><span class="mw-reflink-text" id="mwAlY"><span class="cite-bracket" id="mwAlc">[</span>56<span class="cite-bracket" id="mwAlg">]</span></span></a></sup> higher attention scores do not always correlate with greater impact on model performances.<sup about="#mwt111" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-57"}}' id="cite_ref-57" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-57" id="mwAlk"><span class="mw-reflink-text" id="mwAlo"><span class="cite-bracket" id="mwAls">[</span>57<span class="cite-bracket" id="mwAlw">]</span></span></a></sup></p>
+<p id="mwAl8">For matrices: <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q\\in\\mathbb{R}^{m\\times d_k}, K\\in\\mathbb{R}^{n\\times d_k}"}}' id="mwAmA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q\in \mathbb {R} ^{m\times d_{k}},K\in \mathbb {R} ^{n\times d_{k}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>×<!-- × --></mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>K</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q\in \mathbb {R} ^{m\times d_{k}},K\in \mathbb {R} ^{n\times d_{k}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q\in \mathbb {R} ^{m\times d_{k}},K\in \mathbb {R} ^{n\times d_{k}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32465b005ab325fcae5d7dc472b578d060b8ff99" style="vertical-align: -0.671ex; width:22.855ex; height:3.009ex;"/></span> and <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V\\in\\mathbb{R}^{n\\times d_v}"}}' id="mwAmE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V\in \mathbb {R} ^{n\times d_{v}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V\in \mathbb {R} ^{n\times d_{v}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V\in \mathbb {R} ^{n\times d_{v}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/202925a11ae6c1678f0975f8902dfc398a8626e3" style="vertical-align: -0.338ex; width:10.469ex; height:2.676ex;"/></span>, the scaled dot-product, or QKV attention, is defined as:
+<span about="#mwt114" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V\\in\\mathbb{R}^{m\\times d_v}"}}' id="mwAmI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}\right)V\in \mathbb {R} ^{m\times d_{v}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mrow>
+<mo>(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>Q</mi>
+<msup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+</mrow>
+<msqrt>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</msqrt>
+</mfrac>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mi>V</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>×<!-- × --></mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}\right)V\in \mathbb {R} ^{m\times d_{v}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}\right)V\in \mathbb {R} ^{m\times d_{v}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/db3106d8746fa638cda2e3440cd2438c7e682bde" style="vertical-align: -3.171ex; width:52.111ex; height:7.509ex;"/></span>
+where <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"{}^T"}}' id="mwAmM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {}^{T}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {}^{T}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {}^{T}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8f5df5b5ecb120f5e7f4837d839c7c3181a08346" style="vertical-align: -0.171ex; width:1.389ex; height:2.509ex;"/></span> denotes <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Matrix_transpose" id="mwAmQ" rel="mw:WikiLink" title="Matrix transpose">transpose</a> and the <a href="https://en.wikipedia.org/wiki/Softmax_function" id="mwAmU" rel="mw:WikiLink" title="Softmax function">softmax function</a> is applied independently to every row of its argument. The matrix <span about="#mwt116" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q"}}' id="mwAmY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8752c7023b4b3286800fe3238271bbca681219ed" style="vertical-align: -0.671ex; width:1.838ex; height:2.509ex;"/></span> contains <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAmc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> queries, while matrices <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K, V"}}' id="mwAmg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle K,V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle K,V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle K,V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1059d12adb442403ba8c33fd0379064bb9754bb" style="vertical-align: -0.671ex; width:4.887ex; height:2.509ex;"/></span> jointly contain an <i id="mwAmk">unordered</i> set of <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAmo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> key-value pairs. Value vectors in matrix <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwAms" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> are weighted using the weights resulting from the softmax operation, so that the rows of the <span about="#mwt121" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAmw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span>-by-<span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d_v"}}' id="mwAm0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle d_{v}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle d_{v}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle d_{v}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4034edfd613443b0938cb4da1899ab1ce102da2a" style="vertical-align: -0.671ex; width:2.239ex; height:2.509ex;"/></span> output matrix are confined to the <a href="https://en.wikipedia.org/wiki/Convex_hull" id="mwAm4" rel="mw:WikiLink" title="Convex hull">convex hull</a> of the points in <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbb{R}^{d_v}"}}' id="mwAm8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {R} ^{d_{v}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {R} ^{d_{v}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {R} ^{d_{v}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f17b1fab835e9a966e7a1f9c75875f98d3de3970" style="vertical-align: -0.338ex; width:3.577ex; height:2.676ex;"/></span> given by the rows of <span about="#mwt124" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwAnA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span>.</p>
+<p id="mwAnE">To understand the permutation invariance and permutation equivariance properties of QKV attention,<sup about="#mwt127" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"SetTransformer"},"body":{"id":"mw-reference-text-cite_note-SetTransformer-58"}}' id="cite_ref-SetTransformer_58-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-SetTransformer-58" id="mwAnI"><span class="mw-reflink-text" id="mwAnM"><span class="cite-bracket" id="mwAnQ">[</span>58<span class="cite-bracket" id="mwAnU">]</span></span></a></sup> let <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A\\in\\mathbb{R}^{m\\times m}"}}' id="mwAnY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A\in \mathbb {R} ^{m\times m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>×<!-- × --></mo>
+<mi>m</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A\in \mathbb {R} ^{m\times m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A\in \mathbb {R} ^{m\times m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/900e5c7a9590bf32dbf6130f6f7579df9027d80c" style="vertical-align: -0.338ex; width:10.658ex; height:2.343ex;"/></span> and <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"B\\in\\mathbb{R}^{n\\times n}"}}' id="mwAnc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle B\in \mathbb {R} ^{n\times n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>B</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle B\in \mathbb {R} ^{n\times n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle B\in \mathbb {R} ^{n\times n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a6da48b3b39c68ecfdbddb3367c0bb9c6c5dab8" style="vertical-align: -0.338ex; width:9.766ex; height:2.343ex;"/></span> be <a href="https://en.wikipedia.org/wiki/Permutation_matrix" id="mwAng" rel="mw:WikiLink" title="Permutation matrix">permutation matrices</a>; and <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D\\in\\mathbb{R}^{m\\times n}"}}' id="mwAnk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D\in \mathbb {R} ^{m\times n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D\in \mathbb {R} ^{m\times n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D\in \mathbb {R} ^{m\times n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4078865760ea47300ba9eb9958cbc326e836c6da" style="vertical-align: -0.338ex; width:10.383ex; height:2.343ex;"/></span> an arbitrary matrix. The softmax function is permutation equivariant in the sense that:
+<span about="#mwt131" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\text{softmax}(ADB) = A\\,\\text{softmax}(D)B\n"}}' id="mwAno" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{softmax}}(ADB)=A\,{\text{softmax}}(D)B}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mi>D</mi>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>A</mi>
+<mspace width="thinmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>D</mi>
+<mo stretchy="false">)</mo>
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{softmax}}(ADB)=A\,{\text{softmax}}(D)B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{softmax}}(ADB)=A\,{\text{softmax}}(D)B}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/03aacfdd979d855aff47c20abf94d6d4f5271a20" style="vertical-align: -0.838ex; width:34.009ex; height:2.843ex;"/></span>
+By noting that the transpose of a permutation matrix is also its inverse, it follows that:
+<span about="#mwt132" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\text{Attention}(AQ, BK, BV) = A\\,\\text{Attention}(Q, K, V)\n"}}' id="mwAns" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{Attention}}(AQ,BK,BV)=A\,{\text{Attention}}(Q,K,V)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mi>K</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>A</mi>
+<mspace width="thinmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{Attention}}(AQ,BK,BV)=A\,{\text{Attention}}(Q,K,V)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{Attention}}(AQ,BK,BV)=A\,{\text{Attention}}(Q,K,V)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8cdee6b028b70be2e05e00a58783c9f9c646e24e" style="vertical-align: -0.838ex; width:49.405ex; height:2.843ex;"/></span>
+which shows that QKV attention is <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Equivariance" id="mwAnw" rel="mw:WikiLink" title="Equivariance">equivariant</a> with respect to re-ordering the queries (rows of <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q"}}' id="mwAn0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8752c7023b4b3286800fe3238271bbca681219ed" style="vertical-align: -0.671ex; width:1.838ex; height:2.509ex;"/></span>); and <a href="https://en.wikipedia.org/wiki/Invariant_(mathematics)" id="mwAn4" rel="mw:WikiLink" title="Invariant (mathematics)">invariant</a> to re-ordering of the key-value pairs in <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K, V"}}' id="mwAn8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle K,V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle K,V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle K,V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1059d12adb442403ba8c33fd0379064bb9754bb" style="vertical-align: -0.671ex; width:4.887ex; height:2.509ex;"/></span>. These properties are inherited when applying linear transforms to the inputs and outputs of QKV attention blocks. For example, a simple self-attention function defined as:
+<span about="#mwt135" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\nX\\mapsto\\text{Attention}(XT_q, XT_k, XT_v)\n"}}' id="mwAoA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X\mapsto {\text{Attention}}(XT_{q},XT_{k},XT_{v})}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+<mo stretchy="false">↦<!-- ↦ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>q</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X\mapsto {\text{Attention}}(XT_{q},XT_{k},XT_{v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X\mapsto {\text{Attention}}(XT_{q},XT_{k},XT_{v})}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d70ba131ae5fab0bf4ed87a19c9e32fdb306d1e7" style="vertical-align: -1.005ex; width:32.475ex; height:3.009ex;"/></span>  
+is permutation equivariant with respect to re-ordering the rows of the input matrix <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X"}}' id="mwAoE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/68baa052181f707c662844a465bfeeb135e82bab" style="vertical-align: -0.338ex; width:1.98ex; height:2.176ex;"/></span> in a non-trivial way, because every row of the output is a function of all the rows of the input. Similar properties hold for <i id="mwAoI">multi-head attention</i>, which is defined below.</p>
+<p id="mwAoQ">When QKV attention is used as a building block for an autoregressive decoder, and when at training time all input and output matrices have <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAoU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> rows, a masked attention variant is used:
+<span about="#mwt138" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}+M\\right)V\n"}}' id="mwAoY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}+M\right)V}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mrow>
+<mo>(</mo>
+<mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>Q</mi>
+<msup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+</mrow>
+<msqrt>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</msqrt>
+</mfrac>
+</mrow>
+<mo>+</mo>
+<mi>M</mi>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}+M\right)V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}\left({\frac {QK^{T}}{\sqrt {d_{k}}}}+M\right)V}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f2344362e74c257757b96397c5e7d2acb2f27f07" style="vertical-align: -3.171ex; width:48.255ex; height:7.509ex;"/></span>
+where the mask, <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"M\\in\\mathbb{\\{0, -\\infty\\}}^{n\\times n}"}}' id="mwAoc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle M\in \mathbb {\{0,-\infty \}} ^{n\times n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>M</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo fence="false" stretchy="false">{</mo>
+<mn mathvariant="double-struck">0</mn>
+<mo mathvariant="double-struck">,</mo>
+<mo mathvariant="double-struck">−<!-- − --></mo>
+<mi mathvariant="normal">∞<!-- ∞ --></mi>
+<mo fence="false" stretchy="false">}</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle M\in \mathbb {\{0,-\infty \}} ^{n\times n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle M\in \mathbb {\{0,-\infty \}} ^{n\times n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa684e05412fab623f94c1f3b76703b655cd6f37" style="vertical-align: -0.838ex; width:16.774ex; height:3.009ex;"/></span> is a <a href="https://en.wikipedia.org/wiki/Triangular_matrix" id="mwAog" rel="mw:WikiLink" title="Triangular matrix">strictly upper triangular matrix</a>, with zeros on and below the diagonal and <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"-\\infty"}}' id="mwAok" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle -\infty }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>−<!-- − --></mo>
+<mi mathvariant="normal">∞<!-- ∞ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle -\infty }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle -\infty }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ca2608c4b5fd3bffc73585f8c67e379b4e99b6f1" style="vertical-align: -0.505ex; width:4.132ex; height:2.176ex;"/></span> in every element above the diagonal. The softmax output, in <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbb{R}^{n\\times n}"}}' id="mwAoo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {R} ^{n\times n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {R} ^{n\times n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {R} ^{n\times n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7095e87521f2c247d021fa7101072f11beba0a70" style="vertical-align: -0.338ex; width:5.161ex; height:2.343ex;"/></span> is then <i id="mwAos">lower triangular</i>, with zeros in all elements above the diagonal. The masking ensures that for all <span about="#mwt142" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1\\le i&lt;j\\le n"}}' id="mwAow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1\leq i&lt;j\leq n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>≤<!-- ≤ --></mo>
+<mi>i</mi>
+<mo>&lt;</mo>
+<mi>j</mi>
+<mo>≤<!-- ≤ --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1\leq i&lt;j\leq n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1\leq i&lt;j\leq n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/05aa5c14ef41693716e76cecdd716851f4f5d304" style="vertical-align: -0.671ex; width:13.613ex; height:2.509ex;"/></span>, row <span about="#mwt143" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwAo0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span> of the attention output is independent of row <span about="#mwt144" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwAo4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span> of any of the three input matrices. The permutation invariance and equivariance properties of standard QKV attention do not hold for the masked variant.</p>
+<p id="mwApQ">Multi-head attention
+<span about="#mwt145" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n    \\text{MultiHead}(Q, K, V) = \\text{Concat}(\\text{head}_1, ..., \\text{head}_h)W^O\n"}}' id="mwApU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{MultiHead}}(Q,K,V)={\text{Concat}}({\text{head}}_{1},...,{\text{head}}_{h})W^{O}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>MultiHead</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Concat</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>head</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>head</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>h</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>O</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{MultiHead}}(Q,K,V)={\text{Concat}}({\text{head}}_{1},...,{\text{head}}_{h})W^{O}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{MultiHead}}(Q,K,V)={\text{Concat}}({\text{head}}_{1},...,{\text{head}}_{h})W^{O}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/008a9557a33d71fa3d16abe664eb4fc257d5a6db" style="vertical-align: -0.838ex; width:53.518ex; height:3.176ex;"/></span>
+where each head is computed with QKV attention as:
+<span about="#mwt146" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n    \\text{head}_i = \\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)\n"}}' id="mwApY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{head}}_{i}={\text{Attention}}(QW_{i}^{Q},KW_{i}^{K},VW_{i}^{V})}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>head</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<mi>K</mi>
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<mi>V</mi>
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>V</mi>
+</mrow>
+</msubsup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{head}}_{i}={\text{Attention}}(QW_{i}^{Q},KW_{i}^{K},VW_{i}^{V})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{head}}_{i}={\text{Attention}}(QW_{i}^{Q},KW_{i}^{K},VW_{i}^{V})}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fba64142fc62f2da5f4ed116d6cc19772a89bba" style="vertical-align: -1.005ex; width:40.375ex; height:3.509ex;"/></span>
+and <span about="#mwt147" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W_i^Q, W_i^K, W_i^V"}}' id="mwApc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W_{i}^{Q},W_{i}^{K},W_{i}^{V}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<msubsup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>V</mi>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W_{i}^{Q},W_{i}^{K},W_{i}^{V}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W_{i}^{Q},W_{i}^{K},W_{i}^{V}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3087f1739ddc134719d701163d3a75af985498b1" style="vertical-align: -1.005ex; width:14.313ex; height:3.509ex;"/></span>, and <span about="#mwt148" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W^O"}}' id="mwApg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W^{O}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>O</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W^{O}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W^{O}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7f0f376fd1863b3a195a6bf34b56ff43ec5d695f" style="vertical-align: -0.338ex; width:3.994ex; height:2.676ex;"/></span> are parameter matrices.</p>
+<p id="mwApk">The permutation properties of (standard, unmasked) QKV attention apply here also. For permutation matrices, <span about="#mwt149" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A, B"}}' id="mwApo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A,B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>,</mo>
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A,B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A,B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/96c3298ea9aa77c226be56a7d8515baaa517b90b" style="vertical-align: -0.671ex; width:4.541ex; height:2.509ex;"/></span>:
+<span about="#mwt150" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n\\text{MultiHead}(AQ, BK, BV) = A\\,\\text{MultiHead}(Q, K, V)\n"}}' id="mwAps" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{MultiHead}}(AQ,BK,BV)=A\,{\text{MultiHead}}(Q,K,V)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>MultiHead</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mi>K</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>A</mi>
+<mspace width="thinmathspace"></mspace>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>MultiHead</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{MultiHead}}(AQ,BK,BV)=A\,{\text{MultiHead}}(Q,K,V)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{MultiHead}}(AQ,BK,BV)=A\,{\text{MultiHead}}(Q,K,V)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d3b87f0747c0651491cc17e9b81eb7c3256dc782" style="vertical-align: -0.838ex; width:51.342ex; height:2.843ex;"/></span>
+from which we also see that multi-head self-attention:
+<span about="#mwt151" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\nX\\mapsto\\text{MultiHead}(XT_q, XT_k, XT_v)\n"}}' id="mwApw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X\mapsto {\text{MultiHead}}(XT_{q},XT_{k},XT_{v})}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+<mo stretchy="false">↦<!-- ↦ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>MultiHead</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>q</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>X</mi>
+<msub>
+<mi>T</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>v</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X\mapsto {\text{MultiHead}}(XT_{q},XT_{k},XT_{v})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X\mapsto {\text{MultiHead}}(XT_{q},XT_{k},XT_{v})}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0630d9f93e5736f659a56b908fa8234198c3672c" style="vertical-align: -1.005ex; width:33.443ex; height:3.009ex;"/></span>  
+is equivariant with respect to re-ordering of the rows of input matrix <span about="#mwt152" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X"}}' id="mwAp0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>X</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/68baa052181f707c662844a465bfeeb135e82bab" style="vertical-align: -0.338ex; width:1.98ex; height:2.176ex;"/></span>.</p>
+<p id="mwAp8"><span about="#mwt153" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\text{Attention}(Q, K, V) = \\text{softmax}(\\tanh(W_QQ + W_KK))V"}}' id="mwAqA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(\tanh(W_{Q}Q+W_{K}K))V}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>tanh</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msub>
+<mi>Q</mi>
+<mo>+</mo>
+<msub>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msub>
+<mi>K</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(\tanh(W_{Q}Q+W_{K}K))V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(\tanh(W_{Q}Q+W_{K}K))V}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/40d34445e83f991acd397ab8979f2f194f5c530e" style="vertical-align: -1.005ex; width:54.987ex; height:3.009ex;"/></span>
+where <span about="#mwt154" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W_Q"}}' id="mwAqE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W_{Q}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W_{Q}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W_{Q}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/27233f4471dd458034969c094d1ac13bff1e38d1" style="vertical-align: -1.005ex; width:3.726ex; height:2.843ex;"/></span> and <span about="#mwt155" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W_K"}}' id="mwAqI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W_{K}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W_{K}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W_{K}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1476608b04371ce36cdf6625d8b9ba8a96c615b9" style="vertical-align: -0.671ex; width:3.887ex; height:2.509ex;"/></span> are learnable weight matrices.<sup about="#mwt156" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"bahdanau"}}' id="cite_ref-bahdanau_11-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-bahdanau-11" id="mwAqM"><span class="mw-reflink-text" id="mwAqQ"><span class="cite-bracket" id="mwAqU">[</span>11<span class="cite-bracket" id="mwAqY">]</span></span></a></sup></p>
+<p id="mwAqg"><span about="#mwt157" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\n    \\text{Attention}(Q, K, V) = \\text{softmax}(QWK^T)V\n"}}' id="mwAqk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(QWK^{T})V}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Attention</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mo>,</mo>
+<mi>K</mi>
+<mo>,</mo>
+<mi>V</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>softmax</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>Q</mi>
+<mi>W</mi>
+<msup>
+<mi>K</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(QWK^{T})V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{Attention}}(Q,K,V)={\text{softmax}}(QWK^{T})V}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5e929a24c593127608cadcb84997c67fdb434741" style="vertical-align: -0.838ex; width:41.925ex; height:3.176ex;"/></span>
+where <span about="#mwt158" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"W"}}' id="mwAqo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle W}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>W</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle W}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle W}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54a9c4c547f4d6111f81946cad242b18298d70b7" style="vertical-align: -0.338ex; width:2.435ex; height:2.176ex;"/></span> is a learnable weight matrix.<sup about="#mwt159" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"xy-dot"}}' id="cite_ref-xy-dot_39-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-xy-dot-39" id="mwAqs"><span class="mw-reflink-text" id="mwAqw"><span class="cite-bracket" id="mwAq0">[</span>39<span class="cite-bracket" id="mwAq4">]</span></span></a></sup></p>
+<p id="mwArA">Self-attention is essentially the same as cross-attention, except that query, key, and value vectors all come from the same model. Both encoder and decoder can use self-attention, but with subtle differences.</p>
+<p id="mwArE">For encoder self-attention, we can start with a simple encoder without self-attention, such as an "embedding layer", which simply converts each input word into a vector by a fixed <a href="https://en.wikipedia.org/wiki/Lookup_table" id="mwArI" rel="mw:WikiLink" title="Lookup table">lookup table</a>. This gives a sequence of hidden vectors <span about="#mwt160" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_0, h_1, \\dots "}}' id="mwArM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{0},h_{1},\dots }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{0},h_{1},\dots }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{0},h_{1},\dots }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1c31f089081e2b1d4e3022a7c2e090cb393f74b5" style="vertical-align: -0.671ex; width:9.578ex; height:2.509ex;"/></span>. These can then be applied to a dot-product attention mechanism, to obtain<span about="#mwt161" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;\\begin{aligned}\nh_0' &amp;= \\mathrm{Attention}(h_0 W^Q, HW^K, H W^V) \\\\ \nh_1' &amp;= \\mathrm{Attention}(h_1 W^Q, HW^K, H W^V) \\\\\n&amp;\\;\\,\\vdots\n\\end{aligned}  &quot;}}" id="mwArQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{aligned}h_{0}'&amp;=\mathrm {Attention} (h_{0}W^{Q},HW^{K},HW^{V})\\h_{1}'&amp;=\mathrm {Attention} (h_{1}W^{Q},HW^{K},HW^{V})\\&amp;\;\,\vdots \end{aligned}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true" rowspacing="3pt">
+<mtr>
+<mtd>
+<msubsup>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+<mo>′</mo>
+</msubsup>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">A</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">e</mi>
+<mi mathvariant="normal">n</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">i</mi>
+<mi mathvariant="normal">o</mi>
+<mi mathvariant="normal">n</mi>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>V</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msubsup>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mo>′</mo>
+</msubsup>
+</mtd>
+<mtd>
+<mi></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">A</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">e</mi>
+<mi mathvariant="normal">n</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">i</mi>
+<mi mathvariant="normal">o</mi>
+<mi mathvariant="normal">n</mi>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>V</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd></mtd>
+<mtd>
+<mi></mi>
+<mspace width="thickmathspace"></mspace>
+<mspace width="thinmathspace"></mspace>
+<mo>⋮<!-- ⋮ --></mo>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}h_{0}'&amp;=\mathrm {Attention} (h_{0}W^{Q},HW^{K},HW^{V})\\h_{1}'&amp;=\mathrm {Attention} (h_{1}W^{Q},HW^{K},HW^{V})\\&amp;\;\,\vdots \end{aligned}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\begin{aligned}h_{0}'&amp;=\mathrm {Attention} (h_{0}W^{Q},HW^{K},HW^{V})\\h_{1}'&amp;=\mathrm {Attention} (h_{1}W^{Q},HW^{K},HW^{V})\\&amp;\;\,\vdots \end{aligned}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2c8313b988269a80d9ff4a821dd650a069eb5ed7" style="vertical-align: -5.005ex; width:38.769ex; height:11.176ex;"/></span>or more succinctly, <span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;H' = \\mathrm{Attention}(H W^Q, HW^K, H W^V)   &quot;}}" id="mwArU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H'=\mathrm {Attention} (HW^{Q},HW^{K},HW^{V})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>H</mi>
+<mo>′</mo>
+</msup>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">A</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">e</mi>
+<mi mathvariant="normal">n</mi>
+<mi mathvariant="normal">t</mi>
+<mi mathvariant="normal">i</mi>
+<mi mathvariant="normal">o</mi>
+<mi mathvariant="normal">n</mi>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>Q</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>K</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mi>H</mi>
+<msup>
+<mi>W</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>V</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H'=\mathrm {Attention} (HW^{Q},HW^{K},HW^{V})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H'=\mathrm {Attention} (HW^{Q},HW^{K},HW^{V})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f4c3a1f071c91152b75f73e4dce95c0ceb90394c" style="vertical-align: -0.838ex; width:38.083ex; height:3.176ex;"/></span>. This can be applied repeatedly, to obtain a multilayered encoder. This is the "encoder self-attention", sometimes called the "all-to-all attention", as the vector at every position can attend to every other.</p>
+<p id="mwArs">For decoder self-attention, all-to-all attention is inappropriate, because during the autoregressive decoding process, the decoder cannot attend to future outputs that has yet to be decoded. This can be solved by forcing the attention weights <span about="#mwt163" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_{ij} = 0 "}}' id="mwArw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{ij}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{ij}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{ij}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/22675f237ad99282d4a6cd7e9742aeeeb1e049fb" style="vertical-align: -1.005ex; width:7.402ex; height:2.843ex;"/></span> for all <span about="#mwt164" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i &lt; j "}}' id="mwAr0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i&lt;j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>&lt;</mo>
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i&lt;j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i&lt;j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e60ff2d1b23e30fb2979e8c1536da03493f943cf" style="vertical-align: -0.671ex; width:4.859ex; height:2.509ex;"/></span>, called "causal masking". This attention mechanism is the "causally masked self-attention".</p>
+</div></div>
+</body></html>

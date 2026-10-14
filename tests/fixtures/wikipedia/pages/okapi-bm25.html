@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Okapi BM25 - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Okapi BM25</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">In <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwBA" rel="mw:WikiLink" title="Information retrieval">information retrieval</a>, <b id="mwBQ">Okapi BM25</b> (<i id="mwBg">BM</i> is an abbreviation of <i id="mwBw">best matching</i>) is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Ranking_function" id="mwCA" rel="mw:WikiLink" title="Ranking function">ranking function</a> used by <a href="https://en.wikipedia.org/wiki/Search_engine" id="mwCQ" rel="mw:WikiLink" title="Search engine">search engines</a> to estimate the <a href="https://en.wikipedia.org/wiki/Relevance_(information_retrieval)" id="mwCg" rel="mw:WikiLink" title="Relevance (information retrieval)">relevance</a> of documents to a given search query. It is based on the <a href="https://en.wikipedia.org/wiki/Probabilistic_relevance_model" id="mwCw" rel="mw:WikiLink" title="Probabilistic relevance model">probabilistic retrieval framework</a> developed in the 1970s and 1980s by <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Stephen_E._Robertson" id="mwDA" rel="mw:WikiLink" title="Stephen E. Robertson">Stephen E. Robertson</a>, <a href="https://en.wikipedia.org/wiki/Karen_Spärck_Jones" id="mwDQ" rel="mw:WikiLink" title="Karen Spärck Jones">Karen Spärck Jones</a>, and others.</p>
+<p id="mwDg">The name of the actual ranking function is <i id="mwDw">BM25</i>. The fuller name, <i id="mwEA">Okapi BM25</i>, includes the name of the first system to use it, which was the Okapi information retrieval system, implemented at <a href="https://en.wikipedia.org/wiki/London" id="mwEQ" rel="mw:WikiLink" title="London">London</a>'s <a class="mw-redirect" href="https://en.wikipedia.org/wiki/City_University,_London" id="mwEg" rel="mw:WikiLink" title="City University, London">City University</a><sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwEw"><span class="mw-reflink-text" id="mwFA"><span class="cite-bracket" id="mwFQ">[</span>1<span class="cite-bracket" id="mwFg">]</span></span></a></sup> in the 1980s and 1990s. BM25 and its newer variants, e.g. BM25F (a version of BM25 that can take document structure and <a href="https://en.wikipedia.org/wiki/Anchor_text" id="mwFw" rel="mw:WikiLink" title="Anchor text">anchor text</a> into account), represent <a class="mw-redirect" href="https://en.wikipedia.org/wiki/TF-IDF" id="mwGA" rel="mw:WikiLink" title="TF-IDF">TF-IDF</a>-like retrieval functions used in <a href="https://en.wikipedia.org/wiki/Document_retrieval" id="mwGQ" rel="mw:WikiLink" title="Document retrieval">document retrieval</a>.<sup about="#mwt5" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"robertson2009"}}' id="cite_ref-robertson2009_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-robertson2009-2" id="mwGg"><span class="mw-reflink-text" id="mwGw"><span class="cite-bracket" id="mwHA">[</span>2<span class="cite-bracket" id="mwHQ">]</span></span></a></sup></p>
+<p id="mwIA">BM25 is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Bag_of_words_model" id="mwIQ" rel="mw:WikiLink" title="Bag of words model">bag-of-words</a> retrieval function that ranks a set of documents based on the query terms appearing in each document, regardless of their proximity within the document. It is a family of scoring functions with slightly different components and parameters. One of the most prominent instantiations of the function is as follows.</p>
+<p id="mwIg">Given a query <span about="#mwt6" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"Q"}},"i":0}}]}' id="mwIw" style="font-style:italic;" typeof="mw:Transclusion">Q</span>, containing keywords <span about="#mwt8" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_1, ..., q_n"}}' id="mwJA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{1},...,q_{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{1},...,q_{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{1},...,q_{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4024517280628a21186b246939a2cc89c937f7e3" style="vertical-align: -0.671ex; width:9.516ex; height:2.009ex;"/></span>, the BM25 score of a document <span about="#mwt7" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwJQ" style="font-style:italic;" typeof="mw:Transclusion">D</span> is:</p>
+<p id="mwKQ">where <span about="#mwt14" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(q_i, D)"}}' id="mwKg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(q_{i},D)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>D</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(q_{i},D)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(q_{i},D)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7caf2f93a6527d4a76c07bd67980ec921167f990" style="vertical-align: -0.838ex; width:7.883ex; height:2.843ex;"/></span> is the number of times that the keyword <span about="#mwt15" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_i"}}' id="mwKw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2752dcbff884354069fe332b8e51eb0a70a531b6" style="vertical-align: -0.671ex; width:1.837ex; height:2.009ex;"/></span> occurs in the document <span about="#mwt10" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwLA" style="font-style:italic;" typeof="mw:Transclusion">D</span>, <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"|D|"}}' id="mwLQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle |D|}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>D</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle |D|}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle |D|}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7c936c42ab206e72c1fbc1ea103cc9eca1802af1" style="vertical-align: -0.838ex; width:3.218ex; height:2.843ex;"/></span> is the length of the document <span about="#mwt11" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwLg" style="font-style:italic;" typeof="mw:Transclusion">D</span> in words, and <span about="#mwt12" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"avgdl"}},"i":0}}]}' id="mwLw" typeof="mw:Transclusion">avgdl</span> is the average document length in the text collection from which documents are drawn. <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_1"}}' id="mwMA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/376315fd4983f01dada5ec2f7bebc48455b14a66" style="vertical-align: -0.671ex; width:2.265ex; height:2.509ex;"/></span> and <span about="#mwt13" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"b"}},"i":0}}]}' id="mwMQ" style="font-style:italic;" typeof="mw:Transclusion">b</span> are free parameters, usually chosen, in absence of an advanced optimization, as <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_1 \\in [1.2,2.0]"}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{1}\in [1.2,2.0]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>∈<!-- ∈ --></mo>
+<mo stretchy="false">[</mo>
+<mn>1.2</mn>
+<mo>,</mo>
+<mn>2.0</mn>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{1}\in [1.2,2.0]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{1}\in [1.2,2.0]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0af33de8946a560fed04ff522251656c8207f3db" style="vertical-align: -0.838ex; width:13.377ex; height:2.843ex;"/></span> and <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b = 0.75"}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b=0.75}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+<mo>=</mo>
+<mn>0.75</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b=0.75}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b=0.75}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cc8113cfb95fd7d2a084b62f53ff1a54186bc11c" style="vertical-align: -0.338ex; width:8.23ex; height:2.176ex;"/></span>.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwNA"><span class="mw-reflink-text" id="mwNQ"><span class="cite-bracket" id="mwNg">[</span>3<span class="cite-bracket" id="mwNw">]</span></span></a></sup> <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\text{IDF}(q_i)"}}' id="mwOA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\text{IDF}}(q_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>IDF</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\text{IDF}}(q_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\text{IDF}}(q_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e34b65be68e2123b44a9106fed33a0253229e356" style="vertical-align: -0.838ex; width:7.779ex; height:2.843ex;"/></span> is the IDF (<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Inverse_document_frequency" id="mwOQ" rel="mw:WikiLink" title="Inverse document frequency">inverse document frequency</a>) weight of the query term <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_i"}}' id="mwOg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2752dcbff884354069fe332b8e51eb0a70a531b6" style="vertical-align: -0.671ex; width:1.837ex; height:2.009ex;"/></span>. It is usually computed as:</p>
+<p id="mwPg">where  <span about="#mwt24" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"N"}},"i":0}}]}' id="mwPw" style="font-style:italic;" typeof="mw:Transclusion">N</span> is the total number of documents in the collection, and <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n(q_i)"}}' id="mwQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n(q_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n(q_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n(q_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14dc99fdb5fe2428a1c46cd20a7255dbee944945" style="vertical-align: -0.838ex; width:5.041ex; height:2.843ex;"/></span> is the number of documents containing <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_i"}}' id="mwQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2752dcbff884354069fe332b8e51eb0a70a531b6" style="vertical-align: -0.671ex; width:1.837ex; height:2.009ex;"/></span>.</p>
+<p id="mwQg">There are several interpretations for IDF and slight variations on its formula. In the original BM25 derivation, the IDF component is derived from the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Binary_Independence_Model" id="mwQw" rel="mw:WikiLink" title="Binary Independence Model">Binary Independence Model</a>.</p>
+<p id="mwRQ">Here is an interpretation from <a href="https://en.wikipedia.org/wiki/Information_theory" id="mwRg" rel="mw:WikiLink" title="Information theory">information theory</a>. Suppose a query term <span about="#mwt27" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}' id="mwRw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;"/></span> appears in <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n(q)"}}' id="mwSA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n(q)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo stretchy="false">(</mo>
+<mi>q</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n(q)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n(q)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bbd26739abf7d0b2055386c8a43df80e398167be" style="vertical-align: -0.838ex; width:4.274ex; height:2.843ex;"/></span> documents. Then a randomly picked document <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mwSQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span> will contain the term with probability <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{n(q)}{N}"}}' id="mwSg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {n(q)}{N}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>n</mi>
+<mo stretchy="false">(</mo>
+<mi>q</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mi>N</mi>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {n(q)}{N}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {n(q)}{N}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/42db8d96fb7df8e92eb349eb1df81ddb61af8fb1" style="vertical-align: -1.838ex; width:5.11ex; height:5.676ex;"/></span> (where <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"N"}}' id="mwSw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle N}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle N}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle N}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5e3890c981ae85503089652feb48b191b57aae3" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> is again the cardinality of the set of documents in the collection). Therefore, the <a href="https://en.wikipedia.org/wiki/Information_content" id="mwTA" rel="mw:WikiLink" title="Information content">information content</a> of the message "<span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mwTQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span> contains <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}' id="mwTg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;"/></span>" is:</p>
+<p id="mwUg">Now suppose we have two query terms <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_1"}}' id="mwUw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9daa41f6e8f78ea6bb5711d7ac97901ce564b94e" style="vertical-align: -0.671ex; width:2.091ex; height:2.009ex;"/></span> and <span about="#mwt36" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_2"}}' id="mwVA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd2d05084feb02b8ba29b0673440fb673b102589" style="vertical-align: -0.671ex; width:2.091ex; height:2.009ex;"/></span>. If the two terms occur in documents entirely independently of each other, then the probability of seeing both <span about="#mwt37" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_1"}}' id="mwVQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9daa41f6e8f78ea6bb5711d7ac97901ce564b94e" style="vertical-align: -0.671ex; width:2.091ex; height:2.009ex;"/></span> and <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q_2"}}' id="mwVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd2d05084feb02b8ba29b0673440fb673b102589" style="vertical-align: -0.671ex; width:2.091ex; height:2.009ex;"/></span> in a randomly picked document <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mwVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span> is:</p>
+<p id="mwWw">and the information content of such an event is:</p>
+<p id="mwXw">With a small variation, this is exactly what is expressed by the IDF component of BM25.</p>
+</div></div>
+</body></html>

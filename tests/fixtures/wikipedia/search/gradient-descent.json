@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 1493,
+   "suggestion": "gradient descend",
+   "suggestionsnippet": "gradient descend"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Gradient descent",
+    "pageid": 201489,
+    "size": 40753,
+    "wordcount": 5629,
+    "snippet": "<span class=\"searchmatch\">Gradient</span> <span class=\"searchmatch\">descent</span> is a method for unconstrained mathematical optimization. It is a first-order iterative algorithm for minimizing a differentiable multivariate",
+    "timestamp": "2026-09-07T06:25:53Z"
+   },
+   {
+    "ns": 0,
+    "title": "Stochastic gradient descent",
+    "pageid": 1180641,
+    "size": 54296,
+    "wordcount": 7067,
+    "snippet": "Stochastic <span class=\"searchmatch\">gradient</span> <span class=\"searchmatch\">descent</span> (often abbreviated SGD) is an iterative method for optimizing an objective function with suitable smoothness properties (e",
+    "timestamp": "2026-10-14T08:45:02Z"
+   },
+   {
+    "ns": 0,
+    "title": "Conjugate gradient method",
+    "pageid": 1448821,
+    "size": 55599,
+    "wordcount": 8843,
+    "snippet": "In mathematics, the conjugate <span class=\"searchmatch\">gradient</span> method is an algorithm for the numerical solution of particular systems of linear equations, namely those whose",
+    "timestamp": "2026-09-28T04:28:11Z"
+   },
+   {
+    "ns": 0,
+    "title": "Federated learning",
+    "pageid": 60992857,
+    "size": 58032,
+    "wordcount": 6470,
+    "snippet": "dataset and then used to make one step of the <span class=\"searchmatch\">gradient</span> <span class=\"searchmatch\">descent</span>. Federated stochastic <span class=\"searchmatch\">gradient</span> <span class=\"searchmatch\">descent</span> is the analog of this algorithm to the federated",
+    "timestamp": "2026-10-05T12:44:46Z"
+   },
+   {
+    "ns": 0,
+    "title": "Gradient boosting",
+    "pageid": 26649339,
+    "size": 30012,
+    "wordcount": 4328,
+    "snippet": "introduced the view of boosting algorithms as iterative functional <span class=\"searchmatch\">gradient</span> <span class=\"searchmatch\">descent</span> algorithms. That is, algorithms that optimize a cost function over",
+    "timestamp": "2026-09-07T06:14:31Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Extended Kalman filter - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Extended Kalman filter</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">In <a href="https://en.wikipedia.org/wiki/Estimation_theory" id="mwBA" rel="mw:WikiLink" title="Estimation theory">estimation theory</a>, the <b id="mwBQ">extended Kalman filter</b> (<b id="mwBg">EKF</b>) is the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Nonlinear" id="mwBw" rel="mw:WikiLink" title="Nonlinear">nonlinear</a> version of the <a href="https://en.wikipedia.org/wiki/Kalman_filter" id="mwCA" rel="mw:WikiLink" title="Kalman filter">Kalman filter</a> which linearizes about an estimate of the current <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Mean" id="mwCQ" rel="mw:WikiLink" title="Mean">mean</a> and <a href="https://en.wikipedia.org/wiki/Covariance" id="mwCg" rel="mw:WikiLink" title="Covariance">covariance</a>. In the case of well defined transition models, the EKF has been considered<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Julier2004"},"body":{"id":"mw-reference-text-cite_note-Julier2004-1"}}' id="cite_ref-Julier2004_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Julier2004-1" id="mwCw"><span class="mw-reflink-text" id="mwDA"><span class="cite-bracket" id="mwDQ">[</span>1<span class="cite-bracket" id="mwDg">]</span></span></a></sup> the <i id="mwDw"><a class="mw-redirect" href="https://en.wikipedia.org/wiki/De_facto" id="mwEA" rel="mw:WikiLink" title="De facto">de facto</a></i> standard in the theory of nonlinear <a href="https://en.wikipedia.org/wiki/State_observer" id="mwEQ" rel="mw:WikiLink" title="State observer">state estimation</a>, <a href="https://en.wikipedia.org/wiki/Navigation_system" id="mwEg" rel="mw:WikiLink" title="Navigation system">navigation systems</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/GPS" id="mwEw" rel="mw:WikiLink" title="GPS">GPS</a>.<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Courses2006"},"body":{"id":"mw-reference-text-cite_note-Courses2006-2"}}' id="cite_ref-Courses2006_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Courses2006-2" id="mwFA"><span class="mw-reflink-text" id="mwFQ"><span class="cite-bracket" id="mwFg">[</span>2<span class="cite-bracket" id="mwFw">]</span></span></a></sup></p>
+<p id="mwGg">The papers establishing the mathematical foundations of Kalman type filters were published between 1959 and 1961.<sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kalman1960-1"},"body":{"id":"mw-reference-text-cite_note-Kalman1960-1-3"}}' id="cite_ref-Kalman1960-1_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kalman1960-1-3" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>3<span class="cite-bracket" id="mwHg">]</span></span></a></sup><sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kalman1960"},"body":{"id":"mw-reference-text-cite_note-Kalman1960-4"}}' id="cite_ref-Kalman1960_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kalman1960-4" id="mwHw"><span class="mw-reflink-text" id="mwIA"><span class="cite-bracket" id="mwIQ">[</span>4<span class="cite-bracket" id="mwIg">]</span></span></a></sup><sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Kalman1961"},"body":{"id":"mw-reference-text-cite_note-Kalman1961-5"}}' id="cite_ref-Kalman1961_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Kalman1961-5" id="mwIw"><span class="mw-reflink-text" id="mwJA"><span class="cite-bracket" id="mwJQ">[</span>5<span class="cite-bracket" id="mwJg">]</span></span></a></sup>  Named after the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hungarian-American" id="mwJw" rel="mw:WikiLink" title="Hungarian-American">Hungarian-American</a> <a href="https://en.wikipedia.org/wiki/Mathematician" id="mwKA" rel="mw:WikiLink" title="Mathematician">mathematician</a>, <a href="https://en.wikipedia.org/wiki/Engineer" id="mwKQ" rel="mw:WikiLink" title="Engineer">engineer</a>, and inventor <a href="https://en.wikipedia.org/wiki/Rudolf_E._Kálmán" id="mwKg" rel="mw:WikiLink" title="Rudolf E. Kálmán">Rudolf E. Kálmán</a>, the <a href="https://en.wikipedia.org/wiki/Kalman_filter" id="mwKw" rel="mw:WikiLink" title="Kalman filter">Kalman filter</a> is the optimal linear estimator for <i id="mwLA">linear</i>
+system models with additive independent white noise in both the transition and the measurement systems.
+Unfortunately, in engineering, most systems are <i id="mwLQ">nonlinear</i>, so attempts were made to apply
+this filtering method to nonlinear systems; most of this work was done at <a class="mw-redirect" href="https://en.wikipedia.org/wiki/NASA_Ames" id="mwLg" rel="mw:WikiLink" title="NASA Ames">NASA Ames</a>.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"McElhoe1966"},"body":{"id":"mw-reference-text-cite_note-McElhoe1966-6"}}' id="cite_ref-McElhoe1966_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-McElhoe1966-6" id="mwLw"><span class="mw-reflink-text" id="mwMA"><span class="cite-bracket" id="mwMQ">[</span>6<span class="cite-bracket" id="mwMg">]</span></span></a></sup><sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Smith1962"},"body":{"id":"mw-reference-text-cite_note-Smith1962-7"}}' id="cite_ref-Smith1962_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Smith1962-7" id="mwMw"><span class="mw-reflink-text" id="mwNA"><span class="cite-bracket" id="mwNQ">[</span>7<span class="cite-bracket" id="mwNg">]</span></span></a></sup>  The EKF adapted techniques from <a href="https://en.wikipedia.org/wiki/Calculus" id="mwNw" rel="mw:WikiLink" title="Calculus">calculus</a>, namely multivariate <a href="https://en.wikipedia.org/wiki/Taylor_series" id="mwOA" rel="mw:WikiLink" title="Taylor series">Taylor series</a> expansions, to linearize a model about a working point.  If the system model (as described below) is not well known or is inaccurate, then <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Monte_Carlo_methods" id="mwOQ" rel="mw:WikiLink" title="Monte Carlo methods">Monte Carlo methods</a>, especially <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Particle_filters" id="mwOg" rel="mw:WikiLink" title="Particle filters">particle filters</a>, are employed for estimation.  Monte Carlo techniques predate the existence of the EKF but are more computationally expensive for any moderately dimensioned <a class="mw-redirect" href="https://en.wikipedia.org/wiki/State-space" id="mwOw" rel="mw:WikiLink" title="State-space">state-space</a>.</p>
+<p id="mwPQ">In the extended Kalman filter, the state transition and observation models don't need to be linear functions of the state but may instead be <a href="https://en.wikipedia.org/wiki/Differentiable_function" id="mwPg" rel="mw:WikiLink" title="Differentiable function">differentiable</a> functions.</p>
+<p id="mwRQ">Here <b id="mwRg">w</b><sub id="mwRw"><i id="mwSA">k</i></sub> and <b id="mwSQ">v</b><sub id="mwSg"><i id="mwSw">k</i></sub> are the process and observation noises which are both assumed to be zero mean <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution" id="mwTA" rel="mw:WikiLink" title="Multivariate normal distribution">multivariate Gaussian</a> noises with <a href="https://en.wikipedia.org/wiki/Covariance_matrix" id="mwTQ" rel="mw:WikiLink" title="Covariance matrix">covariance</a> <b id="mwTg">Q</b><sub id="mwTw"><i id="mwUA">k</i></sub> and <b id="mwUQ">R</b><sub id="mwUg"><i id="mwUw">k</i></sub> respectively. <b id="mwVA">u</b><sub id="mwVQ"><i id="mwVg">k</i></sub> is the control vector.</p>
+<p id="mwVw">The function <i id="mwWA">f</i> can be used to compute the predicted state from the previous estimate and similarly the function <i id="mwWQ">h</i> can be used to compute the predicted measurement from the predicted state. However, <i id="mwWg">f</i> and <i id="mwWw">h</i> cannot be applied to the covariance directly. Instead a matrix of partial derivatives (the <a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant" id="mwXA" rel="mw:WikiLink" title="Jacobian matrix and determinant">Jacobian</a>) is computed.</p>
+<p id="mwXQ">At each time step, the Jacobian is evaluated with current predicted states. These matrices can be used in the Kalman filter equations. This process essentially linearizes the non-linear function around the current estimate.</p>
+<p id="mwXg">See the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Kalman_Filter" id="mwXw" rel="mw:WikiLink" title="Kalman Filter">Kalman Filter</a> article for notational remarks.</p>
+<p id="mwYQ">Notation <span about="#mwt27" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\hat{\\mathbf{x}}_{n\\mid m}"}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3eff5422264edcbe21aed62839528629f28dc6a" style="vertical-align: -1.171ex; width:4.53ex; height:3.176ex;"/></span> represents the estimate of <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> at time <i id="mwZA">n</i> given observations up to and including at time <span about="#mwt26" class="nowrap" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;nowrap&quot;,&quot;href&quot;:&quot;./Template:Nowrap&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''m'' ≤ ''n''&quot;}},&quot;i&quot;:0}}]}" id="mwZQ" typeof="mw:Transclusion"><i>m</i> ≤ <i>n</i></span>.</p>
+<p id="mwiw">where the state transition and observation matrices are defined to be the following <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Jacobian_matrix" id="mwjA" rel="mw:WikiLink" title="Jacobian matrix">Jacobians</a></p>
+<p id="mwlA">Unlike its linear counterpart, the extended Kalman filter in general is <i id="mwlQ">not</i> an optimal estimator (it is optimal if the measurement and the state transition model are both linear, as in that case the extended Kalman filter is identical to the regular one). In addition, if the initial estimate of the state is wrong, or if the process is modeled incorrectly, the filter may quickly diverge, owing to its linearization.   Another problem with the extended Kalman filter is that the estimated <a href="https://en.wikipedia.org/wiki/Covariance_matrix" id="mwlg" rel="mw:WikiLink" title="Covariance matrix">covariance matrix</a> tends to underestimate the true covariance matrix and therefore risks becoming <a href="https://en.wikipedia.org/wiki/Consistency_(statistics)" id="mwlw" rel="mw:WikiLink" title="Consistency (statistics)">inconsistent</a> in the statistical sense without the addition of "stabilising noise".<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwmA"><span class="mw-reflink-text" id="mwmQ"><span class="cite-bracket" id="mwmg">[</span>8<span class="cite-bracket" id="mwmw">]</span></span></a></sup></p>
+<p id="mwnA">More generally one should consider  the infinite dimensional nature of the <a href="https://en.wikipedia.org/wiki/Filtering_problem_(stochastic_processes)" id="mwnQ" rel="mw:WikiLink" title="Filtering problem (stochastic processes)">nonlinear filtering problem</a> and the inadequacy of a simple mean and variance-covariance estimator to fully represent the optimal filter. It should also be noted that the extended Kalman filter may give poor performances even for very simple one-dimensional systems such as the cubic sensor,<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwng"><span class="mw-reflink-text" id="mwnw"><span class="cite-bracket" id="mwoA">[</span>9<span class="cite-bracket" id="mwoQ">]</span></span></a></sup> where the optimal filter can be bimodal<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"brigoieee"},"body":{"id":"mw-reference-text-cite_note-brigoieee-10"}}' id="cite_ref-brigoieee_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-brigoieee-10" id="mwog"><span class="mw-reflink-text" id="mwow"><span class="cite-bracket" id="mwpA">[</span>10<span class="cite-bracket" id="mwpQ">]</span></span></a></sup> and as such cannot be effectively represented by a single mean and variance estimator, having a rich structure, or similarly for the quadratic sensor.<sup about="#mwt49" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"brigomcss"},"body":{"id":"mw-reference-text-cite_note-brigomcss-11"}}' id="cite_ref-brigomcss_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-brigomcss-11" id="mwpg"><span class="mw-reflink-text" id="mwpw"><span class="cite-bracket" id="mwqA">[</span>11<span class="cite-bracket" id="mwqQ">]</span></span></a></sup>
+In such cases the <a href="https://en.wikipedia.org/wiki/Projection_filters" id="mwqg" rel="mw:WikiLink" title="Projection filters">projection filters</a> have been studied as an alternative, having been applied also to navigation.<sup about="#mwt52" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"azimi"},"body":{"id":"mw-reference-text-cite_note-azimi-12"}}' id="cite_ref-azimi_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-azimi-12" id="mwqw"><span class="mw-reflink-text" id="mwrA"><span class="cite-bracket" id="mwrQ">[</span>12<span class="cite-bracket" id="mwrg">]</span></span></a></sup> Other general nonlinear filtering methods like full <a href="https://en.wikipedia.org/wiki/Particle_filter" id="mwrw" rel="mw:WikiLink" title="Particle filter">particle filters</a> may be considered in this case.</p>
+<p id="mwsA">Having stated this, the extended Kalman filter can give reasonable performance, and is arguably the <a href="https://en.wikipedia.org/wiki/De_facto_standard" id="mwsQ" rel="mw:WikiLink" title="De facto standard">de facto standard</a> in navigation systems and GPS.<link about="#mwt53" data-mw='{"parts":[{"template":{"target":{"wt":"Citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"June 2025"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwsg" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt53" href="./Category:Articles_with_unsourced_statements_from_June_2025" rel="mw:PageProp/Category"/><sup about="#mwt53" class="noprint Inline-Template Template-Fact" id="mwsw" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (June 2025)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwtg"><b id="mwtw">Model</b></p>
+<p id="mwuw"><b id="mwvA">Initialize</b></p>
+<p id="mwwA"><b id="mwwQ">Predict-Update</b></p>
+<p id="mwxQ">Unlike the discrete-time extended Kalman filter, the prediction and update steps are coupled in the continuous-time extended Kalman filter.<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwxg"><span class="mw-reflink-text" id="mwxw"><span class="cite-bracket" id="mwyA">[</span>13<span class="cite-bracket" id="mwyQ">]</span></span></a></sup></p>
+<p id="mwyw">Most physical systems are represented as continuous-time models while discrete-time measurements are frequently taken for state estimation via a digital processor. Therefore, the system model and measurement model are given by</p>
+<p id="mwzw">where <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_k=\\mathbf{x}(t_k)"}}' id="mw0A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k}=\mathbf {x} (t_{k})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k}=\mathbf {x} (t_{k})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k}=\mathbf {x} (t_{k})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/86ab936a0c1592fd1230a19b7ac2426ba8da8c9d" style="vertical-align: -0.838ex; width:10.747ex; height:2.843ex;"/></span>.</p>
+<p id="mw0Q"><b id="mw0g">Initialize</b></p>
+<p id="mw1g"><b id="mw1w">Predict</b></p>
+<p id="mw2w">where</p>
+<p id="mw3w"><b id="mw4A">Update</b></p>
+<p id="mw6A">where</p>
+<p id="mw7A">The update equations are identical to those of discrete-time extended Kalman filter.<sup about="#mwt69" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_14-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-14" id="mw7Q"><span class="mw-reflink-text" id="mw7g"><span class="cite-bracket" id="mw7w">[</span>14<span class="cite-bracket" id="mw8A">]</span></span></a></sup></p>
+<p id="mw8g">The above recursion is a first-order extended Kalman filter (EKF). Higher order EKFs may be obtained by retaining more terms of the Taylor series expansions. For example, second and third order EKFs have been described.<sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-14"}}' id="cite_ref-:0_14-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-14" id="mw8w"><span class="mw-reflink-text" id="mw9A"><span class="cite-bracket" id="mw9Q">[</span>14<span class="cite-bracket" id="mw9g">]</span></span></a></sup> However, higher order EKFs tend to only provide performance benefits when the measurement noise is small.</p>
+<p id="mw-A">The typical formulation of the EKF involves the assumption of <a href="https://en.wikipedia.org/wiki/Additive_process" id="mw-Q" rel="mw:WikiLink" title="Additive process">additive process</a> and measurement noise.  This assumption, however, is not necessary for EKF implementation.<sup about="#mwt75" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mw-g"><span class="mw-reflink-text" id="mw-w"><span class="cite-bracket" id="mw_A">[</span>15<span class="cite-bracket" id="mw_Q">]</span></span></a></sup>  Instead, consider a more general system of the form:</p>
+<p id="mwAQQ">Here <b id="mwAQU">w</b><sub id="mwAQY"><i id="mwAQc">k</i></sub> and <b id="mwAQg">v</b><sub id="mwAQk"><i id="mwAQo">k</i></sub> are the process and observation noises which are both assumed to be zero mean <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution" id="mwAQs" rel="mw:WikiLink" title="Multivariate normal distribution">multivariate Gaussian</a> noises with <a href="https://en.wikipedia.org/wiki/Covariance_matrix" id="mwAQw" rel="mw:WikiLink" title="Covariance matrix">covariance</a> <b id="mwAQ0">Q</b><sub id="mwAQ4"><i id="mwAQ8">k</i></sub> and <b id="mwARA">R</b><sub id="mwARE"><i id="mwARI">k</i></sub> respectively.  Then the <a href="https://en.wikipedia.org/wiki/Covariance" id="mwARM" rel="mw:WikiLink" title="Covariance">covariance</a> prediction and innovation equations become</p>
+<p id="mwARo">where the matrices <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\boldsymbol{L}_{k-1}"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\boldsymbol {L}}_{k-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">L</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\boldsymbol {L}}_{k-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\boldsymbol {L}}_{k-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e89aeb0584e5755c64d2abac1cb2ad4e550ddb5c" style="vertical-align: -0.671ex; width:4.946ex; height:2.509ex;"/></span> and <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\boldsymbol{M}_{k}"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\boldsymbol {M}}_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">M</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\boldsymbol {M}}_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\boldsymbol {M}}_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/43bd331d4b5cfc3cb22fa683fd48455dd75104d8" style="vertical-align: -0.671ex; width:3.742ex; height:2.509ex;"/></span> are Jacobian matrices:</p>
+<p id="mwASM">The predicted state estimate and measurement residual are evaluated at the mean of the process and measurement noise terms, which is assumed to be zero.  Otherwise, the non-additive noise formulation is implemented in the same manner as the additive noise EKF.</p>
+<p id="mwASU">In certain cases, the observation model of a nonlinear system cannot be solved for <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\boldsymbol{z}_{k}"}}' id="mwASY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\boldsymbol {z}}_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">z</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\boldsymbol {z}}_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\boldsymbol {z}}_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b44724e732d686461d3632b602c30142b06b5e0" style="vertical-align: -0.671ex; width:2.379ex; height:2.009ex;"/></span>, but can be expressed by the <a href="https://en.wikipedia.org/wiki/Implicit_function" id="mwASc" rel="mw:WikiLink" title="Implicit function">implicit function</a>:</p>
+<p id="mwASs">where <span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;\\boldsymbol{z}_{k} = \\boldsymbol{z'}_{k} + \\boldsymbol{v}_{k}&quot;}}" id="mwASw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\boldsymbol {z}}_{k}={\boldsymbol {z'}}_{k}+{\boldsymbol {v}}_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">z</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi mathvariant="bold-italic">z</mi>
+<mo mathvariant="bold">′</mo>
+</msup>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\boldsymbol {z}}_{k}={\boldsymbol {z'}}_{k}+{\boldsymbol {v}}_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\boldsymbol {z}}_{k}={\boldsymbol {z'}}_{k}+{\boldsymbol {v}}_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/49319f5a8c78f02298ee47dd04cd0a28c5c4adca" style="vertical-align: -0.671ex; width:13.788ex; height:2.843ex;"/></span> are the noisy observations.</p>
+<p id="mwAS0">The conventional extended Kalman filter can be applied with the following substitutions:<sup about="#mwt89" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Quan 2017 p."},"body":{"id":"mw-reference-text-cite_note-Quan_2017_p.-16"}}' id="cite_ref-Quan_2017_p._16-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Quan_2017_p.-16" id="mwAS4"><span class="mw-reflink-text" id="mwAS8"><span class="cite-bracket" id="mwATA">[</span>16<span class="cite-bracket" id="mwATE">]</span></span></a></sup><sup about="#mwt92" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhang 1997 pp. 59–76"},"body":{"id":"mw-reference-text-cite_note-Zhang_1997_pp._59–76-17"}}' id="cite_ref-Zhang_1997_pp._59–76_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhang_1997_pp._59–76-17" id="mwATI"><span class="mw-reflink-text" id="mwATM"><span class="cite-bracket" id="mwATQ">[</span>17<span class="cite-bracket" id="mwATU">]</span></span></a></sup></p>
+<p id="mwATw">where:</p>
+<p id="mwAUA">Here the original observation covariance matrix <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" {{\\boldsymbol{R}_{k}}} "}}' id="mwAUE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {{\boldsymbol {R}}_{k}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {{\boldsymbol {R}}_{k}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {{\boldsymbol {R}}_{k}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b0f37a09103118f468acfed878f97317fe54f8e3" style="vertical-align: -0.671ex; width:3.115ex; height:2.509ex;"/></span> is transformed, and the innovation <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\tilde{\\boldsymbol{y}}_{k} "}}' id="mwAUI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\tilde {\boldsymbol {y}}}_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi mathvariant="bold-italic">y</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\tilde {\boldsymbol {y}}}_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\tilde {\boldsymbol {y}}}_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/caf24d5cc03fadbc7ae41bbeb78424e057c81433" style="vertical-align: -0.838ex; width:2.504ex; height:2.676ex;"/></span> is defined differently. The Jacobian matrix <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" {{\\boldsymbol{H}_{k}}} "}}' id="mwAUM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {{\boldsymbol {H}}_{k}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">H</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {{\boldsymbol {H}}_{k}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {{\boldsymbol {H}}_{k}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fc36295adfe9a23c6f964d8b9a99ce58a3edbb94" style="vertical-align: -0.671ex; width:3.371ex; height:2.509ex;"/></span> is defined as before, but determined from the implicit observation model <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(\\boldsymbol{x}_{k}, \\boldsymbol{z}_{k})"}}' id="mwAUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h({\boldsymbol {x}}_{k},{\boldsymbol {z}}_{k})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">z</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h({\boldsymbol {x}}_{k},{\boldsymbol {z}}_{k})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h({\boldsymbol {x}}_{k},{\boldsymbol {z}}_{k})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fb3cb3254418e803599e149eb5ce882adfec4a0e" style="vertical-align: -0.838ex; width:9.182ex; height:2.843ex;"/></span>.</p>
+<p id="mwAUc">The iterated extended Kalman filter improves the linearization of the extended Kalman filter by recursively modifying the centre point of the Taylor expansion. This reduces the linearization error at the cost of increased computational requirements.<sup about="#mwt100" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhang 1997 pp. 59–76"}}' id="cite_ref-Zhang_1997_pp._59–76_17-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhang_1997_pp._59–76-17" id="mwAUg"><span class="mw-reflink-text" id="mwAUk"><span class="cite-bracket" id="mwAUo">[</span>17<span class="cite-bracket" id="mwAUs">]</span></span></a></sup></p>
+<p id="mwAU0">The robust extended Kalman filter arises by linearizing the signal model about the current state estimate and using the linear <a href="https://en.wikipedia.org/wiki/Kalman_filter" id="mwAU4" rel="mw:WikiLink" title="Kalman filter">Kalman filter</a> to predict the next estimate. This attempts to produce a locally optimal filter, however, it is not necessarily stable because the solutions of the underlying <a href="https://en.wikipedia.org/wiki/Riccati_equation" id="mwAU8" rel="mw:WikiLink" title="Riccati equation">Riccati equation</a> are not guaranteed to be positive definite. One way of improving performance is the faux algebraic Riccati technique<sup about="#mwt103" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mwAVA"><span class="mw-reflink-text" id="mwAVE"><span class="cite-bracket" id="mwAVI">[</span>18<span class="cite-bracket" id="mwAVM">]</span></span></a></sup> which trades off optimality for stability. The familiar structure of the extended Kalman filter is retained but stability is achieved by selecting a positive definite solution to a faux <a href="https://en.wikipedia.org/wiki/Algebraic_Riccati_equation" id="mwAVQ" rel="mw:WikiLink" title="Algebraic Riccati equation">algebraic Riccati equation</a> for the gain design.</p>
+<p id="mwAVU">Another way of improving extended Kalman filter performance is to employ the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/H-infinity" id="mwAVY" rel="mw:WikiLink" title="H-infinity">H-infinity</a> results from <a href="https://en.wikipedia.org/wiki/Robust_control" id="mwAVc" rel="mw:WikiLink" title="Robust control">robust control</a>. Robust filters are obtained by adding a positive definite term to the design Riccati equation.<sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwAVg"><span class="mw-reflink-text" id="mwAVk"><span class="cite-bracket" id="mwAVo">[</span>19<span class="cite-bracket" id="mwAVs">]</span></span></a></sup> The additional term is parametrized by a scalar which the designer may tweak to achieve a <a href="https://en.wikipedia.org/wiki/Trade-off" id="mwAVw" rel="mw:WikiLink" title="Trade-off">trade-off</a> between mean-square-error and peak error performance criteria.</p>
+<p id="mwAWA">The invariant extended Kalman filter (IEKF) is a modified version of the EKF for nonlinear systems possessing symmetries (or <i id="mwAWE">invariances</i>). It combines the advantages of both the EKF and the recently introduced <a href="https://en.wikipedia.org/wiki/Symmetry-preserving_filter" id="mwAWI" rel="mw:WikiLink" title="Symmetry-preserving filter">symmetry-preserving filters</a>. Instead of using a linear correction term based on a linear output error, the IEKF uses a geometrically adapted correction term based on an invariant output error; in the same way the gain matrix is not updated from a linear state error, but from an invariant state error. The main benefit is that the gain and covariance equations converge to constant values on a much bigger set of trajectories than equilibrium points as it is the case for the EKF, which results in a better convergence of the estimation.</p>
+<p id="mwAWQ">A nonlinear Kalman filter which shows promise as an improvement over the EKF is the <a href="https://en.wikipedia.org/wiki/Kalman_filter#Unscented_Kalman_filter" id="mwAWU" rel="mw:WikiLink" title="Kalman filter">unscented Kalman filter</a> (UKF). In the UKF, the probability density is approximated by a deterministic sampling of points which represent the underlying distribution as a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Gaussian_distribution" id="mwAWY" rel="mw:WikiLink" title="Gaussian distribution">Gaussian</a>.  The nonlinear transformation of these points are intended to be an estimation of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Posterior_distribution" id="mwAWc" rel="mw:WikiLink" title="Posterior distribution">posterior distribution</a>, the <a href="https://en.wikipedia.org/wiki/Moment_(mathematics)" id="mwAWg" rel="mw:WikiLink" title="Moment (mathematics)">moments</a> of which can then be derived from the transformed samples.  The transformation is known as the <a href="https://en.wikipedia.org/wiki/Unscented_transform" id="mwAWk" rel="mw:WikiLink" title="Unscented transform">unscented transform</a>.  The UKF tends to be more robust and more accurate than the EKF in its estimation of error in all the directions.</p>
+<p id="mwAWs">"The extended Kalman filter (EKF) is probably the most widely used estimation algorithm for nonlinear systems. However, more than 35 years of experience in the estimation community has shown that is difficult to implement, difficult to tune, and only reliable for systems that are almost linear on the time scale of the updates. Many of these difficulties arise from its use of linearization."<sup about="#mwt109" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Julier2004"}}' id="cite_ref-Julier2004_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Julier2004-1" id="mwAWw"><span class="mw-reflink-text" id="mwAW0"><span class="cite-bracket" id="mwAW4">[</span>1<span class="cite-bracket" id="mwAW8">]</span></span></a></sup></p>
+</div></div>
+</body></html>

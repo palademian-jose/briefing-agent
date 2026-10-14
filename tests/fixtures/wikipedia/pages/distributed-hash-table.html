@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Distributed hash table - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Distributed hash table</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">A <b id="mwBA">distributed hash table</b> (<b id="mwBQ">DHT</b>) is a <a href="https://en.wikipedia.org/wiki/Distributed_computing" id="mwBg" rel="mw:WikiLink" title="Distributed computing">distributed system</a> that provides a lookup service similar to a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwBw" rel="mw:WikiLink" title="Hash table">hash table</a>. <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Key–value_pair" id="mwCA" rel="mw:WikiLink" title="Key–value pair">Key–value pairs</a> are stored in a DHT, and any participating <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Node_(networking)" id="mwCQ" rel="mw:WikiLink" title="Node (networking)">node</a> can efficiently retrieve the value associated with a given key. The main advantage of a DHT is that nodes can be added or removed with minimum work around re-distributing keys.<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwCg"><span class="mw-reflink-text" id="mwCw"><span class="cite-bracket" id="mwDA">[</span>1<span class="cite-bracket" id="mwDQ">]</span></span></a></sup> <i id="mwDg">Keys</i> are unique identifiers which map to particular <i id="mwDw">values</i>, which in turn can be anything from addresses, to <a href="https://en.wikipedia.org/wiki/Electronic_document" id="mwEA" rel="mw:WikiLink" title="Electronic document">documents</a>, to arbitrary <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_(computing)" id="mwEQ" rel="mw:WikiLink" title="Data (computing)">data</a>.<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"StoicaEtAl2001"},"body":{"id":"mw-reference-text-cite_note-StoicaEtAl2001-2"}}' id="cite_ref-StoicaEtAl2001_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-StoicaEtAl2001-2" id="mwEg"><span class="mw-reflink-text" id="mwEw"><span class="cite-bracket" id="mwFA">[</span>2<span class="cite-bracket" id="mwFQ">]</span></span></a></sup> Responsibility for maintaining the mapping from keys to values is distributed among the nodes, in such a way that a change in the set of participants causes a minimal amount of disruption. This allows a DHT to <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Scale_(computing)" id="mwFg" rel="mw:WikiLink" title="Scale (computing)">scale</a> to extremely large numbers of nodes and to handle continual node arrivals, departures, and failures.</p>
+<p id="mwFw">DHTs form an infrastructure that can be used to build more complex services, such as <a href="https://en.wikipedia.org/wiki/Anycast" id="mwGA" rel="mw:WikiLink" title="Anycast">anycast</a>, cooperative <a href="https://en.wikipedia.org/wiki/Web_cache" id="mwGQ" rel="mw:WikiLink" title="Web cache">web caching</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Distributed_file_system" id="mwGg" rel="mw:WikiLink" title="Distributed file system">distributed file systems</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Domain_name_system" id="mwGw" rel="mw:WikiLink" title="Domain name system">domain name services</a>, <a href="https://en.wikipedia.org/wiki/Instant_messaging" id="mwHA" rel="mw:WikiLink" title="Instant messaging">instant messaging</a>, <a href="https://en.wikipedia.org/wiki/Multicast" id="mwHQ" rel="mw:WikiLink" title="Multicast">multicast</a>, and also <a href="https://en.wikipedia.org/wiki/Peer-to-peer_file_sharing" id="mwHg" rel="mw:WikiLink" title="Peer-to-peer file sharing">peer-to-peer file sharing</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Content_distribution" id="mwHw" rel="mw:WikiLink" title="Content distribution">content distribution</a> systems. Notable distributed networks that use DHTs include <a class="mw-redirect" href="https://en.wikipedia.org/wiki/BitTorrent_(protocol)" id="mwIA" rel="mw:WikiLink" title="BitTorrent (protocol)">BitTorrent</a>'s distributed tracker, the <a href="https://en.wikipedia.org/wiki/Kad_network" id="mwIQ" rel="mw:WikiLink" title="Kad network">Kad network</a>, the <a href="https://en.wikipedia.org/wiki/Storm_botnet" id="mwIg" rel="mw:WikiLink" title="Storm botnet">Storm botnet</a>, the <a href="https://en.wikipedia.org/wiki/Tox_(protocol)" id="mwIw" rel="mw:WikiLink" title="Tox (protocol)">Tox instant messenger</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Freenet" id="mwJA" rel="mw:WikiLink" title="Freenet">Freenet</a>, the <a href="https://en.wikipedia.org/wiki/YaCy" id="mwJQ" rel="mw:WikiLink" title="YaCy">YaCy</a> search engine, and the <a href="https://en.wikipedia.org/wiki/InterPlanetary_File_System" id="mwJg" rel="mw:WikiLink" title="InterPlanetary File System">InterPlanetary File System</a>.</p>
+<p id="mwLQ">DHT research was originally motivated, in part, by <a href="https://en.wikipedia.org/wiki/Peer-to-peer" id="mwLg" rel="mw:WikiLink" title="Peer-to-peer">peer-to-peer</a> (P2P) systems such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Freenet" id="mwLw" rel="mw:WikiLink" title="Freenet">Freenet</a>, <a href="https://en.wikipedia.org/wiki/Gnutella" id="mwMA" rel="mw:WikiLink" title="Gnutella">Gnutella</a>, <a href="https://en.wikipedia.org/wiki/BitTorrent" id="mwMQ" rel="mw:WikiLink" title="BitTorrent">BitTorrent</a> and <a href="https://en.wikipedia.org/wiki/Napster" id="mwMg" rel="mw:WikiLink" title="Napster">Napster</a>, which took advantage of resources distributed across the Internet to provide a single useful application. In particular, they took advantage of increased <a href="https://en.wikipedia.org/wiki/Bandwidth_(computing)" id="mwMw" rel="mw:WikiLink" title="Bandwidth (computing)">bandwidth</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hard_disk" id="mwNA" rel="mw:WikiLink" title="Hard disk">hard disk</a> capacity to provide a file-sharing service.<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwNQ"><span class="mw-reflink-text" id="mwNg"><span class="cite-bracket" id="mwNw">[</span>3<span class="cite-bracket" id="mwOA">]</span></span></a></sup></p>
+<p id="mwOQ">These systems differed in how they located the data offered by their peers. Napster, the first large-scale P2P content delivery system, required a central index server: each node, upon joining, would send a list of locally held files to the server, which would perform searches and refer the queries to the nodes that held the results. This central component left the system vulnerable to attacks and lawsuits.</p>
+<p id="mwOg">Gnutella and similar networks moved to a <a href="https://en.wikipedia.org/wiki/Query_flooding" id="mwOw" rel="mw:WikiLink" title="Query flooding">query flooding</a> model<span about="#mwt11" data-mw='{"parts":[{"template":{"target":{"wt":"spaced ndash","href":"./Template:Spaced_ndash"},"params":{},"i":0}}]}' id="mwPA" typeof="mw:Transclusion mw:Entity"> </span><span about="#mwt11" typeof="mw:Entity">–</span><span about="#mwt11" typeof="mw:Entity"> </span> in essence, each search would result in a message being broadcast to every machine in the network. While avoiding a <a href="https://en.wikipedia.org/wiki/Single_point_of_failure" id="mwPQ" rel="mw:WikiLink" title="Single point of failure">single point of failure</a>, this method was significantly less efficient than Napster. Later versions of Gnutella clients moved to a dynamic querying model which vastly improved efficiency.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwPg"><span class="mw-reflink-text" id="mwPw"><span class="cite-bracket" id="mwQA">[</span>4<span class="cite-bracket" id="mwQQ">]</span></span></a></sup></p>
+<p id="mwQg">Freenet is fully distributed, but employs a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)" id="mwQw" rel="mw:WikiLink" title="Heuristic (computer science)">heuristic</a> <a href="https://en.wikipedia.org/wiki/Key-based_routing" id="mwRA" rel="mw:WikiLink" title="Key-based routing">key-based routing</a> in which each file is associated with a key, and files with similar keys tend to cluster on a similar set of nodes. Queries are likely to be routed through the network to such a cluster without needing to visit many peers.<sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwRQ"><span class="mw-reflink-text" id="mwRg"><span class="cite-bracket" id="mwRw">[</span>5<span class="cite-bracket" id="mwSA">]</span></span></a></sup> However, Freenet does not guarantee that data will be found.</p>
+<p id="mwSQ">Distributed hash tables use a more structured key-based routing in order to attain both the decentralization of Freenet and Gnutella, and the efficiency and guaranteed results of Napster. One drawback is that, like Freenet, DHTs only directly support exact-match search, rather than keyword search, although Freenet's <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Routing_algorithm" id="mwSg" rel="mw:WikiLink" title="Routing algorithm">routing algorithm</a> can be generalized to any key type where a closeness operation can be defined.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwSw"><span class="mw-reflink-text" id="mwTA"><span class="cite-bracket" id="mwTQ">[</span>6<span class="cite-bracket" id="mwTg">]</span></span></a></sup></p>
+<p id="mwTw">In 2001, four systems<span id="mwUA" typeof="mw:Entity">—</span><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Content_addressable_network" id="mwUQ" rel="mw:WikiLink" title="Content addressable network">CAN</a>,<sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Ratnasamy01"},"body":{"id":"mw-reference-text-cite_note-Ratnasamy01-7"}}' id="cite_ref-Ratnasamy01_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Ratnasamy01-7" id="mwUg"><span class="mw-reflink-text" id="mwUw"><span class="cite-bracket" id="mwVA">[</span>7<span class="cite-bracket" id="mwVQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Chord_(peer-to-peer)" id="mwVg" rel="mw:WikiLink" title="Chord (peer-to-peer)">Chord</a>,<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwVw"><span class="mw-reflink-text" id="mwWA"><span class="cite-bracket" id="mwWQ">[</span>8<span class="cite-bracket" id="mwWg">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Pastry_(DHT)" id="mwWw" rel="mw:WikiLink" title="Pastry (DHT)">Pastry</a>, and <a href="https://en.wikipedia.org/wiki/Tapestry_(DHT)" id="mwXA" rel="mw:WikiLink" title="Tapestry (DHT)">Tapestry</a><span id="mwXQ" typeof="mw:Entity">—</span>brought attention to DHTs. 
+A project called the Infrastructure for Resilient Internet Systems (Iris) was funded by a $12 million grant from the United States <a href="https://en.wikipedia.org/wiki/National_Science_Foundation" id="mwXg" rel="mw:WikiLink" title="National Science Foundation">National Science Foundation</a> in 2002.<sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwXw"><span class="mw-reflink-text" id="mwYA"><span class="cite-bracket" id="mwYQ">[</span>9<span class="cite-bracket" id="mwYg">]</span></span></a></sup>
+Researchers included <a href="https://en.wikipedia.org/wiki/Sylvia_Ratnasamy" id="mwYw" rel="mw:WikiLink" title="Sylvia Ratnasamy">Sylvia Ratnasamy</a>, <a href="https://en.wikipedia.org/wiki/Ion_Stoica" id="mwZA" rel="mw:WikiLink" title="Ion Stoica">Ion Stoica</a>, <a href="https://en.wikipedia.org/wiki/Hari_Balakrishnan" id="mwZQ" rel="mw:WikiLink" title="Hari Balakrishnan">Hari Balakrishnan</a> and <a href="https://en.wikipedia.org/wiki/Scott_Shenker" id="mwZg" rel="mw:WikiLink" title="Scott Shenker">Scott Shenker</a>.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwZw"><span class="mw-reflink-text" id="mwaA"><span class="cite-bracket" id="mwaQ">[</span>10<span class="cite-bracket" id="mwag">]</span></span></a></sup>
+Outside academia, DHT technology has been adopted as a component of BitTorrent and in <a href="https://en.wikipedia.org/wiki/PlanetLab" id="mwaw" rel="mw:WikiLink" title="PlanetLab">PlanetLab</a> projects such as the Coral Content Distribution Network.<sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwbA"><span class="mw-reflink-text" id="mwbQ"><span class="cite-bracket" id="mwbg">[</span>11<span class="cite-bracket" id="mwbw">]</span></span></a></sup></p>
+<p id="mwcQ">DHTs characteristically emphasize the following properties:</p>
+<p id="mwfQ">A key technique used to achieve these goals is that any one node needs to coordinate with only a few other nodes in the system<span about="#mwt37" data-mw='{"parts":[{"template":{"target":{"wt":"px2","href":"./Template:Px2"},"params":{},"i":0}}]}' id="mwfg" style="visibility:hidden; color:transparent; padding-left:2px" typeof="mw:Transclusion"><span typeof="mw:Entity">‍</span></span><span about="#mwt38" data-mw='{"parts":[{"template":{"target":{"wt":"mdash","href":"./Template:Mdash"},"params":{},"i":0}}]}' id="mwfw" typeof="mw:Transclusion">—</span><span about="#mwt39" data-mw='{"parts":[{"template":{"target":{"wt":"hsp","href":"./Template:Hsp"},"params":{},"i":0}}]}' id="mwgA" typeof="mw:Transclusion mw:Entity"> </span>most commonly, <a href="https://en.wikipedia.org/wiki/Big_O_notation" id="mwgQ" rel="mw:WikiLink" title="Big O notation">O</a>(log <i id="mwgg">n</i>) of the <i id="mwgw">n</i> participants (see below)<span about="#mwt40" data-mw='{"parts":[{"template":{"target":{"wt":"px2","href":"./Template:Px2"},"params":{},"i":0}}]}' id="mwhA" style="visibility:hidden; color:transparent; padding-left:2px" typeof="mw:Transclusion"><span typeof="mw:Entity">‍</span></span><span about="#mwt41" data-mw='{"parts":[{"template":{"target":{"wt":"mdash","href":"./Template:Mdash"},"params":{},"i":0}}]}' id="mwhQ" typeof="mw:Transclusion">—</span><span about="#mwt42" data-mw='{"parts":[{"template":{"target":{"wt":"hsp","href":"./Template:Hsp"},"params":{},"i":0}}]}' id="mwhg" typeof="mw:Transclusion mw:Entity"> </span>so that only a limited amount of work needs to be done for each change in membership.</p>
+<p id="mwhw">Some DHT designs seek to be <a href="https://en.wikipedia.org/wiki/Secure_communication" id="mwiA" rel="mw:WikiLink" title="Secure communication">secure</a> against malicious participants<sup about="#mwt44" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwiQ"><span class="mw-reflink-text" id="mwig"><span class="cite-bracket" id="mwiw">[</span>13<span class="cite-bracket" id="mwjA">]</span></span></a></sup> and to allow participants to remain <a href="https://en.wikipedia.org/wiki/Anonymity" id="mwjQ" rel="mw:WikiLink" title="Anonymity">anonymous</a>, though this is less common than in many other peer-to-peer (especially <a href="https://en.wikipedia.org/wiki/File_sharing" id="mwjg" rel="mw:WikiLink" title="File sharing">file sharing</a>) systems; see <a href="https://en.wikipedia.org/wiki/Anonymous_P2P" id="mwjw" rel="mw:WikiLink" title="Anonymous P2P">anonymous P2P</a>.</p>
+<p id="mwkQ">The structure of a DHT can be decomposed into several main components.<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwkg"><span class="mw-reflink-text" id="mwkw"><span class="cite-bracket" id="mwlA">[</span>14<span class="cite-bracket" id="mwlQ">]</span></span></a></sup><sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwlg"><span class="mw-reflink-text" id="mwlw"><span class="cite-bracket" id="mwmA">[</span>15<span class="cite-bracket" id="mwmQ">]</span></span></a></sup> The foundation is an abstract <a href="https://en.wikipedia.org/wiki/Keyspace_(distributed_data_store)" id="mwmg" rel="mw:WikiLink" title="Keyspace (distributed data store)">keyspace</a>, such as the set of 160-bit <a href="https://en.wikipedia.org/wiki/String_(computer_science)" id="mwmw" rel="mw:WikiLink" title="String (computer science)">strings</a>. A keyspace <a href="https://en.wikipedia.org/wiki/Partition_(database)" id="mwnA" rel="mw:WikiLink" title="Partition (database)">partitioning</a> scheme splits ownership of this keyspace among the participating nodes. An <a href="https://en.wikipedia.org/wiki/Overlay_network" id="mwnQ" rel="mw:WikiLink" title="Overlay network">overlay network</a> then connects the nodes, allowing them to find the owner of any given key in the keyspace.</p>
+<p id="mwng">Once these components are in place, a typical use of the DHT for storage and retrieval might proceed as follows. Suppose the keyspace is the set of 160-bit strings. To index a file with given <span about="#mwt49" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"filename"}},"i":0}}]}' id="mwnw" style="font-style:italic;" typeof="mw:Transclusion">filename</span> and <span about="#mwt50" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"data"}},"i":0}}]}' id="mwoA" style="font-style:italic;" typeof="mw:Transclusion">data</span> in the DHT, the <a href="https://en.wikipedia.org/wiki/SHA-1" id="mwoQ" rel="mw:WikiLink" title="SHA-1">SHA-1</a> hash of <span about="#mwt51" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"filename"}},"i":0}}]}' id="mwog" style="font-style:italic;" typeof="mw:Transclusion">filename</span> is generated, producing a 160-bit key <span about="#mwt52" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwow" style="font-style:italic;" typeof="mw:Transclusion">k</span>, and a message <span about="#mwt53" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''put''(''k, data'')&quot;}},&quot;i&quot;:0}}]}" id="mwpA" typeof="mw:Transclusion"><i>put</i>(<i>k, data</i>)</span> is sent to any node participating in the DHT. The message is forwarded from node to node through the overlay network until it reaches the single node responsible for key <span about="#mwt54" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwpQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> as specified by the keyspace partitioning. That node then stores the key and the data. Any other client can then retrieve the contents of the file by again hashing <span about="#mwt55" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"filename"}},"i":0}}]}' id="mwpg" style="font-style:italic;" typeof="mw:Transclusion">filename</span> to produce <span about="#mwt56" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwpw" style="font-style:italic;" typeof="mw:Transclusion">k</span> and asking any DHT node to find the data associated with <span about="#mwt57" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwqA" style="font-style:italic;" typeof="mw:Transclusion">k</span> with a message <span about="#mwt58" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''get''(''k'')&quot;}},&quot;i&quot;:0}}]}" id="mwqQ" typeof="mw:Transclusion"><i>get</i>(<i>k</i>)</span>. The message will again be routed through the overlay to the node responsible for <span about="#mwt59" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwqg" style="font-style:italic;" typeof="mw:Transclusion">k</span>, which will reply with the stored <span about="#mwt60" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"data"}},"i":0}}]}' id="mwqw" style="font-style:italic;" typeof="mw:Transclusion">data</span>.</p>
+<p id="mwrA">The keyspace partitioning and overlay network components are described below with the goal of capturing the principal ideas common to most DHTs; many designs differ in the details.</p>
+<p id="mwrg">Most DHTs use some variant of <a href="https://en.wikipedia.org/wiki/Consistent_hashing" id="mwrw" rel="mw:WikiLink" title="Consistent hashing">consistent hashing</a> or <a href="https://en.wikipedia.org/wiki/Rendezvous_hashing" id="mwsA" rel="mw:WikiLink" title="Rendezvous hashing">rendezvous hashing</a> to map keys to nodes. The two algorithms appear to have been devised independently and simultaneously to solve the distributed hash table problem.</p>
+<p id="mwsQ">Both consistent hashing and rendezvous hashing have the essential property that removal or addition of one node changes only the set of keys owned by the nodes with adjacent IDs, and leaves all other nodes unaffected. Contrast this with a traditional <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwsg" rel="mw:WikiLink" title="Hash table">hash table</a> in which addition or removal of one bucket causes nearly the entire keyspace to be remapped. Since any change in ownership typically corresponds to bandwidth-intensive movement of objects stored in the DHT from one node to another, minimizing such reorganization is required to efficiently support high rates of <a href="https://en.wikipedia.org/wiki/Churn_rate" id="mwsw" rel="mw:WikiLink" title="Churn rate">churn</a> (node arrival and failure).</p>
+<p id="mwtw">Consistent hashing employs a function <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta(k_1, k_2)"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta (k_{1},k_{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta (k_{1},k_{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta (k_{1},k_{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/393b0b9cbab3983c701a045715c4390cb84f31dd" style="vertical-align: -0.838ex; width:8.423ex; height:2.843ex;"/></span> that defines an abstract notion of the distance between the keys <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_1"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/376315fd4983f01dada5ec2f7bebc48455b14a66" style="vertical-align: -0.671ex; width:2.265ex; height:2.509ex;"/></span> and <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_2"}}' id="mwug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c51b4ba57ee596d8435fc4ed76703ca3a2fc444a" style="vertical-align: -0.671ex; width:2.265ex; height:2.509ex;"/></span>, which is unrelated to geographical distance or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Network_latency" id="mwuw" rel="mw:WikiLink" title="Network latency">network latency</a>. Each node is assigned a single key called its <i id="mwvA">identifier</i> (ID). A node with ID <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_x"}}' id="mwvQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{x}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{x}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{x}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6ba704d71ac5022a9bda478a8ee8010557700974" style="vertical-align: -0.671ex; width:1.975ex; height:2.509ex;"/></span> owns all the keys <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_m"}}' id="mwvg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25d16171af1c8efc54dfb43a8c83893cf7516f01" style="vertical-align: -0.671ex; width:2.886ex; height:2.509ex;"/></span> for which <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_x"}}' id="mwvw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{x}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{x}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{x}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6ba704d71ac5022a9bda478a8ee8010557700974" style="vertical-align: -0.671ex; width:1.975ex; height:2.509ex;"/></span> is the closest ID, measured according to <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta(k_m, i_x)"}}' id="mwwA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta (k_{m},i_{x})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta (k_{m},i_{x})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta (k_{m},i_{x})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dc992d3c15e888b2510aad981a09f27685ada9ac" style="vertical-align: -0.838ex; width:8.753ex; height:2.843ex;"/></span>.</p>
+<p id="mwwQ">For example, the <a href="https://en.wikipedia.org/wiki/Chord_(peer-to-peer)" id="mwwg" rel="mw:WikiLink" title="Chord (peer-to-peer)">Chord DHT</a> uses consistent hashing, which treats nodes as points on a circle, and <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\delta(k_1, k_2)"}}' id="mwww" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \delta (k_{1},k_{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>δ<!-- δ --></mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \delta (k_{1},k_{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \delta (k_{1},k_{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/393b0b9cbab3983c701a045715c4390cb84f31dd" style="vertical-align: -0.838ex; width:8.423ex; height:2.843ex;"/></span> is the distance traveling clockwise around the circle from <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_1"}}' id="mwxA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/376315fd4983f01dada5ec2f7bebc48455b14a66" style="vertical-align: -0.671ex; width:2.265ex; height:2.509ex;"/></span> to <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_2"}}' id="mwxQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c51b4ba57ee596d8435fc4ed76703ca3a2fc444a" style="vertical-align: -0.671ex; width:2.265ex; height:2.509ex;"/></span>. Thus, the circular keyspace is split into contiguous segments whose endpoints are the node identifiers. If <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_1"}}' id="mwxg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5484b6123d92ccfcef3204a32720eeae60998e29" style="vertical-align: -0.671ex; width:1.857ex; height:2.509ex;"/></span> and <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_2"}}' id="mwxw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14feff7997a635a64f7dfacfbd0374a24ab279bd" style="vertical-align: -0.671ex; width:1.857ex; height:2.509ex;"/></span> are two adjacent IDs, then the node with ID <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_2"}}' id="mwyA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14feff7997a635a64f7dfacfbd0374a24ab279bd" style="vertical-align: -0.671ex; width:1.857ex; height:2.509ex;"/></span> owns all the keys that fall between <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_1"}}' id="mwyQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5484b6123d92ccfcef3204a32720eeae60998e29" style="vertical-align: -0.671ex; width:1.857ex; height:2.509ex;"/></span> and <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i_2"}}' id="mwyg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>i</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14feff7997a635a64f7dfacfbd0374a24ab279bd" style="vertical-align: -0.671ex; width:1.857ex; height:2.509ex;"/></span>.</p>
+<p id="mwzg">In rendezvous hashing, also called highest random weight (HRW) hashing, all clients use the same hash function <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h()"}}' id="mwzw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h()}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h()}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h()}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/992946ab39fbae54bdf55bfa775e9a19d97205e2" style="vertical-align: -0.838ex; width:3.148ex; height:2.843ex;"/></span> (chosen ahead of time) to associate a key to one of the <i id="mw0A">n</i> available servers.
+Each client has the same list of identifiers <span about="#mwt81" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;{{mset|''S''&lt;sub&gt;1&lt;/sub&gt;, ''S''&lt;sub&gt;2&lt;/sub&gt;, ..., ''S''&lt;sub&gt;''n''&lt;/sub&gt; }}&quot;}},&quot;i&quot;:0}}]}" id="mw0Q" typeof="mw:Transclusion">{<i>S</i><sub>1</sub>, <i>S</i><sub>2</sub>, ..., <i>S</i><sub><i>n</i></sub> }</span>, one for each server.
+Given some key <i id="mw0g">k</i>, a client computes <i id="mw0w">n</i> hash weights <span about="#mwt82" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''w''&lt;sub&gt;1&lt;/sub&gt; = ''h''(''S''&lt;sub&gt;1&lt;/sub&gt;, ''k''), ''w''&lt;sub&gt;2&lt;/sub&gt; = ''h''(''S''&lt;sub&gt;2&lt;/sub&gt;, ''k''), ..., ''w''&lt;sub&gt;''n''&lt;/sub&gt; = ''h''(''S''&lt;sub&gt;''n''&lt;/sub&gt;, ''k'')&quot;}},&quot;i&quot;:0}}]}" id="mw1A" typeof="mw:Transclusion"><i>w</i><sub>1</sub> = <i>h</i>(<i>S</i><sub>1</sub>, <i>k</i>), <i>w</i><sub>2</sub> = <i>h</i>(<i>S</i><sub>2</sub>, <i>k</i>), ..., <i>w</i><sub><i>n</i></sub> = <i>h</i>(<i>S</i><sub><i>n</i></sub>, <i>k</i>)</span>.
+The client associates that key with the server corresponding to the highest hash weight for that key.
+A server with ID <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_x"}}' id="mw1Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{x}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{x}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{x}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e17297f0fdd502bf3cf9e999b890ffb872869c82" style="vertical-align: -0.671ex; width:2.597ex; height:2.509ex;"/></span> owns all the keys <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_m"}}' id="mw1g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25d16171af1c8efc54dfb43a8c83893cf7516f01" style="vertical-align: -0.671ex; width:2.886ex; height:2.509ex;"/></span> for which the hash weight <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(S_x, k_m)"}}' id="mw1w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(S_{x},k_{m})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>x</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(S_{x},k_{m})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(S_{x},k_{m})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6c9d066cc97a7ab7823119933d5968e5d1eb21e8" style="vertical-align: -0.838ex; width:9.666ex; height:2.843ex;"/></span> is higher than the hash weight of any other node for that key.</p>
+<p id="mw2w">Locality-preserving hashing ensures that similar keys are assigned to similar objects. This can enable a more efficient execution of range queries, however, in contrast to using consistent hashing, there is no more assurance that the keys (and thus the load) is uniformly randomly distributed over the key space and the participating peers. DHT protocols such as Self-Chord and Oscar<sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mw3A"><span class="mw-reflink-text" id="mw3Q"><span class="cite-bracket" id="mw3g">[</span>16<span class="cite-bracket" id="mw3w">]</span></span></a></sup> address such issues. Self-Chord decouples object keys from peer IDs and sorts keys along the ring with a statistical approach based on the <a href="https://en.wikipedia.org/wiki/Swarm_intelligence" id="mw4A" rel="mw:WikiLink" title="Swarm intelligence">swarm intelligence</a> paradigm.<sup about="#mwt93" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mw4Q"><span class="mw-reflink-text" id="mw4g"><span class="cite-bracket" id="mw4w">[</span>17<span class="cite-bracket" id="mw5A">]</span></span></a></sup> Sorting ensures that similar keys are stored by neighbour nodes and that discovery procedures, including <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Range_query_(data_structures)" id="mw5Q" rel="mw:WikiLink" title="Range query (data structures)">range queries</a>, can be performed in logarithmic time. Oscar constructs a navigable <a href="https://en.wikipedia.org/wiki/Small-world_network" id="mw5g" rel="mw:WikiLink" title="Small-world network">small-world network</a> based on <a href="https://en.wikipedia.org/wiki/Random_walk" id="mw5w" rel="mw:WikiLink" title="Random walk">random walk</a> sampling also assuring logarithmic search time.</p>
+<p id="mw6Q">Each node maintains a set of <a href="https://en.wikipedia.org/wiki/Data_link" id="mw6g" rel="mw:WikiLink" title="Data link">links</a> to other nodes (its <i id="mw6w">neighbors</i> or <a href="https://en.wikipedia.org/wiki/Routing_table" id="mw7A" rel="mw:WikiLink" title="Routing table">routing table</a>). Together, these links form the overlay network.<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mw7Q"><span class="mw-reflink-text" id="mw7g"><span class="cite-bracket" id="mw7w">[</span>18<span class="cite-bracket" id="mw8A">]</span></span></a></sup> A node picks its neighbors according to a certain structure, called the <a href="https://en.wikipedia.org/wiki/Network_topology" id="mw8Q" rel="mw:WikiLink" title="Network topology">network's topology</a>.</p>
+<p id="mw8g">All DHT topologies share some variant of the most essential property: for any key <span about="#mwt97" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw8w" style="font-style:italic;" typeof="mw:Transclusion">k</span>, each node either has a node ID that owns <span about="#mwt98" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw9A" style="font-style:italic;" typeof="mw:Transclusion">k</span> or has a link to a node whose node ID is <i id="mw9Q">closer</i> to <span about="#mwt99" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw9g" style="font-style:italic;" typeof="mw:Transclusion">k</span>, in terms of the keyspace distance defined above. It is then easy to route a message to the owner of any key <span about="#mwt100" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw9w" style="font-style:italic;" typeof="mw:Transclusion">k</span> using the following <a href="https://en.wikipedia.org/wiki/Greedy_algorithm" id="mw-A" rel="mw:WikiLink" title="Greedy algorithm">greedy algorithm</a> (that is not necessarily globally optimal): at each step, forward the message to the neighbor whose ID is closest to <span about="#mwt101" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw-Q" style="font-style:italic;" typeof="mw:Transclusion">k</span>. When there is no such neighbor, then we must have arrived at the closest node, which is the owner of <span about="#mwt102" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mw-g" style="font-style:italic;" typeof="mw:Transclusion">k</span> as defined above. This style of routing is sometimes called <a href="https://en.wikipedia.org/wiki/Key-based_routing" id="mw-w" rel="mw:WikiLink" title="Key-based routing">key-based routing</a>.</p>
+<p id="mw_A">Beyond basic routing correctness, two important constraints on the topology are to guarantee that the maximum number of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hop_(networking)" id="mw_Q" rel="mw:WikiLink" title="Hop (networking)">hops</a> in any route (route length) is low, so that requests complete quickly; and that the maximum number of neighbors of any node (maximum node <a href="https://en.wikipedia.org/wiki/Degree_(graph_theory)" id="mw_g" rel="mw:WikiLink" title="Degree (graph theory)">degree</a>) is low, so that maintenance overhead is not excessive. Of course, having shorter routes requires higher <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Maximum_degree" id="mw_w" rel="mw:WikiLink" title="Maximum degree">maximum degree</a>. Some common choices for maximum degree and route length are as follows, where <span about="#mwt103" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAQA" style="font-style:italic;" typeof="mw:Transclusion">n</span> is the number of nodes in the DHT, using <a href="https://en.wikipedia.org/wiki/Big_O_notation" id="mwAQE" rel="mw:WikiLink" title="Big O notation">Big O notation</a>:</p>
+<p id="mwATU">The most common choice, <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwATY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> degree/route length, is not optimal in terms of degree/route length tradeoff, but such topologies typically allow more flexibility in choice of neighbors. Many DHTs use that flexibility to pick neighbors that are close in terms of latency in the physical underlying network. In general, all DHTs construct navigable small-world network topologies, which trade-off route length vs. network degree.<sup about="#mwt117" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwATc"><span class="mw-reflink-text" id="mwATg"><span class="cite-bracket" id="mwATk">[</span>19<span class="cite-bracket" id="mwATo">]</span></span></a></sup></p>
+<p id="mwATs">Maximum route length is closely related to <a href="https://en.wikipedia.org/wiki/Diameter_(graph_theory)" id="mwATw" rel="mw:WikiLink" title="Diameter (graph theory)">diameter</a>: the maximum number of hops in any shortest path between nodes. Clearly, the network's worst case route length is at least as large as its diameter, so DHTs are limited by the degree/diameter tradeoff<sup about="#mwt120" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwAT0"><span class="mw-reflink-text" id="mwAT4"><span class="cite-bracket" id="mwAT8">[</span>20<span class="cite-bracket" id="mwAUA">]</span></span></a></sup> that is fundamental in <a href="https://en.wikipedia.org/wiki/Graph_theory" id="mwAUE" rel="mw:WikiLink" title="Graph theory">graph theory</a>. Route length can be greater than diameter, since the greedy routing algorithm may not find shortest paths.<sup about="#mwt122" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mwAUI"><span class="mw-reflink-text" id="mwAUM"><span class="cite-bracket" id="mwAUQ">[</span>21<span class="cite-bracket" id="mwAUU">]</span></span></a></sup></p>
+<p id="mwAUc">Aside from routing, there exist many algorithms that exploit the structure of the overlay network for sending a message to all nodes, or a subset of nodes, in a DHT.<sup about="#mwt125" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mwAUg"><span class="mw-reflink-text" id="mwAUk"><span class="cite-bracket" id="mwAUo">[</span>22<span class="cite-bracket" id="mwAUs">]</span></span></a></sup> These algorithms are used by applications to do <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Overlay_multicast" id="mwAUw" rel="mw:WikiLink" title="Overlay multicast">overlay multicast</a>, range queries, or to collect statistics. Two systems that are based on this approach are Structella,<sup about="#mwt128" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mwAU0"><span class="mw-reflink-text" id="mwAU4"><span class="cite-bracket" id="mwAU8">[</span>23<span class="cite-bracket" id="mwAVA">]</span></span></a></sup> which implements flooding and random walks on a Pastry overlay, and DQ-DHT, which implements a dynamic querying search algorithm over a Chord network.<sup about="#mwt131" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mwAVE"><span class="mw-reflink-text" id="mwAVI"><span class="cite-bracket" id="mwAVM">[</span>24<span class="cite-bracket" id="mwAVQ">]</span></span></a></sup></p>
+<p id="mwAVY">Because of the decentralization, fault tolerance, and scalability of DHTs, they are inherently more resilient against a hostile attacker than a centralized system.<link about="#mwt132" data-mw='{"parts":[{"template":{"target":{"wt":"Vague","href":"./Template:Vague"},"params":{"date":{"wt":"June 2016"}},"i":0}}]}' href="./Category:All_Wikipedia_articles_needing_clarification" id="mwAVc" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt132" href="./Category:Wikipedia_articles_needing_clarification_from_June_2016" rel="mw:PageProp/Category"/><sup about="#mwt132" class="noprint Inline-Template" id="mwAVg" style="margin-left:0.1em; white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Vagueness" rel="mw:WikiLink" title="Wikipedia:Vagueness"><span title="This information is too vague. (June 2016)">vague</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwAVk">Open systems for <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Distributed_data_storage" id="mwAVo" rel="mw:WikiLink" title="Distributed data storage">distributed data storage</a> that are robust against massive hostile attackers are feasible.<sup about="#mwt135" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwAVs"><span class="mw-reflink-text" id="mwAVw"><span class="cite-bracket" id="mwAV0">[</span>25<span class="cite-bracket" id="mwAV4">]</span></span></a></sup></p>
+<p id="mwAV8">A DHT system that is carefully designed to have <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Byzantine_fault_tolerance" id="mwAWA" rel="mw:WikiLink" title="Byzantine fault tolerance">Byzantine fault tolerance</a> can defend against a security weakness, known as the <a href="https://en.wikipedia.org/wiki/Sybil_attack" id="mwAWE" rel="mw:WikiLink" title="Sybil attack">Sybil attack</a>, which affects most current DHT designs.<sup about="#mwt137" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAWI"><span class="mw-reflink-text" id="mwAWM"><span class="cite-bracket" id="mwAWQ">[</span>26<span class="cite-bracket" id="mwAWU">]</span></span></a></sup><sup about="#mwt140" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwAWY"><span class="mw-reflink-text" id="mwAWc"><span class="cite-bracket" id="mwAWg">[</span>27<span class="cite-bracket" id="mwAWk">]</span></span></a></sup> Whanau is a DHT designed to be resistant to Sybil attacks.<sup about="#mwt142" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAWo"><span class="mw-reflink-text" id="mwAWs"><span class="cite-bracket" id="mwAWw">[</span>28<span class="cite-bracket" id="mwAW0">]</span></span></a></sup></p>
+<p id="mwAW4">Petar Maymounkov, one of the original authors of <a href="https://en.wikipedia.org/wiki/Kademlia" id="mwAW8" rel="mw:WikiLink" title="Kademlia">Kademlia</a>, has proposed a way to circumvent the weakness to the Sybil attack by incorporating social trust relationships into the system design.<sup about="#mwt145" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAXA"><span class="mw-reflink-text" id="mwAXE"><span class="cite-bracket" id="mwAXI">[</span>29<span class="cite-bracket" id="mwAXM">]</span></span></a></sup> The new system, codenamed Tonika or also known by its domain name as 5ttt, is based on an algorithm design known as "electric routing" and co-authored with the mathematician Jonathan Kelner.<sup about="#mwt148" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAXQ"><span class="mw-reflink-text" id="mwAXU"><span class="cite-bracket" id="mwAXY">[</span>30<span class="cite-bracket" id="mwAXc">]</span></span></a></sup> Maymounkov has now undertaken a comprehensive implementation effort of this new system. However, research into effective defences against Sybil attacks is generally considered an open question, and wide variety of potential defences are proposed every year in top security research conferences.<sup about="#mwt151" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAXg"><span class="mw-reflink-text" id="mwAXk"><span class="cite-bracket" id="mwAXo">[</span>31<span class="cite-bracket" id="mwAXs">]</span></span></a></sup></p>
+<p id="mwAX0">Most notable differences encountered in practical instances of DHT implementations include at least the following:</p>
+</div></div>
+</body></html>

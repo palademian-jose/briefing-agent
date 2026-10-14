@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Galactic algorithm - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Galactic algorithm</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">A <b id="mwBA">galactic algorithm</b> is an <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwBQ" rel="mw:WikiLink" title="Algorithm">algorithm</a> with state-of-the-art theoretical (<a href="https://en.wikipedia.org/wiki/Asymptotic_computational_complexity" id="mwBg" rel="mw:WikiLink" title="Asymptotic computational complexity">asymptotic</a>) performance, but which is not used due to practical constraints. Typical reasons are that the performance gains only appear for problems that are so large they never occur, or the algorithm's complexity outweighs a relatively small gain in real-world performance.  Galactic algorithms were so named by <a href="https://en.wikipedia.org/wiki/Richard_Lipton" id="mwBw" rel="mw:WikiLink" title="Richard Lipton">Richard Lipton</a> and Ken Regan,<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"seminal"},"body":{"id":"mw-reference-text-cite_note-seminal-1"}}' id="cite_ref-seminal_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-seminal-1" id="mwCA"><span class="mw-reflink-text" id="mwCQ"><span class="cite-bracket" id="mwCg">[</span>1<span class="cite-bracket" id="mwCw">]</span></span></a></sup> because they will never be used on any data sets on Earth.</p>
+<p id="mwDg">Even if they are never used in practice, galactic algorithms may still contribute to <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwDw" rel="mw:WikiLink" title="Computer science">computer science</a>:</p>
+<p>This alone could be important and often is a great reason for finding such algorithms. For example, if tomorrow there were a discovery that showed there is a factoring algorithm with a huge but provably polynomial time bound, that would change our beliefs about factoring. The algorithm might never be used, but would certainly shape the future research into factoring.</p>
+<p id="mwLA">An example of a galactic algorithm is the fastest known way to <a href="https://en.wikipedia.org/wiki/Multiplication_algorithm" id="mwLQ" rel="mw:WikiLink" title="Multiplication algorithm">multiply two numbers</a>,<sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>4<span class="cite-bracket" id="mwMQ">]</span></span></a></sup> which is based on a 1729-dimensional <a href="https://en.wikipedia.org/wiki/Fourier_transform" id="mwMg" rel="mw:WikiLink" title="Fourier transform">Fourier transform</a>.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"quick"},"body":{"id":"mw-reference-text-cite_note-quick-5"}}' id="cite_ref-quick_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-quick-5" id="mwMw"><span class="mw-reflink-text" id="mwNA"><span class="cite-bracket" id="mwNQ">[</span>5<span class="cite-bracket" id="mwNg">]</span></span></a></sup> It needs <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n \\log n)"}}' id="mwNw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9d2320768fb54880ca4356e61f60eb02a3f9d9f1" style="vertical-align: -0.838ex; width:10.118ex; height:2.843ex;"/></span> bit operations, but as the constants hidden by the <a href="https://en.wikipedia.org/wiki/Big_O_notation" id="mwOA" rel="mw:WikiLink" title="Big O notation">big O notation</a> are large, so it is almost never used in practice. However, it also shows why galactic algorithms may still be useful. The authors state: "we are hopeful that with further refinements, the algorithm might become practical for numbers with merely billions or trillions of digits."<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"quick"}}' id="cite_ref-quick_5-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-quick-5" id="mwOQ"><span class="mw-reflink-text" id="mwOg"><span class="cite-bracket" id="mwOw">[</span>5<span class="cite-bracket" id="mwPA">]</span></span></a></sup></p>
+<p id="mwPg">The <a class="mw-redirect" href="https://en.wikipedia.org/wiki/AKS_primality_test" id="mwPw" rel="mw:WikiLink" title="AKS primality test">AKS primality test</a> is galactic.  It is the most theoretically sound of any known algorithm that can take an arbitrary number and tell if it is <a href="https://en.wikipedia.org/wiki/Prime_number" id="mwQA" rel="mw:WikiLink" title="Prime number">prime</a>.  In particular, it is  <i id="mwQQ">provably polynomial-time</i>, <i id="mwQg">deterministic</i>, and <i id="mwQw">unconditionally correct</i>.  All other known algorithms fall short on at least one of these criteria, but the shortcomings are minor and the calculations are much faster, so they are used instead.  <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Elliptic_curve_primality_proving" id="mwRA" rel="mw:WikiLink" title="Elliptic curve primality proving">ECPP</a> in practice runs much faster than AKS, but it has never been proven to be polynomial time.  The <a href="https://en.wikipedia.org/wiki/Miller–Rabin_primality_test" id="mwRQ" rel="mw:WikiLink" title="Miller–Rabin primality test">Miller–Rabin</a> test is also much faster than AKS, but produces only a probabilistic result.  However the probability of error can be driven down to arbitrarily small values (say <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"&lt; 10^{-100}"}}' id="mwRg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle &lt;10^{-100}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>&lt;</mo>
+<msup>
+<mn>10</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mn>100</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle &lt;10^{-100}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle &lt;10^{-100}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b610ca49f45cf06d419f308eb5f17b2d4ace1f4" style="vertical-align: -0.338ex; width:8.755ex; height:2.676ex;"/></span>), good enough for practical purposes.  There is also a <a href="https://en.wikipedia.org/wiki/Miller–Rabin_primality_test#Deterministic_variants" id="mwRw" rel="mw:WikiLink" title="Miller–Rabin primality test">deterministic version</a> of the Miller-Rabin test, which runs in polynomial time over all inputs, but its correctness depends on the <a href="https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis" id="mwSA" rel="mw:WikiLink" title="Generalized Riemann hypothesis">generalized Riemann hypothesis</a> (which is widely believed, but not proven).  The existence of these (much) faster alternatives means AKS is not used in practice.</p>
+<p id="mwSg">The first improvement over brute-force <a href="https://en.wikipedia.org/wiki/Matrix_multiplication" id="mwSw" rel="mw:WikiLink" title="Matrix multiplication">matrix multiplication</a> (which takes <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^3)"}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{3})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{3})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{3})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b04f5c5cfea38f43406d9442387ad28555e2609" style="vertical-align: -0.838ex; width:6.032ex; height:3.176ex;"/></span> operations) was the <a href="https://en.wikipedia.org/wiki/Strassen_algorithm" id="mwTQ" rel="mw:WikiLink" title="Strassen algorithm">Strassen algorithm</a>: a recursive algorithm that takes <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^{2.807})"}}' id="mwTg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{2.807})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2.807</mn>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{2.807})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{2.807})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5efdd8558feb6363dbd3fe296b5f757df910e88a" style="vertical-align: -0.838ex; width:8.955ex; height:3.176ex;"/></span> operations. This algorithm is not galactic and is used in practice. Further extensions of this, using sophisticated <a href="https://en.wikipedia.org/wiki/Group_theory" id="mwTw" rel="mw:WikiLink" title="Group theory">group theory</a>, are the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Coppersmith–Winograd_algorithm" id="mwUA" rel="mw:WikiLink" title="Coppersmith–Winograd algorithm">Coppersmith–Winograd algorithm</a> and its slightly better successors, taking <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^{2.373})"}}' id="mwUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{2.373})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2.373</mn>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{2.373})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{2.373})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8b7e9678394c2c1edfe2bbe326ea0c90343eb68b" style="vertical-align: -0.838ex; width:8.955ex; height:3.176ex;"/></span> operations. These are galactic – "We nevertheless stress that such improvements are only of theoretical interest, since the huge constants involved in the complexity of fast matrix multiplication usually make these algorithms impractical."<sup about="#mwt29" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwUg"><span class="mw-reflink-text" id="mwUw"><span class="cite-bracket" id="mwVA">[</span>6<span class="cite-bracket" id="mwVQ">]</span></span></a></sup></p>
+<p id="mwVw"><a href="https://en.wikipedia.org/wiki/Claude_Shannon" id="mwWA" rel="mw:WikiLink" title="Claude Shannon">Claude Shannon</a> showed a simple but asymptotically optimal <a href="https://en.wikipedia.org/wiki/Code" id="mwWQ" rel="mw:WikiLink" title="Code">code</a> that can reach the theoretical capacity of a <a href="https://en.wikipedia.org/wiki/Communication_channel" id="mwWg" rel="mw:WikiLink" title="Communication channel">communication channel</a>.  It requires assigning a random code word to every possible <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>-bit message, then decoding by finding the closest code word.  If <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is chosen large enough, this beats any existing code and can get arbitrarily close to the capacity of the channel.  Unfortunately, any <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> big enough to beat existing codes is also completely impractical.<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwXg"><span class="mw-reflink-text" id="mwXw"><span class="cite-bracket" id="mwYA">[</span>7<span class="cite-bracket" id="mwYQ">]</span></span></a></sup> These codes, though never used, inspired decades of research into more practical algorithms that today can achieve rates arbitrarily close to the ideal channel capacity.<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwYg"><span class="mw-reflink-text" id="mwYw"><span class="cite-bracket" id="mwZA">[</span>8<span class="cite-bracket" id="mwZQ">]</span></span></a></sup></p>
+<p id="mwZw">The problem of <a href="https://en.wikipedia.org/wiki/Decision_problem" id="mwaA" rel="mw:WikiLink" title="Decision problem">deciding</a> whether a graph <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mwaQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> contains <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"H"}}' id="mwag" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a9edddcca2f782014371f75dca39d7e13a9c1b" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> as a <a href="https://en.wikipedia.org/wiki/Graph_minor" id="mwaw" rel="mw:WikiLink" title="Graph minor">minor</a> is <a class="mw-redirect" href="https://en.wikipedia.org/wiki/NP-complete" id="mwbA" rel="mw:WikiLink" title="NP-complete">NP-complete</a> in general, but where <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"H"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a9edddcca2f782014371f75dca39d7e13a9c1b" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> is fixed, it can be solved in polynomial time.  The running time for testing whether <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"H"}}' id="mwbg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a9edddcca2f782014371f75dca39d7e13a9c1b" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> is a minor of <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> in this case is <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^2)"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6cd9594a16cb898b8f2a2dff9227a385ec183392" style="vertical-align: -0.838ex; width:6.032ex; height:3.176ex;"/></span>,<sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"kkr12"},"body":{"id":"mw-reference-text-cite_note-kkr12-9"}}' id="cite_ref-kkr12_9-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-kkr12-9" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>9<span class="cite-bracket" id="mwdA">]</span></span></a></sup> where <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwdQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is the number of vertices in <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"G"}}' id="mwdg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5f3c8921a3b352de45446a6789b104458c9f90b" style="vertical-align: -0.338ex; width:1.827ex; height:2.176ex;"/></span> and the <a href="https://en.wikipedia.org/wiki/Big_O_notation" id="mwdw" rel="mw:WikiLink" title="Big O notation">big O notation</a> hides a constant that depends superexponentially on <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"H"}}' id="mweA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a9edddcca2f782014371f75dca39d7e13a9c1b" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span>.  The constant is greater than <span about="#mwt51" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2 \\uparrow \\uparrow (2 \\uparrow \\uparrow (2 \\uparrow \\uparrow (h/2) ) ) "}}' id="mweQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2\uparrow \uparrow (2\uparrow \uparrow (2\uparrow \uparrow (h/2)))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>2</mn>
+<mo stretchy="false">↑<!-- ↑ -->↑<!-- ↑ --></mo>
+<mo stretchy="false">(</mo>
+<mn>2</mn>
+<mo stretchy="false">↑<!-- ↑ -->↑<!-- ↑ --></mo>
+<mo stretchy="false">(</mo>
+<mn>2</mn>
+<mo stretchy="false">↑<!-- ↑ -->↑<!-- ↑ --></mo>
+<mo stretchy="false">(</mo>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2\uparrow \uparrow (2\uparrow \uparrow (2\uparrow \uparrow (h/2)))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2\uparrow \uparrow (2\uparrow \uparrow (2\uparrow \uparrow (h/2)))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/360009b1d76b85fe5141886793eb89e9ad50e825" style="vertical-align: -0.838ex; width:23.425ex; height:2.843ex;"/></span> in <a href="https://en.wikipedia.org/wiki/Knuth's_up-arrow_notation" id="mweg" rel="mw:WikiLink" title="Knuth's up-arrow notation">Knuth's up-arrow notation</a>, where <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mwew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> is the number of vertices in <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"H"}}' id="mwfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/75a9edddcca2f782014371f75dca39d7e13a9c1b" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span>.<sup about="#mwt57" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwfQ"><span class="mw-reflink-text" id="mwfg"><span class="cite-bracket" id="mwfw">[</span>10<span class="cite-bracket" id="mwgA">]</span></span></a></sup> Even the case of <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h = 4"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h=4}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo>=</mo>
+<mn>4</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h=4}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h=4}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b3ec3aec2fcc1177dad3a297dfc9060ec07e5a3" style="vertical-align: -0.338ex; width:5.6ex; height:2.176ex;"/></span> cannot be reasonably computed as the constant is greater than 2 <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Pentated" id="mwgg" rel="mw:WikiLink" title="Pentated">pentated</a> by 4, or 2 <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tetrated" id="mwgw" rel="mw:WikiLink" title="Tetrated">tetrated</a> by 65536, that is, <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2 \\uparrow \\uparrow \\uparrow 4 = {}^{65536}2 = \\underbrace{2^{2^{\\cdot^{\\cdot^2}}}}_{65536}"}}' id="mwhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2\uparrow \uparrow \uparrow 4={}^{65536}2=\underbrace {2^{2^{\cdot ^{\cdot ^{2}}}}} _{65536}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>2</mn>
+<mo stretchy="false">↑<!-- ↑ -->↑<!-- ↑ -->↑<!-- ↑ --></mo>
+<mn>4</mn>
+<mo>=</mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>65536</mn>
+</mrow>
+</msup>
+<mn>2</mn>
+<mo>=</mo>
+<munder>
+<mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+<munder>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mo>⋅<!-- ⋅ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mo>⋅<!-- ⋅ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mrow>
+</msup>
+</mrow>
+</msup>
+</mrow>
+</msup>
+<mo>⏟<!-- ⏟ --></mo>
+</munder>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>65536</mn>
+</mrow>
+</munder>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2\uparrow \uparrow \uparrow 4={}^{65536}2=\underbrace {2^{2^{\cdot ^{\cdot ^{2}}}}} _{65536}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2\uparrow \uparrow \uparrow 4={}^{65536}2=\underbrace {2^{2^{\cdot ^{\cdot ^{2}}}}} _{65536}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5787e6e37e6e31854ce4abe8dff3707f2fa8340c" style="vertical-align: -3.671ex; margin-right: -0.002ex; width:22.916ex; height:7.343ex;"/></span>.</p>
+<p id="mwhg">In <a href="https://en.wikipedia.org/wiki/Cryptography" id="mwhw" rel="mw:WikiLink" title="Cryptography">cryptography</a> jargon, a "break" is any attack faster in expectation than <a href="https://en.wikipedia.org/wiki/Brute-force_attack" id="mwiA" rel="mw:WikiLink" title="Brute-force attack">brute force</a> – i.e., performing one trial decryption for each possible key. For many cryptographic systems, breaks are known, but are still practically infeasible with current technology. One example is the best attack known against 128-bit <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" id="mwiQ" rel="mw:WikiLink" title="Advanced Encryption Standard">AES</a>, which takes only <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2^{126}"}}' id="mwig" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2^{126}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>126</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2^{126}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2^{126}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/03ba78eeaf0f84e190d7aa90548b82ead88a37c5" style="vertical-align: -0.338ex; width:3.861ex; height:2.676ex;"/></span> operations.<sup about="#mwt63" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-11"}}' id="cite_ref-:0_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-11" id="mwiw"><span class="mw-reflink-text" id="mwjA"><span class="cite-bracket" id="mwjQ">[</span>11<span class="cite-bracket" id="mwjg">]</span></span></a></sup> Despite being impractical, theoretical breaks can provide insight into vulnerability patterns, and sometimes lead to discovery of exploitable breaks.</p>
+<p id="mwkA">For several decades, the best known approximation to the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Traveling_salesman_problem" id="mwkQ" rel="mw:WikiLink" title="Traveling salesman problem">traveling salesman problem</a> in a <a href="https://en.wikipedia.org/wiki/Metric_space" id="mwkg" rel="mw:WikiLink" title="Metric space">metric space</a> was the simple <a href="https://en.wikipedia.org/wiki/Christofides_algorithm" id="mwkw" rel="mw:WikiLink" title="Christofides algorithm">Christofides algorithm</a> which produced a path at most 50% longer than the optimum. (Many other algorithms could <i id="mwlA">usually</i> do much better, but could not provably do so.)  In 2020, a newer and much more complex algorithm was discovered that beat this algorithm by <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"10^{-34}"}}' id="mwlQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 10^{-34}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mn>10</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mn>34</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 10^{-34}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 10^{-34}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9cf2b5bceb62956a12c9ce5a253e838aa25c9f11" style="vertical-align: -0.338ex; width:5.48ex; height:2.676ex;"/></span> percent.<sup about="#mwt67" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwlg"><span class="mw-reflink-text" id="mwlw"><span class="cite-bracket" id="mwmA">[</span>12<span class="cite-bracket" id="mwmQ">]</span></span></a></sup> Although no one will ever switch to this algorithm for its very slight worst-case improvement, it is still considered important because "this minuscule improvement breaks through both a theoretical logjam and a psychological one".<sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwmg"><span class="mw-reflink-text" id="mwmw"><span class="cite-bracket" id="mwnA">[</span>13<span class="cite-bracket" id="mwnQ">]</span></span></a></sup></p>
+<p id="mwnw">A single algorithm, "<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hutter_search" id="mwoA" rel="mw:WikiLink" title="Hutter search">Hutter search</a>", can solve any well-defined problem in an asymptotically optimal time, barring some caveats.<link about="#mwt71" data-mw='{"parts":[{"template":{"target":{"wt":"Example needed","href":"./Template:Example_needed"},"params":{"date":{"wt":"June 2025"}},"i":0}}]}' href="./Category:All_articles_needing_examples" id="mwoQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt71" href="./Category:Articles_needing_examples_from_June_2025" rel="mw:PageProp/Category"/><sup about="#mwt71" class="noprint Inline-Template" id="mwog" style="margin-left:0.1em; white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a class="mw-redirect" href="https://en.wikipedia.org/wiki/Wikipedia:AUDIENCE" rel="mw:WikiLink" title="Wikipedia:AUDIENCE"><span title="An editor has requested that an example be provided. (June 2025)">example needed</span></a></i><span typeof="mw:Entity">]</span></sup> It works by searching through all possible algorithms (by runtime), while simultaneously searching through all possible <a href="https://en.wikipedia.org/wiki/Formal_proof" id="mwow" rel="mw:WikiLink" title="Formal proof">proofs</a> (by length of proof), looking for a proof of correctness for each algorithm.  Since the proof of correctness is of finite size, it "only" adds a constant and does not affect the asymptotic runtime. However, this constant is so big that the algorithm is entirely impractical.<sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwpA"><span class="mw-reflink-text" id="mwpQ"><span class="cite-bracket" id="mwpg">[</span>14<span class="cite-bracket" id="mwpw">]</span></span></a></sup><sup about="#mwt77" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwqA"><span class="mw-reflink-text" id="mwqQ"><span class="cite-bracket" id="mwqg">[</span>15<span class="cite-bracket" id="mwqw">]</span></span></a></sup>  For example, if the shortest proof of correctness of a given algorithm is 1000 bits long, the search will examine at least 2<sup id="mwrA">999</sup> other potential proofs first.</p>
+<p id="mwrQ">Hutter search is related to <a href="https://en.wikipedia.org/wiki/Solomonoff's_theory_of_inductive_inference" id="mwrg" rel="mw:WikiLink" title="Solomonoff's theory of inductive inference">Solomonoff induction</a>, which is a formalization of <a href="https://en.wikipedia.org/wiki/Bayesian_inference" id="mwrw" rel="mw:WikiLink" title="Bayesian inference">Bayesian inference</a>.  All <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Computable" id="mwsA" rel="mw:WikiLink" title="Computable">computable</a> theories (as implemented by programs) which perfectly describe previous observations are used to calculate the probability of the next observation, with more weight put on the shorter computable theories.  Again, the search over all possible explanations makes this procedure galactic.</p>
+<p id="mwsg"><a href="https://en.wikipedia.org/wiki/Simulated_annealing" id="mwsw" rel="mw:WikiLink" title="Simulated annealing">Simulated annealing</a>, when used with a logarithmic cooling schedule, has been proven to find the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Global_optimum" id="mwtA" rel="mw:WikiLink" title="Global optimum">global optimum</a> of any optimization problem.<sup about="#mwt80" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwtQ"><span class="mw-reflink-text" id="mwtg"><span class="cite-bracket" id="mwtw">[</span>16<span class="cite-bracket" id="mwuA">]</span></span></a></sup>  However, such a cooling schedule results in entirely impractical runtimes, and is never used.<sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mwuQ"><span class="mw-reflink-text" id="mwug"><span class="cite-bracket" id="mwuw">[</span>17<span class="cite-bracket" id="mwvA">]</span></span></a></sup>  However, knowing this ideal algorithm exists has led to practical variants that are able to find very good (though not provably optimal) solutions to complex optimization problems.<sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mwvQ"><span class="mw-reflink-text" id="mwvg"><span class="cite-bracket" id="mwvw">[</span>18<span class="cite-bracket" id="mwwA">]</span></span></a></sup><sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwwQ"><span class="mw-reflink-text" id="mwwg"><span class="cite-bracket" id="mwww">[</span>19<span class="cite-bracket" id="mwxA">]</span></span></a></sup></p>
+<p id="mwxg">The <a href="https://en.wikipedia.org/wiki/Expected_linear_time_MST_algorithm" id="mwxw" rel="mw:WikiLink" title="Expected linear time MST algorithm">expected linear time MST algorithm</a> is able to discover the <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree" id="mwyA" rel="mw:WikiLink" title="Minimum spanning tree">minimum spanning tree</a> of a graph in <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(m + n)"}}' id="mwyQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(m+n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>m</mi>
+<mo>+</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(m+n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(m+n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0922aa919079469e54e4c3affe9b7ab456f1a124" style="vertical-align: -0.838ex; width:9.858ex; height:2.843ex;"/></span>, where <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwyg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> is the number of edges and <span about="#mwt93" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwyw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is the number of nodes of the graph.<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwzA"><span class="mw-reflink-text" id="mwzQ"><span class="cite-bracket" id="mwzg">[</span>20<span class="cite-bracket" id="mwzw">]</span></span></a></sup> However, the constant factor that is hidden by the <a href="https://en.wikipedia.org/wiki/Big_O_notation" id="mw0A" rel="mw:WikiLink" title="Big O notation">Big O notation</a> is huge enough to make the algorithm impractical. An implementation is publicly available<sup about="#mwt99" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mw0Q"><span class="mw-reflink-text" id="mw0g"><span class="cite-bracket" id="mw0w">[</span>21<span class="cite-bracket" id="mw1A">]</span></span></a></sup> and given the experimentally estimated implementation constants, it would only be faster than <a href="https://en.wikipedia.org/wiki/Borůvka's_algorithm" id="mw1Q" rel="mw:WikiLink" title="Borůvka's algorithm">Borůvka's algorithm</a> for graphs in which <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m + n &gt; 9 \\cdot 10^{151}"}}' id="mw1g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m+n&gt;9\cdot 10^{151}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>+</mo>
+<mi>n</mi>
+<mo>&gt;</mo>
+<mn>9</mn>
+<mo>⋅<!-- ⋅ --></mo>
+<msup>
+<mn>10</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>151</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m+n&gt;9\cdot 10^{151}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m+n&gt;9\cdot 10^{151}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bc74100999273f6c2d96369163dbb6e20152e8dd" style="vertical-align: -0.505ex; width:17.239ex; height:2.843ex;"/></span>.<sup about="#mwt103" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mw1w"><span class="mw-reflink-text" id="mw2A"><span class="cite-bracket" id="mw2Q">[</span>22<span class="cite-bracket" id="mw2g">]</span></span></a></sup></p>
+<p id="mw3A">Researchers have found an algorithm that achieves the provably best-possible<sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"SuccinctDictionaries"},"body":{"id":"mw-reference-text-cite_note-SuccinctDictionaries-23"}}' id="cite_ref-SuccinctDictionaries_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-SuccinctDictionaries-23" id="mw3Q"><span class="mw-reflink-text" id="mw3g"><span class="cite-bracket" id="mw3w">[</span>23<span class="cite-bracket" id="mw4A">]</span></span></a></sup> asymptotic performance in terms of time-space tradeoff in <a href="https://en.wikipedia.org/wiki/Hash_table" id="mw4Q" rel="mw:WikiLink" title="Hash table">hash tables</a>.<sup about="#mwt109" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mw4g"><span class="mw-reflink-text" id="mw4w"><span class="cite-bracket" id="mw5A">[</span>24<span class="cite-bracket" id="mw5Q">]</span></span></a></sup>  But it remains purely theoretical: "Despite the new hash table’s unprecedented efficiency, no one is likely to try building it anytime soon. It’s just too complicated to construct."<sup about="#mwt112" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"OptimalBalance"},"body":{"id":"mw-reference-text-cite_note-OptimalBalance-25"}}' id="cite_ref-OptimalBalance_25-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-OptimalBalance-25" id="mw5g"><span class="mw-reflink-text" id="mw5w"><span class="cite-bracket" id="mw6A">[</span>25<span class="cite-bracket" id="mw6Q">]</span></span></a></sup> and "in practice, constants really matter. In the real world, a factor of 10 is a game ender.”<sup about="#mwt113" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"OptimalBalance"}}' id="cite_ref-OptimalBalance_25-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-OptimalBalance-25" id="mw6g"><span class="mw-reflink-text" id="mw6w"><span class="cite-bracket" id="mw7A">[</span>25<span class="cite-bracket" id="mw7Q">]</span></span></a></sup></p>
+<p id="mw7w">Connectivity in undirected graphs (also known as USTCON, for Undirected Source-Target CONnectivity) is the problem of deciding if a path exists between two nodes in an undirected graph, or in other words, if they are in the same <a href="https://en.wikipedia.org/wiki/Component_(graph_theory)" id="mw8A" rel="mw:WikiLink" title="Component (graph theory)">connected component</a>. When the usage of <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\text{N})"}}' id="mw8Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{N}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>N</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{N}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{N}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/72b616ad783a53fea186ae002ece56aaced980c3" style="vertical-align: -0.838ex; width:5.326ex; height:2.843ex;"/></span> space is allowed, polynomial time solutions such as <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm" id="mw8g" rel="mw:WikiLink" title="Dijkstra's algorithm">Dijkstra's algorithm</a> have been known and used for decades. But for many years it was unknown if this could be done deterministically in <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\text{log N})"}}' id="mw8w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{log N}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>log N</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{log N}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{log N}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d22d4ea0774b991bd277a16090024a17e8eaa605" style="vertical-align: -0.838ex; width:8.878ex; height:2.843ex;"/></span> space (class <b id="mw9A"><a href="https://en.wikipedia.org/wiki/L_(complexity)" id="mw9Q" rel="mw:WikiLink" title="L (complexity)">L</a></b>), though it was known to be possible with randomized algorithms (class <b id="mw9g">RL</b>).</p>
+<p id="mw9w">A breakthrough 2008 paper by <a href="https://en.wikipedia.org/wiki/Omer_Reingold" id="mw-A" rel="mw:WikiLink" title="Omer Reingold">Omer Reingold</a> showed that USTCON is in fact in <b id="mw-Q"><a href="https://en.wikipedia.org/wiki/L_(complexity)" id="mw-g" rel="mw:WikiLink" title="L (complexity)">L</a></b>,<sup about="#mwt118" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mw-w"><span class="mw-reflink-text" id="mw_A"><span class="cite-bracket" id="mw_Q">[</span>26<span class="cite-bracket" id="mw_g">]</span></span></a></sup> providing an algorithm with asymptotically better space requirement. However, <a href="https://en.wikipedia.org/wiki/SL_(complexity)#Omer_Reingold,_2004" id="mw_w" rel="mw:WikiLink" title="SL (complexity)">the algorithm's very big constant</a> hidden by the <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\text{log N})"}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{log N}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>log N</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{log N}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{log N}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d22d4ea0774b991bd277a16090024a17e8eaa605" style="vertical-align: -0.838ex; width:8.878ex; height:2.843ex;"/></span> means that on any realistic problem it consumes significantly more memory and computation time than the well known <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\text{N})"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{N}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>N</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{N}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{N}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/72b616ad783a53fea186ae002ece56aaced980c3" style="vertical-align: -0.838ex; width:5.326ex; height:2.843ex;"/></span> algorithms. Despite not being used in practice, the paper is still a landmark in theory, and has been cited more than 1000 times as of 2026.</p>
+<p id="mwAQM"><a href="https://en.wikipedia.org/wiki/Low-density_parity-check_code" id="mwAQQ" rel="mw:WikiLink" title="Low-density parity-check code">Low-density parity-check codes</a>, also known as LDPC or Gallager codes, are an example of an algorithm that was galactic when first developed, but became practical as computation improved.  They were originally conceived by <a href="https://en.wikipedia.org/wiki/Robert_G._Gallager" id="mwAQU" rel="mw:WikiLink" title="Robert G. Gallager">Robert G. Gallager</a> in his doctoral dissertation<sup about="#mwt123" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwAQY"><span class="mw-reflink-text" id="mwAQc"><span class="cite-bracket" id="mwAQg">[</span>27<span class="cite-bracket" id="mwAQk">]</span></span></a></sup> at the <a href="https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology" id="mwAQo" rel="mw:WikiLink" title="Massachusetts Institute of Technology">Massachusetts Institute of Technology</a> in 1960.<sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAQs"><span class="mw-reflink-text" id="mwAQw"><span class="cite-bracket" id="mwAQ0">[</span>28<span class="cite-bracket" id="mwAQ4">]</span></span></a></sup><sup about="#mwt129" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"G1962"},"body":{"id":"mw-reference-text-cite_note-G1962-29"}}' id="cite_ref-G1962_29-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-G1962-29" id="mwAQ8"><span class="mw-reflink-text" id="mwARA"><span class="cite-bracket" id="mwARE">[</span>29<span class="cite-bracket" id="mwARI">]</span></span></a></sup> Although their performance was much better than other codes of that time, reaching the <a href="https://en.wikipedia.org/wiki/Gilbert–Varshamov_bound_for_linear_codes" id="mwARM" rel="mw:WikiLink" title="Gilbert–Varshamov bound for linear codes">Gilbert–Varshamov bound for linear codes</a>, the codes were largely ignored as their iterative decoding algorithm was prohibitively computationally expensive for the hardware available.<sup about="#mwt133" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwARQ"><span class="mw-reflink-text" id="mwARU"><span class="cite-bracket" id="mwARY">[</span>30<span class="cite-bracket" id="mwARc">]</span></span></a></sup></p>
+<p id="mwARg">Renewed interest in LDPC codes emerged following the invention of the closely related <a href="https://en.wikipedia.org/wiki/Turbo_code" id="mwARk" rel="mw:WikiLink" title="Turbo code">turbo codes</a> (1993), whose similarly iterative decoding algorithm outperformed other codes used at that time.  LDPC codes were subsequently rediscovered in 1996,<sup about="#mwt136" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MacKay96"},"body":{"id":"mw-reference-text-cite_note-MacKay96-31"}}' id="cite_ref-MacKay96_31-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MacKay96-31" id="mwARo"><span class="mw-reflink-text" id="mwARs"><span class="cite-bracket" id="mwARw">[</span>31<span class="cite-bracket" id="mwAR0">]</span></span></a></sup> and became popular as a patent-free alternative.<sup about="#mwt139" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Closing"},"body":{"id":"mw-reference-text-cite_note-Closing-32"}}' id="cite_ref-Closing_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Closing-32" id="mwAR4"><span class="mw-reflink-text" id="mwAR8"><span class="cite-bracket" id="mwASA">[</span>32<span class="cite-bracket" id="mwASE">]</span></span></a></sup>  Even though the turbo code patents have now expired, LDPC codes also have some technical advantages, and are used in many applications today.</p>
+<p id="mwASM"><a href="https://en.wikipedia.org/wiki/Polygon_triangulation" id="mwASQ" rel="mw:WikiLink" title="Polygon triangulation">Polygon triangulation</a> is the division of a polygon into non-overlapping triangles.  <a href="https://en.wikipedia.org/wiki/Bernard_Chazelle" id="mwASU" rel="mw:WikiLink" title="Bernard Chazelle">Bernard Chazelle</a> showed in 1991 that any simple polygon can be triangulated in linear time.<sup about="#mwt142" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-33"}}' id="cite_ref-33" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-33" id="mwASY"><span class="mw-reflink-text" id="mwASc"><span class="cite-bracket" id="mwASg">[</span>33<span class="cite-bracket" id="mwASk">]</span></span></a></sup>  However the proposed algorithm is extremely complex, and much simpler algorithms<sup about="#mwt145" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-34"}}' id="cite_ref-34" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-34" id="mwASo"><span class="mw-reflink-text" id="mwASs"><span class="cite-bracket" id="mwASw">[</span>34<span class="cite-bracket" id="mwAS0">]</span></span></a></sup> with near-linear <span about="#mwt146" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\text{Nlog}^*\\text{N})"}}' id="mwAS4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O({\text{Nlog}}^{*}{\text{N}})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>Nlog</mtext>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>N</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O({\text{Nlog}}^{*}{\text{N}})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O({\text{Nlog}}^{*}{\text{N}})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/444d3838831cef453230018064f9c6d6062e85bd" style="vertical-align: -0.838ex; width:11.095ex; height:2.843ex;"/></span> performance are available, so these are used instead.<sup about="#mwt149" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-35"}}' id="cite_ref-35" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-35" id="mwAS8"><span class="mw-reflink-text" id="mwATA"><span class="cite-bracket" id="mwATE">[</span>35<span class="cite-bracket" id="mwATI">]</span></span></a></sup>  "His [Chazelle's] work represents an important theoretical breakthrough. However, his O(n) algorithm has appeared as very difficult to program and thus, to the knowledge of the authors, there is still no practical implementation available."<sup about="#mwt152" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-36"}}' id="cite_ref-36" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-36" id="mwATM"><span class="mw-reflink-text" id="mwATQ"><span class="cite-bracket" id="mwATU">[</span>36<span class="cite-bracket" id="mwATY">]</span></span></a></sup></p>
+</div></div>
+</body></html>

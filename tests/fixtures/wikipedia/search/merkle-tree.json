@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 309,
+   "suggestion": "merle tree",
+   "suggestionsnippet": "merle tree"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Merkle tree",
+    "pageid": 2497388,
+    "size": 15665,
+    "wordcount": 1812,
+    "snippet": "In cryptography and computer science, a hash <span class=\"searchmatch\">tree</span> or <span class=\"searchmatch\">Merkle</span> <span class=\"searchmatch\">tree</span> is a <span class=\"searchmatch\">tree</span> in which every &quot;leaf&quot; node is labelled with the cryptographic hash of a data",
+    "timestamp": "2026-09-15T19:40:55Z"
+   },
+   {
+    "ns": 0,
+    "title": "Torrent file",
+    "pageid": 24767575,
+    "size": 18828,
+    "wordcount": 2303,
+    "snippet": "of the <span class=\"searchmatch\">Merkle</span> hash: { # ... &#039;info&#039;: { # ... &#039;root hash&#039;: &lt;binary SHA1 hash&gt;, # ... }, # ... } BitTorrent v2 uses a different type of <span class=\"searchmatch\">Merkle</span> <span class=\"searchmatch\">tree</span>. A de-bencoded",
+    "timestamp": "2026-09-22T17:52:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "Ralph Merkle",
+    "pageid": 25849,
+    "size": 13950,
+    "wordcount": 1182,
+    "snippet": "cryptosystem, and inventing cryptographic hashing (<span class=\"searchmatch\">Merkle</span>–Damgård construction) and <span class=\"searchmatch\">Merkle</span> <span class=\"searchmatch\">trees</span>. He has worked as a manager at Elxsi, research scientist",
+    "timestamp": "2026-08-29T18:39:37Z"
+   },
+   {
+    "ns": 0,
+    "title": "Hash-based cryptography",
+    "pageid": 53957696,
+    "size": 21257,
+    "wordcount": 2379,
+    "snippet": "<span class=\"searchmatch\">Merkle</span> <span class=\"searchmatch\">tree</span> structure is used to this end. In this hierarchical data structure, a hash function and concatenation are used repeatedly to compute <span class=\"searchmatch\">tree</span>",
+    "timestamp": "2025-09-24T11:04:18Z"
+   },
+   {
+    "ns": 0,
+    "title": "Merkle signature scheme",
+    "pageid": 19650520,
+    "size": 8614,
+    "wordcount": 1453,
+    "snippet": "hash-based cryptography, the <span class=\"searchmatch\">Merkle</span> signature scheme is a digital signature scheme based on <span class=\"searchmatch\">Merkle</span> <span class=\"searchmatch\">trees</span> (also called hash <span class=\"searchmatch\">trees</span>) and one-time signatures",
+    "timestamp": "2025-11-10T04:14:06Z"
+   }
+  ]
+ }
+}

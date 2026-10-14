@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 97
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Lamport timestamp",
+    "pageid": 2173021,
+    "size": 12776,
+    "wordcount": 1891,
+    "snippet": "The <span class=\"searchmatch\">Lamport</span> <span class=\"searchmatch\">timestamp</span> algorithm is a simple logical clock algorithm used to determine the order of events in a distributed computer system. As different",
+    "timestamp": "2026-06-15T04:32:35Z"
+   },
+   {
+    "ns": 0,
+    "title": "Logical clock",
+    "pageid": 1376887,
+    "size": 3221,
+    "wordcount": 318,
+    "snippet": "The idea of logical clocks is due to Leslie <span class=\"searchmatch\">Lamport</span>, who introduced it in 1978 with his system of <span class=\"searchmatch\">timestamps</span>. In logical clock systems each process has",
+    "timestamp": "2026-06-12T18:56:34Z"
+   },
+   {
+    "ns": 0,
+    "title": "Timestamping (computing)",
+    "pageid": 35339450,
+    "size": 1380,
+    "wordcount": 151,
+    "snippet": "efficient build automation tools. Trusted <span class=\"searchmatch\">timestamping</span> <span class=\"searchmatch\">Timestamp</span>-based concurrency control <span class=\"searchmatch\">Lamport</span> <span class=\"searchmatch\">timestamp</span> Advances in Computer Science and Information",
+    "timestamp": "2026-05-13T05:40:17Z"
+   },
+   {
+    "ns": 0,
+    "title": "Vector clock",
+    "pageid": 1376702,
+    "size": 16793,
+    "wordcount": 2128,
+    "snippet": "distributed system and detecting causality violations. Just as in <span class=\"searchmatch\">Lamport</span> <span class=\"searchmatch\">timestamps</span>, inter-process messages contain the state of the sending process&#039;s",
+    "timestamp": "2026-07-24T13:28:35Z"
+   },
+   {
+    "ns": 0,
+    "title": "Lamport's distributed mutual exclusion algorithm",
+    "pageid": 14581969,
+    "size": 2262,
+    "wordcount": 272,
+    "snippet": "order. The queues are ordered by virtual time stamps derived from <span class=\"searchmatch\">Lamport</span> <span class=\"searchmatch\">timestamps</span>. Requesting process Pushing its request in its own queue (ordered",
+    "timestamp": "2023-05-26T09:17:25Z"
+   }
+  ]
+ }
+}

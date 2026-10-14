@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Kalman filter - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Kalman filter</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p class="mw-empty-elt" id="mwAw"><span about="#mwt2" data-mw='{"parts":[{"template":{"target":{"wt":"Use American English","href":"./Template:Use_American_English"},"params":{"date":{"wt":"March 2018"}},"i":0}}]}' id="mwBA" typeof="mw:Nowiki mw:Transclusion"></span><link about="#mwt2" href="./Category:Use_American_English_from_March_2018" rel="mw:PageProp/Category"/><link about="#mwt2" href="./Category:All_Wikipedia_articles_written_in_American_English" id="mwBQ" rel="mw:PageProp/Category"/></p>
+<p id="mwEw">In <a href="https://en.wikipedia.org/wiki/Statistics" id="mwFA" rel="mw:WikiLink" title="Statistics">statistics</a> and <a href="https://en.wikipedia.org/wiki/Control_theory" id="mwFQ" rel="mw:WikiLink" title="Control theory">control theory</a>, <b id="mwFg">Kalman filtering</b> (also known as <b id="mwFw">linear quadratic estimation</b>) is an <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwGA" rel="mw:WikiLink" title="Algorithm">algorithm</a> that uses a series of measurements observed over time, including <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Statistical_noise" id="mwGQ" rel="mw:WikiLink" title="Statistical noise">statistical noise</a> and other inaccuracies, to produce estimates of unknown variables that tend to be more accurate than those based on a single measurement, by estimating a <a href="https://en.wikipedia.org/wiki/Joint_probability_distribution" id="mwGg" rel="mw:WikiLink" title="Joint probability distribution">joint probability distribution</a> over the variables for each time-step. The filter is constructed as a <a href="https://en.wikipedia.org/wiki/Mean_squared_error" id="mwGw" rel="mw:WikiLink" title="Mean squared error">mean squared error</a> minimiser, but also relates to maximum likelihood statistics.<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwHA"><span class="mw-reflink-text" id="mwHQ"><span class="cite-bracket" id="mwHg">[</span>1<span class="cite-bracket" id="mwHw">]</span></span></a></sup> The filter is named after <a href="https://en.wikipedia.org/wiki/Rudolf_E._Kálmán" id="mwIA" rel="mw:WikiLink" title="Rudolf E. Kálmán">Rudolf E. Kálmán</a>.</p>
+<p id="mwIQ">Kalman filtering has numerous technological applications. A common application is for <a href="https://en.wikipedia.org/wiki/Guidance,_navigation,_and_control" id="mwIg" rel="mw:WikiLink" title="Guidance, navigation, and control">guidance, navigation, and control</a> of vehicles, particularly aircraft, spacecraft and ships <a href="https://en.wikipedia.org/wiki/Dynamic_positioning" id="mwIw" rel="mw:WikiLink" title="Dynamic positioning">positioned dynamically</a>.<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ZarchanMusoff2000"},"body":{"id":"mw-reference-text-cite_note-ZarchanMusoff2000-2"}}' id="cite_ref-ZarchanMusoff2000_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ZarchanMusoff2000-2" id="mwJA"><span class="mw-reflink-text" id="mwJQ"><span class="cite-bracket" id="mwJg">[</span>2<span class="cite-bracket" id="mwJw">]</span></span></a></sup> Furthermore, Kalman filtering is much applied in <a href="https://en.wikipedia.org/wiki/Time_series" id="mwKA" rel="mw:WikiLink" title="Time series">time series</a> analysis tasks such as <a href="https://en.wikipedia.org/wiki/Signal_processing" id="mwKQ" rel="mw:WikiLink" title="Signal processing">signal processing</a> and <a href="https://en.wikipedia.org/wiki/Econometrics" id="mwKg" rel="mw:WikiLink" title="Econometrics">econometrics</a>. Kalman filtering is also important for robotic <a href="https://en.wikipedia.org/wiki/Motion_planning" id="mwKw" rel="mw:WikiLink" title="Motion planning">motion planning</a> and control,<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwLA"><span class="mw-reflink-text" id="mwLQ"><span class="cite-bracket" id="mwLg">[</span>3<span class="cite-bracket" id="mwLw">]</span></span></a></sup><sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwMA"><span class="mw-reflink-text" id="mwMQ"><span class="cite-bracket" id="mwMg">[</span>4<span class="cite-bracket" id="mwMw">]</span></span></a></sup> and can be used for <a href="https://en.wikipedia.org/wiki/Trajectory_optimization" id="mwNA" rel="mw:WikiLink" title="Trajectory optimization">trajectory optimization</a>.<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwNQ"><span class="mw-reflink-text" id="mwNg"><span class="cite-bracket" id="mwNw">[</span>5<span class="cite-bracket" id="mwOA">]</span></span></a></sup> Kalman filtering also works for modeling the <a href="https://en.wikipedia.org/wiki/Central_nervous_system" id="mwOQ" rel="mw:WikiLink" title="Central nervous system">central nervous system</a>'s control of movement. Due to the time delay between issuing motor commands and receiving <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sensory_feedback" id="mwOg" rel="mw:WikiLink" title="Sensory feedback">sensory feedback</a>, the use of Kalman filters provides a realistic model for making estimates of the current state of a motor system and issuing updated commands.<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwOw"><span class="mw-reflink-text" id="mwPA"><span class="cite-bracket" id="mwPQ">[</span>6<span class="cite-bracket" id="mwPg">]</span></span></a></sup></p>
+<p id="mwPw">The algorithm works via a two-phase process: a <i id="mwQA">prediction phase</i> and an <i id="mwQQ">update phase</i>. In the prediction phase, the Kalman filter produces estimates of the current <a href="https://en.wikipedia.org/wiki/State_variable" id="mwQg" rel="mw:WikiLink" title="State variable">state variables</a>, including their uncertainties. Once the outcome of the next measurement (necessarily corrupted with some error, including random noise) is observed, these estimates are updated using a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_mean" id="mwQw" rel="mw:WikiLink" title="Weighted mean">weighted average</a>, with more weight given to estimates with greater certainty. The algorithm is <a href="https://en.wikipedia.org/wiki/Recursion_(computer_science)" id="mwRA" rel="mw:WikiLink" title="Recursion (computer science)">recursive</a>. It can operate in <a href="https://en.wikipedia.org/wiki/Real-time_Control_System" id="mwRQ" rel="mw:WikiLink" title="Real-time Control System">real time</a>, using only the present input measurements and the state calculated previously and its uncertainty matrix; no additional past information is required.</p>
+<p id="mwRg">Optimality of Kalman filtering assumes that errors have a zero mean <a href="https://en.wikipedia.org/wiki/Normal_distribution" id="mwRw" rel="mw:WikiLink" title="Normal distribution">normal (Gaussian)</a> distribution. In the words of <a href="https://en.wikipedia.org/wiki/Rudolf_E._Kálmán" id="mwSA" rel="mw:WikiLink" title="Rudolf E. Kálmán">Rudolf E. Kálmán</a>, "The following assumptions are made about random processes: Physical random phenomena may be thought of as due to primary random sources exciting dynamic systems. The primary sources are assumed to be independent gaussian random processes with zero mean; the dynamic systems will be linear."<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwSQ"><span class="mw-reflink-text" id="mwSg"><span class="cite-bracket" id="mwSw">[</span>7<span class="cite-bracket" id="mwTA">]</span></span></a></sup> Regardless of Gaussianity, however, if the process and measurement covariances are known and mean is zero, then the Kalman filter is the best possible <i id="mwTQ"><a href="https://en.wikipedia.org/wiki/Linearity" id="mwTg" rel="mw:WikiLink" title="Linearity">linear</a></i> estimator in the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Minimum_mean_square_error" id="mwTw" rel="mw:WikiLink" title="Minimum mean square error">minimum mean-square-error sense</a>,<sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwUA"><span class="mw-reflink-text" id="mwUQ"><span class="cite-bracket" id="mwUg">[</span>8<span class="cite-bracket" id="mwUw">]</span></span></a></sup> although there may be better nonlinear estimators. It is a common misconception (perpetuated in the literature) that the Kalman filter cannot be rigorously applied unless all noise processes are assumed to be Gaussian.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwVA"><span class="mw-reflink-text" id="mwVQ"><span class="cite-bracket" id="mwVg">[</span>9<span class="cite-bracket" id="mwVw">]</span></span></a></sup></p>
+<p id="mwWA">Extensions and <a href="https://en.wikipedia.org/wiki/Generalization" id="mwWQ" rel="mw:WikiLink" title="Generalization">generalizations</a> of the method have also been developed, such as the <a href="https://en.wikipedia.org/wiki/Extended_Kalman_filter" id="mwWg" rel="mw:WikiLink" title="Extended Kalman filter">extended Kalman filter</a> and the <a class="mw-selflink-fragment" href="#Unscented_Kalman_filter" id="mwWw" rel="mw:WikiLink">unscented Kalman filter</a> which work on <a href="https://en.wikipedia.org/wiki/Nonlinear_system" id="mwXA" rel="mw:WikiLink" title="Nonlinear system">nonlinear systems</a>. The basis is a <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" id="mwXQ" rel="mw:WikiLink" title="Hidden Markov model">hidden Markov model</a> such that the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/State_space" id="mwXg" rel="mw:WikiLink" title="State space">state space</a> of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Latent_variable" id="mwXw" rel="mw:WikiLink" title="Latent variable">latent variables</a> is <a href="https://en.wikipedia.org/wiki/State-space_representation" id="mwYA" rel="mw:WikiLink" title="State-space representation">continuous</a> and all latent and observed variables have Gaussian distributions. Kalman filtering has been used successfully in <a href="https://en.wikipedia.org/wiki/Sensor_fusion" id="mwYQ" rel="mw:WikiLink" title="Sensor fusion">multi-sensor fusion</a>,<sup about="#mwt34" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwYg"><span class="mw-reflink-text" id="mwYw"><span class="cite-bracket" id="mwZA">[</span>10<span class="cite-bracket" id="mwZQ">]</span></span></a></sup> and distributed <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Sensor_Networks" id="mwZg" rel="mw:WikiLink" title="Sensor Networks">sensor networks</a> to develop distributed or <a href="https://en.wikipedia.org/wiki/Consensus_(computer_science)" id="mwZw" rel="mw:WikiLink" title="Consensus (computer science)">consensus</a> Kalman filtering.<sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwaA"><span class="mw-reflink-text" id="mwaQ"><span class="cite-bracket" id="mwag">[</span>11<span class="cite-bracket" id="mwaw">]</span></span></a></sup></p>
+<p id="mwbg">The filtering method is named for Hungarian <a href="https://en.wikipedia.org/wiki/Émigré" id="mwbw" rel="mw:WikiLink" title="Émigré">émigré</a> <a href="https://en.wikipedia.org/wiki/Rudolf_E._Kálmán" id="mwcA" rel="mw:WikiLink" title="Rudolf E. Kálmán">Rudolf E. Kálmán</a>, although <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Thorvald_Nicolai_Thiele" id="mwcQ" rel="mw:WikiLink" title="Thorvald Nicolai Thiele">Thorvald Nicolai Thiele</a><sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwcg"><span class="mw-reflink-text" id="mwcw"><span class="cite-bracket" id="mwdA">[</span>12<span class="cite-bracket" id="mwdQ">]</span></span></a></sup><sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwdg"><span class="mw-reflink-text" id="mwdw"><span class="cite-bracket" id="mweA">[</span>13<span class="cite-bracket" id="mweQ">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Peter_Swerling" id="mweg" rel="mw:WikiLink" title="Peter Swerling">Peter Swerling</a> developed a similar algorithm earlier. <a href="https://en.wikipedia.org/wiki/Richard_S._Bucy" id="mwew" rel="mw:WikiLink" title="Richard S. Bucy">Richard S. Bucy</a> of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Johns_Hopkins_Applied_Physics_Laboratory" id="mwfA" rel="mw:WikiLink" title="Johns Hopkins Applied Physics Laboratory">Johns Hopkins Applied Physics Laboratory</a> contributed to the theory, causing it to be known sometimes as Kalman–Bucy filtering. Kalman was inspired to derive the Kalman filter by applying state variables to the <a href="https://en.wikipedia.org/wiki/Wiener_filter" id="mwfQ" rel="mw:WikiLink" title="Wiener filter">Wiener filtering problem</a>.<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwfg"><span class="mw-reflink-text" id="mwfw"><span class="cite-bracket" id="mwgA">[</span>14<span class="cite-bracket" id="mwgQ">]</span></span></a></sup>
+<a href="https://en.wikipedia.org/wiki/Stanley_F._Schmidt" id="mwgg" rel="mw:WikiLink" title="Stanley F. Schmidt">Stanley F. Schmidt</a> is generally credited with developing the first implementation of a Kalman filter. He realized that the filter could be divided into two distinct parts, with one part for time periods between sensor outputs and another part for incorporating measurements.<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwgw"><span class="mw-reflink-text" id="mwhA"><span class="cite-bracket" id="mwhQ">[</span>15<span class="cite-bracket" id="mwhg">]</span></span></a></sup> It was during a visit by Kálmán to the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/NASA_Ames_Research_Center" id="mwhw" rel="mw:WikiLink" title="NASA Ames Research Center">NASA Ames Research Center</a> that Schmidt saw the applicability of Kálmán's ideas to the nonlinear problem of trajectory estimation for the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Project_Apollo" id="mwiA" rel="mw:WikiLink" title="Project Apollo">Apollo program</a> resulting in its incorporation in the <a href="https://en.wikipedia.org/wiki/Apollo_Guidance_Computer" id="mwiQ" rel="mw:WikiLink" title="Apollo Guidance Computer">Apollo navigation computer</a>.<sup about="#mwt53" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwig"><span class="mw-reflink-text" id="mwiw"><span class="cite-bracket" id="mwjA">[</span>16<span class="cite-bracket" id="mwjQ">]</span></span></a></sup><sup about="#mwt47" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"16"}},"i":0}}]}' id="mwjg" typeof="mw:Transclusion"><span title="Page / location: 16"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>16<span typeof="mw:Entity"> </span></span></sup></p>
+<p id="mwjw">This digital filter is sometimes termed the <i id="mwkA">Stratonovich–Kalman–Bucy filter</i> because it is a special case of a more general, nonlinear filter developed by the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Soviet" id="mwkQ" rel="mw:WikiLink" title="Soviet">Soviet</a> <a href="https://en.wikipedia.org/wiki/Mathematician" id="mwkg" rel="mw:WikiLink" title="Mathematician">mathematician</a> <a href="https://en.wikipedia.org/wiki/Ruslan_Stratonovich" id="mwkw" rel="mw:WikiLink" title="Ruslan Stratonovich">Ruslan Stratonovich</a>.<sup about="#mwt56" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mwlA"><span class="mw-reflink-text" id="mwlQ"><span class="cite-bracket" id="mwlg">[</span>17<span class="cite-bracket" id="mwlw">]</span></span></a></sup><sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mwmA"><span class="mw-reflink-text" id="mwmQ"><span class="cite-bracket" id="mwmg">[</span>18<span class="cite-bracket" id="mwmw">]</span></span></a></sup><sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwnA"><span class="mw-reflink-text" id="mwnQ"><span class="cite-bracket" id="mwng">[</span>19<span class="cite-bracket" id="mwnw">]</span></span></a></sup><sup about="#mwt65" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwoA"><span class="mw-reflink-text" id="mwoQ"><span class="cite-bracket" id="mwog">[</span>20<span class="cite-bracket" id="mwow">]</span></span></a></sup> In fact, some of the special case linear filter's equations appeared in papers by Stratonovich that were published before the summer of 1961, when Kalman met with Stratonovich during a conference in Moscow.<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"stepanov_on_kalman"},"body":{"id":"mw-reference-text-cite_note-stepanov_on_kalman-21"}}' id="cite_ref-stepanov_on_kalman_21-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-stepanov_on_kalman-21" id="mwpA"><span class="mw-reflink-text" id="mwpQ"><span class="cite-bracket" id="mwpg">[</span>21<span class="cite-bracket" id="mwpw">]</span></span></a></sup></p>
+<p id="mwqA">This Kalman filtering was first described and developed partially in technical papers by Swerling (1958), Kalman (1960) and Kalman and Bucy (1961).</p>
+<p>The Apollo computer used 2k of magnetic core RAM and 36k wire rope [...]. The CPU was built from ICs [...]. Clock speed was under 100 kHz [...]. The fact that the MIT engineers were able to pack such good software (one of the very first applications of the Kalman filter) into such a tiny computer is truly remarkable.</p>
+<p style="display: inline; padding-left: 2.3em;">—<span typeof="mw:Entity"> </span>Interview with Jack Crenshaw, by Matthew Reed, TRS-80.org (2009) <a class="external autonumber" href="http://www.trs-80.org/interview-jack-crenshaw/" rel="mw:ExtLink nofollow"></a><span data-plural="0" style="display:none"></span></p>
+<p id="mwqw">Kalman filters have been vital in the implementation of the navigation systems of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/U.S._Navy" id="mwrA" rel="mw:WikiLink" title="U.S. Navy">U.S. Navy</a> nuclear <a href="https://en.wikipedia.org/wiki/Ballistic_missile_submarine" id="mwrQ" rel="mw:WikiLink" title="Ballistic missile submarine">ballistic missile submarines</a>, and in the guidance and navigation systems of cruise missiles such as the U.S. Navy's <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tomahawk_(missile_family)" id="mwrg" rel="mw:WikiLink" title="Tomahawk (missile family)">Tomahawk missile</a> and the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/U.S._Air_Force" id="mwrw" rel="mw:WikiLink" title="U.S. Air Force">U.S. Air Force</a>'s <a href="https://en.wikipedia.org/wiki/AGM-86_ALCM" id="mwsA" rel="mw:WikiLink" title="AGM-86 ALCM">Air Launched Cruise Missile</a>. They are also used in the guidance and navigation systems of <a href="https://en.wikipedia.org/wiki/Reusable_launch_vehicle" id="mwsQ" rel="mw:WikiLink" title="Reusable launch vehicle">reusable launch vehicles</a> and the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Attitude_dynamics_and_control" id="mwsg" rel="mw:WikiLink" title="Attitude dynamics and control">attitude control</a> and navigation systems of spacecraft which dock at the <a href="https://en.wikipedia.org/wiki/International_Space_Station" id="mwsw" rel="mw:WikiLink" title="International Space Station">International Space Station</a>.<sup about="#mwt73" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mwtA"><span class="mw-reflink-text" id="mwtQ"><span class="cite-bracket" id="mwtg">[</span>22<span class="cite-bracket" id="mwtw">]</span></span></a></sup></p>
+<p id="mwuQ">Kalman filtering uses a system's dynamic model (e.g., physical laws of motion), known control inputs to that system, and multiple sequential measurements (such as from sensors) to form an estimate of the system's varying quantities (its <a class="mw-redirect" href="https://en.wikipedia.org/wiki/State_space_(controls)" id="mwug" rel="mw:WikiLink" title="State space (controls)">state</a>) that is better than the estimate obtained by using only one measurement alone. As such, it is a common <a href="https://en.wikipedia.org/wiki/Sensor_fusion" id="mwuw" rel="mw:WikiLink" title="Sensor fusion">sensor fusion</a> and <a href="https://en.wikipedia.org/wiki/Data_fusion" id="mwvA" rel="mw:WikiLink" title="Data fusion">data fusion</a> algorithm.</p>
+<p id="mwvQ">Noisy sensor data, approximations in the equations that describe the system evolution, and external factors that are not accounted for, all limit how well it is possible to determine the system's state. The Kalman filter deals effectively with the uncertainty due to noisy sensor data and, to some extent, with random external factors. The Kalman filter produces an estimate of the state of the system as an average of the system's predicted state and of the new measurement using a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_mean" id="mwvg" rel="mw:WikiLink" title="Weighted mean">weighted average</a>. The purpose of the weights is that values with better (i.e., smaller) estimated uncertainty are "trusted" more. The weights are calculated from the <a href="https://en.wikipedia.org/wiki/Covariance" id="mwvw" rel="mw:WikiLink" title="Covariance">covariance</a>, a measure of the estimated uncertainty of the prediction of the system's state. The result of the weighted average is a new state estimate that lies between the predicted and measured state, and has a better estimated uncertainty than either alone. This process is repeated at every time step, with the new estimate and its covariance informing the prediction used in the following iteration. This means that Kalman filter works <a href="https://en.wikipedia.org/wiki/Recursive_filter" id="mwwA" rel="mw:WikiLink" title="Recursive filter">recursively</a> and requires only the last "best guess", rather than the entire history, of a system's state to calculate a new state.</p>
+<p id="mwwQ"><span about="#mwt74" class="anchor" data-mw='{"parts":[{"template":{"target":{"wt":"anchor","href":"./Template:Anchor"},"params":{"1":{"wt":"Kalman gain"}},"i":0}}]}' id="Kalman_gain" typeof="mw:Transclusion"></span>The measurements' certainty-grading and current-state estimate are important considerations. It is common to discuss the filter's response in terms of the Kalman filter's <i id="mwwg"><a href="https://en.wikipedia.org/wiki/Gain_(electronics)" id="mwww" rel="mw:WikiLink" title="Gain (electronics)">gain</a></i>. The Kalman gain is the weight given to the measurements and current-state estimate, and can be "tuned" to achieve a particular performance. With a high gain, the filter places more weight on the most recent measurements, and thus conforms to them more responsively. With a low gain, the filter conforms to the model predictions more closely. At the extremes, a high gain (close to one) will result in a more jumpy estimated trajectory, while a low gain (close to zero) will smooth out noise but decrease the responsiveness.</p>
+<p id="mwxA">When performing the actual calculations for the filter (as discussed below), the state estimate and covariances are coded into <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" id="mwxQ" rel="mw:WikiLink" title="Matrix (mathematics)">matrices</a> because of the multiple dimensions involved in a single set of calculations. This allows for a representation of linear relationships between different state variables (such as position, velocity, and acceleration) in any of the transition models or covariances.</p>
+<p id="mwxw">As an example application, consider the problem of determining the precise location of a truck. The truck can be equipped with a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/GPS" id="mwyA" rel="mw:WikiLink" title="GPS">GPS</a> unit that provides an estimate of the position within a few meters. The GPS estimate is likely to be noisy; readings 'jump around' rapidly, though remaining within a few meters of the real position. In addition, since the truck is expected to follow the laws of physics, its position can also be estimated by integrating its velocity over time, determined by keeping track of wheel revolutions and the angle of the steering wheel. This is a technique known as <a href="https://en.wikipedia.org/wiki/Dead_reckoning" id="mwyQ" rel="mw:WikiLink" title="Dead reckoning">dead reckoning</a>. Typically, the dead reckoning will provide a very smooth estimate of the truck's position, but it will <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Drift_(telecommunication)" id="mwyg" rel="mw:WikiLink" title="Drift (telecommunication)">drift</a> over time as small errors accumulate.</p>
+<p id="mwyw">For this example, the Kalman filter can be thought of as operating in two distinct phases: predict and update. In the prediction phase, the truck's old position will be modified according to the physical <a href="https://en.wikipedia.org/wiki/Newton's_laws_of_motion" id="mwzA" rel="mw:WikiLink" title="Newton's laws of motion">laws of motion</a> (the dynamic or "state transition" model). Not only will a new position estimate be calculated, but also a new covariance will be calculated as well. Perhaps the covariance is proportional to the speed of the truck because we are more uncertain about the accuracy of the dead reckoning position estimate at high speeds but very certain about the position estimate at low speeds. Next, in the update phase, a measurement of the truck's position is taken from the GPS unit. Along with this measurement comes some amount of uncertainty, and its covariance relative to that of the prediction from the previous phase determines how much the new measurement will affect the updated prediction. Ideally, as the dead reckoning estimates tend to drift away from the real position, the GPS measurement should pull the position estimate back toward the real position but not disturb it to the point of becoming noisy and rapidly jumping.</p>
+<p id="mwzg">The Kalman filter is an efficient <a href="https://en.wikipedia.org/wiki/Recursive_filter" id="mwzw" rel="mw:WikiLink" title="Recursive filter">recursive filter</a> <a href="https://en.wikipedia.org/wiki/Estimator" id="mw0A" rel="mw:WikiLink" title="Estimator">estimating</a> the internal state of a <a href="https://en.wikipedia.org/wiki/Linear_dynamical_system" id="mw0Q" rel="mw:WikiLink" title="Linear dynamical system">linear dynamic system</a> from a series of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Statistical_noise" id="mw0g" rel="mw:WikiLink" title="Statistical noise">noisy</a> measurements.  It is used in a wide range of <a href="https://en.wikipedia.org/wiki/Engineering" id="mw0w" rel="mw:WikiLink" title="Engineering">engineering</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Econometric" id="mw1A" rel="mw:WikiLink" title="Econometric">econometric</a> applications from <a href="https://en.wikipedia.org/wiki/Radar" id="mw1Q" rel="mw:WikiLink" title="Radar">radar</a> and <a href="https://en.wikipedia.org/wiki/Computer_vision" id="mw1g" rel="mw:WikiLink" title="Computer vision">computer vision</a> to estimation of structural macroeconomic models,<sup about="#mwt78" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mw1w"><span class="mw-reflink-text" id="mw2A"><span class="cite-bracket" id="mw2Q">[</span>23<span class="cite-bracket" id="mw2g">]</span></span></a></sup><sup about="#mwt81" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mw2w"><span class="mw-reflink-text" id="mw3A"><span class="cite-bracket" id="mw3Q">[</span>24<span class="cite-bracket" id="mw3g">]</span></span></a></sup> and is an important topic in <a href="https://en.wikipedia.org/wiki/Control_theory" id="mw3w" rel="mw:WikiLink" title="Control theory">control theory</a> and <a href="https://en.wikipedia.org/wiki/Control_system" id="mw4A" rel="mw:WikiLink" title="Control system">control systems</a> engineering.  Together with the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Linear-quadratic_regulator" id="mw4Q" rel="mw:WikiLink" title="Linear-quadratic regulator">linear-quadratic regulator</a> (LQR), the Kalman filter solves the <a href="https://en.wikipedia.org/wiki/Linear–quadratic–Gaussian_control" id="mw4g" rel="mw:WikiLink" title="Linear–quadratic–Gaussian control">linear–quadratic–Gaussian control</a> problem (LQG).  The Kalman filter, the linear-quadratic regulator, and the linear–quadratic–Gaussian controller are solutions to what arguably are the most fundamental problems of control theory.</p>
+<p id="mw4w">In most applications, the internal state is much larger (has more <a href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(physics_and_chemistry)" id="mw5A" rel="mw:WikiLink" title="Degrees of freedom (physics and chemistry)">degrees of freedom</a>) than the few "observable" parameters which are measured.  However, by combining a series of measurements, the Kalman filter can estimate the entire internal state.</p>
+<p id="mw5Q">For the <a href="https://en.wikipedia.org/wiki/Dempster–Shafer_theory" id="mw5g" rel="mw:WikiLink" title="Dempster–Shafer theory">Dempster–Shafer theory</a>, each state equation or observation is considered a special case of a <a href="https://en.wikipedia.org/wiki/Linear_belief_function" id="mw5w" rel="mw:WikiLink" title="Linear belief function">linear belief function</a> and the Kalman filtering is a special case of combining linear belief functions on a join-tree or <a href="https://en.wikipedia.org/wiki/Markov_chain" id="mw6A" rel="mw:WikiLink" title="Markov chain">Markov tree</a>. Additional methods include <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Belief_filter" id="mw6Q" rel="mw:WikiLink" title="Belief filter">belief filtering</a> which use Bayes or evidential updates to the state equations.</p>
+<p id="mw6g">A wide variety of Kalman filters exists by now: Kalman's original formulation - now termed the "simple" Kalman filter, the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Kalman–Bucy_filter" id="mw6w" rel="mw:WikiLink" title="Kalman–Bucy filter">Kalman–Bucy filter</a>, Schmidt's "extended" filter, the <a class="mw-selflink-fragment" href="#Information_filter" id="mw7A" rel="mw:WikiLink">information filter</a>, and a variety of "square-root" filters that were developed by Bierman, Thornton, and many others. Perhaps the most commonly used type of very simple Kalman filter is the <a href="https://en.wikipedia.org/wiki/Phase-locked_loop" id="mw7Q" rel="mw:WikiLink" title="Phase-locked loop">phase-locked loop</a>, which is now ubiquitous in radios, especially <a href="https://en.wikipedia.org/wiki/Frequency_modulation" id="mw7g" rel="mw:WikiLink" title="Frequency modulation">frequency modulation</a> (FM) radios, television sets, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Satellite_communications" id="mw7w" rel="mw:WikiLink" title="Satellite communications">satellite communications</a> receivers, outer space communications systems, and nearly any other <a href="https://en.wikipedia.org/wiki/Electronics" id="mw8A" rel="mw:WikiLink" title="Electronics">electronic</a> communications equipment.</p>
+<p id="mw8g">Kalman filtering is based on <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Linear_dynamic_system" id="mw8w" rel="mw:WikiLink" title="Linear dynamic system">linear dynamic systems</a> discretized in the time domain. They are modeled on a <a href="https://en.wikipedia.org/wiki/Markov_chain" id="mw9A" rel="mw:WikiLink" title="Markov chain">Markov chain</a> built on <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Linear_operator" id="mw9Q" rel="mw:WikiLink" title="Linear operator">linear operators</a> perturbed by errors that may include <a href="https://en.wikipedia.org/wiki/Normal_distribution" id="mw9g" rel="mw:WikiLink" title="Normal distribution">Gaussian</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Noise_(physics)" id="mw9w" rel="mw:WikiLink" title="Noise (physics)">noise</a>. The <a class="mw-redirect" href="https://en.wikipedia.org/wiki/State_space_(controls)" id="mw-A" rel="mw:WikiLink" title="State space (controls)">state</a> of the target system refers to the ground truth (yet hidden) system configuration of interest, which is represented as a <a href="https://en.wikipedia.org/wiki/Vector_space" id="mw-Q" rel="mw:WikiLink" title="Vector space">vector</a> of <a href="https://en.wikipedia.org/wiki/Real_number" id="mw-g" rel="mw:WikiLink" title="Real number">real numbers</a>. At each <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Discrete_time" id="mw-w" rel="mw:WikiLink" title="Discrete time">discrete time</a> increment, a linear operator is applied to the state to generate the new state, with some noise mixed in, and optionally some information from the controls on the system if they are known. Then, another linear operator mixed with more noise generates the measurable outputs (i.e., observation) from the true ("hidden") state. The Kalman filter may be regarded as analogous to the hidden Markov model, with the difference that the hidden state variables have values in a continuous space as opposed to a discrete state space as for the hidden Markov model. There is a strong analogy between the equations of a Kalman Filter and those of the hidden Markov model. A review of this and other models is given in Roweis and <a href="https://en.wikipedia.org/wiki/Zoubin_Ghahramani" id="mw_A" rel="mw:WikiLink" title="Zoubin Ghahramani">Ghahramani</a> (1999)<sup about="#mwt84" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"roweisghahramani1999"},"body":{"id":"mw-reference-text-cite_note-roweisghahramani1999-25"}}' id="cite_ref-roweisghahramani1999_25-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-roweisghahramani1999-25" id="mw_Q"><span class="mw-reflink-text" id="mw_g"><span class="cite-bracket" id="mw_w">[</span>25<span class="cite-bracket" id="mwAQA">]</span></span></a></sup> and Hamilton (1994), Chapter 13.<sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"hamilton"},"body":{"id":"mw-reference-text-cite_note-hamilton-26"}}' id="cite_ref-hamilton_26-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-hamilton-26" id="mwAQE"><span class="mw-reflink-text" id="mwAQI"><span class="cite-bracket" id="mwAQM">[</span>26<span class="cite-bracket" id="mwAQQ">]</span></span></a></sup></p>
+<p id="mwAQU">In order to use the Kalman filter to estimate the internal state of a process given only a sequence of noisy observations, one must model the process in accordance with the following framework. This means specifying the matrices, for each time-step <i id="mwAQY"><span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAQc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span></i>, following:</p>
+<p id="mwARg">As seen below, it is common in many applications that the matrices <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{F}"}}' id="mwARk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {F} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">F</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {F} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {F} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/da18bef8c979f3548bb0d8976f5844012d7b8256" style="vertical-align: -0.338ex; width:1.683ex; height:2.176ex;"/></span>, <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{H}"}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {H} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">H</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {H} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {H} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f017b876ed763037d8818ec5dfbbdc6703e0f683" style="vertical-align: -0.338ex; width:2.091ex; height:2.176ex;"/></span>, <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Q}"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Q} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">Q</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Q} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Q} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132d0144479d6f47c30ad82a65d458966ccbe928" style="vertical-align: -0.671ex; width:2.008ex; height:2.509ex;"/></span>, <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{R}"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {R} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">R</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {R} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {R} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5de85fcc2a00d8ba14aae84aeef812d7fef4b3d5" style="vertical-align: -0.338ex; width:2.003ex; height:2.176ex;"/></span>, and <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{B}"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {B} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">B</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {B} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {B} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cafb0ef39b0f5ffa23c170aa7f7b4e718327c4d1" style="vertical-align: -0.338ex; width:1.901ex; height:2.176ex;"/></span> are constant across time, in which case their <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> index may be dropped.</p>
+<p id="mwASU">The Kalman filter model assumes the true state at time <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwASY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> is evolved from the state at <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k-1"}}' id="mwASc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/21363ebd7038c93aae93127e7d910fc1b2e2c745" style="vertical-align: -0.505ex; width:5.214ex; height:2.343ex;"/></span> according to</p>
+<p id="mwASs">where</p>
+<p id="mwATw">If <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Q}"}}' id="mwAT0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Q} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">Q</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Q} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Q} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132d0144479d6f47c30ad82a65d458966ccbe928" style="vertical-align: -0.671ex; width:2.008ex; height:2.509ex;"/></span> is independent of time, one may, following Roweis and Ghahramani,<sup about="#mwt114" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"roweisghahramani1999"}}' id="cite_ref-roweisghahramani1999_25-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-roweisghahramani1999-25" id="mwAT4"><span class="mw-reflink-text" id="mwAT8"><span class="cite-bracket" id="mwAUA">[</span>25<span class="cite-bracket" id="mwAUE">]</span></span></a></sup><sup about="#mwt112" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Rp","href":"./Template:Rp"},"params":{"page":{"wt":"307"}},"i":0}}]}' id="mwAUI" typeof="mw:Transclusion"><span title="Page: 307"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>307<span typeof="mw:Entity"> </span></span></sup> write <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{w}_\\bull"}}' id="mwAUM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {w} _{\bullet }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">w</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∙<!-- ∙ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {w} _{\bullet }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {w} _{\bullet }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3029a97a254710d024fc9e820fbada33d5ac66e9" style="vertical-align: -0.26ex; margin-bottom: -0.412ex; width:2.985ex; height:2.009ex;"/></span> instead of <span about="#mwt116" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{w}_k"}}' id="mwAUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {w} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">w</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {w} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {w} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/09d84ac907430e389025fce17b0af0f6c13c0446" style="vertical-align: -0.671ex; width:3.02ex; height:2.009ex;"/></span> to emphasize that the noise has no explicit knowledge of time.</p>
+<p id="mwAUU">At time <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAUY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> an observation (or measurement) <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{z}_k"}}' id="mwAUc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {z} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">z</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {z} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {z} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/73f74e708e559d464fdb5103012e8900cab8dfa5" style="vertical-align: -0.671ex; width:2.277ex; height:2.009ex;"/></span>of the true state <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_k"}}' id="mwAUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/30d5e53bbed2b7e7f9d201d7873e69b4b3f5c343" style="vertical-align: -0.671ex; width:2.5ex; height:2.009ex;"/></span> is made according to</p>
+<p id="mwAUw">where</p>
+<p id="mwAVU">Analogously to the situation for <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{w}_k"}}' id="mwAVY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {w} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">w</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {w} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {w} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/09d84ac907430e389025fce17b0af0f6c13c0446" style="vertical-align: -0.671ex; width:3.02ex; height:2.009ex;"/></span>, one may write <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}_\\bull"}}' id="mwAVc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} _{\bullet }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∙<!-- ∙ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} _{\bullet }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} _{\bullet }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fac34ddb1ff71b53d0e6f5f314e7aec223448112" style="vertical-align: -0.26ex; margin-bottom: -0.412ex; width:2.465ex; height:2.009ex;"/></span> instead of <span about="#mwt127" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}_k"}}' id="mwAVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a65659de269cb11dbe5b7ccbcef4cbe216a2ed80" style="vertical-align: -0.671ex; width:2.5ex; height:2.009ex;"/></span>  if <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{R}"}}' id="mwAVk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {R} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">R</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {R} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {R} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5de85fcc2a00d8ba14aae84aeef812d7fef4b3d5" style="vertical-align: -0.338ex; width:2.003ex; height:2.176ex;"/></span> is independent of time.</p>
+<p id="mwAVo">The initial state, and the noise vectors at each step <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{ \\mathbf{x}_0, \\mathbf{w}_1, \\dots, \\mathbf{w}_k, \\mathbf{v}_1, \\dots, \\mathbf{v}_k  \\} "}}' id="mwAVs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{\mathbf {x} _{0},\mathbf {w} _{1},\dots ,\mathbf {w} _{k},\mathbf {v} _{1},\dots ,\mathbf {v} _{k}\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">w</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">w</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{\mathbf {x} _{0},\mathbf {w} _{1},\dots ,\mathbf {w} _{k},\mathbf {v} _{1},\dots ,\mathbf {v} _{k}\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{\mathbf {x} _{0},\mathbf {w} _{1},\dots ,\mathbf {w} _{k},\mathbf {v} _{1},\dots ,\mathbf {v} _{k}\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/be43179c760aecdd90e55cfc8c6a7025919ad094" style="vertical-align: -0.838ex; width:28.185ex; height:2.843ex;"/></span> are all assumed to be mutually <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Statistical_independence" id="mwAVw" rel="mw:WikiLink" title="Statistical independence">independent</a>.</p>
+<p id="mwAV0">Many real-time dynamic systems do not exactly conform to this model. In fact, unmodeled dynamics can seriously degrade the filter performance, even when it was supposed to work with unknown stochastic signals as inputs. The reason for this is that the effect of unmodeled dynamics depends on the input, and, therefore, can bring the estimation algorithm to instability (it diverges). On the other hand, independent white noise signals will not make the algorithm diverge. The problem of distinguishing between measurement noise and unmodeled dynamics is a difficult one and is treated as a problem of control theory using <a href="https://en.wikipedia.org/wiki/Robust_control" id="mwAV4" rel="mw:WikiLink" title="Robust control">robust control</a>.<sup about="#mwt132" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"ishihara06"},"body":{"id":"mw-reference-text-cite_note-ishihara06-27"}}' id="cite_ref-ishihara06_27-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-ishihara06-27" id="mwAV8"><span class="mw-reflink-text" id="mwAWA"><span class="cite-bracket" id="mwAWE">[</span>27<span class="cite-bracket" id="mwAWI">]</span></span></a></sup><sup about="#mwt135" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"terra14"},"body":{"id":"mw-reference-text-cite_note-terra14-28"}}' id="cite_ref-terra14_28-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-terra14-28" id="mwAWM"><span class="mw-reflink-text" id="mwAWQ"><span class="cite-bracket" id="mwAWU">[</span>28<span class="cite-bracket" id="mwAWY">]</span></span></a></sup></p>
+<p id="mwAWg">The Kalman filter is a <a href="https://en.wikipedia.org/wiki/Infinite_impulse_response" id="mwAWk" rel="mw:WikiLink" title="Infinite impulse response">recursive</a> estimator. This means that only the estimated state from the previous time step and the current measurement are needed to compute the estimate for the current state. In contrast to batch estimation techniques, no history of observations and/or estimates is required. In what follows, the notation <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\hat{\\mathbf{x}}_{n\\mid m}"}}' id="mwAWo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>m</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\hat {\mathbf {x} }}_{n\mid m}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3eff5422264edcbe21aed62839528629f28dc6a" style="vertical-align: -1.171ex; width:4.53ex; height:3.176ex;"/></span> represents the estimate of <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}"}}' id="mwAWs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> at time <i id="mwAWw">n</i> given observations up to and including at time <span about="#mwt136" class="nowrap" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;nowrap&quot;,&quot;href&quot;:&quot;./Template:Nowrap&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''m'' ≤ ''n''&quot;}},&quot;i&quot;:0}}]}" id="mwAW0" typeof="mw:Transclusion"><i>m</i> ≤ <i>n</i></span>.</p>
+<p id="mwAW4">The state of the filter is represented by two variables:</p>
+<p id="mwAXo">The algorithm structure of the Kalman filter resembles that of <a href="https://en.wikipedia.org/wiki/Alpha_beta_filter" id="mwAXs" rel="mw:WikiLink" title="Alpha beta filter">Alpha beta filter</a>. The Kalman filter can be written as a single equation; however, it is most often conceptualized as two distinct phases: "Predict" and "Update". The predict phase uses the state estimate from the previous timestep to produce an estimate of the state at the current timestep. This predicted state estimate is also known as the <i id="mwAXw">a priori</i> state estimate because, although it is an estimate of the state at the current timestep, it does not include observation information from the current timestep. In the update phase, the <a href="https://en.wikipedia.org/wiki/Innovation_(signal_processing)" id="mwAX0" rel="mw:WikiLink" title="Innovation (signal processing)">innovation</a> (the pre-fit residual), i.e. the difference between the current <i id="mwAX4">a priori</i> prediction and the current observation information, is multiplied by the optimal Kalman gain and combined with the previous state estimate to refine the state estimate. This improved estimate based on the current observation is termed the <i id="mwAX8">a posteriori</i> state estimate.</p>
+<p id="mwAYA">Typically, the two phases alternate, with the prediction advancing the state until the next scheduled observation, and the update incorporating the observation.  However, this is not necessary; if an observation is unavailable for some reason, the update may be skipped and multiple prediction procedures performed.  Likewise, if multiple independent observations are available at the same time, multiple update procedures may be performed (typically with different observation matrices <b id="mwAYE">H</b><sub id="mwAYI"><i id="mwAYM">k</i></sub>).<sup about="#mwt144" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAYQ"><span class="mw-reflink-text" id="mwAYU"><span class="cite-bracket" id="mwAYY">[</span>29<span class="cite-bracket" id="mwAYc">]</span></span></a></sup><sup about="#mwt147" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAYg"><span class="mw-reflink-text" id="mwAYk"><span class="cite-bracket" id="mwAYo">[</span>30<span class="cite-bracket" id="mwAYs">]</span></span></a></sup></p>
+<p id="mwAb4">The second formula for the updated (<i id="mwAb8">a posteriori</i>) estimate covariance above is known as the "Joseph form" that is often used in applications (numerically more stable than the more simple usual formulation). Proof of the formulae is found in the <i id="mwAcA"><a class="mw-selflink-fragment" href="#Derivations" id="mwAcE" rel="mw:WikiLink">derivations</a></i> section, where the formula valid for any <b id="mwAcI">K</b><sub id="mwAcM">k</sub> is also shown.</p>
+<p id="mwAcQ">A more intuitive way to express the updated state estimate (<span about="#mwt157" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\hat{\\mathbf{x}}_{k\\mid k}"}}' id="mwAcU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\hat {\mathbf {x} }}_{k\mid k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>∣<!-- ∣ --></mo>
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\hat {\mathbf {x} }}_{k\mid k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\hat {\mathbf {x} }}_{k\mid k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f0be19f4d4c2d69771f3856b3c25ce1de5a446e3" style="vertical-align: -1.171ex; width:3.814ex; height:3.176ex;"/></span>) is:</p>
+<p id="mwAck">This expression reminds us of a <a href="https://en.wikipedia.org/wiki/Linear_interpolation" id="mwAco" rel="mw:WikiLink" title="Linear interpolation">linear interpolation</a>, <span about="#mwt159" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x = (1-t)(a) + t(b)"}}' id="mwAcs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x=(1-t)(a)+t(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>t</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>t</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x=(1-t)(a)+t(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x=(1-t)(a)+t(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/33970b748fe7930f488221f32ee8f6fb23dbba54" style="vertical-align: -0.838ex; width:20.606ex; height:2.843ex;"/></span> for <span about="#mwt160" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"t"}}' id="mwAcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle t}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>t</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle t}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle t}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/65658b7b223af9e1acc877d848888ecdb4466560" style="vertical-align: -0.338ex; width:0.84ex; height:2.009ex;"/></span> between [0,1]. 
+In our case:</p>
+</div></div>
+</body></html>

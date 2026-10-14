@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 908
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Conflict-free replicated data type",
+    "pageid": 44455674,
+    "size": 31105,
+    "wordcount": 3466,
+    "snippet": "In distributed computing, a <span class=\"searchmatch\">conflict</span>-<span class=\"searchmatch\">free</span> <span class=\"searchmatch\">replicated</span> <span class=\"searchmatch\">data</span> <span class=\"searchmatch\">type</span> (CRDT) is a <span class=\"searchmatch\">data</span> structure that is <span class=\"searchmatch\">replicated</span> across multiple computers in a network, with",
+    "timestamp": "2026-09-17T19:17:38Z"
+   },
+   {
+    "ns": 0,
+    "title": "Replication (computing)",
+    "pageid": 2722905,
+    "size": 24994,
+    "wordcount": 3195,
+    "snippet": "many times. Computational tasks may be: <span class=\"searchmatch\">Replicated</span> in space, where tasks are executed on separate devices <span class=\"searchmatch\">Replicated</span> in time, where tasks are executed repeatedly",
+    "timestamp": "2026-10-13T10:30:53Z"
+   },
+   {
+    "ns": 0,
+    "title": "Local-first software",
+    "pageid": 82435146,
+    "size": 8715,
+    "wordcount": 956,
+    "snippet": "as a &quot;gradient&quot; rather than a strict checklist. <span class=\"searchmatch\">Conflict</span>-<span class=\"searchmatch\">free</span> <span class=\"searchmatch\">replicated</span> <span class=\"searchmatch\">data</span> <span class=\"searchmatch\">type</span> Peer-to-peer <span class=\"searchmatch\">Data</span> sovereignty End-to-end encryption Cloud computing",
+    "timestamp": "2026-03-06T07:28:13Z"
+   },
+   {
+    "ns": 0,
+    "title": "Redis",
+    "pageid": 24956915,
+    "size": 28132,
+    "wordcount": 2557,
+    "snippet": "supports interfacing with Redis through its Poco::Redis library. <span class=\"searchmatch\">Conflict</span>-<span class=\"searchmatch\">free</span> <span class=\"searchmatch\">replicated</span> <span class=\"searchmatch\">data</span> <span class=\"searchmatch\">type</span> Memcached Infinispan Valkey Bernardi, Stefano (January 4,",
+    "timestamp": "2026-09-20T09:36:49Z"
+   },
+   {
+    "ns": 0,
+    "title": "Operational transformation",
+    "pageid": 8924002,
+    "size": 49264,
+    "wordcount": 5539,
+    "snippet": "sequence <span class=\"searchmatch\">types</span> of <span class=\"searchmatch\">conflict</span>-<span class=\"searchmatch\">free</span> <span class=\"searchmatch\">replicated</span> <span class=\"searchmatch\">data</span> <span class=\"searchmatch\">type</span>. <span class=\"searchmatch\">Data</span> synchronization Collaborative real-time editors <span class=\"searchmatch\">Conflict</span>-<span class=\"searchmatch\">free</span> <span class=\"searchmatch\">replicated</span> <span class=\"searchmatch\">data</span> <span class=\"searchmatch\">types</span> Consistency",
+    "timestamp": "2026-09-04T14:02:18Z"
+   }
+  ]
+ }
+}

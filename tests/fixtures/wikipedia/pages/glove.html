@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>GloVe - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">GloVe</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBQ">In <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwBg" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>, <b id="mwBw">GloVe</b> (acronym for <i id="mwCA"><b id="mwCQ">Glo</b>bal <b id="mwCg">Ve</b>ctors</i>) is a model for distributed word representation. The model is an <a href="https://en.wikipedia.org/wiki/Unsupervised_learning" id="mwCw" rel="mw:WikiLink" title="Unsupervised learning">unsupervised learning</a> algorithm for obtaining <a href="https://en.wikipedia.org/wiki/Word_embedding" id="mwDA" rel="mw:WikiLink" title="Word embedding">vector representations</a> of words. This is achieved by mapping words into a meaningful space where the distance between words is related to <a href="https://en.wikipedia.org/wiki/Semantic_similarity" id="mwDQ" rel="mw:WikiLink" title="Semantic similarity">semantic similarity</a>.<sup about="#mwt6" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-1"}}' id="cite_ref-:1_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-1" id="mwDg"><span class="mw-reflink-text" id="mwDw"><span class="cite-bracket" id="mwEA">[</span>1<span class="cite-bracket" id="mwEQ">]</span></span></a></sup> Training is performed on aggregated global word-word <a href="https://en.wikipedia.org/wiki/Co-occurrence" id="mwEg" rel="mw:WikiLink" title="Co-occurrence">co-occurrence</a> <a href="https://en.wikipedia.org/wiki/Statistics" id="mwEw" rel="mw:WikiLink" title="Statistics">statistics</a> from a <a href="https://en.wikipedia.org/wiki/Text_corpus" id="mwFA" rel="mw:WikiLink" title="Text corpus">corpus</a>, and the resulting representations showcase interesting linear substructures of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Word_vector_space" id="mwFQ" rel="mw:WikiLink" title="Word vector space">word vector space</a>. As log-bilinear regression model for unsupervised learning of word representations, it combines the features of two model families, namely the global <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Matrix_factorization" id="mwFg" rel="mw:WikiLink" title="Matrix factorization">matrix factorization</a> and local <a href="https://en.wikipedia.org/wiki/Context_window" id="mwFw" rel="mw:WikiLink" title="Context window">context window methods</a>.</p>
+<p id="mwGA">It was developed as an <a href="https://en.wikipedia.org/wiki/Open-source_software" id="mwGQ" rel="mw:WikiLink" title="Open-source software">open-source</a> project at <a href="https://en.wikipedia.org/wiki/Stanford_University" id="mwGg" rel="mw:WikiLink" title="Stanford University">Stanford University</a><sup about="#mwt9" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>2<span class="cite-bracket" id="mwHg">]</span></span></a></sup> and launched in 2014. It was designed as a competitor to <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Word2vec" id="mwHw" rel="mw:WikiLink" title="Word2vec">word2vec</a>, and the original paper noted multiple improvements of GloVe over word2vec. <span about="#mwt7" data-mw='{"parts":[{"template":{"target":{"wt":"As of","href":"./Template:As_of"},"params":{"1":{"wt":"2022"}},"i":0}}]}' id="mwIA" typeof="mw:Transclusion">As of 2022</span><sup about="#mwt7" class="plainlinks noexcerpt noprint asof-tag update" style="display:none;"><a class="external text" data-mw-original-href="//en.wikipedia.org/w/index.php?title=GloVe&amp;action=edit" href="https://en.wikipedia.org/w/index.php?title=GloVe&amp;action=edit" rel="mw:ExtLink"><span typeof="mw:Entity">[</span>update<span typeof="mw:Entity">]</span></a></sup><span about="#mwt7" typeof="mw:Nowiki"></span><link about="#mwt7" href="./Category:Articles_containing_potentially_dated_statements_from_2022" rel="mw:PageProp/Category"/><link about="#mwt7" href="./Category:All_articles_containing_potentially_dated_statements" id="mwIQ" rel="mw:PageProp/Category"/>, both approaches are outdated, and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" id="mwIg" rel="mw:WikiLink" title="Transformer (deep learning architecture)">transformer-based models</a>, such as <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" id="mwIw" rel="mw:WikiLink" title="BERT (language model)">BERT</a>, which add multiple neural-network attention layers on top of a word embedding model similar to Word2vec, have come to be regarded as the state of the art in <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwJA" rel="mw:WikiLink" title="Natural language processing">natural language processing</a> (NLP).<sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwJQ"><span class="mw-reflink-text" id="mwJg"><span class="cite-bracket" id="mwJw">[</span>3<span class="cite-bracket" id="mwKA">]</span></span></a></sup></p>
+<p id="mwLA">You shall know a word by the company it keeps (Firth, J. R. 1957:11)<sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwLQ"><span class="mw-reflink-text" id="mwLg"><span class="cite-bracket" id="mwLw">[</span>4<span class="cite-bracket" id="mwMA">]</span></span></a></sup></p>
+<p id="mwMQ">The idea of GloVe is to construct, for each word <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>, two vectors <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i, \\tilde w_i"}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i},{\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i},{\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i},{\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a37eb766fd58f82ab52e744e5746c8256305d02" style="vertical-align: -0.671ex; width:5.962ex; height:2.509ex;"/></span>, such that the relative positions of the vectors capture part of the statistical regularities of the word <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwNA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>. The statistical regularity is defined as the co-occurrence probabilities. Words that resemble each other in meaning should also resemble each other in co-occurrence probabilities.</p>
+<p id="mwNg">Let the <b id="mwNw">vocabulary</b> be <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwOA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span>, the set of all possible words (aka "tokens"). Punctuation is either ignored, or treated as vocabulary, and similarly for capitalization and other typographical details.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-1" id="mwOQ"><span class="mw-reflink-text" id="mwOg"><span class="cite-bracket" id="mwOw">[</span>1<span class="cite-bracket" id="mwPA">]</span></span></a></sup></p>
+<p id="mwPQ">
+
+If two words occur close to each other, then we say that they occur in the <b id="mwPg">context</b> of each other. For example, if the context length is 3, then we say that in the following sentence</p>
+<p id="mwQA">GloVe<sub id="mwQQ">1</sub>, coined<sub id="mwQg">2</sub> from<sub id="mwQw">3</sub> Global<sub id="mwRA">4</sub> Vectors<sub id="mwRQ">5</sub>, is<sub id="mwRg">6</sub> a<sub id="mwRw">7</sub> model<sub id="mwSA">8</sub> for<sub id="mwSQ">9</sub> distributed<sub id="mwSg">10</sub> word<sub id="mwSw">11</sub> representation<sub id="mwTA">12</sub></p>
+<p id="mwTQ">the word "model<sub id="mwTg">8</sub>" is in the context of "word<sub id="mwTw">11</sub>" but not the context of "representation<sub id="mwUA">12</sub>".</p>
+<p id="mwUQ">A word is not in the context of itself, so "model<sub id="mwUg">8</sub>" is not in the context of the word "model<sub id="mwUw">8</sub>", although, if a word appears again in the same context, then it does count.</p>
+<p id="mwVA">Let <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X_{ij}"}}' id="mwVQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X_{ij}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X_{ij}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X_{ij}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a3501695fc03e54ae7d33791d3fd08a5bfb9645" style="vertical-align: -1.005ex; width:3.401ex; height:2.843ex;"/></span> be the number of times that the word <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span> appears in the context of the word <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span> over the entire corpus. For example, if the corpus is just "I don't think that that is a problem." we have <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X_{\\text{that}, \\text{that}} = 2"}}' id="mwWA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X_{{\text{that}},{\text{that}}}=2}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>that</mtext>
+</mrow>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>that</mtext>
+</mrow>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>2</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X_{{\text{that}},{\text{that}}}=2}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X_{{\text{that}},{\text{that}}}=2}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/05fadf1777232bfeece7eed231e494d56d5e388e" style="vertical-align: -1.005ex; width:12.905ex; height:2.843ex;"/></span> since the first "that" appears in the second one's context, and vice versa.</p>
+<p id="mwWQ">Let <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X_i = \\sum_{j \\in V} X_{ij}"}}' id="mwWg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X_{i}=\sum _{j\in V}X_{ij}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mrow>
+</munder>
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X_{i}=\sum _{j\in V}X_{ij}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X_{i}=\sum _{j\in V}X_{ij}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e912dec1eaebe539f7e0c5dee90a486e7b1d0485" style="vertical-align: -3.338ex; width:12.966ex; height:5.843ex;"/></span> be the number of words in the context of all instances of word <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>. By counting, we have<span about="#mwt27" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"X_i = 2 \\times(\\text{context size}) \\times \\# (\\text{occurrences of word }i)"}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X_{i}=2\times ({\text{context size}})\times \#({\text{occurrences of word }}i)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>2</mn>
+<mo>×<!-- × --></mo>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>context size</mtext>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>×<!-- × --></mo>
+<mi mathvariant="normal">#<!-- # --></mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>occurrences of word </mtext>
+</mrow>
+<mi>i</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X_{i}=2\times ({\text{context size}})\times \#({\text{occurrences of word }}i)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X_{i}=2\times ({\text{context size}})\times \#({\text{occurrences of word }}i)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dff30e20a1f80afa5a9e0bbf6a9b679a50d23fea" style="vertical-align: -0.838ex; width:51.098ex; height:2.843ex;"/></span>(except for words occurring right at the start and end of the corpus)</p>
+<p id="mwXg">Let <span about="#mwt28" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"P_{ik} := P(k | i) := \\frac{X_{ik}}{X_{i}}"}}' id="mwXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{ik}:=P(k|i):={\frac {X_{ik}}{X_{i}}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>:=</mo>
+<mi>P</mi>
+<mo stretchy="false">(</mo>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">|</mo>
+</mrow>
+<mi>i</mi>
+<mo stretchy="false">)</mo>
+<mo>:=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{ik}:=P(k|i):={\frac {X_{ik}}{X_{i}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{ik}:=P(k|i):={\frac {X_{ik}}{X_{i}}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69c258860f79a0dd5122515a826c7cb68368de74" style="vertical-align: -2.338ex; width:21.271ex; height:5.676ex;"/></span>be the <b id="mwYA">co-occurrence probability</b>. That is, if one samples a random occurrence of the word <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwYQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span> in the entire document, and a random word within its context, that word is <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> with probability <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_{ik}"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{ik}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{ik}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{ik}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3c19fb5cdaac8ead08d69078b689cf27b6ac5394" style="vertical-align: -0.671ex; width:3.148ex; height:2.509ex;"/></span>. Note that <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_{ik} \\neq P_{ki}"}}' id="mwZA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{ik}\neq P_{ki}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>≠<!-- ≠ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{ik}\neq P_{ki}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{ik}\neq P_{ki}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67a7084e5e7eb8c7d8874d98288da89339e8cc7d" style="vertical-align: -0.838ex; width:9.395ex; height:2.676ex;"/></span> in general. For example, in a typical modern English corpus, <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_{\\text{ado}, \\text{much}}"}}' id="mwZQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{{\text{ado}},{\text{much}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>ado</mtext>
+</mrow>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>much</mtext>
+</mrow>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{{\text{ado}},{\text{much}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{{\text{ado}},{\text{much}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/55fb37d0f28aca96744e48988aca89f501969df9" style="vertical-align: -1.005ex; width:8.667ex; height:2.843ex;"/></span> is close to one, but <span about="#mwt34" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_{\\text{much}, \\text{ado}}"}}' id="mwZg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{{\text{much}},{\text{ado}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>much</mtext>
+</mrow>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>ado</mtext>
+</mrow>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{{\text{much}},{\text{ado}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{{\text{much}},{\text{ado}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1396bd2dfaa143d3c5956798a345f471fe631e68" style="vertical-align: -1.005ex; width:8.667ex; height:2.843ex;"/></span> is close to zero. This is because the word "ado" is almost only used in the context of the archaic phrase "<a href="https://en.wikipedia.org/wiki/Much_Ado_About_Nothing" id="mwZw" rel="mw:WikiLink" title="Much Ado About Nothing">much ado about</a>", but the word "much" occurs in all kinds of contexts.</p>
+<p id="mwaA">For example, in a 6 billion token corpus, we have</p>
+<p id="mwmw">Inspecting the table, we see that the words "ice" and "steam" are indistinguishable along the "water" (often co-occurring with both) and "fashion" (rarely co-occurring with either), but distinguishable along the "solid" (co-occurring more with "ice") and "gas" (co-occurring more with "steam").</p>
+<p id="mwnA">The idea is to learn two vectors <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i, \\tilde w_i"}}' id="mwnQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i},{\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i},{\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i},{\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a37eb766fd58f82ab52e744e5746c8256305d02" style="vertical-align: -0.671ex; width:5.962ex; height:2.509ex;"/></span> for each word <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwng" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>, such that we have a <a href="https://en.wikipedia.org/wiki/Multinomial_logistic_regression" id="mwnw" rel="mw:WikiLink" title="Multinomial logistic regression">multinomial logistic regression</a>:<span about="#mwt57" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w_i^T \\tilde w_j + b_i + \\tilde b_j \\approx \\ln P_{ij}"}}' id="mwoA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}\approx \ln P_{ij}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msubsup>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>≈<!-- ≈ --></mo>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}\approx \ln P_{ij}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}\approx \ln P_{ij}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/49a579ef7762f93bf1c5a5d9f65677bd8adf30e1" style="vertical-align: -1.005ex; width:23.572ex; height:3.343ex;"/></span>and the terms <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b_i, \\tilde b_j"}}' id="mwoQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b_{i},{\tilde {b}}_{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b_{i},{\tilde {b}}_{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b_{i},{\tilde {b}}_{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b147a96d761593b637142335fef1e05fa0def841" style="vertical-align: -1.005ex; width:4.903ex; height:3.343ex;"/></span> are unimportant parameters.</p>
+<p id="mwog">This means that if the words <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i, j"}}' id="mwow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i,j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i,j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i,j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f4cbf8bbc622154cda8208d6e339495fe16a1f9a" style="vertical-align: -0.671ex; width:2.794ex; height:2.509ex;"/></span> have similar co-occurrence probabilities <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(P_{ik})_{k \\in V} \\approx (P_{jk})_{k \\in V} "}}' id="mwpA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (P_{ik})_{k\in V}\approx (P_{jk})_{k\in V}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mrow>
+</msub>
+<mo>≈<!-- ≈ --></mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (P_{ik})_{k\in V}\approx (P_{jk})_{k\in V}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (P_{ik})_{k\in V}\approx (P_{jk})_{k\in V}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54ade051c03f44474de9d6bd4c614bc734d3cce9" style="vertical-align: -1.005ex; width:20.021ex; height:3.009ex;"/></span>, then their vectors should also be similar: <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i \\approx w_j"}}' id="mwpQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}\approx w_{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>≈<!-- ≈ --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}\approx w_{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}\approx w_{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/483ba79771401c65d566f387a1395b84057cf5d8" style="vertical-align: -1.005ex; width:8.136ex; height:2.343ex;"/></span>.</p>
+<p id="mwpw">Naively, logistic regression can be run by minimizing the squared loss:<span about="#mwt62" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"L = \\sum_{i, j \\in V} (w_i^T \\tilde w_j + b_i + \\tilde b_j - \\ln P_{ij})^2"}}' id="mwqA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L=\sum _{i,j\in V}(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo>=</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mrow>
+</munder>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msubsup>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L=\sum _{i,j\in V}(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L=\sum _{i,j\in V}(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6457effdc7e515dcf3cea15fd043e708a3a99ef6" style="vertical-align: -3.338ex; width:34.921ex; height:5.843ex;"/></span>However, this would be noisy for rare co-occurrences. To fix the issue, the squared loss is weighted so that the loss is slowly ramped-up as the absolute number of co-occurrences <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X_{ij}"}}' id="mwqQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle X_{ij}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle X_{ij}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle X_{ij}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a3501695fc03e54ae7d33791d3fd08a5bfb9645" style="vertical-align: -1.005ex; width:3.401ex; height:2.843ex;"/></span> increases:<span about="#mwt64" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"L = \\sum_{i, j \\in V} f(X_{ij}) (w_i^T \\tilde w_j + b_i + \\tilde b_j - \\ln P_{ij})^2\n "}}' id="mwqg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L=\sum _{i,j\in V}f(X_{ij})(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo>=</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mrow>
+</munder>
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>X</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msubsup>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mi>j</mi>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L=\sum _{i,j\in V}f(X_{ij})(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L=\sum _{i,j\in V}f(X_{ij})(w_{i}^{T}{\tilde {w}}_{j}+b_{i}+{\tilde {b}}_{j}-\ln P_{ij})^{2}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/60e736cc2be7b755969a2d8deedef1c3342f87c4" style="vertical-align: -3.338ex; width:41.797ex; height:5.843ex;"/></span>where<span about="#mwt65" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"f(x)=\\left\\{\\begin{array}{cc}\n\\left(x / x_{\\max }\\right)^\\alpha &amp; \\text { if } x&lt;x_{\\max } \\\\\n1 &amp; \\text { otherwise }\n\\end{array}\\right."}}' id="mwqw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(x)=\left\{{\begin{array}{cc}\left(x/x_{\max }\right)^{\alpha }&amp;{\text{ if }}x&lt;x_{\max }\\1&amp;{\text{ otherwise }}\end{array}}\right.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtable columnalign="center center" columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msup>
+<mrow>
+<mo>(</mo>
+<mrow>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>α<!-- α --></mi>
+</mrow>
+</msup>
+</mtd>
+<mtd>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> if </mtext>
+</mrow>
+<mi>x</mi>
+<mo>&lt;</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mn>1</mn>
+</mtd>
+<mtd>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> otherwise </mtext>
+</mrow>
+</mtd>
+</mtr>
+</mtable>
+</mrow>
+<mo fence="true" stretchy="true" symmetric="true"></mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(x)=\left\{{\begin{array}{cc}\left(x/x_{\max }\right)^{\alpha }&amp;{\text{ if }}x&lt;x_{\max }\\1&amp;{\text{ otherwise }}\end{array}}\right.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(x)=\left\{{\begin{array}{cc}\left(x/x_{\max }\right)^{\alpha }&amp;{\text{ if }}x&lt;x_{\max }\\1&amp;{\text{ otherwise }}\end{array}}\right.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/eab98eadcf3ed4ce2a52dd2e734dd95089bb1dc4" style="vertical-align: -2.505ex; width:34.108ex; height:6.176ex;"/></span>and <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_{\\max }, \\alpha"}}' id="mwrA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{\max },\alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+<mo>,</mo>
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{\max },\alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{\max },\alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b90fa88c1db34729f98f51733fe294280e2788ac" style="vertical-align: -0.671ex; width:7.142ex; height:2.009ex;"/></span> are <a href="https://en.wikipedia.org/wiki/Hyperparameter_(machine_learning)" id="mwrQ" rel="mw:WikiLink" title="Hyperparameter (machine learning)">hyperparameters</a>. In the original paper, the authors found that <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_{\\max } = 100, \\alpha = 3/4"}}' id="mwrg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{\max }=100,\alpha =3/4}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo form="prefix" movablelimits="true">max</mo>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>100</mn>
+<mo>,</mo>
+<mi>α<!-- α --></mi>
+<mo>=</mo>
+<mn>3</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mn>4</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{\max }=100,\alpha =3/4}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{\max }=100,\alpha =3/4}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/85ddf258747e1a64026da444a01e5cfc3189fbd7" style="vertical-align: -0.838ex; width:20.314ex; height:2.843ex;"/></span> seem to work well in practice.</p>
+<p id="mwsA">Once a model is trained, we have 4 trained parameters for each word: <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i, \\tilde w_i, b_i, \\tilde b_i"}}' id="mwsQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i},{\tilde {w}}_{i},b_{i},{\tilde {b}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i},{\tilde {w}}_{i},b_{i},{\tilde {b}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i},{\tilde {w}}_{i},b_{i},{\tilde {b}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/84941050e71dfa30c393e90b081f57e7df18c55f" style="vertical-align: -0.671ex; width:11.789ex; height:3.009ex;"/></span>. The parameters <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" b_i, \\tilde b_i"}}' id="mwsg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b_{i},{\tilde {b}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>b</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b_{i},{\tilde {b}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b_{i},{\tilde {b}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7860dcc2573fe21395c52d13a3f1fec4828ac047" style="vertical-align: -0.671ex; width:4.793ex; height:3.009ex;"/></span> are irrelevant, and only <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i, \\tilde w_i"}}' id="mwsw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i},{\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i},{\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i},{\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a37eb766fd58f82ab52e744e5746c8256305d02" style="vertical-align: -0.671ex; width:5.962ex; height:2.509ex;"/></span> are relevant.</p>
+<p id="mwtA">The authors recommended using <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i + \\tilde w_i"}}' id="mwtQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}+{\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}+{\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}+{\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/feac481552a621a103b5a3483b52a39f0b4dba4e" style="vertical-align: -0.671ex; width:7.768ex; height:2.509ex;"/></span> as the final representation vector for word <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwtg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>, because empirically it worked better than <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwtw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span> or <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\tilde w_i"}}' id="mwuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\tilde {w}}_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">~<!-- ~ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\tilde {w}}_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\tilde {w}}_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/214ca375bfbaf1ac7c72eed96e70ba0a3d27a636" style="vertical-align: -0.671ex; width:2.464ex; height:2.509ex;"/></span> alone.</p>
+<p id="mwug">GloVe can be used to find relations between words like synonyms, company-product relations, zip codes and cities, etc. However, the unsupervised learning algorithm is not effective in identifying homographs, i.e., words with the same spelling and different meanings. This is as the unsupervised learning algorithm calculates a single set of vectors for words with the same morphological structure.<sup about="#mwt77" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwuw"><span class="mw-reflink-text" id="mwvA"><span class="cite-bracket" id="mwvQ">[</span>5<span class="cite-bracket" id="mwvg">]</span></span></a></sup> The algorithm is also used by the <a href="https://en.wikipedia.org/wiki/SpaCy" id="mwvw" rel="mw:WikiLink" title="SpaCy">spaCy</a> library to build semantic word embedding features, while computing the top list words that match with distance measures such as <a href="https://en.wikipedia.org/wiki/Cosine_similarity" id="mwwA" rel="mw:WikiLink" title="Cosine similarity">cosine similarity</a> and <a href="https://en.wikipedia.org/wiki/Euclidean_distance" id="mwwQ" rel="mw:WikiLink" title="Euclidean distance">Euclidean distance</a> approach.<sup about="#mwt80" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwwg"><span class="mw-reflink-text" id="mwww"><span class="cite-bracket" id="mwxA">[</span>6<span class="cite-bracket" id="mwxQ">]</span></span></a></sup> GloVe was also used as the word representation framework for the online and offline systems designed to detect psychological distress in patient interviews.<sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-7"}}' id="cite_ref-:0_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-7" id="mwxg"><span class="mw-reflink-text" id="mwxw"><span class="cite-bracket" id="mwyA">[</span>7<span class="cite-bracket" id="mwyQ">]</span></span></a></sup></p>
+</div></div>
+</body></html>

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 25181
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Learning to rank",
+    "pageid": 25050663,
+    "size": 55460,
+    "wordcount": 4453,
+    "snippet": "<span class=\"searchmatch\">Learning</span> <span class=\"searchmatch\">to</span> <span class=\"searchmatch\">rank</span> (LTR) or machine-learned ranking (MLR) is the application of machine <span class=\"searchmatch\">learning</span>, often supervised, semi-supervised or reinforcement learning",
+    "timestamp": "2026-06-23T02:18:21Z"
+   },
+   {
+    "ns": 0,
+    "title": "International Conference on Machine Learning",
+    "pageid": 18586449,
+    "size": 10323,
+    "wordcount": 629,
+    "snippet": "machine <span class=\"searchmatch\">learning</span> and artificial intelligence research. It is organized by the International Machine <span class=\"searchmatch\">Learning</span> Society (IMLS). Precise dates vary year <span class=\"searchmatch\">to</span> year",
+    "timestamp": "2026-10-10T01:02:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "Machine learning",
+    "pageid": 233488,
+    "size": 146373,
+    "wordcount": 16598,
+    "snippet": "the field of deep <span class=\"searchmatch\">learning</span> have allowed neural networks, a class of statistical algorithms, <span class=\"searchmatch\">to</span> surpass many previous machine <span class=\"searchmatch\">learning</span> approaches in performance",
+    "timestamp": "2026-10-06T04:59:14Z"
+   },
+   {
+    "ns": 0,
+    "title": "Reinforcement learning",
+    "pageid": 66294,
+    "size": 79844,
+    "wordcount": 8980,
+    "snippet": "order <span class=\"searchmatch\">to</span> maximize a reward signal. Reinforcement <span class=\"searchmatch\">learning</span> is one of the three basic machine <span class=\"searchmatch\">learning</span> paradigms, alongside supervised <span class=\"searchmatch\">learning</span> and unsupervised",
+    "timestamp": "2026-09-05T22:02:46Z"
+   },
+   {
+    "ns": 0,
+    "title": "International Conference on Learning Representations",
+    "pageid": 59466481,
+    "size": 5743,
+    "wordcount": 271,
+    "snippet": "The International Conference on <span class=\"searchmatch\">Learning</span> Representations (ICLR) is a machine <span class=\"searchmatch\">learning</span> conference typically held in late April or early May each year.",
+    "timestamp": "2026-09-05T09:00:54Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Word2Vec - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Word2Vec</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">In <a href="https://en.wikipedia.org/wiki/Natural_language_processing" id="mwBA" rel="mw:WikiLink" title="Natural language processing">natural language processing</a>, <b id="mwBQ">Word2Vec</b> is a technique for obtaining <a href="https://en.wikipedia.org/wiki/Vector_space" id="mwBg" rel="mw:WikiLink" title="Vector space">vector</a> representations of words as <a href="https://en.wikipedia.org/wiki/Word_embedding" id="mwBw" rel="mw:WikiLink" title="Word embedding">word embeddings</a>. These vectors capture information about the meaning of a word based on its surrounding words in a piece of text, following the principles of <a href="https://en.wikipedia.org/wiki/Distributional_semantics" id="mwCA" rel="mw:WikiLink" title="Distributional semantics">distributional semantics</a>. Once trained, the model can be used to find words with similar meanings or usage, while its embeddings can serve as inputs to systems for <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwCQ" rel="mw:WikiLink" title="Information retrieval">search</a> and <a href="https://en.wikipedia.org/wiki/Document_classification" id="mwCg" rel="mw:WikiLink" title="Document classification">classification</a>.</p>
+<p id="mwCw">Word2Vec was developed by <a href="https://en.wikipedia.org/wiki/Tomáš_Mikolov" id="mwDA" rel="mw:WikiLink" title="Tomáš Mikolov">Tomáš Mikolov</a>, Kai Chen, Greg Corrado, <a href="https://en.wikipedia.org/wiki/Ilya_Sutskever" id="mwDQ" rel="mw:WikiLink" title="Ilya Sutskever">Ilya Sutskever</a> and <a href="https://en.wikipedia.org/wiki/Jeff_Dean" id="mwDg" rel="mw:WikiLink" title="Jeff Dean">Jeff Dean</a> at <a href="https://en.wikipedia.org/wiki/Google" id="mwDw" rel="mw:WikiLink" title="Google">Google</a>, published in preprints<sup about="#mwt2" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov"}}' id="cite_ref-mikolov_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-1" id="mwEA"><span class="mw-reflink-text" id="mwEQ"><span class="cite-bracket" id="mwEg">[</span>1<span class="cite-bracket" id="mwEw">]</span></span></a></sup><sup about="#mwt3" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov-nips"}}' id="cite_ref-mikolov-nips_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-nips-2" id="mwFA"><span class="mw-reflink-text" id="mwFQ"><span class="cite-bracket" id="mwFg">[</span>2<span class="cite-bracket" id="mwFw">]</span></span></a></sup> and presented at <a href="https://en.wikipedia.org/wiki/International_Conference_on_Learning_Representations" id="mwGA" rel="mw:WikiLink" title="International Conference on Learning Representations">ICLR</a> in 2013.<sup about="#mwt6" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwGQ"><span class="mw-reflink-text" id="mwGg"><span class="cite-bracket" id="mwGw">[</span>3<span class="cite-bracket" id="mwHA">]</span></span></a></sup> Its computational efficiency made it practical to learn high-quality word embeddings from very large <a href="https://en.wikipedia.org/wiki/Text_corpus" id="mwHQ" rel="mw:WikiLink" title="Text corpus">text corpora</a> and contributed to their widespread adoption in natural language processing.<sup about="#mwt9" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Mikolov2013a"},"body":{"id":"mw-reference-text-cite_note-Mikolov2013a-4"}}' id="cite_ref-Mikolov2013a_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Mikolov2013a-4" id="mwHg"><span class="mw-reflink-text" id="mwHw"><span class="cite-bracket" id="mwIA">[</span>4<span class="cite-bracket" id="mwIQ">]</span></span></a></sup></p>
+<p id="mwJA">Word2Vec is a group of related models that are used to produce word embeddings. These models are shallow, two-layer <a href="https://en.wikipedia.org/wiki/Neural_network" id="mwJQ" rel="mw:WikiLink" title="Neural network">neural networks</a> that are trained to reconstruct linguistic contexts of words. Word2Vec takes as its input a large corpus of text and produces a mapping of the set of words to a <a href="https://en.wikipedia.org/wiki/Vector_space" id="mwJg" rel="mw:WikiLink" title="Vector space">vector space</a>, typically of several hundred <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Dimensions" id="mwJw" rel="mw:WikiLink" title="Dimensions">dimensions</a>, with each unique word in the <a href="https://en.wikipedia.org/wiki/Corpus_linguistics" id="mwKA" rel="mw:WikiLink" title="Corpus linguistics">corpus</a> being assigned a vector in the space.</p>
+<p id="mwKQ">Word2Vec can use either of two model architectures to produce these <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Distributed_representation" id="mwKg" rel="mw:WikiLink" title="Distributed representation">distributed representations</a> of words: continuous <a href="https://en.wikipedia.org/wiki/Bag-of-words_model" id="mwKw" rel="mw:WikiLink" title="Bag-of-words model">bag of words</a> (CBOW) or continuously sliding skip-gram. In both architectures, Word2Vec considers both individual words and a sliding context window as it iterates over the corpus. </p>
+<p id="mwLA">The CBOW can be viewed as a "fill in the blank" task, where the word embedding represents the way the word influences the relative probabilities of other words in the context window. Words which are semantically similar should influence these probabilities in similar ways, because semantically similar words should be used in similar contexts. The order of context words does not influence prediction (bag of words assumption). </p>
+<p id="mwLQ">In the continuous skip-gram architecture, the model uses the current word to predict the surrounding window of context words.<sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov"},"body":{"id":"mw-reference-text-cite_note-mikolov-1"}}' id="cite_ref-mikolov_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-1" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>1<span class="cite-bracket" id="mwMQ">]</span></span></a></sup><sup about="#mwt15" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov-nips"},"body":{"id":"mw-reference-text-cite_note-mikolov-nips-2"}}' id="cite_ref-mikolov-nips_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-nips-2" id="mwMg"><span class="mw-reflink-text" id="mwMw"><span class="cite-bracket" id="mwNA">[</span>2<span class="cite-bracket" id="mwNQ">]</span></span></a></sup> The skip-gram architecture weighs nearby context words more heavily than more distant context words. According to the authors' note,<sup about="#mwt18" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-5"}}' id="cite_ref-:1_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-5" id="mwNg"><span class="mw-reflink-text" id="mwNw"><span class="cite-bracket" id="mwOA">[</span>5<span class="cite-bracket" id="mwOQ">]</span></span></a></sup> CBOW is faster while skip-gram does a better job for infrequent words.</p>
+<p id="mwOg">After the model is trained, the learned word embeddings are positioned in the vector space such that words that share common contexts in the corpus — that is, words that are <a href="https://en.wikipedia.org/wiki/Semantic_similarity" id="mwOw" rel="mw:WikiLink" title="Semantic similarity">semantically</a> and syntactically similar — are located close to one another in the space.<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov"}}' id="cite_ref-mikolov_1-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-1" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>1<span class="cite-bracket" id="mwPw">]</span></span></a></sup> More dissimilar words are located farther from one another in the space.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov"}}' id="cite_ref-mikolov_1-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-1" id="mwQA"><span class="mw-reflink-text" id="mwQQ"><span class="cite-bracket" id="mwQg">[</span>1<span class="cite-bracket" id="mwQw">]</span></span></a></sup></p>
+<p id="mwRQ">This section is based on expositions.<sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"explain"},"body":{"id":"mw-reference-text-cite_note-explain-6"}}' id="cite_ref-explain_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-explain-6" id="mwRg"><span class="mw-reflink-text" id="mwRw"><span class="cite-bracket" id="mwSA">[</span>6<span class="cite-bracket" id="mwSQ">]</span></span></a></sup><sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwSg"><span class="mw-reflink-text" id="mwSw"><span class="cite-bracket" id="mwTA">[</span>7<span class="cite-bracket" id="mwTQ">]</span></span></a></sup></p>
+<p id="mwTg">A corpus is a sequence of words. Both CBOW and skip-gram are methods to learn one vector per word appearing in the corpus.</p>
+<p id="mwTw">Let <span about="#mwt27" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> ("vocabulary") be the set of all words appearing in the corpus <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}' id="mwUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>C</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;"/></span>. Our goal is to learn one vector <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"v_w \\in \\R^d"}}' id="mwUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle v_{w}\in \mathbb {R} ^{d}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>w</mi>
+</mrow>
+</msub>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle v_{w}\in \mathbb {R} ^{d}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle v_{w}\in \mathbb {R} ^{d}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/79a9f3bbade4f0d63e605595407f0dc12150b620" style="vertical-align: -0.671ex; width:8.147ex; height:3.009ex;"/></span> for each word <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w \\in V"}}' id="mwUw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w\in V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w\in V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w\in V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fb3ba2e494febb4b85886a94ea45400bbfa30176" style="vertical-align: -0.338ex; width:6.292ex; height:2.176ex;"/></span>.</p>
+<p id="mwVA">The idea of skip-gram is that the vector of a word should be close to the vector of each of its neighbors. The idea of CBOW is that the vector-sum of a word's neighbors should be close to the vector of the word.</p>
+<p id="mwXg">The idea of CBOW is to represent each word with a vector, such that it is possible to predict a word using the sum of the vectors of its neighbors. Specifically, for each word <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span> in the corpus, the <a href="https://en.wikipedia.org/wiki/One-hot" id="mwYA" rel="mw:WikiLink" title="One-hot">one-hot</a> encoding of the word is used as the input to the neural network. The output of the neural network is a probability distribution over the dictionary, representing a prediction of individual words in the neighborhood of <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwYQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span>. The objective of training is to maximize <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sum_i\\ln \\Pr(w_i \\mid w_{i + j}\\colon j \\in N) "}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i+j}\colon j\in N)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>+</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>:<!-- : --></mo>
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i+j}\colon j\in N)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i+j}\colon j\in N)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5582fb7124bc75f264f38efaa31d0e003bf44e2b" style="vertical-align: -3.005ex; width:26.089ex; height:5.509ex;"/></span> where <span about="#mwt34" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"N"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle N}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle N}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle N}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5e3890c981ae85503089652feb48b191b57aae3" style="vertical-align: -0.338ex; width:2.064ex; height:2.176ex;"/></span> is a set of (non-zero) indices representing the relative locations of nearby words considered to be in <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwZA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span>'s neighborhood.</p>
+<p id="mwZQ">For example, if we want each word in the corpus to be predicted by every other word in a small span of 4 words. The set of relative indexes of neighbor words will be: <span about="#mwt36" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"N = \\{-2, -1, +1, +2\\} "}}' id="mwZg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle N=\{-2,-1,+1,+2\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mo>=</mo>
+<mo fence="false" stretchy="false">{</mo>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo>,</mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mo>+</mo>
+<mn>2</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle N=\{-2,-1,+1,+2\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle N=\{-2,-1,+1,+2\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82b604882862f765a9adf0a11a525ed9eff47634" style="vertical-align: -0.838ex; width:22.471ex; height:2.843ex;"/></span>, and the objective is to maximize<span about="#mwt37" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sum_i\\ln \\Pr(w_i \\mid w_{i-2}, w_{i-1}, w_{i+1}, w_{i+2}) "}}' id="mwZw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i-2},w_{i-1},w_{i+1},w_{i+2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>+</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i-2},w_{i-1},w_{i+1},w_{i+2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{i}\ln \Pr(w_{i}\mid w_{i-2},w_{i-1},w_{i+1},w_{i+2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8fad9e35484765e3243de59529e3f0391c13a773" style="vertical-align: -3.005ex; width:36.132ex; height:5.509ex;"/></span>.</p>
+<p id="mwaA">In standard bag-of-words, a word's context is represented by a word-count (aka a word <a href="https://en.wikipedia.org/wiki/Histogram" id="mwaQ" rel="mw:WikiLink" title="Histogram">histogram</a>) of its neighboring words. For example, the "sat" in "the cat sat on the mat" is represented as {"the": 2, "cat": 1, "on": 1}. Note that the last word "mat" is not used to represent "sat", because it is outside the neighborhood <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"N = \\{-2, -1, +1, +2\\} "}}' id="mwag" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle N=\{-2,-1,+1,+2\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>N</mi>
+<mo>=</mo>
+<mo fence="false" stretchy="false">{</mo>
+<mo>−<!-- − --></mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+<mo>,</mo>
+<mo>+</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mo>+</mo>
+<mn>2</mn>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle N=\{-2,-1,+1,+2\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle N=\{-2,-1,+1,+2\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82b604882862f765a9adf0a11a525ed9eff47634" style="vertical-align: -0.838ex; width:22.471ex; height:2.843ex;"/></span>.</p>
+<p id="mwaw">In continuous bag-of-words, the histogram is multiplied by a matrix <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> to obtain a continuous representation of the word's context. The matrix <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> is also called a <b id="mwbg">dictionary</b>. Its columns are the word vectors. It has <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span> columns, where <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span> is the size of the dictionary. Let <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d"}}' id="mwcQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle d}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>d</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle d}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle d}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e85ff03cbe0c7341af6b982e47e9f90d235c66ab" style="vertical-align: -0.338ex; width:1.216ex; height:2.176ex;"/></span> be the length of each word vector. We have <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V \\in \\R^{d \\times D}"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V\in \mathbb {R} ^{d\times D}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+<mo>×<!-- × --></mo>
+<mi>D</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V\in \mathbb {R} ^{d\times D}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V\in \mathbb {R} ^{d\times D}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61168185b0b99958520fc692686cd2533740ac30" style="vertical-align: -0.338ex; width:10.037ex; height:2.676ex;"/></span>.</p>
+<p id="mwcw">For example, multiplying the word histogram {"the": 2, "cat": 1, "on": 1} with <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwdA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span>, we obtain <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2 v_{\\text{the}} + v_{\\text{cat}} + v_{\\text{on}}"}}' id="mwdQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2v_{\text{the}}+v_{\text{cat}}+v_{\text{on}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>2</mn>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>the</mtext>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>cat</mtext>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>on</mtext>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2v_{\text{the}}+v_{\text{cat}}+v_{\text{on}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2v_{\text{the}}+v_{\text{cat}}+v_{\text{on}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f185d6095243b0dc3fe5e421aae98e685410c77e" style="vertical-align: -0.671ex; width:17.134ex; height:2.509ex;"/></span>.</p>
+<p id="mwdg">This is then multiplied with another matrix <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V'&quot;}}" id="mwdw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff31fe992a31b4c954a933f1be91e2739a1c0ae7" style="vertical-align: -0.338ex; width:2.602ex; height:2.509ex;"/></span> of shape <span about="#mwt48" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\R^{D \\times d}"}}' id="mweA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {R} ^{D\times d}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>D</mi>
+<mo>×<!-- × --></mo>
+<mi>d</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {R} ^{D\times d}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {R} ^{D\times d}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/39147db56bc1a551a698196db4c7a329cfa10330" style="vertical-align: -0.338ex; width:5.409ex; height:2.676ex;"/></span>. Each row of it is a word vector <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;v'&quot;}}" id="mweQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle v'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>v</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle v'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle v'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/19f1c5b0af1f30c41cb8bc0ba3bfea98681da268" style="vertical-align: -0.338ex; width:1.812ex; height:2.509ex;"/></span>. This results in a vector of length <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"D"}}' id="mweg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle D}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle D}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle D}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f34a0c600395e5d4345287e21fb26efd386990e6" style="vertical-align: -0.338ex; width:1.924ex; height:2.176ex;"/></span>, one entry per dictionary entry. Then, apply the softmax to obtain a probability distribution over the dictionary.</p>
+<p id="mwew">This system can be visualized as a neural network, similar in spirit to an <a href="https://en.wikipedia.org/wiki/Autoencoder" id="mwfA" rel="mw:WikiLink" title="Autoencoder">autoencoder</a>, of architecture linear-linear-<a href="https://en.wikipedia.org/wiki/Softmax_function" id="mwfQ" rel="mw:WikiLink" title="Softmax function">softmax</a>, as depicted in the diagram. The system is trained by gradient descent to minimize the <a href="https://en.wikipedia.org/wiki/Cross-entropy" id="mwfg" rel="mw:WikiLink" title="Cross-entropy">cross-entropy loss</a>. </p>
+<p id="mwfw">In full formula, the cross-entropy loss is:<span about="#mwt51" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;-\\sum_i \\ln \\frac{e^{v_{w_i}' \\cdot (\\sum_{j \\in N} v_{w_{j+i}})}}{\\sum_{w'} e^{v_{w'}' \\cdot (\\sum_{j \\in N} v_{{w'}_{j+i}})}}&quot;}}" id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle -\sum _{i}\ln {\frac {e^{v_{w_{i}}'\cdot (\sum _{j\in N}v_{w_{j+i}})}}{\sum _{w'}e^{v_{w'}'\cdot (\sum _{j\in N}v_{{w'}_{j+i}})}}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>−<!-- − --></mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">(</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+</mrow>
+</munder>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mrow>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>w</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+</munder>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>w</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">(</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+</mrow>
+</munder>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>w</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle -\sum _{i}\ln {\frac {e^{v_{w_{i}}'\cdot (\sum _{j\in N}v_{w_{j+i}})}}{\sum _{w'}e^{v_{w'}'\cdot (\sum _{j\in N}v_{{w'}_{j+i}})}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle -\sum _{i}\ln {\frac {e^{v_{w_{i}}'\cdot (\sum _{j\in N}v_{w_{j+i}})}}{\sum _{w'}e^{v_{w'}'\cdot (\sum _{j\in N}v_{{w'}_{j+i}})}}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0b9b92d5c1c21128eea171b1bbdc69c4d00b084e" style="vertical-align: -3.838ex; width:28.862ex; height:8.176ex;"/></span>where the outer summation <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sum_i"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/984afb04567819f6ffc8af62378ab24c6a816398" style="vertical-align: -3.005ex; width:3.355ex; height:5.509ex;"/></span> is over the words in a corpus, the quantity <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sum_{j \\in N} v_{w_{j+i}}"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{j\in N}v_{w_{j+i}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+</mrow>
+</munder>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{j\in N}v_{w_{j+i}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{j\in N}v_{w_{j+i}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d43cf428c504817146fbd2c5948796c281860019" style="vertical-align: -3.338ex; width:8.492ex; height:5.843ex;"/></span> is the sum of a word's neighbors' vectors, etc.</p>
+<p id="mwgw">Once such a system is trained, we have two trained matrices <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V, V'&quot;}}" id="mwhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V,V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+<mo>,</mo>
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V,V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V,V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f7beab57ca0526a8b51dc1f1df846019d134452d" style="vertical-align: -0.671ex; width:5.423ex; height:2.843ex;"/></span>. Either the column vectors of <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> or the row vectors of <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V'&quot;}}" id="mwhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff31fe992a31b4c954a933f1be91e2739a1c0ae7" style="vertical-align: -0.338ex; width:2.602ex; height:2.509ex;"/></span> can serve as the dictionary. For example, the word "sat" can be represented as either the "sat"-th column of <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> or the "sat"-th row of <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V'&quot;}}" id="mwiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff31fe992a31b4c954a933f1be91e2739a1c0ae7" style="vertical-align: -0.338ex; width:2.602ex; height:2.509ex;"/></span>. It is also possible to simply define <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V' = V^\\top&quot;}}" id="mwiQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'=V^{\top }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">⊤<!-- ⊤ --></mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'=V^{\top }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'=V^{\top }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f0ae890beef3ec8927faeac2d34a2baea5a18dea" style="vertical-align: -0.338ex; width:9.128ex; height:2.676ex;"/></span>, in which case there would no longer be a choice.</p>
+<p id="mwjw">The idea of skip-gram is to represent each word with a vector, such that it is possible to predict the vectors of its neighbors using the vector of a word.</p>
+<p id="mwkA">The architecture is still linear-linear-softmax, the same as CBOW, but the input and the output are switched. Specifically, for each word <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwkQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span> in the corpus, the one-hot encoding of the word is used as the input to the neural network. The output of the neural network is a probability distribution over the dictionary, representing a prediction of individual words in the neighborhood of <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_i"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fe22f0329d3ecb2e1880d44d191aba0e5475db68" style="vertical-align: -0.671ex; width:2.464ex; height:2.009ex;"/></span>. The objective of training is to maximize <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sum_i \\sum_{j \\in N} \\ln \\Pr(w_{j+i} \\mid w_i) "}}' id="mwkw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \sum _{i}\sum _{j\in N}\ln \Pr(w_{j+i}\mid w_{i})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+</mrow>
+</munder>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo form="prefix" movablelimits="true">Pr</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>∣<!-- ∣ --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \sum _{i}\sum _{j\in N}\ln \Pr(w_{j+i}\mid w_{i})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \sum _{i}\sum _{j\in N}\ln \Pr(w_{j+i}\mid w_{i})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82c16342a0f5280c98da7246bbdea6c3f1506825" style="vertical-align: -3.338ex; width:22.935ex; height:5.843ex;"/></span>. </p>
+<p id="mwlA">In full formula, the loss function is<span about="#mwt63" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;-\\sum_i \\sum_{j \\in N} \\ln \\frac{e^{v_{w_{j+i}}' \\cdot v_{w_i}}}{\\sum_{w'} e^{v_{w'}' \\cdot v_{w_i}}}&quot;}}" id="mwlQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle -\sum _{i}\sum _{j\in N}\ln {\frac {e^{v_{w_{j+i}}'\cdot v_{w_{i}}}}{\sum _{w'}e^{v_{w'}'\cdot v_{w_{i}}}}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>−<!-- − --></mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</munder>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>N</mi>
+</mrow>
+</munder>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo>⋅<!-- ⋅ --></mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msub>
+</mrow>
+</msup>
+<mrow>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>w</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+</munder>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msup>
+<mi>w</mi>
+<mo>′</mo>
+</msup>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mo>⋅<!-- ⋅ --></mo>
+<msub>
+<mi>v</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+</msub>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle -\sum _{i}\sum _{j\in N}\ln {\frac {e^{v_{w_{j+i}}'\cdot v_{w_{i}}}}{\sum _{w'}e^{v_{w'}'\cdot v_{w_{i}}}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle -\sum _{i}\sum _{j\in N}\ln {\frac {e^{v_{w_{j+i}}'\cdot v_{w_{i}}}}{\sum _{w'}e^{v_{w'}'\cdot v_{w_{i}}}}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/08e6ec5b159f44ed6d8ed8e7ae0bb88608e8a542" style="vertical-align: -3.338ex; width:24.325ex; height:7.676ex;"/></span>Same as CBOW, once such a system is trained, we have two trained matrices <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V, V'&quot;}}" id="mwlg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V,V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+<mo>,</mo>
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V,V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V,V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f7beab57ca0526a8b51dc1f1df846019d134452d" style="vertical-align: -0.671ex; width:5.423ex; height:2.843ex;"/></span>. Either the column vectors of <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"V"}}' id="mwlw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>V</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/af0f6064540e84211d0ffe4dac72098adfa52845" style="vertical-align: -0.338ex; width:1.787ex; height:2.176ex;"/></span> or the row vectors of <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V'&quot;}}" id="mwmA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff31fe992a31b4c954a933f1be91e2739a1c0ae7" style="vertical-align: -0.338ex; width:2.602ex; height:2.509ex;"/></span> can serve as the dictionary. It is also possible to simply define <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;V' = V^\\top&quot;}}" id="mwmQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle V'=V^{\top }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>V</mi>
+<mo>′</mo>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>V</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">⊤<!-- ⊤ --></mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle V'=V^{\top }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle V'=V^{\top }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f0ae890beef3ec8927faeac2d34a2baea5a18dea" style="vertical-align: -0.338ex; width:9.128ex; height:2.676ex;"/></span>, in which case there would no longer be a choice. </p>
+<p id="mwmg">Essentially, skip-gram and CBOW are exactly the same in architecture. They only differ in the objective function during training. </p>
+<p id="mwnA">Research on neural language models emerged during the 1980s.<sup about="#mwt70" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwnQ"><span class="mw-reflink-text" id="mwng"><span class="cite-bracket" id="mwnw">[</span>8<span class="cite-bracket" id="mwoA">]</span></span></a></sup> In 2003, <a href="https://en.wikipedia.org/wiki/Yoshua_Bengio" id="mwoQ" rel="mw:WikiLink" title="Yoshua Bengio">Yoshua Bengio</a> and colleagues introduced a neural probabilistic language model that jointly learned distributed word representations and probabilities over word sequences.<sup about="#mwt73" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwog"><span class="mw-reflink-text" id="mwow"><span class="cite-bracket" id="mwpA">[</span>9<span class="cite-bracket" id="mwpQ">]</span></span></a></sup> In 2010, <a href="https://en.wikipedia.org/wiki/Tomáš_Mikolov" id="mwpg" rel="mw:WikiLink" title="Tomáš Mikolov">Tomáš Mikolov</a> and colleagues introduced a recurrent neural-network language model for speech recognition that significantly improved performance over conventional n-gram language models.<sup about="#mwt76" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwpw"><span class="mw-reflink-text" id="mwqA"><span class="cite-bracket" id="mwqQ">[</span>10<span class="cite-bracket" id="mwqg">]</span></span></a></sup></p>
+<p id="mwqw">Word2Vec was introduced in two 2013 papers by <a href="https://en.wikipedia.org/wiki/Tomáš_Mikolov" id="mwrA" rel="mw:WikiLink" title="Tomáš Mikolov">Tomáš Mikolov</a> and colleagues at <a href="https://en.wikipedia.org/wiki/Google" id="mwrQ" rel="mw:WikiLink" title="Google">Google</a>. The first described the continuous bag-of-words and skip-gram architectures for efficiently learning word representations from large text corpora.<sup about="#mwt79" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Mikolov2013"},"body":{"id":"mw-reference-text-cite_note-Mikolov2013-11"}}' id="cite_ref-Mikolov2013_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Mikolov2013-11" id="mwrg"><span class="mw-reflink-text" id="mwrw"><span class="cite-bracket" id="mwsA">[</span>11<span class="cite-bracket" id="mwsQ">]</span></span></a></sup> A follow-up paper introduced techniques including negative sampling, sub-sampling of frequent words, and representations of multi-word phrases.<sup about="#mwt82" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MikolovEtAl2013"},"body":{"id":"mw-reference-text-cite_note-MikolovEtAl2013-12"}}' id="cite_ref-MikolovEtAl2013_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MikolovEtAl2013-12" id="mwsg"><span class="mw-reflink-text" id="mwsw"><span class="cite-bracket" id="mwtA">[</span>12<span class="cite-bracket" id="mwtQ">]</span></span></a></sup> The follow-up paper received the 2023 <a href="https://en.wikipedia.org/wiki/Conference_on_Neural_Information_Processing_Systems" id="mwtg" rel="mw:WikiLink" title="Conference on Neural Information Processing Systems">NeurIPS</a> Test of Time Award.<sup about="#mwt85" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"NeurIPS2023"},"body":{"id":"mw-reference-text-cite_note-NeurIPS2023-13"}}' id="cite_ref-NeurIPS2023_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-NeurIPS2023-13" id="mwtw"><span class="mw-reflink-text" id="mwuA"><span class="cite-bracket" id="mwuQ">[</span>13<span class="cite-bracket" id="mwug">]</span></span></a></sup></p>
+<p id="mwuw">In 2017, researchers at <a href="https://en.wikipedia.org/wiki/Meta_AI" id="mwvA" rel="mw:WikiLink" title="Meta AI">Facebook AI Research</a> described an extension of the skip-gram model used in <a href="https://en.wikipedia.org/wiki/FastText" id="mwvQ" rel="mw:WikiLink" title="FastText">fastText</a>, in which words are represented as combinations of character <a href="https://en.wikipedia.org/wiki/N-gram" id="mwvg" rel="mw:WikiLink" title="N-gram">n-grams</a>. This incorporates <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Subword" id="mwvw" rel="mw:WikiLink" title="Subword">subword</a> information into word representations and allows vectors to be constructed for words that did not appear in the training data.<sup about="#mwt88" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwwA"><span class="mw-reflink-text" id="mwwQ"><span class="cite-bracket" id="mwwg">[</span>14<span class="cite-bracket" id="mwww">]</span></span></a></sup></p>
+<p id="mwxA">Static embedding methods such as Word2Vec and <a href="https://en.wikipedia.org/wiki/FastText" id="mwxQ" rel="mw:WikiLink" title="FastText">fastText</a> produce context-independent word representations. Contextual representations were later developed to account for how word meaning varies with surrounding text, including the recurrent <a href="https://en.wikipedia.org/wiki/ELMo" id="mwxg" rel="mw:WikiLink" title="ELMo">ELMo</a> model and <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning)" id="mwxw" rel="mw:WikiLink" title="Transformer (deep learning)">transformer</a>-based models such as <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" id="mwyA" rel="mw:WikiLink" title="BERT (language model)">BERT</a>.<sup about="#mwt91" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwyQ"><span class="mw-reflink-text" id="mwyg"><span class="cite-bracket" id="mwyw">[</span>15<span class="cite-bracket" id="mwzA">]</span></span></a></sup><sup about="#mwt94" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-16"}}' id="cite_ref-16" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-16" id="mwzQ"><span class="mw-reflink-text" id="mwzg"><span class="cite-bracket" id="mwzw">[</span>16<span class="cite-bracket" id="mw0A">]</span></span></a></sup> By 2022, the Word2vec approach was described as "dated".<sup about="#mwt97" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-17"}}' id="cite_ref-17" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-17" id="mw0Q"><span class="mw-reflink-text" id="mw0g"><span class="cite-bracket" id="mw0w">[</span>17<span class="cite-bracket" id="mw1A">]</span></span></a></sup></p>
+<p id="mw1g">Results of Word2Vec training can be sensitive to <a href="https://en.wikipedia.org/wiki/Parameter" id="mw1w" rel="mw:WikiLink" title="Parameter">parametrization</a>. The following are some important parameters in Word2Vec training.</p>
+<p id="mw2Q">A Word2Vec model can be trained with hierarchical <a href="https://en.wikipedia.org/wiki/Softmax_function" id="mw2g" rel="mw:WikiLink" title="Softmax function">softmax</a> and/or negative sampling. To approximate the conditional log-likelihood a model seeks to maximize, the hierarchical softmax method uses a <a href="https://en.wikipedia.org/wiki/Huffman_coding" id="mw2w" rel="mw:WikiLink" title="Huffman coding">Huffman tree</a> to reduce calculation. The negative sampling method, on the other hand, approaches the maximization problem by minimizing the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Log-likelihood" id="mw3A" rel="mw:WikiLink" title="Log-likelihood">log-likelihood</a> of sampled negative instances. According to the authors, hierarchical softmax works better for infrequent words while negative sampling works better for frequent words and better with low dimensional vectors.<sup about="#mwt98" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_5-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-5" id="mw3Q"><span class="mw-reflink-text" id="mw3g"><span class="cite-bracket" id="mw3w">[</span>5<span class="cite-bracket" id="mw4A">]</span></span></a></sup> As training epochs increase, hierarchical softmax stops being useful.<sup about="#mwt101" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-18"}}' id="cite_ref-18" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-18" id="mw4Q"><span class="mw-reflink-text" id="mw4g"><span class="cite-bracket" id="mw4w">[</span>18<span class="cite-bracket" id="mw5A">]</span></span></a></sup></p>
+<p id="mw5g">High-frequency and low-frequency words often provide little information. Words with a frequency above a certain threshold, or below a certain threshold, may be subsampled or removed to speed up training.<sup about="#mwt104" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mw5w"><span class="mw-reflink-text" id="mw6A"><span class="cite-bracket" id="mw6Q">[</span>19<span class="cite-bracket" id="mw6g">]</span></span></a></sup></p>
+<p id="mw7A">Quality of word embedding increases with higher dimensionality. But after reaching some point, marginal gain diminishes.<sup about="#mwt105" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"mikolov"}}' id="cite_ref-mikolov_1-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-mikolov-1" id="mw7Q"><span class="mw-reflink-text" id="mw7g"><span class="cite-bracket" id="mw7w">[</span>1<span class="cite-bracket" id="mw8A">]</span></span></a></sup> Typically, the dimensionality of the vectors is set to be between 100 and 1,000.</p>
+<p id="mw8g">The size of the context window determines how many words before and after a given word are included as context words of the given word. According to the authors' note, the recommended value is 10 for skip-gram and 5 for CBOW.<sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_5-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-5" id="mw8w"><span class="mw-reflink-text" id="mw9A"><span class="cite-bracket" id="mw9Q">[</span>5<span class="cite-bracket" id="mw9g">]</span></span></a></sup></p>
+<p id="mw-A">There are a variety of extensions to Word2Vec, including incorporating variable-lengths of text, estimating topic representations, applications to biological sequences, and applications to medicine.</p>
+<p id="mw-g">doc2vec, generates distributed representations of <i id="mw-w">variable-length</i> pieces of texts, such as sentences, paragraphs, or entire documents.<sup about="#mwt109" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"},"body":{"id":"mw-reference-text-cite_note-:2-20"}}' id="cite_ref-:2_20-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-20" id="mw_A"><span class="mw-reflink-text" id="mw_Q"><span class="cite-bracket" id="mw_g">[</span>20<span class="cite-bracket" id="mw_w">]</span></span></a></sup><sup about="#mwt112" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mwAQA"><span class="mw-reflink-text" id="mwAQE"><span class="cite-bracket" id="mwAQI">[</span>21<span class="cite-bracket" id="mwAQM">]</span></span></a></sup> doc2vec has been implemented in the <a href="https://en.wikipedia.org/wiki/C_(programming_language)" id="mwAQQ" rel="mw:WikiLink" title="C (programming language)">C</a>, <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" id="mwAQU" rel="mw:WikiLink" title="Python (programming language)">Python</a> and <a href="https://en.wikipedia.org/wiki/Java_(programming_language)" id="mwAQY" rel="mw:WikiLink" title="Java (programming language)">Java</a>/<a href="https://en.wikipedia.org/wiki/Scala_(programming_language)" id="mwAQc" rel="mw:WikiLink" title="Scala (programming language)">Scala</a> tools (see below), with the Java and Python versions also supporting inference of document embeddings on new, unseen documents.</p>
+<p id="mwAQg">doc2vec estimates the distributed representations of documents much like how Word2Vec estimates representations of words: doc2vec utilizes either of two model architectures, both of which are allegories to the architectures used in Word2Vec. The first, Distributed Memory Model of Paragraph Vectors (PV-DM), is identical to CBOW other than it also provides a unique document identifier as a piece of additional context. The second architecture, Distributed Bag of Words version of Paragraph Vector (PV-DBOW), is identical to the skip-gram model except that it attempts to predict the window of surrounding context words from the paragraph identifier instead of the current word.<sup about="#mwt113" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"}}' id="cite_ref-:2_20-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-20" id="mwAQk"><span class="mw-reflink-text" id="mwAQo"><span class="cite-bracket" id="mwAQs">[</span>20<span class="cite-bracket" id="mwAQw">]</span></span></a></sup></p>
+<p id="mwAQ0">doc2vec also has the ability to capture the semantic 'meanings' for additional pieces of  'context' around words; doc2vec can estimate the semantic embeddings for speakers or speaker attributes, groups, and periods of time. For example, doc2vec has been used to estimate the political positions of political parties in various Congresses and Parliaments in the U.S. and U.K.,<sup about="#mwt116" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mwAQ4"><span class="mw-reflink-text" id="mwAQ8"><span class="cite-bracket" id="mwARA">[</span>22<span class="cite-bracket" id="mwARE">]</span></span></a></sup> respectively, and various governmental institutions.<sup about="#mwt119" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mwARI"><span class="mw-reflink-text" id="mwARM"><span class="cite-bracket" id="mwARQ">[</span>23<span class="cite-bracket" id="mwARU">]</span></span></a></sup></p>
+<p id="mwARc">Another extension of Word2Vec is top2vec, which leverages both document and word embeddings to estimate distributed representations of topics.<sup about="#mwt122" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":3"},"body":{"id":"mw-reference-text-cite_note-:3-24"}}' id="cite_ref-:3_24-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:3-24" id="mwARg"><span class="mw-reflink-text" id="mwARk"><span class="cite-bracket" id="mwARo">[</span>24<span class="cite-bracket" id="mwARs">]</span></span></a></sup><sup about="#mwt125" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwARw"><span class="mw-reflink-text" id="mwAR0"><span class="cite-bracket" id="mwAR4">[</span>25<span class="cite-bracket" id="mwAR8">]</span></span></a></sup> top2vec takes document embeddings learned from a doc2vec model and <a href="https://en.wikipedia.org/wiki/Dimensionality_reduction" id="mwASA" rel="mw:WikiLink" title="Dimensionality reduction">reduces</a> them into a lower dimension (typically using <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Uniform_Manifold_Approximation_and_Projection" id="mwASE" rel="mw:WikiLink" title="Uniform Manifold Approximation and Projection">UMAP</a>). The space of documents is then scanned using <a class="mw-redirect" href="https://en.wikipedia.org/wiki/HDBSCAN" id="mwASI" rel="mw:WikiLink" title="HDBSCAN">HDBSCAN</a>,<sup about="#mwt128" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwASM"><span class="mw-reflink-text" id="mwASQ"><span class="cite-bracket" id="mwASU">[</span>26<span class="cite-bracket" id="mwASY">]</span></span></a></sup> and clusters of similar documents are found. Next, the centroid of documents identified in a cluster is considered to be that cluster's topic vector. Finally, top2vec searches the semantic space for word embeddings located near to the topic vector to ascertain the 'meaning' of the topic.<sup about="#mwt129" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":3"}}' id="cite_ref-:3_24-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:3-24" id="mwASc"><span class="mw-reflink-text" id="mwASg"><span class="cite-bracket" id="mwASk">[</span>24<span class="cite-bracket" id="mwASo">]</span></span></a></sup> The word with embeddings most similar to the topic vector might be assigned as the topic's title, whereas far away word embeddings may be considered unrelated.</p>
+<p id="mwASs">As opposed to other topic models such as <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation" id="mwASw" rel="mw:WikiLink" title="Latent Dirichlet allocation">LDA</a>, top2vec provides canonical 'distance' metrics between two topics, or between a topic and another embeddings (word, document, or otherwise). Together with results from HDBSCAN, users can generate topic hierarchies, or groups of related topics and subtopics.</p>
+<p id="mwAS0">Furthermore, a user can use the results of top2vec to infer the topics of out-of-sample documents. After inferring the embedding for a new document, must only search the space of topics for the closest topic vector.</p>
+</div></div>
+</body></html>

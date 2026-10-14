@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 9864
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "A*",
+    "pageid": 28368949,
+    "size": 878,
+    "wordcount": 182,
+    "snippet": "<span class=\"searchmatch\">A</span>* or <span class=\"searchmatch\">A</span> star may refer to: <span class=\"searchmatch\">A</span>* <span class=\"searchmatch\">search</span> <span class=\"searchmatch\">algorithm</span>, <span class=\"searchmatch\">a</span> pathfinding <span class=\"searchmatch\">algorithm</span> used in computing <span class=\"searchmatch\">A</span>*, the highest grade in some examination systems such <span class=\"searchmatch\">as</span> the",
+    "timestamp": "2024-12-19T04:34:17Z"
+   },
+   {
+    "ns": 0,
+    "title": "Anytime A*",
+    "pageid": 52609984,
+    "size": 6747,
+    "wordcount": 790,
+    "snippet": "science, <span class=\"searchmatch\">anytime</span> <span class=\"searchmatch\">A</span>* is <span class=\"searchmatch\">a</span> family of variants of the <span class=\"searchmatch\">A</span>* <span class=\"searchmatch\">search</span> <span class=\"searchmatch\">algorithm</span>. Like other <span class=\"searchmatch\">anytime</span> <span class=\"searchmatch\">algorithms</span>, it has <span class=\"searchmatch\">a</span> flexible time cost, can return <span class=\"searchmatch\">a</span> valid solution",
+    "timestamp": "2026-02-10T12:42:35Z"
+   },
+   {
+    "ns": 0,
+    "title": "A9.com",
+    "pageid": 596913,
+    "size": 16297,
+    "wordcount": 1542,
+    "snippet": "<span class=\"searchmatch\">A9</span>.com was <span class=\"searchmatch\">a</span> subsidiary of <span class=\"searchmatch\">Amazon</span> that developed <span class=\"searchmatch\">search</span> engine <span class=\"searchmatch\">and</span> <span class=\"searchmatch\">search</span> <span class=\"searchmatch\">advertising</span> technology. <span class=\"searchmatch\">A9</span> was based in Palo <span class=\"searchmatch\">Alto</span>, California, with teams in",
+    "timestamp": "2026-08-01T22:22:33Z"
+   },
+   {
+    "ns": 0,
+    "title": "AA tree",
+    "pageid": 1665969,
+    "size": 11207,
+    "wordcount": 1563,
+    "snippet": "scientist <span class=\"searchmatch\">Arne</span> <span class=\"searchmatch\">Andersson</span>. <span class=\"searchmatch\">AA</span> trees <span class=\"searchmatch\">are</span> <span class=\"searchmatch\">a</span> variation of the red–black tree, <span class=\"searchmatch\">a</span> form of binary <span class=\"searchmatch\">search</span> tree which supports efficient <span class=\"searchmatch\">addition</span> <span class=\"searchmatch\">and</span> deletion of",
+    "timestamp": "2025-05-14T21:17:31Z"
+   },
+   {
+    "ns": 0,
+    "title": "A (disambiguation)",
+    "pageid": 8270363,
+    "size": 13423,
+    "wordcount": 1692,
+    "snippet": "Haplogroup <span class=\"searchmatch\">A</span> (Y-DNA), <span class=\"searchmatch\">a</span> Y-chromosomal DNA (Y-DNA) haplogroup <span class=\"searchmatch\">Adenine</span>, <span class=\"searchmatch\">a</span> nucleic <span class=\"searchmatch\">acid</span> <span class=\"searchmatch\">Adenosine</span>, <span class=\"searchmatch\">a</span> nucleoside <span class=\"searchmatch\">Alanine</span>, <span class=\"searchmatch\">an</span> <span class=\"searchmatch\">amino</span> <span class=\"searchmatch\">acid</span> <span class=\"searchmatch\">ATC</span> code <span class=\"searchmatch\">A</span>, <span class=\"searchmatch\">Alimentary</span> tract",
+    "timestamp": "2026-09-22T20:17:27Z"
+   }
+  ]
+ }
+}

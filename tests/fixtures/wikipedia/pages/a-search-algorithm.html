@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>A* search algorithm - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">A* search algorithm</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBw"><b id="mwCA">A*</b> (pronounced "A-star") is a <a href="https://en.wikipedia.org/wiki/Graph_traversal" id="mwCQ" rel="mw:WikiLink" title="Graph traversal">graph traversal</a> and <a href="https://en.wikipedia.org/wiki/Pathfinding" id="mwCg" rel="mw:WikiLink" title="Pathfinding">pathfinding</a> <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwCw" rel="mw:WikiLink" title="Algorithm">algorithm</a> that is used in many fields of <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwDA" rel="mw:WikiLink" title="Computer science">computer science</a> due to its completeness, optimality, and optimal efficiency.<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"},"body":{"id":"mw-reference-text-cite_note-:2-1"}}' id="cite_ref-:2_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-1" id="mwDQ"><span class="mw-reflink-text" id="mwDg"><span class="cite-bracket" id="mwDw">[</span>1<span class="cite-bracket" id="mwEA">]</span></span></a></sup> Given a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_graph" id="mwEQ" rel="mw:WikiLink" title="Weighted graph">weighted graph</a>, a source <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)" id="mwEg" rel="mw:WikiLink" title="Vertex (graph theory)">node</a> and a goal node, the algorithm finds the <a href="https://en.wikipedia.org/wiki/Shortest_path_problem" id="mwEw" rel="mw:WikiLink" title="Shortest path problem">shortest path</a> (with respect to the given weights) from source to goal. </p>
+<p id="mwFA">One major practical drawback is its <span about="#mwt13" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(b^d)"}}' id="mwFQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(b^{d})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(b^{d})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(b^{d})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c99d691c81f015266d1626ef381d2a1a49466fbb" style="vertical-align: -0.838ex; width:5.672ex; height:3.176ex;"/></span> <a href="https://en.wikipedia.org/wiki/Space_complexity" id="mwFg" rel="mw:WikiLink" title="Space complexity">space complexity</a> where <span about="#mwt11" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mwFw" style="font-style:italic;" typeof="mw:Transclusion">d</span> is the depth of the shallowest solution (the length of the shortest path from the source node to any given goal node)  and <span about="#mwt12" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"b"}},"i":0}}]}' id="mwGA" style="font-style:italic;" typeof="mw:Transclusion">b</span> is the <a href="https://en.wikipedia.org/wiki/Branching_factor" id="mwGQ" rel="mw:WikiLink" title="Branching factor">branching factor</a> (the maximum number of successors for any given state). In practical <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Travel-routing_system" id="mwGg" rel="mw:WikiLink" title="Travel-routing system">travel-routing systems</a>, it is generally outperformed by algorithms that can pre-process the graph to attain better performance,<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>2<span class="cite-bracket" id="mwHg">]</span></span></a></sup> as well as by memory-bounded approaches; however, A* is still the best solution in many cases.<sup about="#mwt19" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zeng"},"body":{"id":"mw-reference-text-cite_note-Zeng-3"}}' id="cite_ref-Zeng_3-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zeng-3" id="mwHw"><span class="mw-reflink-text" id="mwIA"><span class="cite-bracket" id="mwIQ">[</span>3<span class="cite-bracket" id="mwIg">]</span></span></a></sup></p>
+<p id="mwIw"><a href="https://en.wikipedia.org/wiki/Peter_E._Hart" id="mwJA" rel="mw:WikiLink" title="Peter E. Hart">Peter Hart</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Nils_Nilsson_(researcher)" id="mwJQ" rel="mw:WikiLink" title="Nils Nilsson (researcher)">Nils Nilsson</a> and <a href="https://en.wikipedia.org/wiki/Bertram_Raphael" id="mwJg" rel="mw:WikiLink" title="Bertram Raphael">Bertram Raphael</a> of Stanford Research Institute (now <a href="https://en.wikipedia.org/wiki/SRI_International" id="mwJw" rel="mw:WikiLink" title="SRI International">SRI International</a>) first published the algorithm in 1968.<sup about="#mwt22" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nilsson"},"body":{"id":"mw-reference-text-cite_note-nilsson-4"}}' id="cite_ref-nilsson_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nilsson-4" id="mwKA"><span class="mw-reflink-text" id="mwKQ"><span class="cite-bracket" id="mwKg">[</span>4<span class="cite-bracket" id="mwKw">]</span></span></a></sup> It can be seen as an extension of <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm" id="mwLA" rel="mw:WikiLink" title="Dijkstra's algorithm">Dijkstra's algorithm</a>. A* achieves better performance by using <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)" id="mwLQ" rel="mw:WikiLink" title="Heuristic (computer science)">heuristics</a> to guide its search.</p>
+<p id="mwLg">The A* algorithm terminates once it finds the shortest path to a specified goal, rather than generating the entire <a href="https://en.wikipedia.org/wiki/Shortest-path_tree" id="mwLw" rel="mw:WikiLink" title="Shortest-path tree">shortest-path tree</a> from a specified source to all possible goals. </p>
+<p id="mwNg">A* was created as part of <a href="https://en.wikipedia.org/wiki/Shakey_the_robot" id="mwNw" rel="mw:WikiLink" title="Shakey the robot">the Shakey project</a>, which had the aim of building a <a href="https://en.wikipedia.org/wiki/Mobile_robot" id="mwOA" rel="mw:WikiLink" title="Mobile robot">mobile robot</a> that could plan its own actions. Nils Nilsson originally proposed using the Graph Traverser algorithm<sup about="#mwt30" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwOQ"><span class="mw-reflink-text" id="mwOg"><span class="cite-bracket" id="mwOw">[</span>5<span class="cite-bracket" id="mwPA">]</span></span></a></sup> for Shakey's path planning.<sup about="#mwt33" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-6"}}' id="cite_ref-:0_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-6" id="mwPQ"><span class="mw-reflink-text" id="mwPg"><span class="cite-bracket" id="mwPw">[</span>6<span class="cite-bracket" id="mwQA">]</span></span></a></sup> Graph Traverser is guided by a heuristic function <span about="#mwt23" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''h''(''n'')&quot;}},&quot;i&quot;:0}}]}" id="mwQQ" typeof="mw:Transclusion"><i>h</i>(<i>n</i>)</span>, the estimated distance from node <span about="#mwt24" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwQg" style="font-style:italic;" typeof="mw:Transclusion">n</span> to the goal node: it entirely ignores <span about="#mwt25" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''g''(''n'')&quot;}},&quot;i&quot;:0}}]}" id="mwQw" typeof="mw:Transclusion"><i>g</i>(<i>n</i>)</span>, the distance from the start node to <span about="#mwt26" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwRA" style="font-style:italic;" typeof="mw:Transclusion">n</span>. Bertram Raphael suggested using the sum, <span about="#mwt27" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''g''(''n'') + ''h''(''n'')&quot;}},&quot;i&quot;:0}}]}" id="mwRQ" typeof="mw:Transclusion"><i>g</i>(<i>n</i>) + <i>h</i>(<i>n</i>)</span>.<sup about="#mwt36" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwRg"><span class="mw-reflink-text" id="mwRw"><span class="cite-bracket" id="mwSA">[</span>7<span class="cite-bracket" id="mwSQ">]</span></span></a></sup> Peter Hart invented the concepts we now call <a href="https://en.wikipedia.org/wiki/Admissible_heuristic" id="mwSg" rel="mw:WikiLink" title="Admissible heuristic">admissibility</a> and <a href="https://en.wikipedia.org/wiki/Consistent_heuristic" id="mwSw" rel="mw:WikiLink" title="Consistent heuristic">consistency</a> of heuristic functions. A* was originally designed for finding least-cost paths when the cost of a path is the sum of its  costs, but it has been shown that A* can be used to find optimal paths for any problem satisfying the conditions of a cost algebra.<sup about="#mwt39" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwTA"><span class="mw-reflink-text" id="mwTQ"><span class="cite-bracket" id="mwTg">[</span>8<span class="cite-bracket" id="mwTw">]</span></span></a></sup></p>
+<p id="mwUA">The original 1968 A* paper<sup about="#mwt43" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"nilsson"}}' id="cite_ref-nilsson_4-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-nilsson-4" id="mwUQ"><span class="mw-reflink-text" id="mwUg"><span class="cite-bracket" id="mwUw">[</span>4<span class="cite-bracket" id="mwVA">]</span></span></a></sup> contained a theorem stating that no A*-like algorithm<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-9"},"parts":[{"template":{"target":{"wt":"efn","href":"./Template:Efn"},"params":{"1":{"wt":"\"A*-like\" means the algorithm searches by extending paths originating at the start node one edge at a time, just as A* does. This excludes, for example, algorithms that search backward from the goal or in both directions simultaneously. In addition, the algorithms covered by this theorem must be admissible, and \"not more informed\" than A*."}},"i":0}}]}' id="cite_ref-9" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-9" id="mwVQ"><span class="mw-reflink-text" id="mwVg"><span class="cite-bracket" id="mwVw">[</span>a<span class="cite-bracket" id="mwWA">]</span></span></a></sup> could expand fewer nodes than A* if the heuristic function is consistent and A*'s tie-breaking rule is suitably chosen. A "correction" was published a few years later<sup about="#mwt46" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwWQ"><span class="mw-reflink-text" id="mwWg"><span class="cite-bracket" id="mwWw">[</span>9<span class="cite-bracket" id="mwXA">]</span></span></a></sup> claiming that consistency was not required, but this was shown to be false in 1985 in Dechter and Pearl's definitive study of A*'s optimality (now called optimal efficiency), which gave an example of A* with a heuristic that was admissible but not consistent expanding arbitrarily more nodes than an alternative A*-like algorithm.<sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-11" id="mwXQ"><span class="mw-reflink-text" id="mwXg"><span class="cite-bracket" id="mwXw">[</span>10<span class="cite-bracket" id="mwYA">]</span></span></a></sup></p>
+<p id="mwbg">A* is an informed <a href="https://en.wikipedia.org/wiki/Search_algorithm" id="mwbw" rel="mw:WikiLink" title="Search algorithm">search algorithm</a>, or a <a href="https://en.wikipedia.org/wiki/Best-first_search" id="mwcA" rel="mw:WikiLink" title="Best-first search">best-first search</a>, meaning that it is formulated in terms of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_graph" id="mwcQ" rel="mw:WikiLink" title="Weighted graph">weighted graphs</a>: starting from a specific starting <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Node_(graph_theory)" id="mwcg" rel="mw:WikiLink" title="Node (graph theory)">node</a> of a graph, it aims to find a path to the given goal node having the smallest cost (least distance travelled, shortest time, etc.).  It does this by maintaining a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tree_(data_structure)" id="mwcw" rel="mw:WikiLink" title="Tree (data structure)">tree</a> of paths originating at the start node and extending those paths one edge at a time until the goal node is reached.</p>
+<p id="mwdA">At each iteration of its main loop, A* needs to determine which of its paths to extend. It does so based on the cost of the path and an estimate of the cost required to extend the path all the way to the goal. Specifically, A* selects the path that minimizes</p>
+<p id="mweA">where <span about="#mwt49" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mweQ" style="font-style:italic;" typeof="mw:Transclusion">n</span> is the next node on the path, <span about="#mwt50" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''g''(''n'')&quot;}},&quot;i&quot;:0}}]}" id="mweg" typeof="mw:Transclusion"><i>g</i>(<i>n</i>)</span> is the cost of the path from the start node to <span about="#mwt51" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwew" style="font-style:italic;" typeof="mw:Transclusion">n</span>, and <span about="#mwt52" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''h''(''n'')&quot;}},&quot;i&quot;:0}}]}" id="mwfA" typeof="mw:Transclusion"><i>h</i>(<i>n</i>)</span> is a <a href="https://en.wikipedia.org/wiki/Heuristic" id="mwfQ" rel="mw:WikiLink" title="Heuristic">heuristic</a> function that estimates the cost of the cheapest path from <span about="#mwt53" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwfg" style="font-style:italic;" typeof="mw:Transclusion">n</span> to the goal. The heuristic function is problem-specific.</p>
+<p id="mwfw">Typical implementations of A* use a <a href="https://en.wikipedia.org/wiki/Priority_queue" id="mwgA" rel="mw:WikiLink" title="Priority queue">priority queue</a> to perform the repeated selection of minimum (estimated) cost nodes to expand. This priority queue is known as the <i id="mwgQ">open set</i>, <i id="mwgg">fringe</i> or <i id="mwgw">frontier</i>. At each step of the algorithm, the node with the lowest <span about="#mwt54" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''f''(''x'')&quot;}},&quot;i&quot;:0}}]}" id="mwhA" typeof="mw:Transclusion"><i>f</i>(<i>x</i>)</span> value is removed from the queue, the <span about="#mwt55" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"f"}},"i":0}}]}' id="mwhQ" style="font-style:italic;" typeof="mw:Transclusion">f</span> and <span about="#mwt56" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwhg" style="font-style:italic;" typeof="mw:Transclusion">g</span> values of its neighbors are updated accordingly, and these neighbors are added to the queue. The algorithm continues until a removed node (thus the node with the lowest <span about="#mwt57" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"f"}},"i":0}}]}' id="mwhw" style="font-style:italic;" typeof="mw:Transclusion">f</span> value out of all fringe nodes) is a goal node.<sup about="#mwt58" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"lower-alpha"},"body":{"id":"mw-reference-text-cite_note-12"},"parts":[{"template":{"target":{"wt":"efn","href":"./Template:Efn"},"params":{"1":{"wt":"Goal nodes may be passed over multiple times if there remain other nodes with lower {{mvar|f}} values, as they may lead to a shorter path to a goal."}},"i":0}}]}' id="cite_ref-12" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a data-mw-group="lower-alpha" href="#cite_note-12" id="mwiA"><span class="mw-reflink-text" id="mwiQ"><span class="cite-bracket" id="mwig">[</span>b<span class="cite-bracket" id="mwiw">]</span></span></a></sup> The <span about="#mwt61" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"f"}},"i":0}}]}' id="mwjA" style="font-style:italic;" typeof="mw:Transclusion">f</span> value of that goal is then also the cost of the shortest path, since <span about="#mwt62" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"h"}},"i":0}}]}' id="mwjQ" style="font-style:italic;" typeof="mw:Transclusion">h</span> at the goal is zero in an admissible heuristic.</p>
+<p id="mwjg">The algorithm described so far only gives the length of the shortest path. To find the actual sequence of steps, the algorithm can be easily revised so that each node on the path keeps track of its predecessor. After this algorithm is run, the ending node will point to its predecessor, and so on, until some node's predecessor is the start node.</p>
+<p id="mwjw">As an example, when searching for the shortest route on a map, <span about="#mwt63" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''h''(''x'')&quot;}},&quot;i&quot;:0}}]}" id="mwkA" typeof="mw:Transclusion"><i>h</i>(<i>x</i>)</span> might represent the <a href="https://en.wikipedia.org/wiki/Euclidean_distance" id="mwkQ" rel="mw:WikiLink" title="Euclidean distance">straight-line distance</a> to the goal, since that is physically the smallest possible distance between any two points. For a grid map from a video game, using the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Taxicab_distance" id="mwkg" rel="mw:WikiLink" title="Taxicab distance">Taxicab distance</a> or the <a href="https://en.wikipedia.org/wiki/Chebyshev_distance" id="mwkw" rel="mw:WikiLink" title="Chebyshev distance">Chebyshev distance</a> becomes better depending on the set of movements available (4-way or 8-way).</p>
+<p id="mwlA">If the heuristic <span about="#mwt64" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"h"}},"i":0}}]}' id="mwlQ" style="font-style:italic;" typeof="mw:Transclusion">h</span> satisfies the additional condition <span about="#mwt65" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''h''(''x'') ≤ ''d''(''x'', ''y'') + ''h''(''y'')&quot;}},&quot;i&quot;:0}}]}" id="mwlg" typeof="mw:Transclusion"><i>h</i>(<i>x</i>) ≤ <i>d</i>(<i>x</i>, <i>y</i>) + <i>h</i>(<i>y</i>)</span> for every edge <span about="#mwt66" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;(''x'', ''y'')&quot;}},&quot;i&quot;:0}}]}" id="mwlw" typeof="mw:Transclusion">(<i>x</i>, <i>y</i>)</span> of the graph (where <span about="#mwt67" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mwmA" style="font-style:italic;" typeof="mw:Transclusion">d</span> denotes the length of that edge), then <span about="#mwt68" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"h"}},"i":0}}]}' id="mwmQ" style="font-style:italic;" typeof="mw:Transclusion">h</span> is called <a href="https://en.wikipedia.org/wiki/Consistent_heuristic" id="mwmg" rel="mw:WikiLink" title="Consistent heuristic">monotone, or consistent</a>. With a consistent heuristic, A* is guaranteed to find an optimal path without processing any node more than once and A* is equivalent to running <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm" id="mwmw" rel="mw:WikiLink" title="Dijkstra's algorithm">Dijkstra's algorithm</a> with the <a href="https://en.wikipedia.org/wiki/Reduced_cost" id="mwnA" rel="mw:WikiLink" title="Reduced cost">reduced cost</a> <span about="#mwt69" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;''d'''(''x'', ''y'') {{=}} ''d''(''x'', ''y'') + ''h''(''y'') − ''h''(''x'')&quot;}},&quot;i&quot;:0}}]}" id="mwnQ" typeof="mw:Transclusion"><i>d'</i>(<i>x</i>, <i>y</i>) = <i>d</i>(<i>x</i>, <i>y</i>) + <i>h</i>(<i>y</i>) − <i>h</i>(<i>x</i>)</span>.<sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwng"><span class="mw-reflink-text" id="mwnw"><span class="cite-bracket" id="mwoA">[</span>11<span class="cite-bracket" id="mwoQ">]</span></span></a></sup></p>
+<p id="mwow">The following <a href="https://en.wikipedia.org/wiki/Pseudocode" id="mwpA" rel="mw:WikiLink" title="Pseudocode">pseudocode</a> describes the algorithm:</p>
+<p id="mwAdw"><b id="mwAd0">Remark:</b> In this pseudocode, if a node is reached by one path, removed from <code id="mwAd4">open_set</code>, and subsequently reached by a cheaper path, it will be added to <code id="mwAd8">open_set</code> again. This is essential to guarantee that the path returned is optimal if the heuristic function is <a href="https://en.wikipedia.org/wiki/Admissible_heuristic" id="mwAeA" rel="mw:WikiLink" title="Admissible heuristic">admissible</a> but not  <a href="https://en.wikipedia.org/wiki/Consistent_heuristic" id="mwAeE" rel="mw:WikiLink" title="Consistent heuristic">consistent</a>.   If the heuristic is consistent, when a node is removed from <code id="mwAeI">open_set</code> the path to it is guaranteed to be optimal so the test ‘<code id="mwAeM">tentative_g_score &lt; g_score[neighbor]</code>’ will always fail if the node is reached again. The pseudocode implemented here is sometimes called the <i id="mwAeQ">graph-search</i> version of A*.<sup about="#mwt76" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwAeU"><span class="mw-reflink-text" id="mwAeY"><span class="cite-bracket" id="mwAec">[</span>12<span class="cite-bracket" id="mwAeg">]</span></span></a></sup> This is in contrast with the version without the ‘<code id="mwAek">tentative_g_score &lt; g_score[neighbor]</code>’ test to add nodes back to <code id="mwAeo">open_set</code>, which is sometimes called the <i id="mwAes">tree-search</i> version of A* and require a consistent heuristic to guarantee optimality.</p>
+<p id="mwAfY">An example of an A* algorithm in action where nodes are cities connected with roads and h(x) is the     straight-line distance to the target point:</p>
+<p id="mwAfc"><span class="mw-default-size" data-mw='{"caption":"An example of A* algorithm in action (nodes are cities connected with roads, h(x) is the straight-line distance to the target point) Green: Start, Blue: Target, Orange: Visited"}' id="mwAfg" typeof="mw:File"><a class="mw-file-description" href="https://en.wikipedia.org/wiki/File:AstarExampleEn.gif" id="mwAfk" title="An example of A* algorithm in action (nodes are cities connected with roads, h(x) is the straight-line distance to the target point) Green: Start, Blue: Target, Orange: Visited"><img alt="An example of A* algorithm in action (nodes are cities connected with roads, h(x) is the straight-line distance to the target point) Green: Start, Blue: Target, Orange: Visited" class="mw-file-element" data-file-height="283" data-file-type="bitmap" data-file-width="400" decoding="async" height="283" id="mwAfo" loading="lazy" resource="https://en.wikipedia.org/wiki/File:AstarExampleEn.gif" src="//upload.wikimedia.org/wikipedia/commons/9/98/AstarExampleEn.gif?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail_unscaled" width="400"/></a></span></p>
+<p id="mwAfs"><b id="mwAfw">Key:</b> green: start; blue: goal; orange: visited</p>
+<p id="mwAf0">The A* algorithm has real-world applications. In this example, edges are railroads and h(x) is the <a href="https://en.wikipedia.org/wiki/Great-circle_distance" id="mwAf4" rel="mw:WikiLink" title="Great-circle distance">great-circle distance</a> (the shortest possible distance on a sphere) to the target. The algorithm is searching for a path between Washington, D.C., and Los Angeles.</p>
+<p id="mwAf8"><span class="mw-default-size" data-mw='{"caption":"The A* algorithm finding a path of railroads between Washington, D.C. and Los Angeles."}' id="mwAgA" typeof="mw:File"><a class="mw-file-description" href="https://en.wikipedia.org/wiki/File:A*_Search_Example_on_North_American_Freight_Train_Network.gif" id="mwAgE" title="The A* algorithm finding a path of railroads between Washington, D.C. and Los Angeles."><img alt="The A* algorithm finding a path of railroads between Washington, D.C. and Los Angeles." class="mw-file-element" data-file-height="306" data-file-type="bitmap" data-file-width="554" decoding="async" height="306" id="mwAgI" loading="lazy" resource="https://en.wikipedia.org/wiki/File:A*_Search_Example_on_North_American_Freight_Train_Network.gif" src="//upload.wikimedia.org/wikipedia/commons/6/60/A%2A_Search_Example_on_North_American_Freight_Train_Network.gif?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail_unscaled" width="554"/></a></span></p>
+<p id="mwAgQ">There are a number of simple optimizations or implementation details that can significantly affect the performance of an A* implementation.  The first detail to note is that the way the priority queue handles ties can have a significant effect on performance in some situations.  If ties are broken so the queue behaves in a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/LIFO_(computing)" id="mwAgU" rel="mw:WikiLink" title="LIFO (computing)">LIFO</a> manner, A* will behave like <a href="https://en.wikipedia.org/wiki/Depth-first_search" id="mwAgY" rel="mw:WikiLink" title="Depth-first search">depth-first search</a> among equal cost paths (avoiding exploring more than one equally optimal solution).</p>
+<p id="mwAgc">When a path is required at the end of the search, it is common to keep with each node a reference to that node's parent.  At the end of the search, these references can be used to recover the optimal path.  If these references are being kept then it can be important that the same node doesn't appear in the priority queue more than once (each entry corresponding to a different path to the node, and each with a different cost).  A standard approach here is to check if a node about to be added already appears in the priority queue.  If it does, then the priority and parent pointers are changed to correspond to the lower-cost path. A standard <a href="https://en.wikipedia.org/wiki/Binary_heap" id="mwAgg" rel="mw:WikiLink" title="Binary heap">binary heap</a> based priority queue does not directly support the operation of searching for one of its elements, but it can be augmented with a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwAgk" rel="mw:WikiLink" title="Hash table">hash table</a> that maps elements to their position in the heap, allowing this decrease-priority operation to be performed in logarithmic time. Alternatively, a <a href="https://en.wikipedia.org/wiki/Fibonacci_heap" id="mwAgo" rel="mw:WikiLink" title="Fibonacci heap">Fibonacci heap</a> can perform the same decrease-priority operations in constant <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Amortized_time" id="mwAgs" rel="mw:WikiLink" title="Amortized time">amortized time</a>.</p>
+<p id="mwAg0"><a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm" id="mwAg4" rel="mw:WikiLink" title="Dijkstra's algorithm">Dijkstra's algorithm</a>, as another example of a uniform-cost search algorithm, can be viewed as a special case of A* where <span about="#mwt79" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"h(x) = 0"}},"i":0}}]}' id="mwAg8" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x) = 0"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b13fa03ef9ad62ec2199ec214eb3af674ef391e5" style="vertical-align: -0.838ex; width:8.739ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> for all <i id="mwAhA">x</i>.<sup about="#mwt87" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"geospatial"},"body":{"id":"mw-reference-text-cite_note-geospatial-15"}}' id="cite_ref-geospatial_15-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-geospatial-15" id="mwAhE"><span class="mw-reflink-text" id="mwAhI"><span class="cite-bracket" id="mwAhM">[</span>13<span class="cite-bracket" id="mwAhQ">]</span></span></a></sup><sup about="#mwt90" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"pythalgs"},"body":{"id":"mw-reference-text-cite_note-pythalgs-16"}}' id="cite_ref-pythalgs_16-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-pythalgs-16" id="mwAhU"><span class="mw-reflink-text" id="mwAhY"><span class="cite-bracket" id="mwAhc">[</span>14<span class="cite-bracket" id="mwAhg">]</span></span></a></sup> General <a href="https://en.wikipedia.org/wiki/Depth-first_search" id="mwAhk" rel="mw:WikiLink" title="Depth-first search">depth-first search</a> can be implemented using A* by considering that there is a global counter <i id="mwAho">C</i> initialized with a very large value. Every time we process a node we assign <i id="mwAhs">C</i> to all of its newly discovered neighbors. After every single assignment, we decrease the counter <i id="mwAhw">C</i> by one. Thus the earlier a node is discovered, the higher its <span about="#mwt81" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"h(x)"}},"i":0}}]}' id="mwAh0" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/02c07825dae28705df03d15daeb8844d49c4dbd4" style="vertical-align: -0.838ex; width:4.478ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> value. Both Dijkstra's algorithm and depth-first search can be implemented more efficiently without including an <span about="#mwt83" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"h(x)"}},"i":0}}]}' id="mwAh4" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(x)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/02c07825dae28705df03d15daeb8844d49c4dbd4" style="vertical-align: -0.838ex; width:4.478ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> value at each node.</p>
+<p id="mwAiE">On finite graphs with non-negative edge weights A* is guaranteed to terminate and is <i id="mwAiI">complete</i>, i.e. it will always find a solution (a path from start to goal) if one exists. On infinite graphs with a finite branching factor and edge costs that are bounded away from zero (<span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"d(x,y)&gt;\\varepsilon&gt;0"}}' id="mwAiM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle d(x,y)&gt;\varepsilon &gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>d</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<mi>ε<!-- ε --></mi>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle d(x,y)&gt;\varepsilon &gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle d(x,y)&gt;\varepsilon &gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cbd9cce14624b15efd9312c81005c789de46285f" style="vertical-align: -0.838ex; width:14.987ex; height:2.843ex;"/></span> for some fixed <span about="#mwt92" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\varepsilon"}}' id="mwAiQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a30c89172e5b88edbd45d3e2772c7f5e562e5173" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span>), A* is guaranteed to terminate only if there exists a solution.<sup about="#mwt93" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"}}' id="cite_ref-:2_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-1" id="mwAiU"><span class="mw-reflink-text" id="mwAiY"><span class="cite-bracket" id="mwAic">[</span>1<span class="cite-bracket" id="mwAig">]</span></span></a></sup></p>
+<p id="mwAio">A search algorithm is said to be <i id="mwAis">admissible</i> if it is guaranteed to return an optimal solution. If the heuristic function used by A* is <a href="https://en.wikipedia.org/wiki/Admissible_heuristic" id="mwAiw" rel="mw:WikiLink" title="Admissible heuristic">admissible</a>, then A* is admissible. An intuitive "proof" of this  is as follows:</p>
+<p id="mwAi0">Call a node <i id="mwAi4">closed</i> if it has been visited and is not in the open set.  We <i id="mwAi8">close</i> a node when we remove it from the open set.  A basic property of the A* algorithm, which we'll sketch a proof of below, is that when <span about="#mwt94" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAjA" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt95" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span><span typeof="mw:Entity">⁠</span></span> is closed, <span about="#mwt96" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"f(n)"}},"i":0}}]}' id="mwAjE" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(n)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1c49fad1eccc4e9af1e4f23f32efdc3ac4da973" style="vertical-align: -0.838ex; width:4.483ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> is an optimistic estimate (lower bound) of the true distance from the start to the goal.  So when the goal node, <span about="#mwt98" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAjI" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d3556280e66fe2c0d0140df20935a6f057381d77" style="vertical-align: -0.671ex; width:1.116ex; height:2.009ex;"/></span><span typeof="mw:Entity">⁠</span></span>, is closed, <span about="#mwt100" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"f(g)"}},"i":0}}]}' id="mwAjM" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(g)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(g)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>g</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(g)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(g)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/abbe9e1759bcf3d5938120b23f49b09cd45ff842" style="vertical-align: -0.838ex; width:4.204ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> is no more than the true distance.  On the other hand, it is no less than the true distance, since it is the length of a path to the goal plus a heuristic term.</p>
+<p id="mwAjQ">Now we'll see that whenever a node <span about="#mwt102" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAjU" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span><span typeof="mw:Entity">⁠</span></span> is closed, <span about="#mwt104" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"f(n)"}},"i":0}}]}' id="mwAjY" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f(n)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1c49fad1eccc4e9af1e4f23f32efdc3ac4da973" style="vertical-align: -0.838ex; width:4.483ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> is an optimistic estimate.  It is enough to see that whenever the open set is not empty, it has at least one node <span about="#mwt106" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAjc" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span><span typeof="mw:Entity">⁠</span></span> on an optimal path to the goal for which <span about="#mwt108" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"g(n)"}},"i":0}}]}' id="mwAjg" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(n)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4ad18070e494503403daf39398e711c1378348e" style="vertical-align: -0.838ex; width:4.32ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> is the true distance from start, since in that case <span about="#mwt110" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"g(n)"}},"i":0}}]}' id="mwAjk" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(n)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4ad18070e494503403daf39398e711c1378348e" style="vertical-align: -0.838ex; width:4.32ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> + <span about="#mwt112" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"h(n)"}},"i":0}}]}' id="mwAjo" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(n)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/125976c5970a395422e1baf572a26f31ae5e0b7d" style="vertical-align: -0.838ex; width:4.543ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> underestimates the distance to goal, and therefore so does the smaller value chosen for the closed vertex. Let <span about="#mwt114" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"P"}},"i":0}}]}' id="mwAjs" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4dc73bf40314945ff376bd363916a738548d40a" style="vertical-align: -0.338ex; width:1.745ex; height:2.176ex;"/></span><span typeof="mw:Entity">⁠</span></span> be an optimal path from the start to the goal.  Let <span about="#mwt116" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"p"}},"i":0}}]}' id="mwAjw" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>p</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/81eac1e205430d1f40810df36a0edffdc367af36" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:1.259ex; height:2.009ex;"/></span><span typeof="mw:Entity">⁠</span></span> be the last closed node on <span about="#mwt118" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"P"}},"i":0}}]}' id="mwAj0" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4dc73bf40314945ff376bd363916a738548d40a" style="vertical-align: -0.338ex; width:1.745ex; height:2.176ex;"/></span><span typeof="mw:Entity">⁠</span></span> for which <span about="#mwt120" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"g(p)"}},"i":0}}]}' id="mwAj4" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt121" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(p)"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(p)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>p</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(p)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(p)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8171ccf3015f784cb465e93d8a913a5879328bc6" style="vertical-align: -0.838ex; width:4.095ex; height:2.843ex;"/></span><span typeof="mw:Entity">⁠</span></span> is the true distance from the start to <span about="#mwt122" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"p"}},"i":0}}]}' id="mwAj8" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>p</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/81eac1e205430d1f40810df36a0edffdc367af36" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:1.259ex; height:2.009ex;"/></span><span typeof="mw:Entity">⁠</span></span> (the start is one such vertex).  The next node in <span about="#mwt124" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"P"}},"i":0}}]}' id="mwAkA" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4dc73bf40314945ff376bd363916a738548d40a" style="vertical-align: -0.338ex; width:1.745ex; height:2.176ex;"/></span><span typeof="mw:Entity">⁠</span></span> has the correct <span about="#mwt126" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAkE" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt127" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d3556280e66fe2c0d0140df20935a6f057381d77" style="vertical-align: -0.671ex; width:1.116ex; height:2.009ex;"/></span><span typeof="mw:Entity">⁠</span></span> value, since it was updated when <span about="#mwt128" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"tmath","href":"./Template:Tmath"},"params":{"1":{"wt":"p"}},"i":0}}]}' id="mwAkI" typeof="mw:Transclusion"><span typeof="mw:Entity">⁠</span><span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>p</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/81eac1e205430d1f40810df36a0edffdc367af36" style="vertical-align: -0.671ex; margin-left: -0.089ex; width:1.259ex; height:2.009ex;"/></span><span typeof="mw:Entity">⁠</span></span> was closed, and it is open since it is not closed.</p>
+<p id="mwAkQ">Algorithm A is optimally efficient with respect to a set of alternative algorithms <b id="mwAkU">Alts</b> on a set of problems <b id="mwAkY">P</b> if for every problem P in <b id="mwAkc">P</b> and every algorithm A′ in <b id="mwAkg">Alts</b>, the set of nodes expanded by A in solving P is a subset (possibly equal) of the set of nodes expanded by A′ in solving P. The definitive study of the optimal efficiency of A* is due to Rina Dechter and Judea Pearl.<sup about="#mwt132" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-11"}}' id="cite_ref-:1_11-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-11" id="mwAkk"><span class="mw-reflink-text" id="mwAko"><span class="cite-bracket" id="mwAks">[</span>10<span class="cite-bracket" id="mwAkw">]</span></span></a></sup>
+They considered a variety of  definitions of <b id="mwAk0">Alts</b> and <b id="mwAk4">P</b>  in combination with A*'s heuristic being merely admissible or being both <a href="https://en.wikipedia.org/wiki/Consistent_heuristic" id="mwAk8" rel="mw:WikiLink" title="Consistent heuristic">consistent</a> and admissible.  The most interesting positive result they proved is that A*, with a consistent heuristic, is optimally efficient with respect to all admissible A*-like search algorithms on all "non-pathological" search problems.  Roughly speaking, their notion of the non-pathological problem is what we now mean by "up to tie-breaking".  This result does not hold if A*'s heuristic is admissible but not consistent. In that case, Dechter and Pearl showed there exist admissible A*-like algorithms that can expand arbitrarily fewer nodes than A* on some non-pathological problems.</p>
+<p id="mwAlA">Optimal efficiency is about the <i id="mwAlE">set</i> of nodes expanded, not the <i id="mwAlI">number</i> of node expansions (the number of iterations of A*'s main loop).  When the heuristic being used is admissible but not consistent, it is possible for a node to be expanded by A* many times, an exponential number of times in the worst case.<sup about="#mwt135" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Martelli"},"body":{"id":"mw-reference-text-cite_note-Martelli-17"}}' id="cite_ref-Martelli_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Martelli-17" id="mwAlM"><span class="mw-reflink-text" id="mwAlQ"><span class="cite-bracket" id="mwAlU">[</span>15<span class="cite-bracket" id="mwAlY">]</span></span></a></sup>
+In such circumstances, Dijkstra's algorithm could outperform A* by a large margin. However, more recent research found that this pathological case only occurs in certain contrived situations where the edge weight of the search graph is exponential in the size of the graph and that certain inconsistent (but admissible) heuristics can lead to a reduced number of node expansions in A* searches.<sup about="#mwt138" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Felner2011"},"body":{"id":"mw-reference-text-cite_note-Felner2011-18"}}' id="cite_ref-Felner2011_18-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Felner2011-18" id="mwAlc"><span class="mw-reflink-text" id="mwAlg"><span class="cite-bracket" id="mwAlk">[</span>16<span class="cite-bracket" id="mwAlo">]</span></span></a></sup><sup about="#mwt141" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zhang2009"},"body":{"id":"mw-reference-text-cite_note-Zhang2009-19"}}' id="cite_ref-Zhang2009_19-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zhang2009-19" id="mwAls"><span class="mw-reflink-text" id="mwAlw"><span class="cite-bracket" id="mwAl0">[</span>17<span class="cite-bracket" id="mwAl4">]</span></span></a></sup></p>
+<p id="mwAmU">While the admissibility criterion guarantees an optimal solution path, it also means that A* must examine all equally meritorious paths to find the optimal path. To compute approximate shortest paths, it is possible to speed up the search at the expense of optimality by relaxing the admissibility criterion. Oftentimes we want to bound this relaxation, so that we can guarantee that the solution path is no worse than (1 + <i id="mwAmY">ε</i>) times the optimal solution path. This new guarantee is referred to as <i id="mwAmc">ε</i>-admissible.</p>
+<p id="mwAmg">There are a number of <i id="mwAmk">ε</i>-admissible algorithms:</p>
+<p id="mwAsQ">As a heuristic search algorithm, the performance of A* is heavily influenced by the quality of the heuristic function <span about="#mwt191" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"h(n)"}}' id="mwAsU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle h(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle h(n)}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle h(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/03083aff547219222fc21de3af2f3a863cc6aca5" style="vertical-align: -0.838ex; width:4.543ex; height:2.843ex;"/></span>. If the heuristic closely approximates the true cost to the goal, A* can significantly reduce the number of node expansions. On the other hand, a poor heuristic can lead to many unnecessary expansions.</p>
+<p id="mwAsc">In the worst case, A* expands all nodes <span about="#mwt192" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"n"}}' id="mwAsg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle n}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cc6e1f880981346a604257ebcacdef24c0aca2d6" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> for which <span about="#mwt193" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"f(n)=g(n)+h(n) \\leq C^{*}"}}' id="mwAsk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(n)=g(n)+h(n)\leq C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>≤<!-- ≤ --></mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(n)=g(n)+h(n)\leq C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(n)=g(n)+h(n)\leq C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cae54a2ab720aa7ee3ba30d02bf1919867a6271c" style="vertical-align: -0.838ex; width:25.235ex; height:2.843ex;"/></span>, where <span about="#mwt194" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"C^{*}"}}' id="mwAso" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67bd07d7c9b2743c0a8bea9d2e82a7920b783f5e" style="vertical-align: -0.338ex; width:2.852ex; height:2.176ex;"/></span> is the cost of the optimal goal node.</p>
+<p id="mwAsw">Suppose there is a node <span about="#mwt195" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;N'&quot;}}" id="mwAs0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span> in the open list with <span about="#mwt196" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;f(N') &gt; C^{*}&quot;}}" id="mwAs4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(N')&gt;C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(N')&gt;C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(N')&gt;C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47da79a08f3c2bf66eb85bd5c9e581943738a29c" style="vertical-align: -0.838ex; width:11.846ex; height:2.843ex;"/></span>, and it's the next node to be expanded. Since the goal node has <span about="#mwt197" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"f(goal)=g(goal)+h(goal)=g(goal)=C^{*}"}}' id="mwAs8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(goal)=g(goal)+h(goal)=g(goal)=C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>g</mi>
+<mi>o</mi>
+<mi>a</mi>
+<mi>l</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>g</mi>
+<mi>o</mi>
+<mi>a</mi>
+<mi>l</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>g</mi>
+<mi>o</mi>
+<mi>a</mi>
+<mi>l</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>g</mi>
+<mi>o</mi>
+<mi>a</mi>
+<mi>l</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(goal)=g(goal)+h(goal)=g(goal)=C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(goal)=g(goal)+h(goal)=g(goal)=C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4435fe7bf50d0ca98bc8de3450498d26afcbf170" style="vertical-align: -0.838ex; width:43.741ex; height:2.843ex;"/></span>, and <span about="#mwt198" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; f(N') &gt; C^{*} &quot;}}" id="mwAtA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(N')&gt;C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(N')&gt;C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(N')&gt;C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/47da79a08f3c2bf66eb85bd5c9e581943738a29c" style="vertical-align: -0.838ex; width:11.846ex; height:2.843ex;"/></span>, the goal node will have a lower f-value and will be expanded before <span about="#mwt199" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;N'&quot;}}" id="mwAtE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span>. Therefore, A* never expands nodes with <span about="#mwt200" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":" f(n) &gt; C^{*} "}}' id="mwAtI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(n)&gt;C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>&gt;</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(n)&gt;C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(n)&gt;C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6fdfa908597add3329f16212e9b13a2bf8c01991" style="vertical-align: -0.838ex; width:10.433ex; height:2.843ex;"/></span>.</p>
+<p id="mwAtQ">Assume there exists an optimal algorithm that expands fewer nodes than <span about="#mwt201" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":" C^{*} "}}' id="mwAtU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67bd07d7c9b2743c0a8bea9d2e82a7920b783f5e" style="vertical-align: -0.338ex; width:2.852ex; height:2.176ex;"/></span> in the worst case using the same heuristic. That means there must be some node <span about="#mwt202" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; N' &quot;}}" id="mwAtY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span> such that <span about="#mwt203" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; f(N') &lt; C^{*} &quot;}}" id="mwAtc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(N')&lt;C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>&lt;</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(N')&lt;C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(N')&lt;C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1e20b3751e6ca266f993df50835d2fbea9166d9" style="vertical-align: -0.838ex; width:11.846ex; height:2.843ex;"/></span>, yet the algorithm chooses not to expand it.</p>
+<p id="mwAtg">Now consider a modified graph where a new edge of cost <span about="#mwt204" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":" \\varepsilon "}}' id="mwAtk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2193f5fc8a6dd05f24e01d0789b78ec2b57515ba" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span> (with <span about="#mwt205" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":" \\varepsilon &gt; 0 "}}' id="mwAto" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle \varepsilon &gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle \varepsilon &gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle \varepsilon &gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e73828dc02cc2d6974733344381d188455ab3d55" style="vertical-align: -0.338ex; width:5.344ex; height:2.176ex;"/></span>) is added from <span about="#mwt206" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; N' &quot;}}" id="mwAts" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span> to the goal. If <span about="#mwt207" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; f(N')+\\varepsilon&lt;C^{*} &quot;}}" id="mwAtw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(N')+\varepsilon &lt;C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>ε<!-- ε --></mi>
+<mo>&lt;</mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(N')+\varepsilon &lt;C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(N')+\varepsilon &lt;C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/91437c8911a846dba44b253e726f054bd83ddf37" style="vertical-align: -0.838ex; width:15.77ex; height:2.843ex;"/></span>, then the new optimal path goes through <span about="#mwt208" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; N' &quot;}}" id="mwAt0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span>. However, since the algorithm still avoids expanding <span about="#mwt209" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;inline&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot; N' &quot;}}" id="mwAt4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle N'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>N</mi>
+<mo>′</mo>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle N'}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle N'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/efeb66f99ba24c9cf3101156fe5f99a4a66427a0" style="vertical-align: -0.338ex; width:2.808ex; height:2.343ex;"/></span>, it will miss the new optimal path, violating its optimality.</p>
+<p id="mwAt8">Therefore, no optimal algorithm including A* could expand fewer nodes than <span about="#mwt210" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":" C^{*} "}}' id="mwAuA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67bd07d7c9b2743c0a8bea9d2e82a7920b783f5e" style="vertical-align: -0.338ex; width:2.852ex; height:2.176ex;"/></span> in the worst case.</p>
+<p id="mwAuI">The <a href="https://en.wikipedia.org/wiki/Worst-case_complexity" id="mwAuM" rel="mw:WikiLink" title="Worst-case complexity">worst-case complexity</a> of A* is often described as <span about="#mwt211" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"O(b^d)"}}' id="mwAuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle O(b^{d})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle O(b^{d})}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle O(b^{d})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/74b0bb384ec73868b1e5a4b1679c823a86c21d36" style="vertical-align: -0.838ex; width:5.672ex; height:3.009ex;"/></span>, where <span about="#mwt212" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwAuU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> is the branching factor and <span about="#mwt213" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"d"}}' id="mwAuY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle d}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>d</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle d}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle d}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/252135f29da0e9f9e130ff2d53be5df2f7044d99" style="vertical-align: -0.338ex; width:1.216ex; height:2.176ex;"/></span> is the depth of the shallowest goal. While this gives a rough intuition, it does not precisely capture the actual behavior of A*.</p>
+<p id="mwAuc">A more accurate bound considers the number of nodes with <span about="#mwt214" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"f(n) \\leq C^{*}"}}' id="mwAug" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f(n)\leq C^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo>≤<!-- ≤ --></mo>
+<msup>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f(n)\leq C^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f(n)\leq C^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a86a79423e07825e5d63780a7ce3eaa1c17d1b14" style="vertical-align: -0.838ex; width:10.433ex; height:2.843ex;"/></span>. If <span about="#mwt215" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\varepsilon"}}' id="mwAuk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \varepsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ε<!-- ε --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \varepsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \varepsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a30c89172e5b88edbd45d3e2772c7f5e562e5173" style="vertical-align: -0.338ex; width:1.083ex; height:1.676ex;"/></span> is the smallest possible difference in <span about="#mwt216" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"f"}}' id="mwAuo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle f}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e1b77076edca76caf3331d0551d1645b8f678283" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span>-cost between distinct nodes, then A* may expand up to:</p>
+<p id="mwAuw">This represents both the time and space complexity in the worst case.</p>
+</div></div>
+</body></html>

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 854
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Monte Carlo tree search",
+    "pageid": 40528449,
+    "size": 39713,
+    "wordcount": 4672,
+    "snippet": "In computer science, <span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> <span class=\"searchmatch\">tree</span> <span class=\"searchmatch\">search</span> (MCTS) is a heuristic <span class=\"searchmatch\">tree</span> <span class=\"searchmatch\">search</span> algorithm for some kinds of decision processes, most notably those employed",
+    "timestamp": "2026-09-24T12:27:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "Monte Carlo method",
+    "pageid": 56098,
+    "size": 96154,
+    "wordcount": 10960,
+    "snippet": "<span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> methods, also called the <span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> experiments or <span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> simulations, are a broad class of computational algorithms based on repeated",
+    "timestamp": "2026-09-23T17:53:41Z"
+   },
+   {
+    "ns": 0,
+    "title": "Anti-computer tactics",
+    "pageid": 14332366,
+    "size": 10598,
+    "wordcount": 1420,
+    "snippet": "invitation to play into that kind of board. AI games based on <span class=\"searchmatch\">Monte</span>-<span class=\"searchmatch\">Carlo</span> <span class=\"searchmatch\">tree</span> <span class=\"searchmatch\">search</span> have opposite strengths and weaknesses to alpha-beta AIs. While",
+    "timestamp": "2025-11-23T23:42:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "Computer Go",
+    "pageid": 227021,
+    "size": 53045,
+    "wordcount": 6499,
+    "snippet": "unsolvable without creation of human-like AI. The application of <span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> <span class=\"searchmatch\">tree</span> <span class=\"searchmatch\">search</span> to Go algorithms provided a notable improvement in the late 2000s",
+    "timestamp": "2026-08-24T08:20:12Z"
+   },
+   {
+    "ns": 0,
+    "title": "Artificial intelligence in video games",
+    "pageid": 1654769,
+    "size": 82610,
+    "wordcount": 9699,
+    "snippet": "machines permit transitioning between different behaviors. The <span class=\"searchmatch\">Monte</span> <span class=\"searchmatch\">Carlo</span> <span class=\"searchmatch\">tree</span> <span class=\"searchmatch\">search</span> (MCTS) method provides a more engaging game experience by creating",
+    "timestamp": "2026-10-14T10:17:27Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Cuckoo filter - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Cuckoo filter</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">A <b id="mwBA">cuckoo filter</b> is an space-efficient <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Probabilistic" id="mwBQ" rel="mw:WikiLink" title="Probabilistic">probabilistic</a> <a href="https://en.wikipedia.org/wiki/Data_structure" id="mwBg" rel="mw:WikiLink" title="Data structure">data structure</a> that is used to test whether an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Element_(mathematics)" id="mwBw" rel="mw:WikiLink" title="Element (mathematics)">element</a> is a member of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Set_(computer_science)" id="mwCA" rel="mw:WikiLink" title="Set (computer science)">set</a>, like a <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwCQ" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a> does. <a href="https://en.wikipedia.org/wiki/Type_I_and_type_II_errors" id="mwCg" rel="mw:WikiLink" title="Type I and type II errors">False positive</a> matches are possible, but false negatives are not – in other words, a query returns either "possibly in set" or "definitely not in set". A cuckoo filter can also delete existing items, which is
+not supported by Bloom filters.
+In addition, for applications that store many items and
+target moderately low false positive rates, cuckoo filters can achieve
+lower space overhead than space-optimized Bloom filters.<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwCw"><span class="mw-reflink-text" id="mwDA"><span class="cite-bracket" id="mwDQ">[</span>1<span class="cite-bracket" id="mwDg">]</span></span></a></sup></p>
+<p id="mwDw">Cuckoo filters were first described in 2014.<sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CuckooFilter"},"body":{"id":"mw-reference-text-cite_note-CuckooFilter-2"}}' id="cite_ref-CuckooFilter_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CuckooFilter-2" id="mwEA"><span class="mw-reflink-text" id="mwEQ"><span class="cite-bracket" id="mwEg">[</span>2<span class="cite-bracket" id="mwEw">]</span></span></a></sup></p>
+<p id="mwFg">A cuckoo filter uses a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwFw" rel="mw:WikiLink" title="Hash table">hash table</a> based on <a href="https://en.wikipedia.org/wiki/Cuckoo_hashing" id="mwGA" rel="mw:WikiLink" title="Cuckoo hashing">cuckoo hashing</a> to store the <a href="https://en.wikipedia.org/wiki/Fingerprint_(computing)" id="mwGQ" rel="mw:WikiLink" title="Fingerprint (computing)">fingerprints</a> of items.<sup about="#mwt8" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CuckooFilter"}}' id="cite_ref-CuckooFilter_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CuckooFilter-2" id="mwGg"><span class="mw-reflink-text" id="mwGw"><span class="cite-bracket" id="mwHA">[</span>2<span class="cite-bracket" id="mwHQ">]</span></span></a></sup> The data structure is broken into buckets of some size <span about="#mwt9" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwHg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span>. To insert the fingerprint of an item <span about="#mwt10" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwHw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span>, one first computes two potential buckets <span about="#mwt11" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x)"}}' id="mwIA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a54192749baa8ca6069d3c58b30722fd7eae55d" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> and <span about="#mwt12" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x)"}}' id="mwIQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4960c74f885bc90838e4ed3abc4ae97ae838948" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> where <span about="#mwt13" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwIg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> could go. These buckets are calculated using the formula</p>
+<p id="mwKA">Note that, due to the symmetry of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/XOR" id="mwKQ" rel="mw:WikiLink" title="XOR">XOR</a> operation, one can compute <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x)"}}' id="mwKg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4960c74f885bc90838e4ed3abc4ae97ae838948" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> from <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x)"}}' id="mwKw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a54192749baa8ca6069d3c58b30722fd7eae55d" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span>, and <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x)"}}' id="mwLA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a54192749baa8ca6069d3c58b30722fd7eae55d" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> from <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x)"}}' id="mwLQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4960c74f885bc90838e4ed3abc4ae97ae838948" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span>. As defined above, <span about="#mwt20" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x) = h_1(x)\\oplus\\text{hash}(\\text{fingerprint}(x))"}}' id="mwLg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)=h_{1}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>⊕<!-- ⊕ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>hash</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>fingerprint</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)=h_{1}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)=h_{1}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5966395dc87893ec398a67e9c4f06001e878d970" style="vertical-align: -0.838ex; width:37.421ex; height:2.843ex;"/></span>; it follows that <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x) = h_2(x)\\oplus\\text{hash}(\\text{fingerprint}(x))"}}' id="mwLw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)=h_{2}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>⊕<!-- ⊕ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>hash</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>fingerprint</mtext>
+</mrow>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)=h_{2}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)=h_{2}(x)\oplus {\text{hash}}({\text{fingerprint}}(x))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cb7df14fb242d4a2852e3354a6248babeeee8084" style="vertical-align: -0.838ex; width:37.421ex; height:2.843ex;"/></span>. These properties are what make it possible to store the fingerprints with cuckoo hashing.</p>
+<p id="mwMA">The fingerprint of <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwMQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> is placed into one of buckets <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x)"}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a54192749baa8ca6069d3c58b30722fd7eae55d" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> and <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x)"}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4960c74f885bc90838e4ed3abc4ae97ae838948" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span>. If the buckets are full, then one of the fingerprints in the bucket is evicted using cuckoo hashing, and placed into the other bucket where it can go. If that bucket, in turn, is also full, then that may trigger another eviction, etc.</p>
+<p id="mwNA">The hash table can achieve both high utilization (thanks to <a href="https://en.wikipedia.org/wiki/Cuckoo_hashing" id="mwNQ" rel="mw:WikiLink" title="Cuckoo hashing">cuckoo hashing</a>), and compactness because only fingerprints are stored. Lookup and delete operations of a cuckoo filter are straightforward.<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CuckooFilter"}}' id="cite_ref-CuckooFilter_2-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CuckooFilter-2" id="mwNg"><span class="mw-reflink-text" id="mwNw"><span class="cite-bracket" id="mwOA">[</span>2<span class="cite-bracket" id="mwOQ">]</span></span></a></sup></p>
+<p id="mwOg">There are a maximum of two buckets to check by <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1(x)"}}' id="mwOw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5a54192749baa8ca6069d3c58b30722fd7eae55d" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span> and <span about="#mwt27" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_2(x)"}}' id="mwPA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{2}(x)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{2}(x)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{2}(x)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4960c74f885bc90838e4ed3abc4ae97ae838948" style="vertical-align: -0.838ex; width:5.532ex; height:2.843ex;"/></span>. If found, the appropriate lookup or delete operation can be performed in <span about="#mwt28" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(b)"}}' id="mwPQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/617e0fcc33be0730c40d7c458cd4951c60b4d66a" style="vertical-align: -0.838ex; width:4.58ex; height:2.843ex;"/></span> time. Often, in practice, <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwPg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> is a constant.</p>
+<p id="mwPw">In order for the hash table to offer theoretical guarantees, the fingerprint size <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> must be at least <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\Omega((\\log n) / b)"}}' id="mwQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \Omega ((\log n)/b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">Ω<!-- Ω --></mi>
+<mo stretchy="false">(</mo>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \Omega ((\log n)/b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \Omega ((\log n)/b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/94905321b7398823add475e1562d88c869bea128" style="vertical-align: -0.838ex; width:12.21ex; height:2.843ex;"/></span> bits.<sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CuckooFilter"}}' id="cite_ref-CuckooFilter_2-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CuckooFilter-2" id="mwQg"><span class="mw-reflink-text" id="mwQw"><span class="cite-bracket" id="mwRA">[</span>2<span class="cite-bracket" id="mwRQ">]</span></span></a></sup><sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwRg"><span class="mw-reflink-text" id="mwRw"><span class="cite-bracket" id="mwSA">[</span>3<span class="cite-bracket" id="mwSQ">]</span></span></a></sup><sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwSg"><span class="mw-reflink-text" id="mwSw"><span class="cite-bracket" id="mwTA">[</span>4<span class="cite-bracket" id="mwTQ">]</span></span></a></sup> Subject to this constraint, cuckoo filters guarantee a false-positive rate of at most <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\epsilon \\le b/2^{f - 1}"}}' id="mwTg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \epsilon \leq b/2^{f-1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϵ<!-- ϵ --></mi>
+<mo>≤<!-- ≤ --></mo>
+<mi>b</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>f</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \epsilon \leq b/2^{f-1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \epsilon \leq b/2^{f-1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a25f5e35a055e0079a11bf04e85acfee8859aae8" style="vertical-align: -0.838ex; width:10.602ex; height:3.176ex;"/></span>.<sup about="#mwt40" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CuckooFilter"}}' id="cite_ref-CuckooFilter_2-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CuckooFilter-2" id="mwTw"><span class="mw-reflink-text" id="mwUA"><span class="cite-bracket" id="mwUQ">[</span>2<span class="cite-bracket" id="mwUg">]</span></span></a></sup></p>
+<p id="mwVA">A cuckoo filter is similar to a <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwVQ" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a> in that they both are fast and compact, and they may both return false positives as answers to set-membership queries:</p>
+</div></div>
+</body></html>

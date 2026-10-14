@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 1095,
+   "suggestion": "bloom fiter",
+   "suggestionsnippet": "bloom fiter"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Bloom filter",
+    "pageid": 602211,
+    "size": 92570,
+    "wordcount": 10844,
+    "snippet": "In computing, a <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filter</span> is a space-efficient probabilistic data structure, conceived by Burton Howard <span class=\"searchmatch\">Bloom</span> in 1970, that is used to test whether",
+    "timestamp": "2026-09-10T14:59:32Z"
+   },
+   {
+    "ns": 0,
+    "title": "Counting Bloom filter",
+    "pageid": 61292787,
+    "size": 11742,
+    "wordcount": 1580,
+    "snippet": "A counting <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filter</span> (CBF) or spectral <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filter</span> is a probabilistic data structure that is used to test whether the number of occurrences of a given",
+    "timestamp": "2026-09-15T16:58:24Z"
+   },
+   {
+    "ns": 0,
+    "title": "Cuckoo filter",
+    "pageid": 59150309,
+    "size": 7358,
+    "wordcount": 1069,
+    "snippet": "cuckoo <span class=\"searchmatch\">filter</span> is an space-efficient probabilistic data structure that is used to test whether an element is a member of a set, like a <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filter</span> does",
+    "timestamp": "2026-10-06T23:10:06Z"
+   },
+   {
+    "ns": 0,
+    "title": "Bloom filters in bioinformatics",
+    "pageid": 60104849,
+    "size": 13444,
+    "wordcount": 1702,
+    "snippet": "<span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filters</span> are space-efficient probabilistic data structures used to test whether an element is a part of a set. <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filters</span> require much less space",
+    "timestamp": "2025-11-05T03:08:22Z"
+   },
+   {
+    "ns": 0,
+    "title": "Approximate membership query filter",
+    "pageid": 69215219,
+    "size": 15803,
+    "wordcount": 2309,
+    "snippet": "rate of ϵ {\\displaystyle \\epsilon } . <span class=\"searchmatch\">Bloom</span> <span class=\"searchmatch\">filters</span> are the most known AMQ <span class=\"searchmatch\">filter</span>, but there are other AMQ <span class=\"searchmatch\">filters</span> that support additional operations or",
+    "timestamp": "2026-07-20T20:52:36Z"
+   }
+  ]
+ }
+}

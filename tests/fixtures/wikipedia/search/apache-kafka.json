@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 126
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Apache Kafka",
+    "pageid": 41321945,
+    "size": 9081,
+    "wordcount": 886,
+    "snippet": "<span class=\"searchmatch\">Apache</span> <span class=\"searchmatch\">Kafka</span> is a distributed event store and stream-processing platform. It is an open-source system developed by the <span class=\"searchmatch\">Apache</span> Software Foundation written",
+    "timestamp": "2026-05-04T18:07:45Z"
+   },
+   {
+    "ns": 0,
+    "title": "Neha Narkhede",
+    "pageid": 67845631,
+    "size": 7761,
+    "wordcount": 657,
+    "snippet": "technology company. She co-created the open source software platform <span class=\"searchmatch\">Apache</span> <span class=\"searchmatch\">Kafka</span>. Narkhede now serves as a board member of Confluent. She co-founded risk",
+    "timestamp": "2026-04-22T09:15:53Z"
+   },
+   {
+    "ns": 0,
+    "title": "Confluent",
+    "pageid": 77135540,
+    "size": 5876,
+    "wordcount": 274,
+    "snippet": "23, 2014, in order to commercialize an open-source streaming platform <span class=\"searchmatch\">Apache</span> <span class=\"searchmatch\">Kafka</span>, created by the same founders while working at LinkedIn in 2008 as a",
+    "timestamp": "2026-10-06T04:59:07Z"
+   },
+   {
+    "ns": 0,
+    "title": "Apache Samza",
+    "pageid": 42672986,
+    "size": 4050,
+    "wordcount": 267,
+    "snippet": "Foundation in Scala and Java. It has been developed in conjunction with <span class=\"searchmatch\">Apache</span> <span class=\"searchmatch\">Kafka</span>. Both were originally developed by LinkedIn. Samza allows users to build",
+    "timestamp": "2026-09-26T01:24:09Z"
+   },
+   {
+    "ns": 0,
+    "title": "Kafka (disambiguation)",
+    "pageid": 3366133,
+    "size": 1266,
+    "wordcount": 199,
+    "snippet": "Prague 3412 <span class=\"searchmatch\">Kafka</span>, an asteroid <span class=\"searchmatch\">Apache</span> <span class=\"searchmatch\">Kafka</span>, a software platform for storing events and processing data streams Anti-fascist research group <span class=\"searchmatch\">Kafka</span>, a Dutch",
+    "timestamp": "2026-03-10T18:51:14Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,726 @@
+{
+ "pages": {
+  "https://en.wikipedia.org/wiki/A*": {
+   "file": "pages/a.html",
+   "pageid": 28368949,
+   "snippet": "A* or A star may refer to: A* search algorithm, a pathfinding algorithm used in computing A*, the highest grade in some examination systems such as the",
+   "title": "A*"
+  },
+  "https://en.wikipedia.org/wiki/A*_search_algorithm": {
+   "file": "pages/a-search-algorithm.html",
+   "pageid": 100558,
+   "snippet": "of a generalization of branch and bound. A* is similar to beam search except that beam search maintains a limit on the numbers of paths that it has to",
+   "title": "A* search algorithm"
+  },
+  "https://en.wikipedia.org/wiki/A9.com": {
+   "file": "pages/a9-com.html",
+   "pageid": 596913,
+   "snippet": "A9.com was a subsidiary of Amazon that developed search engine and search advertising technology. A9 was based in Palo Alto, California, with teams in",
+   "title": "A9.com"
+  },
+  "https://en.wikipedia.org/wiki/AA_tree": {
+   "file": "pages/aa-tree.html",
+   "pageid": 1665969,
+   "snippet": "scientist Arne Andersson. AA trees are a variation of the red–black tree, a form of binary search tree which supports efficient addition and deletion of",
+   "title": "AA tree"
+  },
+  "https://en.wikipedia.org/wiki/Anti-computer_tactics": {
+   "file": "pages/anti-computer-tactics.html",
+   "pageid": 14332366,
+   "snippet": "invitation to play into that kind of board. AI games based on Monte-Carlo tree search have opposite strengths and weaknesses to alpha-beta AIs. While",
+   "title": "Anti-computer tactics"
+  },
+  "https://en.wikipedia.org/wiki/Anytime_A*": {
+   "file": "pages/anytime-a.html",
+   "pageid": 52609984,
+   "snippet": "science, anytime A* is a family of variants of the A* search algorithm. Like other anytime algorithms, it has a flexible time cost, can return a valid solution",
+   "title": "Anytime A*"
+  },
+  "https://en.wikipedia.org/wiki/Apache_Kafka": {
+   "file": "pages/apache-kafka.html",
+   "pageid": 41321945,
+   "snippet": "Apache Kafka is a distributed event store and stream-processing platform. It is an open-source system developed by the Apache Software Foundation written",
+   "title": "Apache Kafka"
+  },
+  "https://en.wikipedia.org/wiki/Apache_Samza": {
+   "file": "pages/apache-samza.html",
+   "pageid": 42672986,
+   "snippet": "Foundation in Scala and Java. It has been developed in conjunction with Apache Kafka. Both were originally developed by LinkedIn. Samza allows users to build",
+   "title": "Apache Samza"
+  },
+  "https://en.wikipedia.org/wiki/Atomic_commit": {
+   "file": "pages/atomic-commit.html",
+   "pageid": 1117060,
+   "snippet": "problem will still encounter the Two Generals’ Problem. The two-phase commit protocol and three-phase commit protocol attempt to solve this and some of",
+   "title": "Atomic commit"
+  },
+  "https://en.wikipedia.org/wiki/Attention_(machine_learning)": {
+   "file": "pages/attention-machine-learning.html",
+   "pageid": 66001552,
+   "snippet": "masked self-attention&quot;. Recurrent neural network seq2seq Transformer (deep learning architecture) Attention Dynamic neural network Cherry, E. Colin (1953)",
+   "title": "Attention (machine learning)"
+  },
+  "https://en.wikipedia.org/wiki/BM25": {
+   "file": "pages/bm25.html",
+   "pageid": 12911443,
+   "snippet": "and made in the 1970s, it was seen in the late 1980s by photographers Okapi BM25, a ranking function in information retrieval This disambiguation page",
+   "title": "BM25"
+  },
+  "https://en.wikipedia.org/wiki/Backpropagation": {
+   "file": "pages/backpropagation.html",
+   "pageid": 1360091,
+   "snippet": "In machine learning, backpropagation is a gradient computation method commonly used for training a neural network in computing parameter updates. It is",
+   "title": "Backpropagation"
+  },
+  "https://en.wikipedia.org/wiki/Base64": {
+   "file": "pages/base64.html",
+   "pageid": 215241,
+   "snippet": "binary-to-text encoding that uses 64 printable characters to represent each 6-bit segment of a sequence of byte values. As for all binary-to-text encodings, Base64",
+   "title": "Base64"
+  },
+  "https://en.wikipedia.org/wiki/Bayes'_theorem": {
+   "file": "pages/bayes-theorem.html",
+   "pageid": 49569,
+   "snippet": "In probability theory, Bayes&#039; theorem (alternatively Bayes&#039; law or Bayes&#039; rule), named after Thomas Bayes (/beɪz/), gives a mathematical rule for inverting",
+   "title": "Bayes' theorem"
+  },
+  "https://en.wikipedia.org/wiki/Beam": {
+   "file": "pages/beam.html",
+   "pageid": 42167,
+   "snippet": "up beam in Wiktionary, the free dictionary. Beam may refer to: Light beam, or beam of light, a directional projection of light energy Laser beam Radio",
+   "title": "Beam"
+  },
+  "https://en.wikipedia.org/wiki/Beam_search": {
+   "file": "pages/beam-search.html",
+   "pageid": 1686032,
+   "snippet": "science, beam search is a heuristic search algorithm that explores a graph by expanding the most promising node in a limited set. Beam search is a modification",
+   "title": "Beam search"
+  },
+  "https://en.wikipedia.org/wiki/Binary_search": {
+   "file": "pages/binary-search.html",
+   "pageid": 4266,
+   "snippet": "In computer science, binary search, also known as half-interval search, logarithmic search, or binary chop, is a search algorithm that finds the position",
+   "title": "Binary search"
+  },
+  "https://en.wikipedia.org/wiki/Bloom_filter": {
+   "file": "pages/bloom-filter.html",
+   "pageid": 602211,
+   "snippet": "In computing, a Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether",
+   "title": "Bloom filter"
+  },
+  "https://en.wikipedia.org/wiki/Bloom_filters_in_bioinformatics": {
+   "file": "pages/bloom-filters-in-bioinformatics.html",
+   "pageid": 60104849,
+   "snippet": "Bloom filters are space-efficient probabilistic data structures used to test whether an element is a part of a set. Bloom filters require much less space",
+   "title": "Bloom filters in bioinformatics"
+  },
+  "https://en.wikipedia.org/wiki/Byte-pair_encoding": {
+   "file": "pages/byte-pair-encoding.html",
+   "pageid": 5825526,
+   "snippet": "In computing, byte-pair encoding (BPE), or digram coding, is an algorithm, first described in 1994 by Philip Gage, for encoding strings of text into smaller",
+   "title": "Byte-pair encoding"
+  },
+  "https://en.wikipedia.org/wiki/Byzantine_(disambiguation)": {
+   "file": "pages/byzantine-disambiguation.html",
+   "pageid": 61031,
+   "snippet": "United States Byzantine (video game) &quot;Byzantine&quot; (song), from 2019 Weezer album Byzantine fault, a type of fault affecting system consensus in computer",
+   "title": "Byzantine (disambiguation)"
+  },
+  "https://en.wikipedia.org/wiki/Byzantine_fault": {
+   "file": "pages/byzantine-fault.html",
+   "pageid": 970031,
+   "snippet": "A Byzantine fault is a condition of a system, particularly a distributed computing system, where a fault occurs such that different symptoms are presented",
+   "title": "Byzantine fault"
+  },
+  "https://en.wikipedia.org/wiki/CAP_theorem": {
+   "file": "pages/cap-theorem.html",
+   "pageid": 26411268,
+   "snippet": "computing Lambda architecture (solution) PACELC theorem Paxos (computer science) Raft (computer science) Zooko&#039;s triangle Inconsistent triad Trilemma Gilbert",
+   "title": "CAP theorem"
+  },
+  "https://en.wikipedia.org/wiki/CheiRank": {
+   "file": "pages/cheirank.html",
+   "pageid": 30386872,
+   "snippet": "complementary to the PageRank vector, which ranks nodes based on their number of incoming links. Due to the inversion of link directions, CheiRank measures a node&#039;s",
+   "title": "CheiRank"
+  },
+  "https://en.wikipedia.org/wiki/Commit_(data_management)": {
+   "file": "pages/commit-data-management.html",
+   "pageid": 1626958,
+   "snippet": "multiple systems, commit protocols have been evolving since their emergence in the 1970s. The main developments include the Two-Phase Commit (2PC) first proposed",
+   "title": "Commit (data management)"
+  },
+  "https://en.wikipedia.org/wiki/Computer_Go": {
+   "file": "pages/computer-go.html",
+   "pageid": 227021,
+   "snippet": "unsolvable without creation of human-like AI. The application of Monte Carlo tree search to Go algorithms provided a notable improvement in the late 2000s",
+   "title": "Computer Go"
+  },
+  "https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type": {
+   "file": "pages/conflict-free-replicated-data-type.html",
+   "pageid": 44455674,
+   "snippet": "In distributed computing, a conflict-free replicated data type (CRDT) is a data structure that is replicated across multiple computers in a network, with",
+   "title": "Conflict-free replicated data type"
+  },
+  "https://en.wikipedia.org/wiki/Confluent": {
+   "file": "pages/confluent.html",
+   "pageid": 77135540,
+   "snippet": "23, 2014, in order to commercialize an open-source streaming platform Apache Kafka, created by the same founders while working at LinkedIn in 2008 as a",
+   "title": "Confluent"
+  },
+  "https://en.wikipedia.org/wiki/Conjugate_gradient_method": {
+   "file": "pages/conjugate-gradient-method.html",
+   "pageid": 1448821,
+   "snippet": "In mathematics, the conjugate gradient method is an algorithm for the numerical solution of particular systems of linear equations, namely those whose",
+   "title": "Conjugate gradient method"
+  },
+  "https://en.wikipedia.org/wiki/Consensus_(computer_science)": {
+   "file": "pages/consensus-computer-science.html",
+   "pageid": 5406474,
+   "snippet": "log layer which is based on the Paxos consensus algorithm. In this scheme, Chubby clients communicate with the Paxos master in order to access/update",
+   "title": "Consensus (computer science)"
+  },
+  "https://en.wikipedia.org/wiki/Consistency_(database_systems)": {
+   "file": "pages/consistency-database-systems.html",
+   "pageid": 1140830,
+   "snippet": "any defined database constraints. In a distributed system, referencing CAP theorem, consistency can also be understood as after a successful write, update",
+   "title": "Consistency (database systems)"
+  },
+  "https://en.wikipedia.org/wiki/Consistent_hashing": {
+   "file": "pages/consistent-hashing.html",
+   "pageid": 2434041,
+   "snippet": "In computer science, consistent hashing is a special kind of hashing technique such that when a hash table is resized, only n / m {\\displaystyle n/m}",
+   "title": "Consistent hashing"
+  },
+  "https://en.wikipedia.org/wiki/Counting_Bloom_filter": {
+   "file": "pages/counting-bloom-filter.html",
+   "pageid": 61292787,
+   "snippet": "A counting Bloom filter (CBF) or spectral Bloom filter is a probabilistic data structure that is used to test whether the number of occurrences of a given",
+   "title": "Counting Bloom filter"
+  },
+  "https://en.wikipedia.org/wiki/Cryptography": {
+   "file": "pages/cryptography.html",
+   "pageid": 18934432,
+   "snippet": "behavior. More generally, cryptography is about constructing and analyzing protocols that prevent third parties or the public from reading private messages",
+   "title": "Cryptography"
+  },
+  "https://en.wikipedia.org/wiki/Cuckoo_filter": {
+   "file": "pages/cuckoo-filter.html",
+   "pageid": 59150309,
+   "snippet": "cuckoo filter is an space-efficient probabilistic data structure that is used to test whether an element is a member of a set, like a Bloom filter does",
+   "title": "Cuckoo filter"
+  },
+  "https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange": {
+   "file": "pages/diffie-hellman-key-exchange.html",
+   "pageid": 7903,
+   "snippet": "Diffie–Hellman (DH) key exchange is a mathematical method of securely generating a symmetric cryptographic key over a public channel. It is named after",
+   "title": "Diffie–Hellman key exchange"
+  },
+  "https://en.wikipedia.org/wiki/Dijkstra's_algorithm": {
+   "file": "pages/dijkstra-s-algorithm.html",
+   "pageid": 45809,
+   "snippet": "conceived by computer scientist Edsger W. Dijkstra in 1956 and published three years later. Dijkstra&#039;s algorithm finds the shortest path from a given source",
+   "title": "Dijkstra's algorithm"
+  },
+  "https://en.wikipedia.org/wiki/Distributed_algorithm": {
+   "file": "pages/distributed-algorithm.html",
+   "pageid": 3367202,
+   "snippet": "decides v {\\displaystyle v} . Common algorithms for solving consensus are the Paxos algorithm and the Raft algorithm. Distributed search Leader election",
+   "title": "Distributed algorithm"
+  },
+  "https://en.wikipedia.org/wiki/Distributed_hash_table": {
+   "file": "pages/distributed-hash-table.html",
+   "pageid": 192141,
+   "snippet": "designs differ in the details. Most DHTs use some variant of consistent hashing or rendezvous hashing to map keys to nodes. The two algorithms appear to have",
+   "title": "Distributed hash table"
+  },
+  "https://en.wikipedia.org/wiki/DotCode": {
+   "file": "pages/dotcode.html",
+   "pageid": 76571690,
+   "snippet": "Additionally, DotCode provides much more data density and Reed–Solomon error correction which allows to restore partially damaged dotcodes. However",
+   "title": "DotCode"
+  },
+  "https://en.wikipedia.org/wiki/Extended_Kalman_filter": {
+   "file": "pages/extended-kalman-filter.html",
+   "pageid": 18436459,
+   "snippet": "In estimation theory, the extended Kalman filter (EKF) is the nonlinear version of the Kalman filter which linearizes about an estimate of the current",
+   "title": "Extended Kalman filter"
+  },
+  "https://en.wikipedia.org/wiki/Federated_learning": {
+   "file": "pages/federated-learning.html",
+   "pageid": 60992857,
+   "snippet": "dataset and then used to make one step of the gradient descent. Federated stochastic gradient descent is the analog of this algorithm to the federated",
+   "title": "Federated learning"
+  },
+  "https://en.wikipedia.org/wiki/Feedforward_neural_network": {
+   "file": "pages/feedforward-neural-network.html",
+   "pageid": 1706332,
+   "snippet": "back to earlier stages. Feedforward multiplication is essential for backpropagation, because feedback, where the outputs feed back to the very same inputs",
+   "title": "Feedforward neural network"
+  },
+  "https://en.wikipedia.org/wiki/Fuzzy_hashing": {
+   "file": "pages/fuzzy-hashing.html",
+   "pageid": 70392883,
+   "snippet": "Nilsimsa Hash is an anti-spam–focused locality-sensitive hashing algorithm. ssdeep is a fuzzy hashing tool based on context-triggered piecewise hashing to compare",
+   "title": "Fuzzy hashing"
+  },
+  "https://en.wikipedia.org/wiki/Galactic_algorithm": {
+   "file": "pages/galactic-algorithm.html",
+   "pageid": 60819045,
+   "snippet": "O({\\text{N}})} space is allowed, polynomial time solutions such as Dijkstra&#039;s algorithm have been known and used for decades. But for many years it was unknown",
+   "title": "Galactic algorithm"
+  },
+  "https://en.wikipedia.org/wiki/Generative_pre-trained_transformer": {
+   "file": "pages/generative-pre-trained-transformer.html",
+   "pageid": 72970020,
+   "snippet": "artificial intelligence chatbots. GPTs are based on a deep learning architecture called the transformer. They are pre-trained on large datasets of unlabeled",
+   "title": "Generative pre-trained transformer"
+  },
+  "https://en.wikipedia.org/wiki/Geoffrey_Hinton": {
+   "file": "pages/geoffrey-hinton.html",
+   "pageid": 507174,
+   "snippet": "co-authored a highly cited paper published in 1986 that popularised the backpropagation algorithm for training multi-layer neural networks, although they were",
+   "title": "Geoffrey Hinton"
+  },
+  "https://en.wikipedia.org/wiki/GloVe": {
+   "file": "pages/glove.html",
+   "pageid": 49489032,
+   "snippet": "was designed as a competitor to word2vec, and the original paper noted multiple improvements of GloVe over word2vec. As of 2022[update], both approaches",
+   "title": "GloVe"
+  },
+  "https://en.wikipedia.org/wiki/Gradient_descent": {
+   "file": "pages/gradient-descent.html",
+   "pageid": 201489,
+   "snippet": "Gradient descent is a method for unconstrained mathematical optimization. It is a first-order iterative algorithm for minimizing a differentiable multivariate",
+   "title": "Gradient descent"
+  },
+  "https://en.wikipedia.org/wiki/Hash-based_cryptography": {
+   "file": "pages/hash-based-cryptography.html",
+   "pageid": 53957696,
+   "snippet": "Merkle tree structure is used to this end. In this hierarchical data structure, a hash function and concatenation are used repeatedly to compute tree",
+   "title": "Hash-based cryptography"
+  },
+  "https://en.wikipedia.org/wiki/Hash_table": {
+   "file": "pages/hash-table.html",
+   "pageid": 13833,
+   "snippet": "perfect hash function can be created if all the keys are known ahead of time. The schemes of hashing used in integer universe assumption include hashing by",
+   "title": "Hash table"
+  },
+  "https://en.wikipedia.org/wiki/IDF_(disambiguation)": {
+   "file": "pages/idf-disambiguation.html",
+   "pageid": 15478,
+   "snippet": "factor in the tf–idf principle Indirect fire International Day of Forests IDF1, a French TV channel All pages with titles beginning with IDF All pages with",
+   "title": "IDF (disambiguation)"
+  },
+  "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning": {
+   "file": "pages/international-conference-on-machine-learning.html",
+   "pageid": 18586449,
+   "snippet": "machine learning and artificial intelligence research. It is organized by the International Machine Learning Society (IMLS). Precise dates vary year to year",
+   "title": "International Conference on Machine Learning"
+  },
+  "https://en.wikipedia.org/wiki/John_Ousterhout": {
+   "file": "pages/john-ousterhout.html",
+   "pageid": 42072,
+   "snippet": "Software Design, (Yaknyam Press, 2018, ISBN 1732102201) Ousterhout&#039;s dichotomy Raft (computer science) Ousterhout, J.K.; Jones, K. (2009). Tcl and the Tk Toolkit",
+   "title": "John Ousterhout"
+  },
+  "https://en.wikipedia.org/wiki/Kalman_filter": {
+   "file": "pages/kalman-filter.html",
+   "pageid": 180855,
+   "snippet": "In statistics and control theory, Kalman filtering (also known as linear quadratic estimation) is an algorithm that uses a series of measurements observed",
+   "title": "Kalman filter"
+  },
+  "https://en.wikipedia.org/wiki/Key_(cryptography)": {
+   "file": "pages/key-cryptography.html",
+   "pageid": 53039,
+   "snippet": "unauthorized parties. With public key cryptography, only the private key must be kept secret, but with symmetric cryptography, it is important to maintain",
+   "title": "Key (cryptography)"
+  },
+  "https://en.wikipedia.org/wiki/Knowledge_cutoff": {
+   "file": "pages/knowledge-cutoff.html",
+   "pageid": 80445288,
+   "snippet": "later events without a system for real-time data access such as retrieval-augmented generation, which fetches new information from an external database. Knowledge",
+   "title": "Knowledge cutoff"
+  },
+  "https://en.wikipedia.org/wiki/Lamport_timestamp": {
+   "file": "pages/lamport-timestamp.html",
+   "pageid": 2173021,
+   "snippet": "The Lamport timestamp algorithm is a simple logical clock algorithm used to determine the order of events in a distributed computer system. As different",
+   "title": "Lamport timestamp"
+  },
+  "https://en.wikipedia.org/wiki/Large_language_model": {
+   "file": "pages/large-language-model.html",
+   "pageid": 73248112,
+   "snippet": "embedding is associated with the integer index. Algorithms include byte-pair encoding (BPE) and WordPiece. There are also special tokens serving as control",
+   "title": "Large language model"
+  },
+  "https://en.wikipedia.org/wiki/Learning_to_rank": {
+   "file": "pages/learning-to-rank.html",
+   "pageid": 25050663,
+   "snippet": "Learning to rank (LTR) or machine-learned ranking (MLR) is the application of machine learning, often supervised, semi-supervised or reinforcement learning",
+   "title": "Learning to rank"
+  },
+  "https://en.wikipedia.org/wiki/Local-first_software": {
+   "file": "pages/local-first-software.html",
+   "pageid": 82435146,
+   "snippet": "as a &quot;gradient&quot; rather than a strict checklist. Conflict-free replicated data type Peer-to-peer Data sovereignty End-to-end encryption Cloud computing",
+   "title": "Local-first software"
+  },
+  "https://en.wikipedia.org/wiki/Locality-sensitive_hashing": {
+   "file": "pages/locality-sensitive-hashing.html",
+   "pageid": 11634012,
+   "snippet": "In computer science, locality-sensitive hashing (LSH) is a fuzzy hashing technique that hashes similar input items into the same &quot;buckets&quot; with high probability",
+   "title": "Locality-sensitive hashing"
+  },
+  "https://en.wikipedia.org/wiki/Logical_clock": {
+   "file": "pages/logical-clock.html",
+   "pageid": 1376887,
+   "snippet": "The idea of logical clocks is due to Leslie Lamport, who introduced it in 1978 with his system of timestamps. In logical clock systems each process has",
+   "title": "Logical clock"
+  },
+  "https://en.wikipedia.org/wiki/Machine_learning": {
+   "file": "pages/machine-learning.html",
+   "pageid": 233488,
+   "snippet": "the field of deep learning have allowed neural networks, a class of statistical algorithms, to surpass many previous machine learning approaches in performance",
+   "title": "Machine learning"
+  },
+  "https://en.wikipedia.org/wiki/Mamba_(deep_learning_architecture)": {
+   "file": "pages/mamba-deep-learning-architecture.html",
+   "pageid": 75795581,
+   "snippet": "Mamba is a deep learning architecture focused on sequence modeling. It was developed by two researchers Albert Gu from Carnegie Mellon University and Tri",
+   "title": "Mamba (deep learning architecture)"
+  },
+  "https://en.wikipedia.org/wiki/Mating_in_fungi": {
+   "file": "pages/mating-in-fungi.html",
+   "pageid": 4350664,
+   "snippet": "these genes are to regulate reciprocal nuclear exchange, nuclear migration in both mates and ultimately clamp cell fusion. The first mating pheromone-receptor",
+   "title": "Mating in fungi"
+  },
+  "https://en.wikipedia.org/wiki/Merkle_tree": {
+   "file": "pages/merkle-tree.html",
+   "pageid": 2497388,
+   "snippet": "In cryptography and computer science, a hash tree or Merkle tree is a tree in which every &quot;leaf&quot; node is labelled with the cryptographic hash of a data",
+   "title": "Merkle tree"
+  },
+  "https://en.wikipedia.org/wiki/MinHash": {
+   "file": "pages/minhash.html",
+   "pageid": 30632997,
+   "snippet": "computer science and data mining, MinHash (or the min-wise independent permutations locality sensitive hashing scheme) is a technique for quickly estimating",
+   "title": "MinHash"
+  },
+  "https://en.wikipedia.org/wiki/Monte_Carlo_method": {
+   "file": "pages/monte-carlo-method.html",
+   "pageid": 56098,
+   "snippet": "Monte Carlo methods, also called the Monte Carlo experiments or Monte Carlo simulations, are a broad class of computational algorithms based on repeated",
+   "title": "Monte Carlo method"
+  },
+  "https://en.wikipedia.org/wiki/Monte_Carlo_tree_search": {
+   "file": "pages/monte-carlo-tree-search.html",
+   "pageid": 40528449,
+   "snippet": "In computer science, Monte Carlo tree search (MCTS) is a heuristic tree search algorithm for some kinds of decision processes, most notably those employed",
+   "title": "Monte Carlo tree search"
+  },
+  "https://en.wikipedia.org/wiki/Nearest_neighbor_search": {
+   "file": "pages/nearest-neighbor-search.html",
+   "pageid": 7309022,
+   "snippet": "k-nearest neighbor algorithm Linear least squares Locality sensitive hashing Maximum inner-product search MinHash Multidimensional analysis Nearest-neighbor",
+   "title": "Nearest neighbor search"
+  },
+  "https://en.wikipedia.org/wiki/Neha_Narkhede": {
+   "file": "pages/neha-narkhede.html",
+   "pageid": 67845631,
+   "snippet": "technology company. She co-created the open source software platform Apache Kafka. Narkhede now serves as a board member of Confluent. She co-founded risk",
+   "title": "Neha Narkhede"
+  },
+  "https://en.wikipedia.org/wiki/Neural_backpropagation": {
+   "file": "pages/neural-backpropagation.html",
+   "pageid": 14338608,
+   "snippet": "Neural backpropagation is the phenomenon in which, after the action potential of a neuron creates a voltage spike down the axon (normal propagation),",
+   "title": "Neural backpropagation"
+  },
+  "https://en.wikipedia.org/wiki/Nofollow": {
+   "file": "pages/nofollow.html",
+   "pageid": 3766084,
+   "snippet": "evaporation of the pagerank of outgoing normal links as they started counting total links while calculating page rank. The new system divides page rank by the total",
+   "title": "Nofollow"
+  },
+  "https://en.wikipedia.org/wiki/Okapi_(disambiguation)": {
+   "file": "pages/okapi-disambiguation.html",
+   "pageid": 23453325,
+   "snippet": "Africa Okapi BM25, a ranking function used by search engines to rank matching documents according to their relevance to a given search query Okapi Framework",
+   "title": "Okapi (disambiguation)"
+  },
+  "https://en.wikipedia.org/wiki/Okapi_BM25": {
+   "file": "pages/okapi-bm25.html",
+   "pageid": 9511414,
+   "snippet": "In information retrieval, Okapi BM25 (BM is an abbreviation of best matching) is a ranking function used by search engines to estimate the relevance of",
+   "title": "Okapi BM25"
+  },
+  "https://en.wikipedia.org/wiki/PACELC_design_principle": {
+   "file": "pages/pacelc-design-principle.html",
+   "pageid": 51386205,
+   "snippet": "architecture (solution) Paxos (computer science) Project management triangle Raft (algorithm) Trilemma Dynamo, Cassandra, and Riak have user-adjustable settings",
+   "title": "PACELC design principle"
+  },
+  "https://en.wikipedia.org/wiki/PageRank": {
+   "file": "pages/pagerank.html",
+   "pageid": 26334893,
+   "snippet": "PageRank (PR) is an algorithm used by Google Search to rank web pages in their search engine results. It is named after both the term &quot;web page&quot; and co-founder",
+   "title": "PageRank"
+  },
+  "https://en.wikipedia.org/wiki/Paxos_(computer_science)": {
+   "file": "pages/paxos-computer-science.html",
+   "pageid": 5722488,
+   "snippet": "In computer science, Paxos is a family of protocols for solving consensus in a network of unreliable or fallible processors. Consensus is the process",
+   "title": "Paxos (computer science)"
+  },
+  "https://en.wikipedia.org/wiki/Paxos_(disambiguation)": {
+   "file": "pages/paxos-disambiguation.html",
+   "pageid": 1267785,
+   "snippet": "Paxos or Paxi is a Greek island in the Ionian sea. Paxos may also refer to: Paxos (computer science), a family of algorithms Paxos Trust Company, an American",
+   "title": "Paxos (disambiguation)"
+  },
+  "https://en.wikipedia.org/wiki/Percent-encoding": {
+   "file": "pages/percent-encoding.html",
+   "pageid": 1829286,
+   "snippet": "Percent-encoding, also known as URL encoding, is a method to encode arbitrary data in a uniform resource identifier (URI) using only the US-ASCII characters",
+   "title": "Percent-encoding"
+  },
+  "https://en.wikipedia.org/wiki/Priority_queue": {
+   "file": "pages/priority-queue.html",
+   "pageid": 24485,
+   "snippet": "not all algorithms can use this kind of priority queue. Dijkstra&#039;s algorithm for example can not work on several nodes at once. The algorithm takes the",
+   "title": "Priority queue"
+  },
+  "https://en.wikipedia.org/wiki/Prompt_engineering": {
+   "file": "pages/prompt-engineering.html",
+   "pageid": 69071767,
+   "snippet": "assigning roles to the model. Automated prompt generation methods, such as retrieval-augmented generation (RAG), provide for greater accuracy and a wider",
+   "title": "Prompt engineering"
+  },
+  "https://en.wikipedia.org/wiki/Public-key_cryptography": {
+   "file": "pages/public-key-cryptography.html",
+   "pageid": 24222,
+   "snippet": "Public-key cryptography, or asymmetric cryptography, is the field of cryptographic systems that use pairs of related keys. Each key pair consists of a",
+   "title": "Public-key cryptography"
+  },
+  "https://en.wikipedia.org/wiki/QR_code": {
+   "file": "pages/qr-code.html",
+   "pageid": 828436,
+   "snippet": "readable by imaging devices like cameras, and processed using Reed–Solomon error correction until the image can be appropriately interpreted. The required",
+   "title": "QR code"
+  },
+  "https://en.wikipedia.org/wiki/Raft_(algorithm)": {
+   "file": "pages/raft-algorithm.html",
+   "pageid": 40226710,
+   "snippet": "Raft is a consensus algorithm designed as an alternative to the Paxos family of algorithms. It was meant to be more understandable than Paxos by means",
+   "title": "Raft (algorithm)"
+  },
+  "https://en.wikipedia.org/wiki/Ralph_Merkle": {
+   "file": "pages/ralph-merkle.html",
+   "pageid": 25849,
+   "snippet": "cryptosystem, and inventing cryptographic hashing (Merkle–Damgård construction) and Merkle trees. He has worked as a manager at Elxsi, research scientist",
+   "title": "Ralph Merkle"
+  },
+  "https://en.wikipedia.org/wiki/Rectangular_Micro_QR_Code": {
+   "file": "pages/rectangular-micro-qr-code.html",
+   "pageid": 76700066,
+   "snippet": "and timing patterns to help with recognition. rMQR Code has Reed–Solomon error correction with ability to restore data from corrupted barcodes. As other",
+   "title": "Rectangular Micro QR Code"
+  },
+  "https://en.wikipedia.org/wiki/Recurrent_neural_network": {
+   "file": "pages/recurrent-neural-network.html",
+   "pageid": 1706303,
+   "snippet": "cells, and granule cells. In 1933, Lorente de Nó discovered &quot;recurrent, reciprocal connections&quot; by Golgi&#039;s method, and proposed that excitatory loops explain",
+   "title": "Recurrent neural network"
+  },
+  "https://en.wikipedia.org/wiki/Redis": {
+   "file": "pages/redis.html",
+   "pageid": 24956915,
+   "snippet": "supports interfacing with Redis through its Poco::Redis library. Conflict-free replicated data type Memcached Infinispan Valkey Bernardi, Stefano (January 4,",
+   "title": "Redis"
+  },
+  "https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction": {
+   "file": "pages/reed-solomon-error-correction.html",
+   "pageid": 45600,
+   "snippet": "and coding theory, Reed–Solomon codes are a group of error-correcting codes that were introduced by Irving S. Reed and Gustave Solomon in 1960. They have",
+   "title": "Reed–Solomon error correction"
+  },
+  "https://en.wikipedia.org/wiki/Reinforcement_learning": {
+   "file": "pages/reinforcement-learning.html",
+   "pageid": 66294,
+   "snippet": "order to maximize a reward signal. Reinforcement learning is one of the three basic machine learning paradigms, alongside supervised learning and unsupervised",
+   "title": "Reinforcement learning"
+  },
+  "https://en.wikipedia.org/wiki/Rendezvous_hashing": {
+   "file": "pages/rendezvous-hashing.html",
+   "pageid": 40543215,
+   "snippet": "are assigned to. Consistent hashing addresses the special case k = 1 {\\displaystyle k=1} using a different method. Rendezvous hashing is both much simpler",
+   "title": "Rendezvous hashing"
+  },
+  "https://en.wikipedia.org/wiki/Replication_(computing)": {
+   "file": "pages/replication-computing.html",
+   "pageid": 2722905,
+   "snippet": "many times. Computational tasks may be: Replicated in space, where tasks are executed on separate devices Replicated in time, where tasks are executed repeatedly",
+   "title": "Replication (computing)"
+  },
+  "https://en.wikipedia.org/wiki/Reputation_management": {
+   "file": "pages/reputation-management.html",
+   "pageid": 993351,
+   "snippet": "or a company&#039;s reputation in a positive way. Online reputation management (ORM) involves overseeing and influencing the search engine results related to",
+   "title": "Reputation management"
+  },
+  "https://en.wikipedia.org/wiki/Retrieval-augmented_generation": {
+   "file": "pages/retrieval-augmented-generation.html",
+   "pageid": 75229858,
+   "snippet": "Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external",
+   "title": "Retrieval-augmented generation"
+  },
+  "https://en.wikipedia.org/wiki/Robert_Shostak": {
+   "file": "pages/robert-shostak.html",
+   "pageid": 59868627,
+   "snippet": "for his seminal work in the branch of distributed computing known as Byzantine Fault Tolerance. He is also known for co-authoring the Paradox Database,",
+   "title": "Robert Shostak"
+  },
+  "https://en.wikipedia.org/wiki/Rudolf_E._K%C3%A1lm%C3%A1n": {
+   "file": "pages/rudolf-e-k-lm-n.html",
+   "pageid": 396498,
+   "snippet": "inventor. He is most noted for his co-invention and development of the Kalman filter, a mathematical algorithm that is widely used in signal processing,",
+   "title": "Rudolf E. Kálmán"
+  },
+  "https://en.wikipedia.org/wiki/Schmidt%E2%80%93Kalman_filter": {
+   "file": "pages/schmidt-kalman-filter.html",
+   "pageid": 35575382,
+   "snippet": "The Schmidt–Kalman Filter is a modification of the Kalman filter for reducing the dimensionality of the state estimate, while still considering the effects",
+   "title": "Schmidt–Kalman filter"
+  },
+  "https://en.wikipedia.org/wiki/Search_engine_optimization": {
+   "file": "pages/search-engine-optimization.html",
+   "pageid": 187946,
+   "snippet": "the algorithm, PageRank, is a function of the quantity and strength of inbound links. PageRank estimates the likelihood that a given page will be reached",
+   "title": "Search engine optimization"
+  },
+  "https://en.wikipedia.org/wiki/Semantle": {
+   "file": "pages/semantle.html",
+   "pageid": 70625577,
+   "snippet": "similar the guessed word is to the secret word. The game&#039;s algorithm, Word2vec, assigns each word a vector in a multidimensional space. The similarity",
+   "title": "Semantle"
+  },
+  "https://en.wikipedia.org/wiki/Stephen_Robertson_(computer_scientist)": {
+   "file": "pages/stephen-robertson-computer-scientist.html",
+   "pageid": 24019253,
+   "snippet": "probabilistic information retrieval together with Karen Spärck Jones and the Okapi BM25 weighting model. Robertson was born in London, England,[citation needed]",
+   "title": "Stephen Robertson (computer scientist)"
+  },
+  "https://en.wikipedia.org/wiki/Stochastic_gradient_descent": {
+   "file": "pages/stochastic-gradient-descent.html",
+   "pageid": 1180641,
+   "snippet": "Stochastic gradient descent (often abbreviated SGD) is an iterative method for optimizing an objective function with suitable smoothness properties (e",
+   "title": "Stochastic gradient descent"
+  },
+  "https://en.wikipedia.org/wiki/Tf%E2%80%93idf": {
+   "file": "pages/tf-idf.html",
+   "pageid": 2057290,
+   "snippet": "In information retrieval, tf–idf (term frequency–inverse document frequency, TF*IDF, TFIDF, TF–IDF, or Tf–idf) is a measure of importance of a word to",
+   "title": "Tf–idf"
+  },
+  "https://en.wikipedia.org/wiki/Three-phase_commit_protocol": {
+   "file": "pages/three-phase-commit-protocol.html",
+   "pageid": 2044655,
+   "snippet": "the two-phase commit protocol (2PC) by eliminating the possibility of indefinite blocking caused by a specific type of failure during the commit phase. A",
+   "title": "Three-phase commit protocol"
+  },
+  "https://en.wikipedia.org/wiki/Timestamping_(computing)": {
+   "file": "pages/timestamping-computing.html",
+   "pageid": 35339450,
+   "snippet": "efficient build automation tools. Trusted timestamping Timestamp-based concurrency control Lamport timestamp Advances in Computer Science and Information",
+   "title": "Timestamping (computing)"
+  },
+  "https://en.wikipedia.org/wiki/Top-p_sampling": {
+   "file": "pages/top-p-sampling.html",
+   "pageid": 74652867,
+   "snippet": "token with the highest probability (greedy search) or a limited set of high-probability sequences (beam search) is possible, these deterministic methods",
+   "title": "Top-p sampling"
+  },
+  "https://en.wikipedia.org/wiki/Torrent_file": {
+   "file": "pages/torrent-file.html",
+   "pageid": 24767575,
+   "snippet": "of the Merkle hash: { # ... &#039;info&#039;: { # ... &#039;root hash&#039;: &lt;binary SHA1 hash&gt;, # ... }, # ... } BitTorrent v2 uses a different type of Merkle tree. A de-bencoded",
+   "title": "Torrent file"
+  },
+  "https://en.wikipedia.org/wiki/Transformer_(deep_learning)": {
+   "file": "pages/transformer-deep-learning.html",
+   "pageid": 61603971,
+   "snippet": "In deep learning, the transformer is a family of artificial neural network architectures based on the multi-head attention mechanism, in which input data",
+   "title": "Transformer (deep learning)"
+  },
+  "https://en.wikipedia.org/wiki/Two-phase_commit_protocol": {
+   "file": "pages/two-phase-commit-protocol.html",
+   "pageid": 787850,
+   "snippet": "databases, and computer networking, the two-phase commit protocol (2PC, tupac) is a type of atomic commitment protocol (ACP). It is a distributed algorithm",
+   "title": "Two-phase commit protocol"
+  },
+  "https://en.wikipedia.org/wiki/Vector_clock": {
+   "file": "pages/vector-clock.html",
+   "pageid": 1376702,
+   "snippet": "distributed system and detecting causality violations. Just as in Lamport timestamps, inter-process messages contain the state of the sending process&#039;s",
+   "title": "Vector clock"
+  },
+  "https://en.wikipedia.org/wiki/Vector_database": {
+   "file": "pages/vector-database.html",
+   "pageid": 74020014,
+   "snippet": "detection, and retrieval-augmented generation. An especially common use-case for vector databases is in retrieval-augmented generation (RAG), a method",
+   "title": "Vector database"
+  },
+  "https://en.wikipedia.org/wiki/Vector_space_model": {
+   "file": "pages/vector-space-model.html",
+   "pageid": 20948989,
+   "snippet": "as (term) weights, have been developed. One of the best known schemes is tf-idf weighting (see the example below). The definition of term depends on the",
+   "title": "Vector space model"
+  },
+  "https://en.wikipedia.org/wiki/Word2Vec": {
+   "file": "pages/word2vec.html",
+   "pageid": 47527969,
+   "snippet": "In natural language processing, Word2Vec is a technique for obtaining vector representations of words as word embeddings. These vectors capture information",
+   "title": "Word2Vec"
+  },
+  "https://en.wikipedia.org/wiki/Word_embedding": {
+   "file": "pages/word-embedding.html",
+   "pageid": 43561218,
+   "snippet": "Mikolov created word2vec, a word embedding toolkit that can train vector space models faster than previous approaches. The word2vec approach has been",
+   "title": "Word embedding"
+  }
+ },
+ "searches": {
+  "a search algorithm": "search/a-search-algorithm.json",
+  "apache kafka": "search/apache-kafka.json",
+  "backpropagation": "search/backpropagation.json",
+  "beam search": "search/beam-search.json",
+  "bloom filter": "search/bloom-filter.json",
+  "byte pair encoding": "search/byte-pair-encoding.json",
+  "byzantine fault": "search/byzantine-fault.json",
+  "cap theorem": "search/cap-theorem.json",
+  "conflict free replicated data type": "search/conflict-free-replicated-data-type.json",
+  "consistent hashing": "search/consistent-hashing.json",
+  "dijkstra s algorithm": "search/dijkstra-s-algorithm.json",
+  "gradient descent": "search/gradient-descent.json",
+  "kalman filter": "search/kalman-filter.json",
+  "lamport timestamp": "search/lamport-timestamp.json",
+  "learning to rank": "search/learning-to-rank.json",
+  "locality sensitive hashing": "search/locality-sensitive-hashing.json",
+  "merkle tree": "search/merkle-tree.json",
+  "monte carlo tree search": "search/monte-carlo-tree-search.json",
+  "okapi bm25": "search/okapi-bm25.json",
+  "pagerank": "search/pagerank.json",
+  "paxos computer science": "search/paxos-computer-science.json",
+  "public key cryptography": "search/public-key-cryptography.json",
+  "raft algorithm": "search/raft-algorithm.json",
+  "reciprocal rank fusion in search": "search/reciprocal-rank-fusion-in-search.json",
+  "reed solomon error correction": "search/reed-solomon-error-correction.json",
+  "retrieval augmented generation": "search/retrieval-augmented-generation.json",
+  "tf idf": "search/tf-idf.json",
+  "transformer deep learning architecture": "search/transformer-deep-learning-architecture.json",
+  "two phase commit protocol": "search/two-phase-commit-protocol.json",
+  "word2vec": "search/word2vec.json"
+ }
+}

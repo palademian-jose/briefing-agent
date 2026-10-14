@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Conjugate gradient method - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Conjugate gradient method</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwDQ">In <a href="https://en.wikipedia.org/wiki/Mathematics" id="mwDg" rel="mw:WikiLink" title="Mathematics">mathematics</a>, the <b id="mwDw">conjugate gradient method</b> is an <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwEA" rel="mw:WikiLink" title="Algorithm">algorithm</a> for the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Numerical_solution" id="mwEQ" rel="mw:WikiLink" title="Numerical solution">numerical solution</a> of particular <a href="https://en.wikipedia.org/wiki/System_of_linear_equations" id="mwEg" rel="mw:WikiLink" title="System of linear equations">systems of linear equations</a>, namely those whose matrix is <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Positive-semidefinite_matrix" id="mwEw" rel="mw:WikiLink" title="Positive-semidefinite matrix">positive-semidefinite</a>. The conjugate gradient method is often implemented as an <a href="https://en.wikipedia.org/wiki/Iterative_method" id="mwFA" rel="mw:WikiLink" title="Iterative method">iterative algorithm</a>, applicable to <a href="https://en.wikipedia.org/wiki/Sparse_matrix" id="mwFQ" rel="mw:WikiLink" title="Sparse matrix">sparse</a> systems that are too large to be handled by a direct implementation or other direct methods such as the <a href="https://en.wikipedia.org/wiki/Cholesky_decomposition" id="mwFg" rel="mw:WikiLink" title="Cholesky decomposition">Cholesky decomposition</a>. Large sparse systems often arise when numerically solving <a href="https://en.wikipedia.org/wiki/Partial_differential_equation" id="mwFw" rel="mw:WikiLink" title="Partial differential equation">partial differential equations</a> or optimization problems.</p>
+<p id="mwGA">The conjugate gradient method can also be used to solve unconstrained <a href="https://en.wikipedia.org/wiki/Mathematical_optimization" id="mwGQ" rel="mw:WikiLink" title="Mathematical optimization">optimization</a> problems such as <a href="https://en.wikipedia.org/wiki/Energy_minimization" id="mwGg" rel="mw:WikiLink" title="Energy minimization">energy minimization</a>. It is commonly attributed to <a href="https://en.wikipedia.org/wiki/Magnus_Hestenes" id="mwGw" rel="mw:WikiLink" title="Magnus Hestenes">Magnus Hestenes</a> and <a href="https://en.wikipedia.org/wiki/Eduard_Stiefel" id="mwHA" rel="mw:WikiLink" title="Eduard Stiefel">Eduard Stiefel</a>,<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwHQ"><span class="mw-reflink-text" id="mwHg"><span class="cite-bracket" id="mwHw">[</span>1<span class="cite-bracket" id="mwIA">]</span></span></a></sup><sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwIQ"><span class="mw-reflink-text" id="mwIg"><span class="cite-bracket" id="mwIw">[</span>2<span class="cite-bracket" id="mwJA">]</span></span></a></sup> who programmed it on the <a href="https://en.wikipedia.org/wiki/Z4_(computer)" id="mwJQ" rel="mw:WikiLink" title="Z4 (computer)">Z4</a>,<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwJg"><span class="mw-reflink-text" id="mwJw"><span class="cite-bracket" id="mwKA">[</span>3<span class="cite-bracket" id="mwKQ">]</span></span></a></sup> and extensively researched it.<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"BP"},"body":{"id":"mw-reference-text-cite_note-BP-4"}}' id="cite_ref-BP_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-BP-4" id="mwKg"><span class="mw-reflink-text" id="mwKw"><span class="cite-bracket" id="mwLA">[</span>4<span class="cite-bracket" id="mwLQ">]</span></span></a></sup><sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"AG"},"body":{"id":"mw-reference-text-cite_note-AG-5"}}' id="cite_ref-AG_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-AG-5" id="mwLg"><span class="mw-reflink-text" id="mwLw"><span class="cite-bracket" id="mwMA">[</span>5<span class="cite-bracket" id="mwMQ">]</span></span></a></sup></p>
+<p id="mwMg">The <a href="https://en.wikipedia.org/wiki/Biconjugate_gradient_method" id="mwMw" rel="mw:WikiLink" title="Biconjugate gradient method">biconjugate gradient method</a> provides a generalization to non-symmetric matrices. Various <a href="https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method" id="mwNA" rel="mw:WikiLink" title="Nonlinear conjugate gradient method">nonlinear conjugate gradient methods</a> seek minima of nonlinear optimization problems.</p>
+<p id="mwNw">Suppose we want to solve the <a href="https://en.wikipedia.org/wiki/System_of_linear_equations" id="mwOA" rel="mw:WikiLink" title="System of linear equations">system of linear equations</a></p>
+<p id="mwPA">for the vector <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}"}}' id="mwPQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span>, where the known <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n \\times n"}}' id="mwPg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n\times n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>×<!-- × --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n\times n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n\times n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/59d2b4cb72e304526cf5b5887147729ea259da78" style="vertical-align: -0.338ex; width:5.63ex; height:1.676ex;"/></span> matrix <span about="#mwt20" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mwPw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span> is <a href="https://en.wikipedia.org/wiki/Symmetric_matrix" id="mwQA" rel="mw:WikiLink" title="Symmetric matrix">symmetric</a> (i.e., <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}^\\mathsf{T} = \\mathbf{A} "}}' id="mwQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} ^{\mathsf {T}}=\mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msup>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} ^{\mathsf {T}}=\mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} ^{\mathsf {T}}=\mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/55a6634f2e3f45aac71d34043dd9d2fa98999d7f" style="vertical-align: -0.338ex; width:8.489ex; height:2.676ex;"/></span>), <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Positive-definite_matrix" id="mwQg" rel="mw:WikiLink" title="Positive-definite matrix">positive-definite</a> (i.e. <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}^\\mathsf{T}\\mathbf{Ax} &gt; 0 "}}' id="mwQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} ^{\mathsf {T}}\mathbf {Ax} &gt;0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>&gt;</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} ^{\mathsf {T}}\mathbf {Ax} &gt;0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} ^{\mathsf {T}}\mathbf {Ax} &gt;0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa3210a017ee27975d177d94bc92cf637eed2c0d" style="vertical-align: -0.338ex; width:10.454ex; height:2.676ex;"/></span> for all non-zero vectors <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}"}}' id="mwRA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> in <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbb{R}^n"}}' id="mwRQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {R} ^{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {R} ^{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {R} ^{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c510b63578322050121fe966f2e5770bea43308d" style="vertical-align: -0.338ex; width:2.897ex; height:2.343ex;"/></span>), and <a href="https://en.wikipedia.org/wiki/Real_number" id="mwRg" rel="mw:WikiLink" title="Real number">real</a>, and <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{b}"}}' id="mwRw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/13ebf4628a1adf07133a6009e4a78bdd990c6eb9" style="vertical-align: -0.338ex; width:1.485ex; height:2.176ex;"/></span> is known as well. We denote the unique solution of this system by <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwSA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span>.</p>
+<p id="mwTA">The conjugate gradient method can be derived from several different perspectives, including specialization of the conjugate direction method for optimization, and variation of the <a href="https://en.wikipedia.org/wiki/Arnoldi_iteration" id="mwTQ" rel="mw:WikiLink" title="Arnoldi iteration">Arnoldi</a>/<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Lanczos_iteration" id="mwTg" rel="mw:WikiLink" title="Lanczos iteration">Lanczos</a> iteration for <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Eigenvalue" id="mwTw" rel="mw:WikiLink" title="Eigenvalue">eigenvalue</a> problems. Despite differences in their approaches, these derivations share a common topic—proving the orthogonality of the residuals and conjugacy of the search directions. These two properties are crucial to developing the well-known succinct formulation of the method.</p>
+<p id="mwUA">We say that two non-zero vectors <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{u}"}}' id="mwUQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {u} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">u</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {u} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {u} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/261e20fe101de02a771021d9d4466c0ad3e352d7" style="vertical-align: -0.338ex; width:1.485ex; height:1.676ex;"/></span> and <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}"}}' id="mwUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/35c1866e359fbfd2e0f606c725ba5cc37a5195d6" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> are conjugate (with respect to <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mwUw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span>) if</p>
+<p id="mwVw">Since <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mwWA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span> is symmetric and positive-definite, the left-hand side defines an <a href="https://en.wikipedia.org/wiki/Inner_product_space" id="mwWQ" rel="mw:WikiLink" title="Inner product space">inner product</a></p>
+<p id="mwXQ">Two vectors are conjugate if and only if they are orthogonal with respect to this inner product. Being conjugate is a symmetric relation: if <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{u}"}}' id="mwXg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {u} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">u</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {u} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {u} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/261e20fe101de02a771021d9d4466c0ad3e352d7" style="vertical-align: -0.338ex; width:1.485ex; height:1.676ex;"/></span> is conjugate to <span about="#mwt36" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}"}}' id="mwXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/35c1866e359fbfd2e0f606c725ba5cc37a5195d6" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span>, then <span about="#mwt37" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}"}}' id="mwYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/35c1866e359fbfd2e0f606c725ba5cc37a5195d6" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> is conjugate to <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{u}"}}' id="mwYQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {u} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">u</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {u} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {u} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/261e20fe101de02a771021d9d4466c0ad3e352d7" style="vertical-align: -0.338ex; width:1.485ex; height:1.676ex;"/></span>. Suppose that</p>
+<p id="mwZQ">is a set of <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwZg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> mutually conjugate vectors with respect to <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mwZw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span>, i.e. <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_i^\\mathsf{T} \\mathbf{A} \\mathbf{p}_j = 0"}}' id="mwaA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/15bc60ca4ebe3169413624c583d818f8f3160501" style="vertical-align: -1.171ex; width:11.512ex; height:3.343ex;"/></span> for all <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i \\neq j"}}' id="mwaQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i\neq j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>≠<!-- ≠ --></mo>
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i\neq j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i\neq j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d95aeb406bb427ac96806bc00c30c91d31b858be" style="vertical-align: -0.838ex; width:4.859ex; height:2.676ex;"/></span>. 
+Then <span about="#mwt44" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P"}}' id="mwag" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4dc73bf40314945ff376bd363916a738548d40a" style="vertical-align: -0.338ex; width:1.745ex; height:2.176ex;"/></span> forms a <a href="https://en.wikipedia.org/wiki/Basis_(linear_algebra)" id="mwaw" rel="mw:WikiLink" title="Basis (linear algebra)">basis</a> for <span about="#mwt45" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbb{R}^n"}}' id="mwbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbb {R} ^{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbb {R} ^{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbb {R} ^{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c510b63578322050121fe966f2e5770bea43308d" style="vertical-align: -0.338ex; width:2.897ex; height:2.343ex;"/></span>, and we may express the solution <span about="#mwt46" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span> of <span about="#mwt47" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Ax} = \\mathbf{b}"}}' id="mwbg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Ax} =\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Ax} =\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Ax} =\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e68388b7df59f536a3bef4e70def2f2bb36f48c0" style="vertical-align: -0.338ex; width:8.014ex; height:2.176ex;"/></span> in this basis:</p>
+<p id="mwcg">Left-multiplying the problem <span about="#mwt49" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Ax} = \\mathbf{b}"}}' id="mwcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Ax} =\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Ax} =\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Ax} =\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e68388b7df59f536a3bef4e70def2f2bb36f48c0" style="vertical-align: -0.338ex; width:8.014ex; height:2.176ex;"/></span> with the vector <span about="#mwt50" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_k^\\mathsf{T}"}}' id="mwdA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k}^{\mathsf {T}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k}^{\mathsf {T}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k}^{\mathsf {T}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d4abb42f156425321819c42e7b4e35a1fb61541e" style="vertical-align: -1.005ex; width:2.837ex; height:3.176ex;"/></span> yields</p>
+<p id="mweA">and so</p>
+<p id="mwfA">This gives the following method<sup about="#mwt53" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"BP"}}' id="cite_ref-BP_4-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-BP-4" id="mwfQ"><span class="mw-reflink-text" id="mwfg"><span class="cite-bracket" id="mwfw">[</span>4<span class="cite-bracket" id="mwgA">]</span></span></a></sup> for solving the equation <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Ax} = \\mathbf{b}"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Ax} =\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Ax} =\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Ax} =\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e68388b7df59f536a3bef4e70def2f2bb36f48c0" style="vertical-align: -0.338ex; width:8.014ex; height:2.176ex;"/></span>: find a sequence of <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> conjugate directions, and then compute the coefficients <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_k"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span>.</p>
+<p id="mwhQ">If we choose the conjugate vectors <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_k"}}' id="mwhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06b38cae31fcc9a4db19b6ac10e053f708135b9c" style="vertical-align: -0.838ex; width:2.574ex; height:2.176ex;"/></span> carefully, then we may not need all of them to obtain a good approximation to the solution <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span>. So, we want to regard the conjugate gradient method as an iterative method. This also allows us to approximately solve systems where <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is so large that the direct method would take too much time.</p>
+<p id="mwiQ">We denote the initial guess for <span about="#mwt60" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwig" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span> by <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0"}}' id="mwiw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/799c59f89751f24a2719c4da95f1acdd3e2faf52" style="vertical-align: -0.671ex; width:2.465ex; height:2.009ex;"/></span> (we can assume without loss of generality that <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0 = \\mathbf{0}"}}' id="mwjA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}=\mathbf {0} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn mathvariant="bold">0</mn>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}=\mathbf {0} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}=\mathbf {0} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b6c399cc266052b17aa189d5b35396a883e2c4c3" style="vertical-align: -0.671ex; width:6.9ex; height:2.509ex;"/></span>, otherwise consider the system <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Az} = \\mathbf{b} - \\mathbf{Ax}_0"}}' id="mwjQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Az} =\mathbf {b} -\mathbf {Ax} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">z</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Az} =\mathbf {b} -\mathbf {Ax} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Az} =\mathbf {b} -\mathbf {Ax} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/caea099045ba2d60db20eaa7b0b6d014a76181fd" style="vertical-align: -0.671ex; width:15.116ex; height:2.509ex;"/></span> instead). Starting with <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0"}}' id="mwjg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/799c59f89751f24a2719c4da95f1acdd3e2faf52" style="vertical-align: -0.671ex; width:2.465ex; height:2.009ex;"/></span> we search for the solution and in each iteration we need a metric to tell us whether we are closer to the solution <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwjw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span> (that is unknown to us). This metric comes from the fact that the solution <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_*"}}' id="mwkA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c4abd06f844ab609d9ca0f71bcf9b26ea841b4c7" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.465ex; height:2.009ex;"/></span> is also the unique minimizer of the following <a href="https://en.wikipedia.org/wiki/Quadratic_function" id="mwkQ" rel="mw:WikiLink" title="Quadratic function">quadratic function</a></p>
+<p id="mwlQ">The existence of a unique minimizer is apparent as its <a href="https://en.wikipedia.org/wiki/Hessian_matrix" id="mwlg" rel="mw:WikiLink" title="Hessian matrix">Hessian matrix</a> of second derivatives is symmetric positive-definite</p>
+<p id="mwmg">and that the minimizer (use <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Df(\\mathbf{x}) = 0"}}' id="mwmw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Df(\mathbf {x} )=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>D</mi>
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Df(\mathbf {x} )=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Df(\mathbf {x} )=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c51b59436f1fd08a3cf408ca1fc2dad5ae7092bb" style="vertical-align: -0.838ex; width:10.684ex; height:2.843ex;"/></span>) solves the initial problem follows from its first derivative</p>
+<p id="mwnw">This suggests taking the first basis vector <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_0"}}' id="mwoA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ae6eb9d63094845ac7406038dc1ed8803f6ef575" style="vertical-align: -0.838ex; width:2.54ex; height:2.176ex;"/></span> to be the negative of the gradient of <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwoQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> at <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x} = \\mathbf{x}_0"}}' id="mwog" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} =\mathbf {x} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} =\mathbf {x} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} =\mathbf {x} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8530b6c73bc7920aa4fb072185374e4b230bc6ac" style="vertical-align: -0.671ex; width:6.975ex; height:2.009ex;"/></span>. The gradient of <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> equals <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{Ax} - \\mathbf{b}"}}' id="mwpA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Ax} -\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Ax} -\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Ax} -\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5001942888f00ea8ebf0cde5605c6d4fa71e8ec7" style="vertical-align: -0.505ex; width:7.756ex; height:2.343ex;"/></span>. Starting with an initial guess <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0"}}' id="mwpQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/799c59f89751f24a2719c4da95f1acdd3e2faf52" style="vertical-align: -0.671ex; width:2.465ex; height:2.009ex;"/></span>, this means we take <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_0 = \\mathbf{b} - \\mathbf{Ax}_0 "}}' id="mwpg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{0}=\mathbf {b} -\mathbf {Ax} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{0}=\mathbf {b} -\mathbf {Ax} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{0}=\mathbf {b} -\mathbf {Ax} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/50723b714e958e3d0c5fdd946ee03fd850fa60ba" style="vertical-align: -0.838ex; width:14.448ex; height:2.676ex;"/></span>. The other vectors in the basis will be conjugate to the gradient, hence the name <i id="mwpw">conjugate gradient method</i>.  Note that <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_0"}}' id="mwqA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ae6eb9d63094845ac7406038dc1ed8803f6ef575" style="vertical-align: -0.838ex; width:2.54ex; height:2.176ex;"/></span> is also the <a href="https://en.wikipedia.org/wiki/Residual_(numerical_analysis)" id="mwqQ" rel="mw:WikiLink" title="Residual (numerical analysis)">residual</a> provided by this initial step of the algorithm.</p>
+<p id="mwqg">Let <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_k"}}' id="mwqw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01da6ca6fcfe0ac44e859a2bad84c3d90846f195" style="vertical-align: -0.671ex; width:2.191ex; height:2.009ex;"/></span> be the <a href="https://en.wikipedia.org/wiki/Residual_(numerical_analysis)" id="mwrA" rel="mw:WikiLink" title="Residual (numerical analysis)">residual</a> at the <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwrQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>th step:</p>
+<p id="mwsQ">As observed above, <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_k"}}' id="mwsg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01da6ca6fcfe0ac44e859a2bad84c3d90846f195" style="vertical-align: -0.671ex; width:2.191ex; height:2.009ex;"/></span> is the negative gradient of <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwsw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> at <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_k"}}' id="mwtA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/30d5e53bbed2b7e7f9d201d7873e69b4b3f5c343" style="vertical-align: -0.671ex; width:2.5ex; height:2.009ex;"/></span>, so the <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwtQ" rel="mw:WikiLink" title="Gradient descent">gradient descent</a> method would require to move in the direction <b id="mwtg">r</b><sub id="mwtw"><i id="mwuA">k</i></sub>. Here, however, we insist that the directions <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_k"}}' id="mwuQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06b38cae31fcc9a4db19b6ac10e053f708135b9c" style="vertical-align: -0.838ex; width:2.574ex; height:2.176ex;"/></span> must be conjugate to each other. A practical way to enforce this is by requiring that the next search direction be built out of the current residual and all previous search directions. The conjugation constraint is an orthonormal-type constraint and hence the algorithm can be viewed as an example of <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" id="mwug" rel="mw:WikiLink" title="Gram–Schmidt process">Gram-Schmidt orthonormalization</a>. This gives the following expression:</p>
+<p id="mwvg">(see the picture at the top of the article for the effect of the conjugacy constraint on convergence). Following this direction, the next optimal location is given by</p>
+<p id="mwwg">with </p>
+<p id="mwxg">where the last equality follows from the definition of <span about="#mwt89" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_k"}}' id="mwxw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01da6ca6fcfe0ac44e859a2bad84c3d90846f195" style="vertical-align: -0.671ex; width:2.191ex; height:2.009ex;"/></span> .
+The expression for <span about="#mwt90" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\alpha_k "}}' id="mwyA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span> can be derived if one substitutes the expression for <b id="mwyQ">x</b><sub id="mwyg"><i id="mwyw">k</i>+1</sub> into <i id="mwzA">f</i> and minimizing it with respect to <span about="#mwt91" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\alpha_k "}}' id="mwzQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span></p>
+<p id="mw0g">The above algorithm gives the most straightforward explanation of the conjugate gradient method.  Seemingly, the algorithm as stated requires storage of all previous searching directions and residual vectors, as well as many matrix–vector multiplications, and thus can be computationally expensive. However, a closer analysis<sup about="#mwt96" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mw0w"><span class="mw-reflink-text" id="mw1A"><span class="cite-bracket" id="mw1Q">[</span>6<span class="cite-bracket" id="mw1g">]</span></span></a></sup><sup about="#mwt93" class="reference nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"rp","href":"./Template:Rp"},"params":{"1":{"wt":"p.558"}},"i":0}}]}' id="mw1w" typeof="mw:Transclusion"><span title="Page / location: p.558"><span typeof="mw:Entity">:</span><span typeof="mw:Entity"> </span>p.558<span typeof="mw:Entity"> </span></span></sup> of the algorithm shows that <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_i"}}' id="mw2A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ed603561819ebd007acd75a0931d3ba401ad677a" style="vertical-align: -0.671ex; width:1.902ex; height:2.009ex;"/></span> is orthogonal to <span about="#mwt98" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_j"}}' id="mw2Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/609bdd34e1060e0d89cb81aad617e36d6116b2a8" style="vertical-align: -1.005ex; width:2.012ex; height:2.343ex;"/></span>, i.e. <span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_i^\\mathsf{T} \\mathbf{r}_j=0 "}}' id="mw2g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{i}^{\mathsf {T}}\mathbf {r} _{j}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msubsup>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{i}^{\mathsf {T}}\mathbf {r} _{j}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{i}^{\mathsf {T}}\mathbf {r} _{j}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a484cd137e5b21600020b0de71e2e13cf7384fa3" style="vertical-align: -1.005ex; width:8.726ex; height:3.176ex;"/></span>, for <span about="#mwt100" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i \\neq j"}}' id="mw2w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i\neq j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>≠<!-- ≠ --></mo>
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i\neq j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i\neq j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d95aeb406bb427ac96806bc00c30c91d31b858be" style="vertical-align: -0.838ex; width:4.859ex; height:2.676ex;"/></span>. And <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_i"}}' id="mw3A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f92664042a291accf70dd087f3dea939ad833419" style="vertical-align: -0.838ex; width:2.285ex; height:2.176ex;"/></span> is <span about="#mwt102" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mw3Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span>-orthogonal to <span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_j"}}' id="mw3g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2523085df78a1e0eb66e85e952d39239c9bbd5ce" style="vertical-align: -1.171ex; width:2.395ex; height:2.509ex;"/></span>,   i.e. <span about="#mwt104" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_i^\\mathsf{T} \\mathbf{A} \\mathbf{p}_j=0 "}}' id="mw3w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msubsup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{i}^{\mathsf {T}}\mathbf {A} \mathbf {p} _{j}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/15bc60ca4ebe3169413624c583d818f8f3160501" style="vertical-align: -1.171ex; width:11.512ex; height:3.343ex;"/></span>, for <span about="#mwt105" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i \\neq j"}}' id="mw4A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i\neq j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>≠<!-- ≠ --></mo>
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i\neq j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i\neq j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d95aeb406bb427ac96806bc00c30c91d31b858be" style="vertical-align: -0.838ex; width:4.859ex; height:2.676ex;"/></span>. This can be regarded that as the algorithm progresses, <span about="#mwt106" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_i"}}' id="mw4Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f92664042a291accf70dd087f3dea939ad833419" style="vertical-align: -0.838ex; width:2.285ex; height:2.176ex;"/></span> and <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_i"}}' id="mw4g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ed603561819ebd007acd75a0931d3ba401ad677a" style="vertical-align: -0.671ex; width:1.902ex; height:2.009ex;"/></span> span the same <a href="https://en.wikipedia.org/wiki/Krylov_subspace" id="mw4w" rel="mw:WikiLink" title="Krylov subspace">Krylov subspace</a>, where <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_i"}}' id="mw5A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ed603561819ebd007acd75a0931d3ba401ad677a" style="vertical-align: -0.671ex; width:1.902ex; height:2.009ex;"/></span> form the orthogonal basis with respect to the standard inner product, and <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_i"}}' id="mw5Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f92664042a291accf70dd087f3dea939ad833419" style="vertical-align: -0.838ex; width:2.285ex; height:2.176ex;"/></span> form the orthogonal basis with respect to the inner product induced by <span about="#mwt110" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mw5g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span>. Therefore, <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_k"}}' id="mw5w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/30d5e53bbed2b7e7f9d201d7873e69b4b3f5c343" style="vertical-align: -0.671ex; width:2.5ex; height:2.009ex;"/></span> can be regarded as the projection of <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}"}}' id="mw6A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/32adf004df5eb0a8c7fd8c0b6b7405183c5a5ef2" style="vertical-align: -0.338ex; width:1.411ex; height:1.676ex;"/></span> on the Krylov subspace.</p>
+<p id="mw6Q">That is, if the CG method starts with <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0 = 0"}}' id="mw6g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8637b2251d7bd051064b505202ab7119794451c0" style="vertical-align: -0.671ex; width:6.726ex; height:2.509ex;"/></span>, then<sup about="#mwt116" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mw6w"><span class="mw-reflink-text" id="mw7A"><span class="cite-bracket" id="mw7Q">[</span>7<span class="cite-bracket" id="mw7g">]</span></span></a></sup><span about="#mwt117" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"x_k =\n\\mathrm{argmin}_{y \\in \\mathbb{R}^n}\n{\\left\\{(x_*-y)^{\\top} A(x_*-y): y \\in \\operatorname{span}\\left\\{b, A b, \\ldots, A^{k-1} b\\right\\}\\right\\}}"}}' id="mw7w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{k}=\mathrm {argmin} _{y\in \mathbb {R} ^{n}}{\left\{(x_{*}-y)^{\top }A(x_{*}-y):y\in \operatorname {span} \left\{b,Ab,\ldots ,A^{k-1}b\right\}\right\}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">a</mi>
+<mi mathvariant="normal">r</mi>
+<mi mathvariant="normal">g</mi>
+<mi mathvariant="normal">m</mi>
+<mi mathvariant="normal">i</mi>
+<mi mathvariant="normal">n</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>y</mi>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>{</mo>
+<mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<mi>y</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="normal">⊤<!-- ⊤ --></mi>
+</mrow>
+</msup>
+<mi>A</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+<mo>:</mo>
+<mi>y</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>span</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mrow>
+<mo>{</mo>
+<mrow>
+<mi>b</mi>
+<mo>,</mo>
+<mi>A</mi>
+<mi>b</mi>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msup>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mi>b</mi>
+</mrow>
+<mo>}</mo>
+</mrow>
+</mrow>
+<mo>}</mo>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{k}=\mathrm {argmin} _{y\in \mathbb {R} ^{n}}{\left\{(x_{*}-y)^{\top }A(x_{*}-y):y\in \operatorname {span} \left\{b,Ab,\ldots ,A^{k-1}b\right\}\right\}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{k}=\mathrm {argmin} _{y\in \mathbb {R} ^{n}}{\left\{(x_{*}-y)^{\top }A(x_{*}-y):y\in \operatorname {span} \left\{b,Ab,\ldots ,A^{k-1}b\right\}\right\}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/13cdffdb9f96f906be1aaad8269510d36afde5e8" style="vertical-align: -1.171ex; width:68.456ex; height:3.509ex;"/></span> where <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_*"}}' id="mw8A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54181bafc8b3401909a790683476457984f484ba" style="vertical-align: -0.293ex; margin-bottom: -0.379ex; width:2.384ex; height:2.009ex;"/></span> is the solution to <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A} \\mathbf{x}= \\mathbf{b}"}}' id="mw8Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1688bdcfe95659c92f6452378ee805da3f796c8" style="vertical-align: -0.338ex; width:8.014ex; height:2.176ex;"/></span>.</p>
+<p id="mw8g">The algorithm is detailed below for solving <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A} \\mathbf{x}= \\mathbf{b}"}}' id="mw8w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} \mathbf {x} =\mathbf {b} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c1688bdcfe95659c92f6452378ee805da3f796c8" style="vertical-align: -0.338ex; width:8.014ex; height:2.176ex;"/></span> where <span about="#mwt121" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mw9A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span> is a real, symmetric, positive-definite matrix. The input vector <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_0"}}' id="mw9Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/799c59f89751f24a2719c4da95f1acdd3e2faf52" style="vertical-align: -0.671ex; width:2.465ex; height:2.009ex;"/></span> can be an approximate initial solution or <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{0}"}}' id="mw9g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {0} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mn mathvariant="bold">0</mn>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {0} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {0} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/62e8c650763635a93ddc69768c3c0c100afe985d" style="vertical-align: -0.338ex; width:1.337ex; height:2.176ex;"/></span>. It is a different formulation of the exact procedure described above.</p>
+<p id="mw-g">This is the most commonly used algorithm. The same formula for <span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_k"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/026079ab88c28912592bb6e6d2a096f8253a5fba" style="vertical-align: -0.671ex; width:2.404ex; height:2.509ex;"/></span> is also used in the Fletcher–Reeves <a href="https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method" id="mw_A" rel="mw:WikiLink" title="Nonlinear conjugate gradient method">nonlinear conjugate gradient method</a>.</p>
+<p id="mw_g">The formulas <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_{k+1} := \\mathbf{x}_k + \\alpha_k \\mathbf{p}_k"}}' id="mw_w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k+1}:=\mathbf {x} _{k}+\alpha _{k}\mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k+1}:=\mathbf {x} _{k}+\alpha _{k}\mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k+1}:=\mathbf {x} _{k}+\alpha _{k}\mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ffac354ea88e8f856f97a77d891ff1bb61807eb2" style="vertical-align: -0.838ex; width:18.836ex; height:2.509ex;"/></span> and <span about="#mwt127" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_k := \\mathbf{b} - \\mathbf{A x}_k"}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}:=\mathbf {b} -\mathbf {Ax} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>:=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}:=\mathbf {b} -\mathbf {Ax} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}:=\mathbf {b} -\mathbf {Ax} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/691cc854ce118046813b4fe8c8855607e756cad9" style="vertical-align: -0.671ex; width:14.781ex; height:2.509ex;"/></span>, which both hold in exact arithmetic, make the formulas <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} := \\mathbf{r}_k - \\alpha_k \\mathbf{A p}_k"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/99b50815f83be24363c03d812795e1b89bbebe83" style="vertical-align: -0.838ex; width:20.238ex; height:2.676ex;"/></span> and <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} := \\mathbf{b} - \\mathbf{A x}_{k+1}"}}' id="mwAQI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a7e846e5419924cef9608b4696518ccda0935ead" style="vertical-align: -0.671ex; width:18.982ex; height:2.509ex;"/></span> mathematically equivalent. The former is used in the algorithm to avoid an extra multiplication by <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A}"}}' id="mwAQM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0795cc96c75d81520a120482662b90f024c9a1a1" style="vertical-align: -0.338ex; width:2.019ex; height:2.176ex;"/></span> since the vector <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{A p}_k"}}' id="mwAQQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {Ap} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {Ap} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {Ap} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d94bb92d774329678153cf8a3a2a8600b9391574" style="vertical-align: -0.838ex; width:4.594ex; height:2.676ex;"/></span> is already computed to evaluate <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_k"}}' id="mwAQU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span>. The latter may be more accurate, substituting the explicit calculation <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} := \\mathbf{b} - \\mathbf{A x}_{k+1}"}}' id="mwAQY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a7e846e5419924cef9608b4696518ccda0935ead" style="vertical-align: -0.671ex; width:18.982ex; height:2.509ex;"/></span> for the implicit one by the recursion subject to <a href="https://en.wikipedia.org/wiki/Round-off_error" id="mwAQc" rel="mw:WikiLink" title="Round-off error">round-off error</a> accumulation, and is thus recommended for an occasional evaluation.<sup about="#mwt136" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwAQg"><span class="mw-reflink-text" id="mwAQk"><span class="cite-bracket" id="mwAQo">[</span>8<span class="cite-bracket" id="mwAQs">]</span></span></a></sup></p>
+<p id="mwAQw">A norm of the residual is typically used for stopping criteria. The norm of the explicit residual <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} := \\mathbf{b} - \\mathbf{A x}_{k+1}"}}' id="mwAQ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">b</mi>
+</mrow>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {b} -\mathbf {Ax} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a7e846e5419924cef9608b4696518ccda0935ead" style="vertical-align: -0.671ex; width:18.982ex; height:2.509ex;"/></span> provides a guaranteed level of accuracy both in exact arithmetic and in the presence of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rounding_errors" id="mwAQ4" rel="mw:WikiLink" title="Rounding errors">rounding errors</a>, where convergence naturally stagnates. In contrast, the implicit residual <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} := \\mathbf{r}_k - \\alpha_k \\mathbf{A p}_k"}}' id="mwAQ8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>:=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}:=\mathbf {r} _{k}-\alpha _{k}\mathbf {Ap} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/99b50815f83be24363c03d812795e1b89bbebe83" style="vertical-align: -0.838ex; width:20.238ex; height:2.676ex;"/></span> is known to keep getting smaller in amplitude well below the level of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Rounding_errors" id="mwARA" rel="mw:WikiLink" title="Rounding errors">rounding errors</a> and thus cannot be used to determine the stagnation of convergence.</p>
+<p id="mwARI">In the algorithm, <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_k"}}' id="mwARM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span> is chosen such that <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1}"}}' id="mwARQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2841f98bd102ee7d76d02c8cab09e897f51f69ee" style="vertical-align: -0.671ex; width:4.291ex; height:2.009ex;"/></span> is orthogonal to <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k}"}}' id="mwARU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01da6ca6fcfe0ac44e859a2bad84c3d90846f195" style="vertical-align: -0.671ex; width:2.191ex; height:2.009ex;"/></span>. The denominator is simplified from</p>
+<p id="mwARk">since <span about="#mwt143" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1} = \\mathbf{p}_{k+1}-\\mathbf{\\beta}_{k}\\mathbf{p}_{k}"}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}=\mathbf {p} _{k+1}-\mathbf {\beta } _{k}\mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>β<!-- β --></mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}=\mathbf {p} _{k+1}-\mathbf {\beta } _{k}\mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}=\mathbf {p} _{k+1}-\mathbf {\beta } _{k}\mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3eef907512a79b9d51a2c6384e16a9c4a94d6cb4" style="vertical-align: -1.005ex; width:19.883ex; height:2.843ex;"/></span>. The <span about="#mwt144" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_k"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/026079ab88c28912592bb6e6d2a096f8253a5fba" style="vertical-align: -0.671ex; width:2.404ex; height:2.509ex;"/></span> is chosen such that <span about="#mwt145" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_{k+1}"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9b3ba919158c5496b6f2cb693c6ca018a3aa9222" style="vertical-align: -1.005ex; width:4.675ex; height:2.343ex;"/></span> is conjugate to <span about="#mwt146" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_{k}"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06b38cae31fcc9a4db19b6ac10e053f708135b9c" style="vertical-align: -0.838ex; width:2.574ex; height:2.176ex;"/></span>. Initially, <span about="#mwt147" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_k"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/026079ab88c28912592bb6e6d2a096f8253a5fba" style="vertical-align: -0.671ex; width:2.404ex; height:2.509ex;"/></span> is</p>
+<p id="mwASI">using</p>
+<p id="mwASY">and equivalently</p>
+<p id="mwASc"><span about="#mwt150" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\mathbf{A} \\mathbf{p}_{k} = \\frac{1}{\\alpha_{k}} (\\mathbf{r}_{k} - \\mathbf{r}_{k+1}), "}}' id="mwASg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {A} \mathbf {p} _{k}={\frac {1}{\alpha _{k}}}(\mathbf {r} _{k}-\mathbf {r} _{k+1}),}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">A</mi>
+</mrow>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mfrac>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {A} \mathbf {p} _{k}={\frac {1}{\alpha _{k}}}(\mathbf {r} _{k}-\mathbf {r} _{k+1}),}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {A} \mathbf {p} _{k}={\frac {1}{\alpha _{k}}}(\mathbf {r} _{k}-\mathbf {r} _{k+1}),}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4a94e770932ccd110a2771c43cd69ac3bd83416e" style="vertical-align: -2.171ex; width:22.883ex; height:5.509ex;"/></span></p>
+<p id="mwASk">the numerator of <span about="#mwt151" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_k"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/026079ab88c28912592bb6e6d2a096f8253a5fba" style="vertical-align: -0.671ex; width:2.404ex; height:2.509ex;"/></span> is rewritten as</p>
+<p id="mwAS4">because <span about="#mwt153" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k+1}"}}' id="mwAS8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2841f98bd102ee7d76d02c8cab09e897f51f69ee" style="vertical-align: -0.671ex; width:4.291ex; height:2.009ex;"/></span> and <span about="#mwt154" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}_{k}"}}' id="mwATA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01da6ca6fcfe0ac44e859a2bad84c3d90846f195" style="vertical-align: -0.671ex; width:2.191ex; height:2.009ex;"/></span> are orthogonal by design. The denominator is rewritten as</p>
+<p id="mwATQ">using that the search directions <span about="#mwt156" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_k"}}' id="mwATU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06b38cae31fcc9a4db19b6ac10e053f708135b9c" style="vertical-align: -0.838ex; width:2.574ex; height:2.176ex;"/></span> are conjugated and again that the residuals are orthogonal. This gives the <span about="#mwt157" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta"}}' id="mwATY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>β<!-- β --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7ed48a5e36207156fb792fa79d29925d2f7901e8" style="vertical-align: -0.671ex; width:1.332ex; height:2.509ex;"/></span> in the algorithm after cancelling <span about="#mwt158" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha_k"}}' id="mwATc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha _{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>α<!-- α --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha _{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha _{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/717fd9a74d91add9739563c16ac357ce33924860" style="vertical-align: -0.671ex; width:2.576ex; height:2.009ex;"/></span>.</p>
+<p id="mwA0s">Setting <span about="#mwt161" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_k=0"}}' id="mwA0w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{k}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{k}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{k}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b3ca4570b75ca11125742927e1faf5c6bc9f155d" style="vertical-align: -0.671ex; width:6.665ex; height:2.509ex;"/></span> in the recurrence above makes the next
+search direction equal to the new residual,
+<span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{p}_{k+1}=\\mathbf{r}_{k+1}"}}' id="mwA00" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {p} _{k+1}=\mathbf {r} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">p</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {p} _{k+1}=\mathbf {r} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {p} _{k+1}=\mathbf {r} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f22e8a2c7b731d3751da01a4781ae0f95efe64f6" style="vertical-align: -1.005ex; width:12.064ex; height:2.343ex;"/></span>, and hence restarts the
+conjugate gradient iteration from <span about="#mwt163" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{x}_{k+1}"}}' id="mwA04" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {x} _{k+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">x</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {x} _{k+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {x} _{k+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8f40ebe8904cf458a45c47fe3017e153316015aa" style="vertical-align: -0.671ex; width:4.6ex; height:2.009ex;"/></span>. A
+fixed-length restart after every <span about="#mwt164" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwA08" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span> iterations can be
+implemented by setting <span about="#mwt165" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\beta_{js-1}=0"}}' id="mwA1A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \beta _{js-1}=0}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>β<!-- β --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mi>s</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>0</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \beta _{js-1}=0}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \beta _{js-1}=0}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/631d9981ec4d5a20849e8321b05389440f2d24ce" style="vertical-align: -1.005ex; width:9.358ex; height:2.843ex;"/></span> for
+<span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j=1,2,\\ldots"}}' id="mwA1E" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j=1,2,\ldots }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j=1,2,\ldots }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j=1,2,\ldots }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0c7e6469d3c7b1a834f459479eb4f61ee0006577" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:11.199ex; height:2.509ex;"/></span>. Restarts may slow convergence, but can improve
+stability when the conjugacy of the computed search directions is degraded
+by <a href="https://en.wikipedia.org/wiki/Round-off_error" id="mwA1I" rel="mw:WikiLink" title="Round-off error">round-off error</a>.<sup about="#mwt167" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"BP"}}' id="cite_ref-BP_4-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-BP-4" id="mwA1M"><span class="mw-reflink-text" id="mwA1Q"><span class="cite-bracket" id="mwA1U">[</span>4<span class="cite-bracket" id="mwA1Y">]</span></span></a></sup></p>
+<p id="mwA1g">For a real <a href="https://en.wikipedia.org/wiki/Symmetric_matrix" id="mwA1k" rel="mw:WikiLink" title="Symmetric matrix">symmetric</a>
+<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Positive-definite_matrix" id="mwA1o" rel="mw:WikiLink" title="Positive-definite matrix">positive-definite</a> matrix <span about="#mwt168" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A"}}' id="mwA1s" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7daff47fa58cdfd29dc333def748ff5fa4c923e3" style="vertical-align: -0.338ex; width:1.743ex; height:2.176ex;"/></span>,
+applying <span about="#mwt169" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwA1w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span> steps of the conjugate gradient method and then
+restarting is mathematically equivalent, in exact arithmetic, to the
+<i id="mwA10">optimum <span about="#mwt170" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"s"}}' id="mwA14" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle s}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>s</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle s}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle s}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01d131dfd7673938b947072a13a9744fe997e632" style="vertical-align: -0.338ex; width:1.09ex; height:1.676ex;"/></span>-gradient method</i> studied by
+<a href="https://en.wikipedia.org/wiki/George_Forsythe" id="mwA18" rel="mw:WikiLink" title="George Forsythe">George Forsythe</a> in 1968.<sup about="#mwt173" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Forsythe1968"},"body":{"id":"mw-reference-text-cite_note-Forsythe1968-9"}}' id="cite_ref-Forsythe1968_9-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Forsythe1968-9" id="mwA2A"><span class="mw-reflink-text" id="mwA2E"><span class="cite-bracket" id="mwA2I">[</span>9<span class="cite-bracket" id="mwA2M">]</span></span></a></sup><sup about="#mwt176" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"FaberLiesenTichy2023"},"body":{"id":"mw-reference-text-cite_note-FaberLiesenTichy2023-10"}}' id="cite_ref-FaberLiesenTichy2023_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-FaberLiesenTichy2023-10" id="mwA2Q"><span class="mw-reflink-text" id="mwA2U"><span class="cite-bracket" id="mwA2Y">[</span>10<span class="cite-bracket" id="mwA2c">]</span></span></a></sup></p>
+<p id="mwA2g">Let <span about="#mwt177" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{r}^{(j)}"}}' id="mwA2k" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {r} ^{(j)}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">r</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo stretchy="false">(</mo>
+<mi>j</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {r} ^{(j)}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {r} ^{(j)}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b2b7f65e140d2fed770dafe6e2b95ef91c37acb2" style="vertical-align: -0.338ex; width:3.291ex; height:2.843ex;"/></span> denote the residual at the beginning of
+the <span about="#mwt178" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"j"}}' id="mwA2o" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle j}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>j</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle j}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle j}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f461e54f5c093e92a55547b9764291390f0b5d0" style="vertical-align: -0.671ex; margin-left: -0.027ex; width:0.985ex; height:2.509ex;"/></span>th restart cycle and, when it is nonzero, define its
+normalized direction by</p>
+</div></div>
+</body></html>

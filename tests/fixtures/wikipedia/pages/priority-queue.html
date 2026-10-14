@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Priority queue - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Priority queue</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwBA" rel="mw:WikiLink" title="Computer science">computer science</a>, a <b id="mwBQ">priority queue</b> is an <a href="https://en.wikipedia.org/wiki/Abstract_data_type" id="mwBg" rel="mw:WikiLink" title="Abstract data type">abstract data type</a> similar to a regular <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)" id="mwBw" rel="mw:WikiLink" title="Queue (abstract data type)">queue</a> where each element has an associated priority determining its order of service.<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-1"}}' id="cite_ref-:0_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwCA"><span class="mw-reflink-text" id="mwCQ"><span class="cite-bracket" id="mwCg">[</span>1<span class="cite-bracket" id="mwCw">]</span></span></a></sup> Priority queue serves highest priority items first.<sup about="#mwt5" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwDA"><span class="mw-reflink-text" id="mwDQ"><span class="cite-bracket" id="mwDg">[</span>1<span class="cite-bracket" id="mwDw">]</span></span></a></sup> Priority values have to be instances of an ordered data type, and higher priority can be given either to the lesser or to the greater values with respect to the given order relation. For example, in the <a href="https://en.wikipedia.org/wiki/Java_(programming_language)" id="mwEA" rel="mw:WikiLink" title="Java (programming language)">Java</a> standard library, the PriorityQueue class considers the lowest element with respect to their order as having the highest priority.<sup about="#mwt8" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwEQ"><span class="mw-reflink-text" id="mwEg"><span class="cite-bracket" id="mwEw">[</span>2<span class="cite-bracket" id="mwFA">]</span></span></a></sup></p>
+<p id="mwFQ">While priority queues are often implemented using <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)" id="mwFg" rel="mw:WikiLink" title="Heap (data structure)">heaps</a>, they are conceptually distinct. A priority queue can be implemented with a heap or with other methods; just as a <a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)" id="mwFw" rel="mw:WikiLink" title="List (abstract data type)">list</a> can be implemented with a <a href="https://en.wikipedia.org/wiki/Linked_list" id="mwGA" rel="mw:WikiLink" title="Linked list">linked list</a> or with an <a href="https://en.wikipedia.org/wiki/Array_(data_structure)" id="mwGQ" rel="mw:WikiLink" title="Array (data structure)">array</a>.</p>
+<p id="mwHA">A priority queue has the following operations:<sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwHQ"><span class="mw-reflink-text" id="mwHg"><span class="cite-bracket" id="mwHw">[</span>3<span class="cite-bracket" id="mwIA">]</span></span></a></sup><sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-4"}}' id="cite_ref-:1_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-4" id="mwIQ"><span class="mw-reflink-text" id="mwIg"><span class="cite-bracket" id="mwIw">[</span>4<span class="cite-bracket" id="mwJA">]</span></span></a></sup><sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"},"body":{"id":"mw-reference-text-cite_note-:2-5"}}' id="cite_ref-:2_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-5" id="mwJQ"><span class="mw-reflink-text" id="mwJg"><span class="cite-bracket" id="mwJw">[</span>5<span class="cite-bracket" id="mwKA">]</span></span></a></sup></p>
+<p id="mwTQ"><a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)" id="mwTg" rel="mw:WikiLink" title="Stack (abstract data type)">Stacks</a> and <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)" id="mwTw" rel="mw:WikiLink" title="Queue (abstract data type)">queues</a> can be implemented as particular kinds of priority queues, with the priority determined by the order in which the elements are inserted. In a stack, the priority of each inserted element is monotonically increasing; thus, the last element inserted is always the first retrieved. In a queue, the priority of each inserted element is monotonically decreasing; thus, the first element inserted is always the first retrieved.</p>
+<p id="mwUA">In some implementations, if two elements have the same priority, they are served in the same order in which they were enqueued. In other implementations, the order of elements with the same priority is undefined.</p>
+<p id="mwUw">One can create a simple, but inefficient priority queue in a number of ways. These naive implementations can demonstrate the expected behaviour of a priority queue in a simpler manner.</p>
+<p id="mwcA">To improve performance, priority queues are typically based on a <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)" id="mwcQ" rel="mw:WikiLink" title="Heap (data structure)">heap</a>, giving <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> performance for inserts and removals, and <span about="#mwt34" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n)"}}' id="mwcw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" style="vertical-align: -0.838ex; width:4.977ex; height:2.843ex;"/></span> to build the <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)" id="mwdA" rel="mw:WikiLink" title="Heap (data structure)">heap</a> initially from a set of <span about="#mwt35" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwdQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> elements. Variants of the basic heap data structure such as <a href="https://en.wikipedia.org/wiki/Pairing_heap" id="mwdg" rel="mw:WikiLink" title="Pairing heap">pairing heaps</a> or <a href="https://en.wikipedia.org/wiki/Fibonacci_heap" id="mwdw" rel="mw:WikiLink" title="Fibonacci heap">Fibonacci heaps</a> can provide better bounds for some operations.<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CLRS_priority_queue_pp476"},"body":{"id":"mw-reference-text-cite_note-CLRS_priority_queue_pp476-6"}}' id="cite_ref-CLRS_priority_queue_pp476_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CLRS_priority_queue_pp476-6" id="mweA"><span class="mw-reflink-text" id="mweQ"><span class="cite-bracket" id="mweg">[</span>6<span class="cite-bracket" id="mwew">]</span></span></a></sup></p>
+<p id="mwfA">Alternatively, when a <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree" id="mwfQ" rel="mw:WikiLink" title="Self-balancing binary search tree">self-balancing binary search tree</a> is used, insertion and removal also take <span about="#mwt39" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> time, although building trees from existing sequences of elements takes <span about="#mwt40" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n \\log n)"}}' id="mwfw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9d2320768fb54880ca4356e61f60eb02a3f9d9f1" style="vertical-align: -0.838ex; width:10.118ex; height:2.843ex;"/></span> time; this is typical where one might already have access to these data structures, such as with third-party or standard libraries. From a space-complexity standpoint, using <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree" id="mwgA" rel="mw:WikiLink" title="Self-balancing binary search tree">self-balancing binary search tree</a> with <a href="https://en.wikipedia.org/wiki/Linked_list" id="mwgQ" rel="mw:WikiLink" title="Linked list">linked list</a> takes more storage, since it requires storing extra references to other nodes.</p>
+<p id="mwgg">From a computational-complexity standpoint, priority queues are congruent to sorting algorithms. The section on <a class="mw-selflink-fragment" href="#Equivalence_of_priority_queues_and_sorting_algorithms" id="mwgw" rel="mw:WikiLink">the equivalence of priority queues and sorting algorithms</a>, below, describes how efficient sorting algorithms can create efficient priority queues.</p>
+<p id="mwhQ">There are several specialized <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)" id="mwhg" rel="mw:WikiLink" title="Heap (data structure)">heap</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Data_structures" id="mwhw" rel="mw:WikiLink" title="Data structures">data structures</a> that either supply additional operations or outperform heap-based implementations for specific types of keys, specifically integer keys. Suppose the set of possible keys is <span about="#mwt41" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{1, 2, ..., C\\}"}}' id="mwiA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{1,2,...,C\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mi>C</mi>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{1,2,...,C\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{1,2,...,C\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2e482c394abf2e547aa20bbbe7fe9a6d3871a877" style="vertical-align: -0.838ex; width:12.62ex; height:2.843ex;"/></span>.</p>
+<p id="mwvg">For applications that do many "<a href="https://en.wikipedia.org/wiki/Peek_(data_type_operation)" id="mwvw" rel="mw:WikiLink" title="Peek (data type operation)">peek</a>" operations for every "<code id="mwwA">extract-min</code>" operation, the time complexity for peek actions can be reduced to <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwwQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> in all tree and heap implementations by caching the highest priority element after every insertion and removal. For insertion, this adds at most a constant cost, since the newly inserted element is compared only to the previously cached minimum element. For deletion, this at most adds an additional "peek" cost, which is typically cheaper than the deletion cost, so overall time complexity is not significantly impacted.</p>
+<p id="mwwg"><a href="https://en.wikipedia.org/wiki/Monotone_priority_queue" id="mwww" rel="mw:WikiLink" title="Monotone priority queue">Monotone priority queues</a> are specialized queues that are optimized for the case where no item is ever inserted that has a lower priority (in the case of min-heap) than any item previously extracted. This restriction is met by several practical applications of priority queues.</p>
+<p about="#mwt63" data-mw='{"parts":[{"template":{"target":{"wt":"Heap Running Times","href":"./Template:Heap_Running_Times"},"params":{},"i":0}}]}' id="mwxQ" typeof="mw:Transclusion">Here are <a href="https://en.wikipedia.org/wiki/Computational_complexity_theory" rel="mw:WikiLink" title="Computational complexity theory">time complexities</a><sup about="#mwt66" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CLRS"},"body":{"id":"mw-reference-text-cite_note-CLRS-10"}}' id="cite_ref-CLRS_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CLRS-10" id="mwxg"><span class="mw-reflink-text" id="mwxw"><span class="cite-bracket" id="mwyA">[</span>10<span class="cite-bracket" id="mwyQ">]</span></span></a></sup> of various heap data structures. The abbreviation <abbr about="#mwt189" data-mw='{"attribs":[[{"txt":"title"},{"html":"&lt;span typeof=\"mw:Nowiki\" id=\"mwyg\"&gt;amortized complexity&lt;/span&gt;"}]]}' title="amortized complexity" typeof="mw:ExpandedAttrs">am.</abbr> indicates that the given complexity is amortized, otherwise it is a worst-case complexity. For the meaning of "<i>O</i>(<i>f</i>)" and "<i>Θ</i>(<i>f</i>)" see <a href="https://en.wikipedia.org/wiki/Big_O_notation" rel="mw:WikiLink" title="Big O notation">Big O notation</a>. Names of operations assume a min-heap.</p>
+<p id="mwAas">The <a href="https://en.wikipedia.org/wiki/Operational_semantics" id="mwAaw" rel="mw:WikiLink" title="Operational semantics">semantics</a> of priority queues naturally suggest a sorting method: insert all the elements to be sorted into a priority queue, and sequentially remove them; they will come out in sorted order. This is actually the procedure used by several <a href="https://en.wikipedia.org/wiki/Sorting_algorithm" id="mwAa0" rel="mw:WikiLink" title="Sorting algorithm">sorting algorithms</a>, once the layer of <a href="https://en.wikipedia.org/wiki/Abstraction_(computer_science)" id="mwAa4" rel="mw:WikiLink" title="Abstraction (computer science)">abstraction</a> provided by the priority queue is removed. This sorting method is equivalent to the following sorting algorithms:</p>
+<p id="mwAe4">A sorting algorithm can also be used to implement a priority queue. Specifically, Thorup says:<sup about="#mwt226" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAe8"><span class="mw-reflink-text" id="mwAfA"><span class="cite-bracket" id="mwAfE">[</span>26<span class="cite-bracket" id="mwAfI">]</span></span></a></sup></p>
+<p id="mwAfQ">We present a general deterministic linear space reduction from priority queues to sorting implying that if we can sort up to <span about="#mwt227" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAfU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> keys in <span about="#mwt228" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S(n)"}}' id="mwAfY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/896aa95cb194816f48a89fecd7e304d4b7f1af71" style="vertical-align: -0.838ex; width:4.703ex; height:2.843ex;"/></span> time per key, then there is a priority queue supporting <code id="mwAfc">delete</code> and <code id="mwAfg">insert</code> in <span about="#mwt229" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(S(n))"}}' id="mwAfk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(S(n))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>S</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(S(n))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(S(n))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/343ab759efff53825bd7fa57e82340d2b4d09bc7" style="vertical-align: -0.838ex; width:8.286ex; height:2.843ex;"/></span> time and <code id="mwAfo">find-min</code> in constant time.</p>
+<p id="mwAfs">That is, if there is a sorting algorithm which can sort in <span about="#mwt230" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(S)"}}' id="mwAfw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(S)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>S</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(S)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(S)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ebb7fa41b252b80e5c9b7c86087194abf8d06837" style="vertical-align: -0.838ex; width:5.082ex; height:2.843ex;"/></span> time per key, where <span about="#mwt231" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwAf0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span> is some function of <span about="#mwt232" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAf4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Word_size" id="mwAf8" rel="mw:WikiLink" title="Word size">word size</a>,<sup about="#mwt236" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAgA"><span class="mw-reflink-text" id="mwAgE"><span class="cite-bracket" id="mwAgI">[</span>27<span class="cite-bracket" id="mwAgM">]</span></span></a></sup> then one can use the given procedure to create a priority queue where pulling the highest-priority element is <span about="#mwt237" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwAgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> time, and inserting new elements (and deleting elements) is <span about="#mwt238" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(S)"}}' id="mwAgU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(S)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>S</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(S)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(S)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ebb7fa41b252b80e5c9b7c86087194abf8d06837" style="vertical-align: -0.838ex; width:5.082ex; height:2.843ex;"/></span> time. For example, if one has an <span about="#mwt239" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n \\log n)"}}' id="mwAgY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9d2320768fb54880ca4356e61f60eb02a3f9d9f1" style="vertical-align: -0.838ex; width:10.118ex; height:2.843ex;"/></span> sort algorithm, one can create a priority queue with <span about="#mwt240" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwAgc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> pulling and <span about="#mwt241" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwAgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> insertion.</p>
+<p id="mwAgo">A priority queue is often considered to be a "<a href="https://en.wikipedia.org/wiki/Container_(abstract_data_type)" id="mwAgs" rel="mw:WikiLink" title="Container (abstract data type)">container data structure</a>".</p>
+<p id="mwAgw">The <a href="https://en.wikipedia.org/wiki/Standard_Template_Library" id="mwAg0" rel="mw:WikiLink" title="Standard Template Library">Standard Template Library</a> (STL), and the <a href="https://en.wikipedia.org/wiki/C++" id="mwAg4" rel="mw:WikiLink" title="C++">C++</a> 1998 standard, specifies <a class="external text" href="https://en.cppreference.com/w/cpp/container/priority_queue" id="mwAg8" rel="mw:ExtLink nofollow"><style about="#mwt246" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"std::priority_queue"}},"i":0}}]}' data-mw-deduplicate="TemplateStyles:r886049734" id="mwAhA" typeof="mw:Extension/templatestyles mw:Transclusion">.mw-parser-output .monospaced{font-family:monospace,monospace}</style><span about="#mwt246" class="monospaced" id="mwAhE">std::priority_queue</span></a> as one of the STL <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Container_(programming)" id="mwAhI" rel="mw:WikiLink" title="Container (programming)">container</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Adaptor_(programming)" id="mwAhM" rel="mw:WikiLink" title="Adaptor (programming)">adaptor</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Template_(programming)" id="mwAhQ" rel="mw:WikiLink" title="Template (programming)">class templates</a>. However, it does not specify how two elements with same priority should be served, and indeed, common implementations will not return them according to their order in the queue. It implements a max-priority-queue, and has three parameters: a comparison object for sorting such as a function object (defaults to <code about="#mwt242" class="mw-highlight mw-highlight-lang-text mw-content-ltr" data-mw='{"name":"syntaxhighlight","attrs":{"lang":"text","class":"","style":"","inline":"1"},"body":{"extsrc":"less&lt;T&gt;"},"parts":[{"template":{"target":{"wt":"code","href":"./Template:Code"},"params":{"1":{"wt":"less&lt;T&gt;"}},"i":0}}]}' dir="ltr" id="mwAhU" style="" typeof="mw:Extension/syntaxhighlight mw:Transclusion">less&lt;T&gt;</code> if unspecified), the underlying container for storing the data structures (defaults to <code about="#mwt244" class="mw-highlight mw-highlight-lang-text mw-content-ltr" data-mw='{"name":"syntaxhighlight","attrs":{"lang":"text","class":"","style":"","inline":"1"},"body":{"extsrc":"std::vector&lt;T&gt;"},"parts":[{"template":{"target":{"wt":"code","href":"./Template:Code"},"params":{"1":{"wt":"std::vector&lt;T&gt;"}},"i":0}}]}' dir="ltr" id="mwAhY" style="" typeof="mw:Extension/syntaxhighlight mw:Transclusion">std::vector&lt;T&gt;</code>), and two iterators to the beginning and end of a sequence. Unlike actual STL containers, it does not allow <a href="https://en.wikipedia.org/wiki/Iterator" id="mwAhc" rel="mw:WikiLink" title="Iterator">iteration</a> of its elements (it strictly adheres to its abstract data type definition). STL also has utility functions for manipulating another random-access container as a binary max-heap. The <a href="https://en.wikipedia.org/wiki/Boost_(C++_libraries)" id="mwAhg" rel="mw:WikiLink" title="Boost (C++ libraries)">Boost libraries</a> also have an implementation in the library heap.</p>
+<p id="mwAhk">Python's <a class="external text" href="https://docs.python.org/library/heapq.html" id="mwAho" rel="mw:ExtLink nofollow"><link about="#mwt248" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"heapq"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAhs" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt248" class="monospaced" id="mwAhw">heapq</span></a> module implements a binary min-heap on top of a list.</p>
+<p id="mwAh0"><a href="https://en.wikipedia.org/wiki/Java_(programming_language)" id="mwAh4" rel="mw:WikiLink" title="Java (programming language)">Java</a>'s library contains a <code about="#mwt250" data-mw='{"parts":[{"template":{"target":{"wt":"Javadoc:SE","href":"./Template:Javadoc:SE"},"params":{"1":{"wt":"java/util"},"2":{"wt":"PriorityQueue"}},"i":0}}]}' id="mwAh8" typeof="mw:Transclusion"><a class="external text" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/PriorityQueue.html" rel="mw:ExtLink nofollow">PriorityQueue</a></code> (<code id="mwAiA">java.util.PriorityQueue</code>) class, which implements a min-priority-queue as a binary heap.</p>
+<p id="mwAiE"><a href="https://en.wikipedia.org/wiki/.NET" id="mwAiI" rel="mw:WikiLink" title=".NET">.NET</a>'s library contains a <a class="external text" href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.priorityqueue-2?view=net-6.0" id="mwAiM" rel="mw:ExtLink nofollow">System.Collections.Generic.PriorityQueue</a> class, which implements an array-backed, quaternary min-heap.</p>
+<p id="mwAiQ"><a href="https://en.wikipedia.org/wiki/Scala_(programming_language)" id="mwAiU" rel="mw:WikiLink" title="Scala (programming language)">Scala</a>'s library contains a <a class="external text" href="https://www.scala-lang.org/api/current/scala/collection/mutable/PriorityQueue.html" id="mwAiY" rel="mw:ExtLink nofollow"><link about="#mwt251" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"scala.collection.mutable.PriorityQueue"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAic" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt251" class="monospaced" id="mwAig">scala.collection.mutable.PriorityQueue</span></a> class, which implements a max-priority-queue.</p>
+<p id="mwAik"><a href="https://en.wikipedia.org/wiki/Go_(programming_language)" id="mwAio" rel="mw:WikiLink" title="Go (programming language)">Go</a>'s library contains a <a class="external text" data-mw-original-href="http://golang.org/pkg/container/heap/" href="https://golang.org/pkg/container/heap/" id="mwAis" rel="mw:ExtLink nofollow"><link about="#mwt253" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"container/heap"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAiw" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt253" class="monospaced" id="mwAi0">container/heap</span></a> module, which implements a min-heap on top of any compatible data structure.</p>
+<p id="mwAi4"><a href="https://en.wikipedia.org/wiki/Rust_(programming_language)" id="mwAi8" rel="mw:WikiLink" title="Rust (programming language)">Rust</a>'s standard library contains a <a class="external text" href="https://doc.rust-lang.org/std/collections/struct.BinaryHeap.html" id="mwAjA" rel="mw:ExtLink nofollow"><link about="#mwt255" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"std::collections::BinaryHeap"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAjE" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt255" class="monospaced" id="mwAjI">std::collections::BinaryHeap</span></a> struct, which implements a priority queue with a binary heap.</p>
+<p id="mwAjM">The <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Standard_PHP_Library" id="mwAjQ" rel="mw:WikiLink" title="Standard PHP Library">Standard PHP Library</a> extension contains the class <a class="external text" href="http://us2.php.net/manual/en/class.splpriorityqueue.php" id="mwAjU" rel="mw:ExtLink nofollow"><link about="#mwt257" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"SplPriorityQueue"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAjY" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt257" class="monospaced" id="mwAjc">SplPriorityQueue</span></a>.</p>
+<p id="mwAjg">Apple's <a href="https://en.wikipedia.org/wiki/Core_Foundation" id="mwAjk" rel="mw:WikiLink" title="Core Foundation">Core Foundation</a> framework contains a <a class="external text" href="https://developer.apple.com/library/mac/#documentation/CoreFoundation/Reference/CFBinaryHeapRef/Reference/reference.html" id="mwAjo" rel="mw:ExtLink nofollow"><link about="#mwt259" data-mw='{"name":"templatestyles","attrs":{"src":"Mono/styles.css"},"parts":[{"template":{"target":{"wt":"mono","href":"./Template:Mono"},"params":{"1":{"wt":"CFBinaryHeap"}},"i":0}}]}' href="mw-data:TemplateStyles:r886049734" id="mwAjs" rel="mw-deduplicated-inline-style" typeof="mw:Extension/templatestyles mw:Transclusion"/><span about="#mwt259" class="monospaced" id="mwAjw">CFBinaryHeap</span></a> structure, which implements a min-heap.</p>
+<p id="mwAj8">Priority queuing can be used to manage limited resources such as <a href="https://en.wikipedia.org/wiki/Bandwidth_(computing)" id="mwAkA" rel="mw:WikiLink" title="Bandwidth (computing)">bandwidth</a> on a transmission line from a <a href="https://en.wikipedia.org/wiki/Computer_network" id="mwAkE" rel="mw:WikiLink" title="Computer network">network</a> <a href="https://en.wikipedia.org/wiki/Router_(computing)" id="mwAkI" rel="mw:WikiLink" title="Router (computing)">router</a>. In the event of outgoing <a href="https://en.wikipedia.org/wiki/Traffic" id="mwAkM" rel="mw:WikiLink" title="Traffic">traffic</a> queuing due to insufficient bandwidth, all other queues can be halted to send the traffic from the highest priority queue upon arrival. This ensures that the prioritized traffic (such as real-time traffic, e.g. an <a href="https://en.wikipedia.org/wiki/Real-time_Transport_Protocol" id="mwAkQ" rel="mw:WikiLink" title="Real-time Transport Protocol">RTP</a> stream of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Voice_over_Internet_Protocol" id="mwAkU" rel="mw:WikiLink" title="Voice over Internet Protocol">VoIP</a> connection) is forwarded with the least delay and the least likelihood of being rejected due to a queue reaching its maximum capacity. All other traffic can be handled when the highest priority queue is empty. Another approach used is to send disproportionately more traffic from higher priority queues.</p>
+<p id="mwAkY">Many modern protocols for <a href="https://en.wikipedia.org/wiki/Local_area_network" id="mwAkc" rel="mw:WikiLink" title="Local area network">local area networks</a> also include the concept of priority queues at the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Media_access_control" id="mwAkg" rel="mw:WikiLink" title="Media access control">media access control</a> (MAC) sub-layer to ensure that high-priority applications (such as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/VoIP" id="mwAkk" rel="mw:WikiLink" title="VoIP">VoIP</a> or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/IPTV" id="mwAko" rel="mw:WikiLink" title="IPTV">IPTV</a>) experience lower latency than other applications which can be served with <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Best-effort_service" id="mwAks" rel="mw:WikiLink" title="Best-effort service">best-effort service</a>. Examples include <a class="mw-redirect" href="https://en.wikipedia.org/wiki/IEEE_802.11e" id="mwAkw" rel="mw:WikiLink" title="IEEE 802.11e">IEEE 802.11e</a> (an amendment to <a href="https://en.wikipedia.org/wiki/IEEE_802.11" id="mwAk0" rel="mw:WikiLink" title="IEEE 802.11">IEEE 802.11</a> which provides <a href="https://en.wikipedia.org/wiki/Quality_of_service" id="mwAk4" rel="mw:WikiLink" title="Quality of service">quality of service</a>) and <a href="https://en.wikipedia.org/wiki/ITU-T" id="mwAk8" rel="mw:WikiLink" title="ITU-T">ITU-T</a> <a href="https://en.wikipedia.org/wiki/G.hn" id="mwAlA" rel="mw:WikiLink" title="G.hn">G.hn</a> (a standard for high-speed <a href="https://en.wikipedia.org/wiki/Local_area_network" id="mwAlE" rel="mw:WikiLink" title="Local area network">local area network</a> using existing home wiring (<a class="mw-redirect" href="https://en.wikipedia.org/wiki/Power_line_communication" id="mwAlI" rel="mw:WikiLink" title="Power line communication">power lines</a>, phone lines and <a href="https://en.wikipedia.org/wiki/Ethernet_over_coax" id="mwAlM" rel="mw:WikiLink" title="Ethernet over coax">coaxial cables</a>).</p>
+<p id="mwAlQ">Usually a limitation (policer) is set to limit the bandwidth that traffic from the highest priority queue can take, in order to prevent high priority packets from choking off all other traffic. This limit is usually never reached due to high level control instances such as the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Cisco_Systems,_Inc." id="mwAlU" rel="mw:WikiLink" title="Cisco Systems, Inc.">Cisco</a> <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Callmanager"]}}' href="https://en.wikipedia.org/wiki/Callmanager?action=edit&amp;redlink=1" id="mwAlY" rel="mw:WikiLink" title="Callmanager (page does not exist)" typeof="mw:LocalizedAttrs">Callmanager</a>, which can be programmed to inhibit calls which would exceed the programmed bandwidth limit.</p>
+<p id="mwAlg">Another use of a priority queue is to manage the events in a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Discrete_event_simulation" id="mwAlk" rel="mw:WikiLink" title="Discrete event simulation">discrete event simulation</a>. The events are added to the queue with their simulation time used as the priority. The execution of the simulation proceeds by repeatedly pulling the top of the queue and executing the event thereon.</p>
+<p id="mwAlo"><i id="mwAls">See also</i>: <a href="https://en.wikipedia.org/wiki/Scheduling_(computing)" id="mwAlw" rel="mw:WikiLink" title="Scheduling (computing)">Scheduling (computing)</a>, <a href="https://en.wikipedia.org/wiki/Queueing_theory" id="mwAl0" rel="mw:WikiLink" title="Queueing theory">queueing theory</a></p>
+<p id="mwAl8">When the graph is stored in the form of <a href="https://en.wikipedia.org/wiki/Adjacency_list" id="mwAmA" rel="mw:WikiLink" title="Adjacency list">adjacency list</a> or matrix, priority queue can be used to extract minimum efficiently when implementing <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm" id="mwAmE" rel="mw:WikiLink" title="Dijkstra's algorithm">Dijkstra's algorithm</a>, although one also needs the ability to alter the priority of a particular vertex in the priority queue efficiently.</p>
+<p id="mwAmI">If instead, a graph is stored as node objects, and priority-node pairs are inserted into a heap, altering the priority of a particular vertex is not necessary if one tracks visited nodes. Once a node is visited, if it comes up in the heap again (having had a lower priority number associated with it earlier), it is popped-off and ignored.</p>
+<p id="mwAmQ"><a href="https://en.wikipedia.org/wiki/Huffman_coding" id="mwAmU" rel="mw:WikiLink" title="Huffman coding">Huffman coding</a> requires one to repeatedly obtain the two lowest-frequency trees. A priority queue is <a href="https://en.wikipedia.org/wiki/Huffman_coding#Compression" id="mwAmY" rel="mw:WikiLink" title="Huffman coding">one method of doing this</a>.</p>
+<p id="mwAmg"><a href="https://en.wikipedia.org/wiki/Best-first_search" id="mwAmk" rel="mw:WikiLink" title="Best-first search">Best-first search</a> algorithms, like the <a href="https://en.wikipedia.org/wiki/A*_search_algorithm" id="mwAmo" rel="mw:WikiLink" title="A* search algorithm">A* search algorithm</a>, find the shortest path between two <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)" id="mwAms" rel="mw:WikiLink" title="Vertex (graph theory)">vertices</a> or <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Node_(graph_theory)" id="mwAmw" rel="mw:WikiLink" title="Node (graph theory)">nodes</a> of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_graph" id="mwAm0" rel="mw:WikiLink" title="Weighted graph">weighted graph</a>, trying out the most promising routes first. A priority queue (also known as the <i id="mwAm4">fringe</i>) is used to keep track of unexplored routes; the one for which the estimate (a lower bound in the case of A*) of the total path length is smallest is given highest priority. If memory limitations make best-first search impractical, variants like the <a href="https://en.wikipedia.org/wiki/SMA*" id="mwAm8" rel="mw:WikiLink" title="SMA*">SMA*</a> algorithm can be used instead, with a <a href="https://en.wikipedia.org/wiki/Double-ended_priority_queue" id="mwAnA" rel="mw:WikiLink" title="Double-ended priority queue">double-ended priority queue</a> to allow removal of low-priority items.</p>
+<p id="mwAnI">The Real-time Optimally Adapting Meshes (<a href="https://en.wikipedia.org/wiki/ROAM" id="mwAnM" rel="mw:WikiLink" title="ROAM">ROAM</a>) algorithm computes a dynamically changing triangulation of a terrain. It works by splitting triangles where more detail is needed and merging them where less detail is needed. The algorithm assigns each triangle in the terrain a priority, usually related to the error decrease if that triangle would be split. The algorithm uses two priority queues, one for triangles that can be split and another for triangles that can be merged. In each step the triangle from the split queue with the highest priority is split, or the triangle from the merge queue with the lowest priority is merged with its neighbours.</p>
+<p id="mwAnU">Using <a href="https://en.wikipedia.org/wiki/Binary_heap" id="mwAnY" rel="mw:WikiLink" title="Binary heap">min heap priority queue</a> in <a href="https://en.wikipedia.org/wiki/Prim's_algorithm" id="mwAnc" rel="mw:WikiLink" title="Prim's algorithm">Prim's algorithm</a> to find the <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree" id="mwAng" rel="mw:WikiLink" title="Minimum spanning tree">minimum spanning tree</a> of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Connected_graph" id="mwAnk" rel="mw:WikiLink" title="Connected graph">connected</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Undirected_graph" id="mwAno" rel="mw:WikiLink" title="Undirected graph">undirected graph</a>, one can achieve a good running time. This min heap priority queue uses the min heap data structure which supports operations such as <code id="mwAns">insert</code>, <code id="mwAnw">minimum</code>, <code id="mwAn0">extract-min</code>, <code id="mwAn4">decrease-key</code>.<sup about="#mwt263" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CLR"},"body":{"id":"mw-reference-text-cite_note-CLR-32"}}' id="cite_ref-CLR_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CLR-32" id="mwAn8"><span class="mw-reflink-text" id="mwAoA"><span class="cite-bracket" id="mwAoE">[</span>28<span class="cite-bracket" id="mwAoI">]</span></span></a></sup> In this implementation, the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Weighted_graph" id="mwAoM" rel="mw:WikiLink" title="Weighted graph">weight</a> of the edges is used to decide the priority of the <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)" id="mwAoQ" rel="mw:WikiLink" title="Vertex (graph theory)">vertices</a>. Lower the weight, higher the priority and higher the weight, lower the priority.<sup about="#mwt266" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"GEEKS"},"body":{"id":"mw-reference-text-cite_note-GEEKS-33"}}' id="cite_ref-GEEKS_33-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-GEEKS-33" id="mwAoU"><span class="mw-reflink-text" id="mwAoY"><span class="cite-bracket" id="mwAoc">[</span>29<span class="cite-bracket" id="mwAog">]</span></span></a></sup></p>
+<p id="mwAoo">Parallelization can be used to speed up priority queues, but requires some changes to the priority queue interface. The reason for such changes is that a sequential update usually only has <span about="#mwt267" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"O(1)"}}' id="mwAos" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/55a2cd47ca6554fafc21bbef3331256c7e1631ad" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span> or <span about="#mwt268" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"O(\\log n)"}}' id="mwAow" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/652bcc1f7bfa43527824017e3948b78c4ef942c4" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> cost, and there is no practical gain to parallelize such an operation. One possible change is to allow the concurrent access of multiple processors to the same priority queue. The second possible change is to allow batch operations that work on <span about="#mwt269" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"k"}}' id="mwAo0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle k}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0d5595fc0c47452f8fc2aa6e29c3611f047714b0" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> elements, instead of just one element. For example, <code id="mwAo4">extractMin</code> will remove the first <span about="#mwt270" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{"display":"inline"},"body":{"extsrc":"k"}}' id="mwAo8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\textstyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\textstyle k}</annotation>
+</semantics>
+</math></span><img alt="{\textstyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0d5595fc0c47452f8fc2aa6e29c3611f047714b0" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> elements with the highest priority.</p>
+<p id="mwApE">If the priority queue allows concurrent access, multiple processes can perform operations concurrently on that priority queue. However, this raises two issues. First of all, the definition of the semantics of the individual operations is no longer obvious. For example, if two processes want to extract the element with the highest priority, should they get the same element or different ones? This restricts parallelism on the level of the program using the priority queue. In addition, because multiple processes have access to the same element, this leads to contention.</p>
+</div></div>
+</body></html>

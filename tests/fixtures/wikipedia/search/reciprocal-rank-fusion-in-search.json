@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 35
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Binary search",
+    "pageid": 4266,
+    "size": 81038,
+    "wordcount": 10244,
+    "snippet": "<span class=\"searchmatch\">In</span> computer science, binary <span class=\"searchmatch\">search</span>, also known as half-interval <span class=\"searchmatch\">search</span>, logarithmic <span class=\"searchmatch\">search</span>, or binary chop, is a <span class=\"searchmatch\">search</span> algorithm that finds the position",
+    "timestamp": "2026-10-13T01:47:05Z"
+   },
+   {
+    "ns": 0,
+    "title": "Reputation management",
+    "pageid": 993351,
+    "size": 27582,
+    "wordcount": 2721,
+    "snippet": "or a company&#039;s reputation <span class=\"searchmatch\">in</span> a positive way. Online reputation management (ORM) involves overseeing and influencing the <span class=\"searchmatch\">search</span> engine results related to",
+    "timestamp": "2026-09-27T02:14:01Z"
+   },
+   {
+    "ns": 0,
+    "title": "Mating in fungi",
+    "pageid": 4350664,
+    "size": 37203,
+    "wordcount": 4691,
+    "snippet": "these genes are to regulate <span class=\"searchmatch\">reciprocal</span> nuclear exchange, nuclear migration <span class=\"searchmatch\">in</span> both mates and ultimately clamp cell <span class=\"searchmatch\">fusion</span>. The first mating pheromone-receptor",
+    "timestamp": "2026-02-09T05:46:36Z"
+   },
+   {
+    "ns": 0,
+    "title": "Recurrent neural network",
+    "pageid": 1706303,
+    "size": 91711,
+    "wordcount": 10257,
+    "snippet": "cells, and granule cells. In 1933, Lorente de Nó discovered &quot;recurrent, <span class=\"searchmatch\">reciprocal</span> connections&quot; by Golgi&#039;s method, and proposed that excitatory loops explain",
+    "timestamp": "2026-10-14T00:28:25Z"
+   },
+   {
+    "ns": 0,
+    "title": "Google Doodle",
+    "pageid": 1464549,
+    "size": 105984,
+    "wordcount": 10202,
+    "snippet": "Monoyer. He was a French ophthalmologist who <span class=\"searchmatch\">in</span> 1872 introduced the dioptre, the <span class=\"searchmatch\">reciprocal</span> of focal length <span class=\"searchmatch\">in</span> metres, as a unit for lens power. Its use",
+    "timestamp": "2026-10-12T06:31:00Z"
+   }
+  ]
+ }
+}

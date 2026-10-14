@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 10
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Okapi BM25",
+    "pageid": 9511414,
+    "size": 9735,
+    "wordcount": 1308,
+    "snippet": "In information retrieval, <span class=\"searchmatch\">Okapi</span> <span class=\"searchmatch\">BM25</span> (BM is an abbreviation of best matching) is a ranking function used by search engines to estimate the relevance of",
+    "timestamp": "2026-08-31T04:58:15Z"
+   },
+   {
+    "ns": 0,
+    "title": "BM25",
+    "pageid": 12911443,
+    "size": 384,
+    "wordcount": 91,
+    "snippet": "and made in the 1970s, it was seen in the late 1980s by photographers <span class=\"searchmatch\">Okapi</span> <span class=\"searchmatch\">BM25</span>, a ranking function in information retrieval This disambiguation page",
+    "timestamp": "2025-07-03T15:59:27Z"
+   },
+   {
+    "ns": 0,
+    "title": "Okapi (disambiguation)",
+    "pageid": 23453325,
+    "size": 1130,
+    "wordcount": 211,
+    "snippet": "Africa <span class=\"searchmatch\">Okapi</span> <span class=\"searchmatch\">BM25</span>, a ranking function used by search engines to rank matching documents according to their relevance to a given search query <span class=\"searchmatch\">Okapi</span> Framework",
+    "timestamp": "2025-01-13T05:20:05Z"
+   },
+   {
+    "ns": 0,
+    "title": "Stephen Robertson (computer scientist)",
+    "pageid": 24019253,
+    "size": 5789,
+    "wordcount": 465,
+    "snippet": "probabilistic information retrieval together with Karen Spärck Jones and the <span class=\"searchmatch\">Okapi</span> <span class=\"searchmatch\">BM25</span> weighting model. Robertson was born in London, England,[citation needed]",
+    "timestamp": "2026-09-01T19:21:17Z"
+   },
+   {
+    "ns": 0,
+    "title": "Cold start (recommender systems)",
+    "pageid": 9391536,
+    "size": 30634,
+    "wordcount": 3870,
+    "snippet": " most of them are from the information retrieval domain like tf–idf, <span class=\"searchmatch\">Okapi</span> <span class=\"searchmatch\">BM25</span>, only a few have been developed specifically for recommenders. Hybrid",
+    "timestamp": "2026-09-28T05:00:12Z"
+   }
+  ]
+ }
+}

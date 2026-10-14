@@ -1,0 +1,61 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 485,
+   "suggestion": "dijkstra s algorithm",
+   "suggestionsnippet": "dijkstra s algorithm"
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Dijkstra's algorithm",
+    "pageid": 45809,
+    "size": 53330,
+    "wordcount": 6519,
+    "snippet": "conceived by computer scientist Edsger W. <span class=\"searchmatch\">Dijkstra</span> in 1956 and published three years later. <span class=\"searchmatch\">Dijkstra&#039;s</span> <span class=\"searchmatch\">algorithm</span> finds the shortest path from a given source",
+    "timestamp": "2026-10-12T08:11:00Z"
+   },
+   {
+    "ns": 0,
+    "title": "Priority queue",
+    "pageid": 24485,
+    "size": 35317,
+    "wordcount": 5106,
+    "snippet": "not all <span class=\"searchmatch\">algorithms</span> can use this kind of priority queue. <span class=\"searchmatch\">Dijkstra&#039;s</span> <span class=\"searchmatch\">algorithm</span> for example can not work on several nodes at once. The <span class=\"searchmatch\">algorithm</span> takes the",
+    "timestamp": "2026-08-13T17:19:33Z"
+   },
+   {
+    "ns": 0,
+    "title": "A* search algorithm",
+    "pageid": 100558,
+    "size": 44223,
+    "wordcount": 5542,
+    "snippet": "SRI International) first published the <span class=\"searchmatch\">algorithm</span> in 1968. It can be seen as an extension of <span class=\"searchmatch\">Dijkstra&#039;s</span> <span class=\"searchmatch\">algorithm</span>. A* achieves better performance by using",
+    "timestamp": "2026-09-09T14:26:10Z"
+   },
+   {
+    "ns": 0,
+    "title": "Galactic algorithm",
+    "pageid": 60819045,
+    "size": 25590,
+    "wordcount": 3058,
+    "snippet": "O({\\text{N}})} space is allowed, polynomial time solutions such as <span class=\"searchmatch\">Dijkstra&#039;s</span> <span class=\"searchmatch\">algorithm</span> have been known and used for decades. But for many years it was unknown",
+    "timestamp": "2026-10-14T15:59:22Z"
+   },
+   {
+    "ns": 0,
+    "title": "Johnson's algorithm",
+    "pageid": 1284311,
+    "size": 7874,
+    "wordcount": 1111,
+    "snippet": "Bellman–Ford <span class=\"searchmatch\">algorithm</span> to compute a transformation of the input graph that removes all negative weights, allowing <span class=\"searchmatch\">Dijkstra&#039;s</span> <span class=\"searchmatch\">algorithm</span> to be used on",
+    "timestamp": "2025-11-09T22:45:38Z"
+   }
+  ]
+ }
+}

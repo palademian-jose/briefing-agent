@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 16612
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Beam search",
+    "pageid": 1686032,
+    "size": 8241,
+    "wordcount": 834,
+    "snippet": "science, <span class=\"searchmatch\">beam</span> <span class=\"searchmatch\">search</span> is a heuristic <span class=\"searchmatch\">search</span> algorithm that explores a graph by expanding the most promising node in a limited set. <span class=\"searchmatch\">Beam</span> <span class=\"searchmatch\">search</span> is a modification",
+    "timestamp": "2026-10-08T16:03:01Z"
+   },
+   {
+    "ns": 0,
+    "title": "A* search algorithm",
+    "pageid": 100558,
+    "size": 44223,
+    "wordcount": 5542,
+    "snippet": "of a generalization of branch and bound. A* is similar to <span class=\"searchmatch\">beam</span> <span class=\"searchmatch\">search</span> except that <span class=\"searchmatch\">beam</span> <span class=\"searchmatch\">search</span> maintains a limit on the numbers of paths that it has to",
+    "timestamp": "2026-09-09T14:26:10Z"
+   },
+   {
+    "ns": 0,
+    "title": "Beam",
+    "pageid": 42167,
+    "size": 4510,
+    "wordcount": 603,
+    "snippet": "up <span class=\"searchmatch\">beam</span> in Wiktionary, the free dictionary. <span class=\"searchmatch\">Beam</span> may refer to: Light <span class=\"searchmatch\">beam</span>, or <span class=\"searchmatch\">beam</span> of light, a directional projection of light energy Laser <span class=\"searchmatch\">beam</span> Radio",
+    "timestamp": "2025-11-22T05:36:17Z"
+   },
+   {
+    "ns": 0,
+    "title": "Top-p sampling",
+    "pageid": 74652867,
+    "size": 13018,
+    "wordcount": 1614,
+    "snippet": "token with the highest probability (greedy <span class=\"searchmatch\">search</span>) or a limited set of high-probability sequences (<span class=\"searchmatch\">beam</span> <span class=\"searchmatch\">search</span>) is possible, these deterministic methods",
+    "timestamp": "2026-08-11T12:39:22Z"
+   },
+   {
+    "ns": 0,
+    "title": "Prompt engineering",
+    "pageid": 69071767,
+    "size": 57712,
+    "wordcount": 5657,
+    "snippet": "backtrack or explore other paths. It can use tree <span class=\"searchmatch\">search</span> algorithms like breadth-first, depth-first, or <span class=\"searchmatch\">beam</span>. In 2022, text-to-image models like DALL-E 2,",
+    "timestamp": "2026-10-06T19:06:52Z"
+   }
+  ]
+ }
+}

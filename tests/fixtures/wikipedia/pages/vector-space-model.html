@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Vector space model - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Vector space model</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw"><b id="mwBA">Vector space model</b> (VSM) or <b id="mwBQ">term vector model</b> is an algebraic model for representing text documents (or more generally, items) as <a href="https://en.wikipedia.org/wiki/Vector_space" id="mwBg" rel="mw:WikiLink" title="Vector space">vectors</a> such that the distance between vectors represents the relevance between the documents. It is used in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Information_filtering" id="mwBw" rel="mw:WikiLink" title="Information filtering">information filtering</a>, <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwCA" rel="mw:WikiLink" title="Information retrieval">information retrieval</a>, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Index_(search_engine)" id="mwCQ" rel="mw:WikiLink" title="Index (search engine)">indexing</a> and relevance rankings.  Its first use was in the <a href="https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System" id="mwCg" rel="mw:WikiLink" title="SMART Information Retrieval System">SMART Information Retrieval System</a>.<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwCw"><span class="mw-reflink-text" id="mwDA"><span class="cite-bracket" id="mwDQ">[</span>1<span class="cite-bracket" id="mwDg">]</span></span></a></sup></p>
+<p id="mwEQ">In this section we consider a particular vector space model based on the <a href="https://en.wikipedia.org/wiki/Bag-of-words_model" id="mwEg" rel="mw:WikiLink" title="Bag-of-words model">bag-of-words</a> representation. Documents and queries are represented as vectors.</p>
+<p id="mwGA">Each <a href="https://en.wikipedia.org/wiki/Dimension_(vector_space)" id="mwGQ" rel="mw:WikiLink" title="Dimension (vector space)">dimension</a> corresponds to a separate term. If a term occurs in the document, its value in the vector is non-zero. Several different ways of computing these values, also known as (term) weights, have been developed. One of the best known schemes is <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Tf-idf" id="mwGg" rel="mw:WikiLink" title="Tf-idf">tf-idf</a> weighting (see the example below).</p>
+<p id="mwGw">The definition of <i id="mwHA">term</i> depends on the application. Typically terms are single words, <a href="https://en.wikipedia.org/wiki/Keyword_(linguistics)" id="mwHQ" rel="mw:WikiLink" title="Keyword (linguistics)">keywords</a>, or longer phrases. If words are chosen to be the terms, the dimensionality of the vector is the number of words in the vocabulary (the number of distinct words occurring in the <a href="https://en.wikipedia.org/wiki/Text_corpus" id="mwHg" rel="mw:WikiLink" title="Text corpus">corpus</a>).</p>
+<p id="mwHw">Vector operations can be used to compare documents with queries.<sup about="#mwt9" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-2"}}' id="cite_ref-:0_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-2" id="mwIA"><span class="mw-reflink-text" id="mwIQ"><span class="cite-bracket" id="mwIg">[</span>2<span class="cite-bracket" id="mwIw">]</span></span></a></sup></p>
+<p id="mwKQ">Candidate documents from the corpus can be retrieved and ranked using a variety of methods. <a href="https://en.wikipedia.org/wiki/Relevance_(information_retrieval)" id="mwKg" rel="mw:WikiLink" title="Relevance (information retrieval)">Relevance</a> <a href="https://en.wikipedia.org/wiki/Ranking" id="mwKw" rel="mw:WikiLink" title="Ranking">rankings</a> of documents in a keyword search can be calculated, using the assumptions of <a href="https://en.wikipedia.org/wiki/Semantic_similarity" id="mwLA" rel="mw:WikiLink" title="Semantic similarity">document similarities</a> theory, by comparing the deviation of angles between each document vector and the original query vector where the query is represented as a vector with same dimension as the vectors that represent the other documents.</p>
+<p id="mwLQ">In practice, it is easier to calculate the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Cosine" id="mwLg" rel="mw:WikiLink" title="Cosine">cosine</a> of the angle between the vectors, instead of the angle itself:</p>
+<p id="mwMg">Where <span about="#mwt11" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{d_2} \\cdot \\mathbf{q}"}}' id="mwMw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {d_{2}} \cdot \mathbf {q} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi mathvariant="bold">d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn mathvariant="bold">2</mn>
+</mrow>
+</msub>
+</mrow>
+<mo>⋅<!-- ⋅ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">q</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {d_{2}} \cdot \mathbf {q} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {d_{2}} \cdot \mathbf {q} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/968bb1102153f0b64b7ee8d56cb47fabcb5879db" style="vertical-align: -0.671ex; width:5.757ex; height:2.509ex;"/></span> is the intersection (i.e. the <a href="https://en.wikipedia.org/wiki/Dot_product" id="mwNA" rel="mw:WikiLink" title="Dot product">dot product</a>) of the document (d<sub id="mwNQ">2</sub> in the figure to the right) and the query (q in the figure) vectors, <span about="#mwt12" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\left\\| \\mathbf{d_2} \\right\\|"}}' id="mwNg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \left\|\mathbf {d_{2}} \right\|}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow>
+<mo symmetric="true">‖</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<msub>
+<mi mathvariant="bold">d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn mathvariant="bold">2</mn>
+</mrow>
+</msub>
+</mrow>
+<mo symmetric="true">‖</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \left\|\mathbf {d_{2}} \right\|}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \left\|\mathbf {d_{2}} \right\|}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa37054465647aa73cf24a91064aa92f18d0ee93" style="vertical-align: -0.838ex; width:4.988ex; height:2.843ex;"/></span> is the norm of vector d<sub id="mwNw">2</sub>, and <span about="#mwt13" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\left\\| \\mathbf{q} \\right\\|"}}' id="mwOA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \left\|\mathbf {q} \right\|}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow>
+<mo symmetric="true">‖</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">q</mi>
+</mrow>
+<mo symmetric="true">‖</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \left\|\mathbf {q} \right\|}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \left\|\mathbf {q} \right\|}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7148e10f47c9f52ce329d0e7ff54089863d986c9" style="vertical-align: -0.838ex; width:3.741ex; height:2.843ex;"/></span> is the norm of vector q. The <a href="https://en.wikipedia.org/wiki/Norm_(mathematics)" id="mwOQ" rel="mw:WikiLink" title="Norm (mathematics)">norm</a> of a vector is calculated as such:</p>
+<p id="mwPQ">Using the cosine the similarity between document <i id="mwPg">d<sub id="mwPw">j</sub></i> and query <i id="mwQA">q</i> can be calculated as:</p>
+<p id="mwRA">As all vectors under consideration by this model are element-wise nonnegative, a cosine value of zero means that the query and document vector are <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Orthogonal" id="mwRQ" rel="mw:WikiLink" title="Orthogonal">orthogonal</a> and have no match (i.e. the query term does not exist in the document being considered). See <a href="https://en.wikipedia.org/wiki/Cosine_similarity" id="mwRg" rel="mw:WikiLink" title="Cosine similarity">cosine similarity</a> for further information.<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-2" id="mwRw"><span class="mw-reflink-text" id="mwSA"><span class="cite-bracket" id="mwSQ">[</span>2<span class="cite-bracket" id="mwSg">]</span></span></a></sup></p>
+<p id="mwTA">In the classic vector space model proposed by <a href="https://en.wikipedia.org/wiki/Gerard_Salton" id="mwTQ" rel="mw:WikiLink" title="Gerard Salton">Salton</a>, Wong and Yang,<sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwTg"><span class="mw-reflink-text" id="mwTw"><span class="cite-bracket" id="mwUA">[</span>3<span class="cite-bracket" id="mwUQ">]</span></span></a></sup> the term-specific weights in the document vectors are products of local and global parameters. The model is known as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Term_frequency–inverse_document_frequency" id="mwUg" rel="mw:WikiLink" title="Term frequency–inverse document frequency">term frequency–inverse document frequency</a> (tf–idf) model. The weight vector for document <i id="mwUw">d</i> is <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{v}_d = [w_{1,d}, w_{2,d}, \\ldots, w_{N,d}]^T"}}' id="mwVA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {v} _{d}=[w_{1,d},w_{2,d},\ldots ,w_{N,d}]^{T}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">v</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mo stretchy="false">[</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+<mo>,</mo>
+<mi>d</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mo>,</mo>
+<mi>d</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>N</mi>
+<mo>,</mo>
+<mi>d</mi>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">]</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {v} _{d}=[w_{1,d},w_{2,d},\ldots ,w_{N,d}]^{T}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {v} _{d}=[w_{1,d},w_{2,d},\ldots ,w_{N,d}]^{T}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/30c310ac152cd1b8ea9e13eda4b478e72ade4f1a" style="vertical-align: -1.005ex; width:27.24ex; height:3.343ex;"/></span>, where</p>
+<p id="mwWA">and</p>
+<p id="mwZA">The vector space model has the following advantages over the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Standard_Boolean_model" id="mwZQ" rel="mw:WikiLink" title="Standard Boolean model">Standard Boolean model</a>:</p>
+<p id="mwbQ">Most of these advantages are a consequence of the difference in the density of the document collection representation between Boolean and term frequency-inverse document frequency approaches. When using Boolean weights, any document lies in a vertex in a n-dimensional <a href="https://en.wikipedia.org/wiki/Hypercube" id="mwbg" rel="mw:WikiLink" title="Hypercube">hypercube</a>. Therefore, the possible document representations are <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2^n"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 2^{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mn>2</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 2^{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 2^{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8226f30650ee4fe4e640c6d2798127e80e9c160d" style="vertical-align: -0.338ex; width:2.381ex; height:2.343ex;"/></span> and the maximum Euclidean distance between pairs is <span about="#mwt26" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\sqrt{n}"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\sqrt {n}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<msqrt>
+<mi>n</mi>
+</msqrt>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\sqrt {n}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\sqrt {n}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a2994734eae382ce30100fb17b9447fd8e99f81" style="vertical-align: -1.005ex; width:3.331ex; height:3.009ex;"/></span>. As documents are added to the document collection, the region defined by the hypercube's vertices become more populated and hence denser. Unlike Boolean, when a document is added using term frequency-inverse document frequency weights, the inverse document frequencies of the terms in the new document decrease while that of the remaining terms increase. In average, as documents are added, the region where documents lie expands regulating the density of the entire collection representation. This behavior models the original motivation of Salton and his colleagues that a document collection represented in a low density region could yield better retrieval results.</p>
+<p id="mwcg">The vector space model has the following limitations:</p>
+<p id="mweg">Many of these difficulties can, however, be overcome by the integration of various tools, including mathematical techniques such as <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition" id="mwew" rel="mw:WikiLink" title="Singular value decomposition">singular value decomposition</a> and <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Lexical_database" id="mwfA" rel="mw:WikiLink" title="Lexical database">lexical databases</a> such as <a href="https://en.wikipedia.org/wiki/WordNet" id="mwfQ" rel="mw:WikiLink" title="WordNet">WordNet</a>.</p>
+<p id="mwfw">Models based on and extending the vector space model include:</p>
+<p id="mwjA">The following software packages may be of interest to those wishing to experiment with vector models and implement search services based upon them.</p>
+<p id="mwog">The <b id="mwow">Generalized vector space model</b> is a generalization of the VSM used in <a href="https://en.wikipedia.org/wiki/Information_retrieval" id="mwpA" rel="mw:WikiLink" title="Information retrieval">information retrieval</a>. Wong <i id="mwpQ">et al.</i><sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"wong"},"body":{"id":"mw-reference-text-cite_note-wong-4"}}' id="cite_ref-wong_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-wong-4" id="mwpg"><span class="mw-reflink-text" id="mwpw"><span class="cite-bracket" id="mwqA">[</span>4<span class="cite-bracket" id="mwqQ">]</span></span></a></sup> presented an analysis of the problems that the pairwise orthogonality assumption of the VSM creates. From here they extended the VSM to the generalized vector space model (GVSM).</p>
+<p id="mwqg">Recently Tsatsaronis<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwqw"><span class="mw-reflink-text" id="mwrA"><span class="cite-bracket" id="mwrQ">[</span>5<span class="cite-bracket" id="mwrg">]</span></span></a></sup> focused on the first approach. They measure semantic relatedness (<i id="mwrw">SR</i>) using a thesaurus (<i id="mwsA">O</i>) like <a href="https://en.wikipedia.org/wiki/WordNet" id="mwsQ" rel="mw:WikiLink" title="WordNet">WordNet</a>. It considers the path length, captured by compactness (<i id="mwsg">SCM</i>), and the path depth, captured by semantic path elaboration (<i id="mwsw">SPE</i>).</p>
+<p id="mwtA">Building also on the first approach, Waitelonis et al.<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwtQ"><span class="mw-reflink-text" id="mwtg"><span class="cite-bracket" id="mwtw">[</span>6<span class="cite-bracket" id="mwuA">]</span></span></a></sup> have computed semantic relatedness from <a href="https://en.wikipedia.org/wiki/Linked_data" id="mwuQ" rel="mw:WikiLink" title="Linked data">Linked Open Data</a> resources including <a href="https://en.wikipedia.org/wiki/DBpedia" id="mwug" rel="mw:WikiLink" title="DBpedia">DBpedia</a> as well as the <a href="https://en.wikipedia.org/wiki/YAGO_(database)" id="mwuw" rel="mw:WikiLink" title="YAGO (database)">YAGO taxonomy</a>. Thereby they exploits taxonomic relationships among semantic entities in documents and queries after <a href="https://en.wikipedia.org/wiki/Entity_linking" id="mwvA" rel="mw:WikiLink" title="Entity linking">named entity linking</a>.</p>
+</div></div>
+</body></html>

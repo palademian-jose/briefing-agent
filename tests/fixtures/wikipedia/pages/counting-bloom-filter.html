@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Counting Bloom filter - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Counting Bloom filter</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">A <b id="mwBA">counting Bloom filter</b> (<b id="mwBQ">CBF</b><sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"choi-2024"},"body":{"id":"mw-reference-text-cite_note-choi-2024-1"}}' id="cite_ref-choi-2024_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-choi-2024-1" id="mwBg"><span class="mw-reflink-text" id="mwBw"><span class="cite-bracket" id="mwCA">[</span>1<span class="cite-bracket" id="mwCQ">]</span></span></a></sup>) or <b id="mwCg">spectral Bloom filter</b><sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"cohen-2003"},"body":{"id":"mw-reference-text-cite_note-cohen-2003-2"}}' id="cite_ref-cohen-2003_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-cohen-2003-2" id="mwCw"><span class="mw-reflink-text" id="mwDA"><span class="cite-bracket" id="mwDQ">[</span>2<span class="cite-bracket" id="mwDg">]</span></span></a></sup> is a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Probabilistic" id="mwDw" rel="mw:WikiLink" title="Probabilistic">probabilistic</a> <a href="https://en.wikipedia.org/wiki/Data_structure" id="mwEA" rel="mw:WikiLink" title="Data structure">data structure</a> that is used to test whether the number of occurrences of a given <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Element_(mathematics)" id="mwEQ" rel="mw:WikiLink" title="Element (mathematics)">element</a> in a sequence exceeds a given threshold. As a generalized form of the <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwEg" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a>, <a href="https://en.wikipedia.org/wiki/Type_I_and_type_II_errors" id="mwEw" rel="mw:WikiLink" title="Type I and type II errors">false positive</a> matches are possible, but <a href="https://en.wikipedia.org/wiki/Type_I_and_type_II_errors" id="mwFA" rel="mw:WikiLink" title="Type I and type II errors">false negatives</a> are not – in other words, a query returns either "possibly bigger or equal than the threshold" or "definitely smaller than the threshold".</p>
+<p id="mwFw">Most of the parameters are defined same with <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwGA" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a>, such as <i id="mwGQ">m, k. m</i> is the number of counters in counting Bloom filter, which is expansion of <i id="mwGg">m</i> bits in Bloom filter. An <i id="mwGw">empty counting Bloom filter</i> is a <i id="mwHA">m</i> counters, all set to 0. Similar to Bloom filter, there must also be <i id="mwHQ">k</i> different <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwHg" rel="mw:WikiLink" title="Hash function">hash functions</a> defined, each of which <a href="https://en.wikipedia.org/wiki/Map_(mathematics)" id="mwHw" rel="mw:WikiLink" title="Map (mathematics)">maps</a> or hashes some set element to one of the <i id="mwIA">m</i> counter array positions, generating a uniform random distribution. It is also similar that <i id="mwIQ">k</i> is a constant, much smaller than <i id="mwIg">m</i>, which is proportional to the number of elements to be added.</p>
+<p id="mwIw">The main generalization of Bloom filter is adding an element. To <i id="mwJA">add</i> an element, feed it to each of the <i id="mwJQ">k</i> hash functions to get <i id="mwJg">k</i> array positions and <i id="mwJw">increment</i> the counters 1 at all these positions.</p>
+<p id="mwKA">To <i id="mwKQ">query</i> for an element with a threshold <i id="mwKg">θ</i> (test whether the count number of an element is smaller than <i id="mwKw">θ</i>), feed it to each of the <i id="mwLA">k</i> hash functions to get <i id="mwLQ">k</i> counter positions. If any of the counters at these positions is less than <i id="mwLg">θ</i>, the count number of element is definitely less than <i id="mwLw">θ</i> – if it were more and equal, then all the corresponding counters would have been greater or equal to <i id="mwMA">θ</i>. If all are greater or equal to <i id="mwMQ">θ</i>, then either the count is really greater or equal to <i id="mwMg">θ</i>, or the counters have by chance been greater or equal to <i id="mwMw">θ</i>. If all are greater or equal to θ even though the count is smaller than <i id="mwNA">θ</i>, this circumstance is defined as <a class="mw-redirect" href="https://en.wikipedia.org/wiki/False_positive" id="mwNQ" rel="mw:WikiLink" title="False positive">false positive</a>. This also should be minimized like Bloom filter.</p>
+<p id="mwNg">About hashing problem and advantages, see <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwNw" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a>.</p>
+<p id="mwOA">A counting Bloom filter is essentially the same data structure as <a href="https://en.wikipedia.org/wiki/Count–min_sketch" id="mwOQ" rel="mw:WikiLink" title="Count–min sketch">count–min sketches</a>, but are used differently.</p>
+<p id="mwOw">Several implementations of counting bloom filters allow for deletion, by decrementing each of the <i id="mwPA">k</i> counters for a given input.  This will introduce the probability of false negatives during a query if the deleted input has not previously been inserted into the filter.  Guo <i id="mwPQ">et al.</i> present the problem in great detail, and provide heuristics for the parameters <i id="mwPg">m</i>, <i id="mwPw">k</i>, and <i id="mwQA">n</i> which minimize the probability of false negatives.<sup about="#mwt10" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwQQ"><span class="mw-reflink-text" id="mwQg"><span class="cite-bracket" id="mwQw">[</span>3<span class="cite-bracket" id="mwRA">]</span></span></a></sup></p>
+<p id="mwRg">The same assumptions in <a href="https://en.wikipedia.org/wiki/Bloom_filter" id="mwRw" rel="mw:WikiLink" title="Bloom filter">Bloom filter</a>, which hash functions make insertions uniform random, is also assumed here. In the <i id="mwSA">m</i> pots, <i id="mwSQ">kn</i> balls are inserted randomly. So the probability of one of counter in counting Bloom filter counts <i id="mwSg">l</i> is</p>
+<p id="mwSw"><span about="#mwt11" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b(l, kn, \\frac{1}{m}) = {kn \\choose l}(\\frac{1}{m})^l (1 - \\frac{1}{m})^{kn-l}"}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b(l,kn,{\frac {1}{m}})={kn \choose l}({\frac {1}{m}})^{l}(1-{\frac {1}{m}})^{kn-l}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+<mo stretchy="false">(</mo>
+<mi>l</mi>
+<mo>,</mo>
+<mi>k</mi>
+<mi>n</mi>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mrow class="MJX-TeXAtom-OPEN">
+<mo maxsize="2.047em" minsize="2.047em">(</mo>
+</mrow>
+<mfrac linethickness="0">
+<mrow>
+<mi>k</mi>
+<mi>n</mi>
+</mrow>
+<mi>l</mi>
+</mfrac>
+<mrow class="MJX-TeXAtom-CLOSE">
+<mo maxsize="2.047em" minsize="2.047em">)</mo>
+</mrow>
+</mrow>
+</mrow>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>l</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b(l,kn,{\frac {1}{m}})={kn \choose l}({\frac {1}{m}})^{l}(1-{\frac {1}{m}})^{kn-l}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b(l,kn,{\frac {1}{m}})={kn \choose l}({\frac {1}{m}})^{l}(1-{\frac {1}{m}})^{kn-l}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/101a52e1309a2dd16a1d0b920fd57aeec2fbbad4" style="vertical-align: -2.505ex; width:38.117ex; height:6.176ex;"/></span>,</p>
+<p id="mwTQ">where <i id="mwTg">b</i> is <a href="https://en.wikipedia.org/wiki/Binomial_distribution" id="mwTw" rel="mw:WikiLink" title="Binomial distribution">binomial distribution</a>.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwUA"><span class="mw-reflink-text" id="mwUQ"><span class="cite-bracket" id="mwUg">[</span>4<span class="cite-bracket" id="mwUw">]</span></span></a></sup> A counting Bloom filter determines an element is greater or equal to <i id="mwVA">θ</i> when the corresponding <i id="mwVQ">k</i> counters are greater or equal to <i id="mwVg">θ.</i> Therefore, the probability that counting Bloom filter determines an element is greater or equal to <i id="mwVw">θ</i> is</p>
+<p id="mwWA"><span about="#mwt15" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"p_{fp}(\\theta, k, n, m) = (1 - \\sum\\limits_{l &lt; \\theta} b(l, kn, \\frac{1}{m}))^k"}}' id="mwWQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle p_{fp}(\theta ,k,n,m)=(1-\sum \limits _{l&lt;\theta }b(l,kn,{\frac {1}{m}}))^{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>f</mi>
+<mi>p</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>θ<!-- θ --></mi>
+<mo>,</mo>
+<mi>k</mi>
+<mo>,</mo>
+<mi>n</mi>
+<mo>,</mo>
+<mi>m</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<munder>
+<mo movablelimits="false">∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+<mo>&lt;</mo>
+<mi>θ<!-- θ --></mi>
+</mrow>
+</munder>
+<mi>b</mi>
+<mo stretchy="false">(</mo>
+<mi>l</mi>
+<mo>,</mo>
+<mi>k</mi>
+<mi>n</mi>
+<mo>,</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+<mo stretchy="false">)</mo>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle p_{fp}(\theta ,k,n,m)=(1-\sum \limits _{l&lt;\theta }b(l,kn,{\frac {1}{m}}))^{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle p_{fp}(\theta ,k,n,m)=(1-\sum \limits _{l&lt;\theta }b(l,kn,{\frac {1}{m}}))^{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/77741218ca98001806a0862e64775b319b049e23" style="vertical-align: -3.171ex; margin-left: -0.089ex; width:38.662ex; height:6.509ex;"/></span>.</p>
+<p id="mwWg">This is different from formal definition of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/False_positive" id="mwWw" rel="mw:WikiLink" title="False positive">false positive</a> in counting Bloom filter. However, following the assumption in Bloom filter, above probability is defined as false positive of counting Bloom filter. If <i id="mwXA">θ</i>=1, the equation becomes false positive of Bloom filter.</p>
+<p id="mwXg">For large but fixed <i id="mwXw">n</i> and <i id="mwYA">m</i>, the false positive decreases from <i id="mwYQ">k</i>=1 to a point defined <span about="#mwt16" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_{opt}"}}' id="mwYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{opt}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>o</mi>
+<mi>p</mi>
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{opt}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{opt}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6780d4f16c1df91b33e954ad94651eca4fa1c9d2" style="vertical-align: -1.005ex; width:3.661ex; height:2.843ex;"/></span>, and increases from <span about="#mwt17" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_{opt}"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{opt}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>o</mi>
+<mi>p</mi>
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{opt}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{opt}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6780d4f16c1df91b33e954ad94651eca4fa1c9d2" style="vertical-align: -1.005ex; width:3.661ex; height:2.843ex;"/></span>to positive infinity.<sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwZA"><span class="mw-reflink-text" id="mwZQ"><span class="cite-bracket" id="mwZg">[</span>5<span class="cite-bracket" id="mwZw">]</span></span></a></sup></p>
+<p id="mwaA"><a class="external text" href="https://www.mdpi.com/2079-9292/8/7/779" id="mwaQ" rel="mw:ExtLink nofollow">Kim et al. (2019)</a> shows numerical values of <span about="#mwt21" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k_{opt}"}}' id="mwag" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k_{opt}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>k</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>o</mi>
+<mi>p</mi>
+<mi>t</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k_{opt}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k_{opt}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6780d4f16c1df91b33e954ad94651eca4fa1c9d2" style="vertical-align: -1.005ex; width:3.661ex; height:2.843ex;"/></span>within <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1\\leq\\theta\\leq30"}}' id="mwaw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1\leq \theta \leq 30}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>≤<!-- ≤ --></mo>
+<mi>θ<!-- θ --></mi>
+<mo>≤<!-- ≤ --></mo>
+<mn>30</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1\leq \theta \leq 30}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1\leq \theta \leq 30}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b3b8adae7ace8ca3df67b84b503902e1bce7d499" style="vertical-align: -0.505ex; width:10.775ex; height:2.343ex;"/></span>. For <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\theta &gt; 30"}}' id="mwbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \theta &gt;30}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>θ<!-- θ --></mi>
+<mo>&gt;</mo>
+<mn>30</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \theta &gt;30}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \theta &gt;30}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ac8c701aecadf7fa3596390f55443bc17c1d1d96" style="vertical-align: -0.338ex; width:6.514ex; height:2.176ex;"/></span> they suggested using the floor or ceiling of <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{m}{n} (0.2037\\theta + 0.9176)"}}' id="mwbQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {m}{n}}(0.2037\theta +0.9176)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>m</mi>
+<mi>n</mi>
+</mfrac>
+</mrow>
+<mo stretchy="false">(</mo>
+<mn>0.2037</mn>
+<mi>θ<!-- θ --></mi>
+<mo>+</mo>
+<mn>0.9176</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {m}{n}}(0.2037\theta +0.9176)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {m}{n}}(0.2037\theta +0.9176)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e0e0b08be43ad3f6ae7b7ec7491b14aa0acf2d2f" style="vertical-align: -1.838ex; width:21.535ex; height:4.676ex;"/></span>.</p>
+<p id="mwcA">An invertible Bloom filter (IBF) is a variant of the counting Bloom filter that allows for listing of the remaining element, given there are not too may of them. There is, however, a small chance that multiple hash collisions can render a element unrecoverable.<sup about="#mwt25" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"choi-2024"}}' id="cite_ref-choi-2024_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-choi-2024-1" id="mwcQ"><span class="mw-reflink-text" id="mwcg"><span class="cite-bracket" id="mwcw">[</span>1<span class="cite-bracket" id="mwdA">]</span></span></a></sup><sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"eppstein-2011"},"body":{"id":"mw-reference-text-cite_note-eppstein-2011-6"}}' id="cite_ref-eppstein-2011_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-eppstein-2011-6" id="mwdQ"><span class="mw-reflink-text" id="mwdg"><span class="cite-bracket" id="mwdw">[</span>6<span class="cite-bracket" id="mweA">]</span></span></a></sup></p>
+<p id="mweQ">Like a CBF, an IBF consists of a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mweg" rel="mw:WikiLink" title="Hash table">hash table</a> <i id="mwew">B</i> which uses <i id="mwfA">k</i> hash functions <i id="mwfQ">h</i><sub id="mwfg">1</sub>...<i id="mwfw">h</i><sub id="mwgA"><i id="mwgQ">k</i></sub> and stores a counter in each of its <i id="mwgg">m</i> cells. Alongside each counter, it also stores a sum of elements and a sum of element hashes using a new hash function <i id="mwgw">g</i>. There is also a second hash table <i id="mwhA">C</i> to recover elements that could not be recovered using <i id="mwhQ">B</i>, which also has <i id="mwhg">m</i> cells but only uses two hash functions <i id="mwhw">f</i><sub id="mwiA">1</sub> and <i id="mwiQ">f</i><sub id="mwig">2</sub>. The total number of elements (<i id="mwiw">n</i>) is also stored.</p>
+<p id="mwjA">To insert an element <i id="mwjQ">x</i>, do the following:</p>
+<p id="mwvg">Likewise, to remove an element <i id="mwvw">x</i>, do the following:</p>
+<p id="mw8A">Repeated insertions and removals can be simplified.</p>
+<p id="mw8Q">A cell is considered "pure" if it contains only one distinct element <i id="mw8g">x</i>, which can be checked using <code id="mw8w"><i id="mw9A">g</i>(<i id="mw9Q">B</i>[<i id="mw9g">i</i>].idSum/<i id="mw9w">B</i>[<i id="mw-A">i</i>].count) = <i id="mw-Q">B</i>[<i id="mw-g">i</i>].hashSum/<i id="mw-w">B</i>[<i id="mw_A">i</i>].count</code>. If a cell is pure, then <i id="mw_Q">x</i> can be recovered by dividing the idSum by the count. To list the remaining elements ("stragglers"), do the following:</p>
+<p id="mwASs">An invertible Bloom lookup table (IBLT) is a variant of the invertible Bloom filter that also stores <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Key-value_pair" id="mwASw" rel="mw:WikiLink" title="Key-value pair">associated values</a> with each key. The difference is that an IBLT also stores a <code id="mwAS0">valueSum</code> in each cell, which can be used to obtain the value for a given key.<sup about="#mwt31" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"goodrich-2011"},"body":{"id":"mw-reference-text-cite_note-goodrich-2011-7"}}' id="cite_ref-goodrich-2011_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-goodrich-2011-7" id="mwAS4"><span class="mw-reflink-text" id="mwAS8"><span class="cite-bracket" id="mwATA">[</span>7<span class="cite-bracket" id="mwATE">]</span></span></a></sup></p>
+<p id="mwATI">If there are no extraneous deletions (where a key is deleted without being inserted first) or duplicates (where a key is inserted multiple times), then the <code id="mwATM">hashkeySum</code> can be omitted. In this case, pure cells can be detected by checking whether <code id="mwATQ">count = 1</code>.</p>
+<p id="mwATU">A <code id="mwATY">hashvalueSum</code> may also be stored in each cell to verify that only one value has been inserted for the corresponding key.</p>
+<p id="mwATc">IBLTs are suitable for use in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Databases" id="mwATg" rel="mw:WikiLink" title="Databases">databases</a>, <a href="https://en.wikipedia.org/wiki/Computer_network" id="mwATk" rel="mw:WikiLink" title="Computer network">networking</a><sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"goodrich-2011"}}' id="cite_ref-goodrich-2011_7-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-goodrich-2011-7" id="mwATo"><span class="mw-reflink-text" id="mwATs"><span class="cite-bracket" id="mwATw">[</span>7<span class="cite-bracket" id="mwAT0">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Data_compression" id="mwAT4" rel="mw:WikiLink" title="Data compression">compression</a>.<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwAT8"><span class="mw-reflink-text" id="mwAUA"><span class="cite-bracket" id="mwAUE">[</span>8<span class="cite-bracket" id="mwAUI">]</span></span></a></sup></p>
+</div></div>
+</body></html>

@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 2769
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Public-key cryptography",
+    "pageid": 24222,
+    "size": 42967,
+    "wordcount": 4740,
+    "snippet": "<span class=\"searchmatch\">Public</span>-<span class=\"searchmatch\">key</span> <span class=\"searchmatch\">cryptography</span>, or asymmetric <span class=\"searchmatch\">cryptography</span>, is the field of <span class=\"searchmatch\">cryptographic</span> systems that use pairs of related <span class=\"searchmatch\">keys</span>. Each <span class=\"searchmatch\">key</span> pair consists of a",
+    "timestamp": "2026-10-10T11:38:57Z"
+   },
+   {
+    "ns": 0,
+    "title": "Key (cryptography)",
+    "pageid": 53039,
+    "size": 13094,
+    "wordcount": 1530,
+    "snippet": "unauthorized parties. With <span class=\"searchmatch\">public</span> <span class=\"searchmatch\">key</span> <span class=\"searchmatch\">cryptography</span>, only the private <span class=\"searchmatch\">key</span> must be kept secret, but with symmetric <span class=\"searchmatch\">cryptography</span>, it is important to maintain",
+    "timestamp": "2026-10-10T22:44:46Z"
+   },
+   {
+    "ns": 0,
+    "title": "Diffie–Hellman key exchange",
+    "pageid": 7903,
+    "size": 46772,
+    "wordcount": 5345,
+    "snippet": "Diffie–Hellman (DH) <span class=\"searchmatch\">key</span> exchange is a mathematical method of securely generating a symmetric <span class=\"searchmatch\">cryptographic</span> <span class=\"searchmatch\">key</span> over a <span class=\"searchmatch\">public</span> channel. It is named after",
+    "timestamp": "2026-10-11T16:43:53Z"
+   },
+   {
+    "ns": 0,
+    "title": "Key server (cryptographic)",
+    "pageid": 616119,
+    "size": 12452,
+    "wordcount": 1615,
+    "snippet": "algorithm. <span class=\"searchmatch\">Key</span> servers play an important role in <span class=\"searchmatch\">public</span> <span class=\"searchmatch\">key</span> <span class=\"searchmatch\">cryptography</span>. In <span class=\"searchmatch\">public</span> <span class=\"searchmatch\">key</span> <span class=\"searchmatch\">cryptography</span> an individual is able to generate a <span class=\"searchmatch\">key</span> pair, where",
+    "timestamp": "2026-04-01T01:33:24Z"
+   },
+   {
+    "ns": 0,
+    "title": "Cryptography",
+    "pageid": 18934432,
+    "size": 104108,
+    "wordcount": 11254,
+    "snippet": "behavior. More generally, <span class=\"searchmatch\">cryptography</span> is about constructing and analyzing protocols that prevent third parties or the <span class=\"searchmatch\">public</span> from reading private messages",
+    "timestamp": "2026-10-13T09:37:22Z"
+   }
+  ]
+ }
+}

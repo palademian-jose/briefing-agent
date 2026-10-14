@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 199
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Reed–Solomon error correction",
+    "pageid": 45600,
+    "size": 81385,
+    "wordcount": 12986,
+    "snippet": "and coding theory, <span class=\"searchmatch\">Reed</span>–<span class=\"searchmatch\">Solomon</span> codes are a group of <span class=\"searchmatch\">error</span>-correcting codes that were introduced by Irving S. <span class=\"searchmatch\">Reed</span> and Gustave <span class=\"searchmatch\">Solomon</span> in 1960. They have",
+    "timestamp": "2026-10-14T13:30:56Z"
+   },
+   {
+    "ns": 0,
+    "title": "Rectangular Micro QR Code",
+    "pageid": 76700066,
+    "size": 26109,
+    "wordcount": 2373,
+    "snippet": "and timing patterns to help with recognition. rMQR Code has <span class=\"searchmatch\">Reed</span>–<span class=\"searchmatch\">Solomon</span> <span class=\"searchmatch\">error</span> <span class=\"searchmatch\">correction</span> with ability to restore data from corrupted barcodes. As other",
+    "timestamp": "2026-10-07T04:27:23Z"
+   },
+   {
+    "ns": 0,
+    "title": "QR code",
+    "pageid": 828436,
+    "size": 109108,
+    "wordcount": 10955,
+    "snippet": "readable by imaging devices like cameras, and processed using <span class=\"searchmatch\">Reed</span>–<span class=\"searchmatch\">Solomon</span> <span class=\"searchmatch\">error</span> <span class=\"searchmatch\">correction</span> until the image can be appropriately interpreted. The required",
+    "timestamp": "2026-10-12T23:54:40Z"
+   },
+   {
+    "ns": 0,
+    "title": "DotCode",
+    "pageid": 76571690,
+    "size": 25469,
+    "wordcount": 2319,
+    "snippet": " Additionally, DotCode provides much more data density and <span class=\"searchmatch\">Reed</span>–<span class=\"searchmatch\">Solomon</span> <span class=\"searchmatch\">error</span> <span class=\"searchmatch\">correction</span> which allows to restore partially damaged dotcodes. However",
+    "timestamp": "2026-10-03T12:22:12Z"
+   },
+   {
+    "ns": 0,
+    "title": "Error detection and correction",
+    "pageid": 10375,
+    "size": 35614,
+    "wordcount": 4292,
+    "snippet": "applications in computer science and telecommunications, <span class=\"searchmatch\">error</span> detection and <span class=\"searchmatch\">correction</span> (EDAC) or <span class=\"searchmatch\">error</span> control are techniques that enable reliable delivery",
+    "timestamp": "2026-10-14T13:44:01Z"
+   }
+  ]
+ }
+}

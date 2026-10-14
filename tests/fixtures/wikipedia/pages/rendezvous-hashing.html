@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Rendezvous hashing - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Rendezvous hashing</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwFg"><b id="mwFw">Rendezvous </b>or <b id="mwGA">highest random weight (HRW) hashing</b><sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"},"body":{"id":"mw-reference-text-cite_note-:0-1"}}' id="cite_ref-:0_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwGQ"><span class="mw-reflink-text" id="mwGg"><span class="cite-bracket" id="mwGw">[</span>1<span class="cite-bracket" id="mwHA">]</span></span></a></sup><sup about="#mwt7" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"},"body":{"id":"mw-reference-text-cite_note-:1-2"}}' id="cite_ref-:1_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-2" id="mwHQ"><span class="mw-reflink-text" id="mwHg"><span class="cite-bracket" id="mwHw">[</span>2<span class="cite-bracket" id="mwIA">]</span></span></a></sup> is an algorithm that allows clients to achieve distributed agreement on a set of <span about="#mwt8" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwIQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span> options out of a possible set of <span about="#mwt9" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwIg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> options. A typical application is when clients need to agree on which sites (or proxies) objects are assigned to.</p>
+<p id="mwIw"><a href="https://en.wikipedia.org/wiki/Consistent_hashing" id="mwJA" rel="mw:WikiLink" title="Consistent hashing">Consistent hashing</a> addresses the special case  <span about="#mwt10" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k = 1"}}' id="mwJQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k=1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k=1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k=1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6c035ffa69b5bca8bf2d16c3da3aaad79a8bcbfa" style="vertical-align: -0.338ex; width:5.472ex; height:2.176ex;"/></span> using a different method. Rendezvous hashing is both much simpler and more general than consistent hashing (see below).</p>
+<p id="mwKA">Rendezvous hashing was invented  by David Thaler and Chinya Ravishankar at the <a href="https://en.wikipedia.org/wiki/University_of_Michigan" id="mwKQ" rel="mw:WikiLink" title="University of Michigan">University of Michigan</a> in 1996.<sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwKg"><span class="mw-reflink-text" id="mwKw"><span class="cite-bracket" id="mwLA">[</span>1<span class="cite-bracket" id="mwLQ">]</span></span></a></sup> <a href="https://en.wikipedia.org/wiki/Consistent_hashing" id="mwLg" rel="mw:WikiLink" title="Consistent hashing">Consistent hashing</a> appeared a year later in the literature.</p>
+<p id="mwLw">Given its simplicity and generality, rendezvous hashing is now being preferred to consistent hashing in real-world applications.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwMA"><span class="mw-reflink-text" id="mwMQ"><span class="cite-bracket" id="mwMg">[</span>3<span class="cite-bracket" id="mwMw">]</span></span></a></sup><sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwNA"><span class="mw-reflink-text" id="mwNQ"><span class="cite-bracket" id="mwNg">[</span>4<span class="cite-bracket" id="mwNw">]</span></span></a></sup><sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwOA"><span class="mw-reflink-text" id="mwOQ"><span class="cite-bracket" id="mwOg">[</span>5<span class="cite-bracket" id="mwOw">]</span></span></a></sup>  Rendezvous hashing was used very early on in many applications including mobile caching,<sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>6<span class="cite-bracket" id="mwPw">]</span></span></a></sup> router design,<sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwQA"><span class="mw-reflink-text" id="mwQQ"><span class="cite-bracket" id="mwQg">[</span>7<span class="cite-bracket" id="mwQw">]</span></span></a></sup> secure <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Key_establishment" id="mwRA" rel="mw:WikiLink" title="Key establishment">key establishment</a>,<sup about="#mwt29" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"foisting"},"body":{"id":"mw-reference-text-cite_note-foisting-8"}}' id="cite_ref-foisting_8-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-foisting-8" id="mwRQ"><span class="mw-reflink-text" id="mwRg"><span class="cite-bracket" id="mwRw">[</span>8<span class="cite-bracket" id="mwSA">]</span></span></a></sup> and <a href="https://en.wikipedia.org/wiki/Shard_(database_architecture)" id="mwSQ" rel="mw:WikiLink" title="Shard (database architecture)">sharding</a> and <a href="https://en.wikipedia.org/wiki/Distributed_database" id="mwSg" rel="mw:WikiLink" title="Distributed database">distributed databases</a>.<sup about="#mwt32" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":5"},"body":{"id":"mw-reference-text-cite_note-:5-9"}}' id="cite_ref-:5_9-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:5-9" id="mwSw"><span class="mw-reflink-text" id="mwTA"><span class="cite-bracket" id="mwTQ">[</span>9<span class="cite-bracket" id="mwTg">]</span></span></a></sup> Other examples of real-world systems that use Rendezvous Hashing include the GitHub load balancer,<sup about="#mwt35" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"},"body":{"id":"mw-reference-text-cite_note-:2-10"}}' id="cite_ref-:2_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-10" id="mwTw"><span class="mw-reflink-text" id="mwUA"><span class="cite-bracket" id="mwUQ">[</span>10<span class="cite-bracket" id="mwUg">]</span></span></a></sup> the <a href="https://en.wikipedia.org/wiki/Apache_Ignite" id="mwUw" rel="mw:WikiLink" title="Apache Ignite">Apache Ignite</a> distributed database,<sup about="#mwt38" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":3"},"body":{"id":"mw-reference-text-cite_note-:3-11"}}' id="cite_ref-:3_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:3-11" id="mwVA"><span class="mw-reflink-text" id="mwVQ"><span class="cite-bracket" id="mwVg">[</span>11<span class="cite-bracket" id="mwVw">]</span></span></a></sup> the Tahoe-LAFS file store,<sup about="#mwt41" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":6"},"body":{"id":"mw-reference-text-cite_note-:6-12"}}' id="cite_ref-:6_12-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:6-12" id="mwWA"><span class="mw-reflink-text" id="mwWQ"><span class="cite-bracket" id="mwWg">[</span>12<span class="cite-bracket" id="mwWw">]</span></span></a></sup> the CoBlitz large-file distribution service,<sup about="#mwt44" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":7"},"body":{"id":"mw-reference-text-cite_note-:7-13"}}' id="cite_ref-:7_13-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:7-13" id="mwXA"><span class="mw-reflink-text" id="mwXQ"><span class="cite-bracket" id="mwXg">[</span>13<span class="cite-bracket" id="mwXw">]</span></span></a></sup> Apache Druid,<sup about="#mwt47" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":8"},"body":{"id":"mw-reference-text-cite_note-:8-14"}}' id="cite_ref-:8_14-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:8-14" id="mwYA"><span class="mw-reflink-text" id="mwYQ"><span class="cite-bracket" id="mwYg">[</span>14<span class="cite-bracket" id="mwYw">]</span></span></a></sup> IBM's Cloud Object Store,<sup about="#mwt50" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":9"},"body":{"id":"mw-reference-text-cite_note-:9-15"}}' id="cite_ref-:9_15-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:9-15" id="mwZA"><span class="mw-reflink-text" id="mwZQ"><span class="cite-bracket" id="mwZg">[</span>15<span class="cite-bracket" id="mwZw">]</span></span></a></sup> the Arvados Data Management System,<sup about="#mwt53" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":10"},"body":{"id":"mw-reference-text-cite_note-:10-16"}}' id="cite_ref-:10_16-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:10-16" id="mwaA"><span class="mw-reflink-text" id="mwaQ"><span class="cite-bracket" id="mwag">[</span>16<span class="cite-bracket" id="mwaw">]</span></span></a></sup> Apache Kafka,<sup about="#mwt56" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":11"},"body":{"id":"mw-reference-text-cite_note-:11-17"}}' id="cite_ref-:11_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:11-17" id="mwbA"><span class="mw-reflink-text" id="mwbQ"><span class="cite-bracket" id="mwbg">[</span>17<span class="cite-bracket" id="mwbw">]</span></span></a></sup> and the Twitter EventBus pub/sub platform.<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":4"},"body":{"id":"mw-reference-text-cite_note-:4-18"}}' id="cite_ref-:4_18-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:4-18" id="mwcA"><span class="mw-reflink-text" id="mwcQ"><span class="cite-bracket" id="mwcg">[</span>18<span class="cite-bracket" id="mwcw">]</span></span></a></sup></p>
+<p id="mwdA">One of the first applications of rendezvous hashing was to enable <a href="https://en.wikipedia.org/wiki/Multicast" id="mwdQ" rel="mw:WikiLink" title="Multicast">multicast</a> clients on the Internet (in contexts such as the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/MBONE" id="mwdg" rel="mw:WikiLink" title="MBONE">MBONE</a>) to identify multicast rendezvous points in a distributed fashion.<sup about="#mwt62" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-19"}}' id="cite_ref-19" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-19" id="mwdw"><span class="mw-reflink-text" id="mweA"><span class="cite-bracket" id="mweQ">[</span>19<span class="cite-bracket" id="mweg">]</span></span></a></sup><sup about="#mwt65" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwew"><span class="mw-reflink-text" id="mwfA"><span class="cite-bracket" id="mwfQ">[</span>20<span class="cite-bracket" id="mwfg">]</span></span></a></sup> It was used in 1998 by Microsoft's <a href="https://en.wikipedia.org/wiki/Cache_Array_Routing_Protocol" id="mwfw" rel="mw:WikiLink" title="Cache Array Routing Protocol">Cache Array Routing Protocol</a> (CARP) for distributed cache coordination and routing.<sup about="#mwt68" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"carp"},"body":{"id":"mw-reference-text-cite_note-carp-21"}}' id="cite_ref-carp_21-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-carp-21" id="mwgA"><span class="mw-reflink-text" id="mwgQ"><span class="cite-bracket" id="mwgg">[</span>21<span class="cite-bracket" id="mwgw">]</span></span></a></sup><sup about="#mwt71" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mwhA"><span class="mw-reflink-text" id="mwhQ"><span class="cite-bracket" id="mwhg">[</span>22<span class="cite-bracket" id="mwhw">]</span></span></a></sup> Some <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Protocol_Independent_Multicast" id="mwiA" rel="mw:WikiLink" title="Protocol Independent Multicast">Protocol Independent Multicast</a> routing protocols use rendezvous hashing to pick a rendezvous point.<sup about="#mwt72" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_1-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwiQ"><span class="mw-reflink-text" id="mwig"><span class="cite-bracket" id="mwiw">[</span>1<span class="cite-bracket" id="mwjA">]</span></span></a></sup></p>
+<p id="mwjw">Rendezvous hashing solves a general version of the <a href="https://en.wikipedia.org/wiki/Distributed_hash_table" id="mwkA" rel="mw:WikiLink" title="Distributed hash table">distributed hash table</a> problem: We are given a set of <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwkQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> sites (servers or proxies, say). How can any set of clients, given an object <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9d70e1d0d87e2ef1092ea1ffe2923d9933ff18fc" style="vertical-align: -0.338ex; width:1.773ex; height:2.176ex;"/></span>, agree on a <i id="mwkw">k-</i>subset of sites to assign to <span about="#mwt75" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O"}}' id="mwlA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9d70e1d0d87e2ef1092ea1ffe2923d9933ff18fc" style="vertical-align: -0.338ex; width:1.773ex; height:2.176ex;"/></span>? The standard version of the problem uses <i id="mwlQ">k = 1.</i> Each client is to make its selection independently, but all clients must end up picking the same subset of sites. This is non-trivial if we add a <i id="mwlg">minimal disruption</i> constraint, and require that when a site fails or is removed, only objects mapping to that site need be reassigned to other sites.</p>
+<p id="mwlw">The basic idea is to give each site <span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_j"}}' id="mwmA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/222db49df2eefdb67737ba2d2dbd221a1bae0bf0" style="vertical-align: -1.005ex; width:2.335ex; height:2.843ex;"/></span> a score (a <i id="mwmQ">weight</i>) for each object <span about="#mwt77" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O_i"}}' id="mwmg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>O</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/907f89d54862168ae54a66e6835115df7587954f" style="vertical-align: -0.671ex; width:2.573ex; height:2.509ex;"/></span>, and assign the object to the highest scoring site. All clients first agree on a hash function <span about="#mwt78" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(\\cdot)"}}' id="mwmw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a4e42ce33810cdad2ae2f1f5695206f73000a34" style="vertical-align: -0.838ex; width:3.795ex; height:2.843ex;"/></span>. For object <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O_i"}}' id="mwnA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>O</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/907f89d54862168ae54a66e6835115df7587954f" style="vertical-align: -0.671ex; width:2.573ex; height:2.509ex;"/></span>, the site <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_j"}}' id="mwnQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{j}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{j}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{j}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/222db49df2eefdb67737ba2d2dbd221a1bae0bf0" style="vertical-align: -1.005ex; width:2.335ex; height:2.843ex;"/></span> is defined to have weight <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_{i, j} = h(O_i, S_j)"}}' id="mwng" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i,j}=h(O_{i},S_{j})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>O</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i,j}=h(O_{i},S_{j})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i,j}=h(O_{i},S_{j})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bd0f1838186dcfbeb9d43a0d384ec21b9bbe81d7" style="vertical-align: -1.005ex; width:15.787ex; height:3.009ex;"/></span>. Each client independently computes these weights <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_{i, 1}, w_{i, 2} \\dots w_{i, n}"}}' id="mwnw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{i,1},w_{i,2}\dots w_{i,n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>…<!-- … --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>,</mo>
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{i,1},w_{i,2}\dots w_{i,n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{i,1},w_{i,2}\dots w_{i,n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/de150f1f7ed4beabcca3d5349f084ac925bf249d" style="vertical-align: -1.005ex; width:15.925ex; height:2.343ex;"/></span> and picks the <i id="mwoA">k</i> sites that yield the <i id="mwoQ">k</i> largest hash values. The clients have thereby achieved distributed <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwog" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>-agreement.</p>
+<p id="mwow">If a site <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwpA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span> is added or removed, only the objects mapping to <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwpQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span> are remapped to different sites, satisfying the minimal disruption constraint above. The HRW assignment can be computed independently by any client, since it depends only on the identifiers for the set of sites <span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_1, S_2 \\dots S_n"}}' id="mwpg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{1},S_{2}\dots S_{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>…<!-- … --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{1},S_{2}\dots S_{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{1},S_{2}\dots S_{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3239a81e86f12ba9f4b3cc40d3cdab6a3c9e7891" style="vertical-align: -0.671ex; width:12.133ex; height:2.509ex;"/></span> and the object being assigned.</p>
+<p id="mwpw">HRW easily accommodates different capacities among sites. If site <span about="#mwt87" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwqA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> has twice the capacity of the other sites, we simply represent <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwqQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> twice in the list, say, as <span about="#mwt89" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{k, 1}, S_{k, 2}"}}' id="mwqg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k,1},S_{k,2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>,</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>,</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k,1},S_{k,2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k,1},S_{k,2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8fd79f7ee4315c8979dbe0977bdd3e0bbc777050" style="vertical-align: -1.005ex; width:8.62ex; height:2.843ex;"/></span>. Clearly, twice as many objects will now map to <span about="#mwt90" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwqw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> as to the other sites.</p>
+<p id="mwrQ">Consider the simple version of the problem, with <i id="mwrg">k = 1,</i> where all clients are to agree on a single site for an object <i id="mwrw">O.</i> Approaching the problem naively, it might appear sufficient to treat the <i id="mwsA">n</i> sites as buckets in a <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwsQ" rel="mw:WikiLink" title="Hash table">hash table</a> and hash the object name <i id="mwsg">O</i> into this table. Unfortunately, if any of the sites fails or is unreachable, the hash table size changes, forcing all objects to be remapped. This massive disruption makes such direct hashing unworkable.</p>
+<p id="mwsw">Under rendezvous hashing, however, clients handle site failures by picking the site that yields the next largest weight. Remapping is required only for objects currently mapped to the failed site, and disruption is minimal.<sup about="#mwt91" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":0"}}' id="cite_ref-:0_1-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:0-1" id="mwtA"><span class="mw-reflink-text" id="mwtQ"><span class="cite-bracket" id="mwtg">[</span>1<span class="cite-bracket" id="mwtw">]</span></span></a></sup><sup about="#mwt92" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":1"}}' id="cite_ref-:1_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:1-2" id="mwuA"><span class="mw-reflink-text" id="mwuQ"><span class="cite-bracket" id="mwug">[</span>2<span class="cite-bracket" id="mwuw">]</span></span></a></sup></p>
+<p id="mwvA">Rendezvous hashing has the following properties:</p>
+<p id="mw6g">The standard version of Rendezvous Hashing described above works quite well for moderate <i id="mw6w">n,</i> but when <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mw7A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is extremely large, the hierarchical use of Rendezvous Hashing achieves <span about="#mwt97" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mw7Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> running time.<sup about="#mwt100" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"CSE Technical Report UCR-CS 2001-05062"},"body":{"id":"mw-reference-text-cite_note-CSE_Technical_Report_UCR-CS_2001-05062-23"}}' id="cite_ref-CSE_Technical_Report_UCR-CS_2001-05062_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-CSE_Technical_Report_UCR-CS_2001-05062-23" id="mw7g"><span class="mw-reflink-text" id="mw7w"><span class="cite-bracket" id="mw8A">[</span>23<span class="cite-bracket" id="mw8Q">]</span></span></a></sup><sup about="#mwt103" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mw8g"><span class="mw-reflink-text" id="mw8w"><span class="cite-bracket" id="mw9A">[</span>24<span class="cite-bracket" id="mw9Q">]</span></span></a></sup><sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mw9g"><span class="mw-reflink-text" id="mw9w"><span class="cite-bracket" id="mw-A">[</span>25<span class="cite-bracket" id="mw-Q">]</span></span></a></sup> This approach creates a virtual hierarchical structure (called a "skeleton"), and achieves <span about="#mwt107" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mw-g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span> running time by applying HRW at each level while descending the hierarchy. The idea is to first choose some constant <span about="#mwt108" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> and organize the <span about="#mwt109" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mw_A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> sites into <span about="#mwt110" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"c = \\lceil n / m \\rceil"}}' id="mw_Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle c=\lceil n/m\rceil }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+<mo>=</mo>
+<mo fence="false" stretchy="false">⌈<!-- ⌈ --></mo>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>m</mi>
+<mo fence="false" stretchy="false">⌉<!-- ⌉ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle c=\lceil n/m\rceil }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle c=\lceil n/m\rceil }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/05045a6cebf5f6c2bfceb9161765ecae4eca548a" style="vertical-align: -0.838ex; width:10.768ex; height:2.843ex;"/></span> clusters <span about="#mwt111" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" C_1 = \\left\\{ S_1, S_2 \\dots S_m \\right\\}, C_2 = \\left\\{ S_{m+1}, S_{m+2} \\dots S_{2m} \\right\\} \\dots "}}' id="mw_g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle C_{1}=\left\{S_{1},S_{2}\dots S_{m}\right\},C_{2}=\left\{S_{m+1},S_{m+2}\dots S_{2m}\right\}\dots }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mrow>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>…<!-- … --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>}</mo>
+</mrow>
+<mo>,</mo>
+<msub>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mrow>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>m</mi>
+<mo>+</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>…<!-- … --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mi>m</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>}</mo>
+</mrow>
+<mo>…<!-- … --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle C_{1}=\left\{S_{1},S_{2}\dots S_{m}\right\},C_{2}=\left\{S_{m+1},S_{m+2}\dots S_{2m}\right\}\dots }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle C_{1}=\left\{S_{1},S_{2}\dots S_{m}\right\},C_{2}=\left\{S_{m+1},S_{m+2}\dots S_{2m}\right\}\dots }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/608c077cc676eecd1c6d96f74828d310059d732a" style="vertical-align: -0.838ex; width:52.254ex; height:2.843ex;"/></span> Next, build a virtual hierarchy by choosing a constant <span about="#mwt112" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" f "}}' id="mw_w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> and imagining these <span about="#mwt113" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" c "}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle c}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle c}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle c}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/86a67b81c2de995bd608d5b2df50cd8cd7d92455" style="vertical-align: -0.338ex; width:1.007ex; height:1.676ex;"/></span> clusters placed at the leaves of a tree <span about="#mwt114" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> of virtual nodes, each with fanout <span about="#mwt115" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwAQI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span>.</p>
+<p id="mwAQo">In the accompanying diagram, the cluster size is <span about="#mwt116" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m = 4"}}' id="mwAQs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m=4}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>=</mo>
+<mn>4</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m=4}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m=4}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0002ab187a5f0920f4c5eff6741f9964cbe2abfd" style="vertical-align: -0.338ex; width:6.301ex; height:2.176ex;"/></span>, and the skeleton fanout is <span about="#mwt117" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f = 3"}}' id="mwAQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f=3}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo>=</mo>
+<mn>3</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f=3}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f=3}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/258e6924646c4f1f5cb0a6f3b1c9092acbe78d2a" style="vertical-align: -0.671ex; width:5.54ex; height:2.509ex;"/></span>. Assuming 108 sites (real nodes) for convenience, we get a three-tier virtual hierarchy. Since <span about="#mwt118" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f = 3"}}' id="mwAQ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f=3}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo>=</mo>
+<mn>3</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f=3}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f=3}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/258e6924646c4f1f5cb0a6f3b1c9092acbe78d2a" style="vertical-align: -0.671ex; width:5.54ex; height:2.509ex;"/></span>, each virtual node has a natural numbering in octal. Thus, the 27 virtual nodes at the lowest tier would be numbered <span about="#mwt119" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" 000, 001, 002, ..., 221, 222 "}}' id="mwAQ4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 000,001,002,...,221,222}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>000</mn>
+<mo>,</mo>
+<mn>001</mn>
+<mo>,</mo>
+<mn>002</mn>
+<mo>,</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>,</mo>
+<mn>221</mn>
+<mo>,</mo>
+<mn>222</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 000,001,002,...,221,222}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 000,001,002,...,221,222}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/45eeed5b63f9f43c027e1aacb13f896699d99848" style="vertical-align: -0.671ex; width:25.708ex; height:2.509ex;"/></span> in octal (we can, of course, vary the fanout at each level - in that case, each node will be identified with the corresponding mixed-radix number).</p>
+<p id="mwAQ8">The easiest way to understand the virtual hierarchy is by starting at the top, and descending the virtual hierarchy. We successively apply Rendezvous Hashing to the set of virtual nodes at each level of the hierarchy, and descend the branch defined by the winning virtual node. We can in fact start at any level in the virtual hierarchy. Starting lower in the hierarchy requires more hashes, but may improve load distribution in the case of failures.</p>
+<p id="mwARA">For example, instead of applying HRW to all 108 real nodes in the diagram, we can first apply HRW to the 27 lowest-tier virtual nodes, selecting one. We then apply HRW to the four real nodes in its cluster, and choose the winning site. We only need <span about="#mwt120" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"27 + 4 = 31"}}' id="mwARE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 27+4=31}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>27</mn>
+<mo>+</mo>
+<mn>4</mn>
+<mo>=</mo>
+<mn>31</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 27+4=31}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 27+4=31}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/92c690f8e556f80e1ed631aa81d79fdb8aa1adde" style="vertical-align: -0.505ex; width:11.751ex; height:2.343ex;"/></span> hashes, rather than 108. If we apply this method starting one level higher in the hierarchy, we would need <span about="#mwt121" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"9 + 3 + 4 = 16"}}' id="mwARI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 9+3+4=16}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>9</mn>
+<mo>+</mo>
+<mn>3</mn>
+<mo>+</mo>
+<mn>4</mn>
+<mo>=</mo>
+<mn>16</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 9+3+4=16}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 9+3+4=16}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f22fa964e0117164edbe4d9076b8225a8e7013f2" style="vertical-align: -0.505ex; width:14.592ex; height:2.343ex;"/></span> hashes to get to the winning site. The figure shows how, if we proceed starting from the root of the skeleton, we may successively choose the virtual nodes <span about="#mwt122" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(2)_3"}}' id="mwARM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (2)_{3}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>2</mn>
+<msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (2)_{3}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (2)_{3}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/43ca19c44ba6948ed95137287feac42e655fda51" style="vertical-align: -0.838ex; width:4.026ex; height:2.843ex;"/></span>, <span about="#mwt123" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(20)_3"}}' id="mwARQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (20)_{3}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>20</mn>
+<msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (20)_{3}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (20)_{3}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2ca6095534c22afd45794e57c05f4dd1db048558" style="vertical-align: -0.838ex; width:5.188ex; height:2.843ex;"/></span>, and <span about="#mwt124" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(200)_3 "}}' id="mwARU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (200)_{3}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>200</mn>
+<msub>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (200)_{3}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (200)_{3}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/66aa43894b728bcb14a1cb76e38e406bd66643a5" style="vertical-align: -0.838ex; width:6.351ex; height:2.843ex;"/></span>, and finally end up with site 74.</p>
+<p id="mwARY">The virtual hierarchy need not be stored, but can be created on demand, since the virtual nodes names are simply prefixes of base-<span about="#mwt125" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwARc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> (or mixed-radix) representations. We can easily create appropriately sorted strings from the digits, as required. In the example, we would be working with the strings <span about="#mwt126" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" 0, 1, 2 "}}' id="mwARg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 0,1,2}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 0,1,2}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 0,1,2}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6a61d4d16c56c710fac0eee20d1a12f4097e46fd" style="vertical-align: -0.671ex; width:5.555ex; height:2.509ex;"/></span> (at tier 1), <span about="#mwt127" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" 20, 21, 22 "}}' id="mwARk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 20,21,22}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>20</mn>
+<mo>,</mo>
+<mn>21</mn>
+<mo>,</mo>
+<mn>22</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 20,21,22}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 20,21,22}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/958123935cb10406b3818c6254c40b5fc0365d5c" style="vertical-align: -0.671ex; width:9.043ex; height:2.509ex;"/></span> (at tier 2), and <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" 200, 201, 202 "}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 200,201,202}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>200</mn>
+<mo>,</mo>
+<mn>201</mn>
+<mo>,</mo>
+<mn>202</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 200,201,202}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 200,201,202}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/496de1ebfc80bb737ddaeaff530aa90cb26c3e75" style="vertical-align: -0.671ex; width:12.53ex; height:2.509ex;"/></span> (at tier 3). Clearly, <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"T"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle T}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>T</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle T}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle T}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ec7200acd984a1d3a3d7dc455e262fbe54f7f6e0" style="vertical-align: -0.338ex; width:1.636ex; height:2.176ex;"/></span> has height <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h = O(\\log c) = O(\\log n)"}}' id="mwARw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h=O(\log c)=O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo>=</mo>
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>c</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h=O(\log c)=O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h=O(\log c)=O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/750dd2e520e7f374bdeec8b2cec326f2498850f0" style="vertical-align: -0.838ex; width:23.82ex; height:2.843ex;"/></span>, since <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> and <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> are both constants. The work done at each level is <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(1)"}}' id="mwAR8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(1)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(1)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(1)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" style="vertical-align: -0.838ex; width:4.745ex; height:2.843ex;"/></span>, since <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"f"}}' id="mwASA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61" style="vertical-align: -0.671ex; width:1.279ex; height:2.509ex;"/></span> is a constant.</p>
+<p id="mwASE">The value of <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwASI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> can be chosen based on factors like the anticipated failure rate and the degree of desired load balancing. A higher value of <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m"}}' id="mwASM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a07d98bb302f3856cbabc47b2b9016692e3f7bc" style="vertical-align: -0.338ex; width:2.04ex; height:1.676ex;"/></span> leads to less load skew in the event of failure at the cost of higher search overhead.</p>
+<p id="mwASQ">The choice <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m = n"}}' id="mwASU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m=n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>=</mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m=n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m=n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69c9d8e54796e7de7d4738510cc10bc3fc55d48e" style="vertical-align: -0.338ex; width:6.534ex; height:1.676ex;"/></span> is equivalent to non-hierarchical rendezvous hashing. In practice, the hash function <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(\\cdot)"}}' id="mwASY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(\cdot )}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mo>⋅<!-- ⋅ --></mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(\cdot )}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(\cdot )}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a4e42ce33810cdad2ae2f1f5695206f73000a34" style="vertical-align: -0.838ex; width:3.795ex; height:2.843ex;"/></span> is very cheap, so <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m = n"}}' id="mwASc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m=n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>=</mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m=n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m=n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69c9d8e54796e7de7d4738510cc10bc3fc55d48e" style="vertical-align: -0.338ex; width:6.534ex; height:1.676ex;"/></span> can work quite well unless <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwASg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is very high.</p>
+<p id="mwASk">For any given object, it is clear that each leaf-level cluster, and hence each of the <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> sites, is chosen with equal probability.</p>
+<p id="mwASw">One can enhance resiliency to failures by replicating each object <i id="mwAS0">O</i> across the highest ranking <i id="mwAS4">r &lt; m</i> sites for <i id="mwAS8">O,</i> choosing <i id="mwATA">r</i> based on the level of resiliency desired. The simplest strategy is to replicate only within the leaf-level cluster.</p>
+<p id="mwATE">If the leaf-level site selected for <i id="mwATI">O</i> is unavailable, we select the next-ranked site for <i id="mwATM">O</i> within the same leaf-level cluster. If <i id="mwATQ">O</i> has been replicated within the leaf-level cluster, we are sure to find <i id="mwATU">O</i> in the next available site in the ranked order of <i id="mwATY">r</i> sites. All objects that were held by the failed server appear in some other site in its cluster. (Another option is to go up one or more tiers in the skeleton and select an alternate from among the sibling virtual nodes at that tier. We then descend the hierarchy to the real nodes, as above.)</p>
+<p id="mwATc">When a site is added to the system, it may become the winning site for some objects already assigned to other sites. Objects mapped to other clusters will never map to this new site, so we need to only consider objects held by other sites in its cluster. If the sites are caches, attempting to access an object mapped to the new site will result in a cache miss, the corresponding object will be fetched and cached, and operation returns to normal.</p>
+<p id="mwATg">If sites are servers, some objects must be remapped to this newly added site.  As before, objects mapped to other clusters will never map to this new site, so we need to only consider objects held by sites in its cluster. That is, we need only remap objects currently present in the <i id="mwATk">m</i> sites in this local cluster, rather than the entire set of objects in the system. New objects mapping to this site will of course be automatically assigned to it.</p>
+<p id="mwATs">Because of its simplicity, lower overhead, and generality (it works for any <i id="mwATw">k &lt; n</i>), rendezvous hashing is increasingly being preferred over consistent hashing. Recent examples of its use include the GitHub load balancer,<sup about="#mwt142" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":2"}}' id="cite_ref-:2_10-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:2-10" id="mwAT0"><span class="mw-reflink-text" id="mwAT4"><span class="cite-bracket" id="mwAT8">[</span>10<span class="cite-bracket" id="mwAUA">]</span></span></a></sup> the Apache Ignite distributed database,<sup about="#mwt143" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":3"}}' id="cite_ref-:3_11-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:3-11" id="mwAUE"><span class="mw-reflink-text" id="mwAUI"><span class="cite-bracket" id="mwAUM">[</span>11<span class="cite-bracket" id="mwAUQ">]</span></span></a></sup> and by the Twitter EventBus pub/sub platform.<sup about="#mwt144" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":":4"}}' id="cite_ref-:4_18-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-:4-18" id="mwAUU"><span class="mw-reflink-text" id="mwAUY"><span class="cite-bracket" id="mwAUc">[</span>18<span class="cite-bracket" id="mwAUg">]</span></span></a></sup></p>
+<p id="mwAUk">Consistent hashing operates by mapping each site uniformly and randomly to multiple points on a unit circle called tokens. Objects are also mapped to the unit circle and placed in the site owning the token that is first encountered traveling clockwise from the object's location. When a site is removed, each of its objects is transferred to the site owning the next token encountered moving clockwise. Provided each site is mapped to a large number of tokens (100–200, say), this will reassign objects in a relatively uniform fashion among the remaining sites.</p>
+<p id="mwAUo">If a site's tokens are placed on the unit circle by hashing 200 variants of the site ID, say, then the assignment of any object requires storing or recalculating 200 hash values for each site. However, the tokens associated with a given site can be precomputed and stored in a sorted list, requiring only a single application of the hash function to the object, and a binary search to compute the assignment. Even with many tokens per site, however, the basic version of consistent hashing may not balance objects uniformly over sites, since when a site is removed each object assigned to it is distributed only over as many other sites as the site has tokens (say 100–200).</p>
+<p id="mwAUs">Variants of consistent hashing (such as Amazon's <a href="https://en.wikipedia.org/wiki/Dynamo_(storage_system)" id="mwAUw" rel="mw:WikiLink" title="Dynamo (storage system)">Dynamo</a>) that use more complex logic to distribute tokens on the unit circle offer better <a href="https://en.wikipedia.org/wiki/Load_balancing_(computing)" id="mwAU0" rel="mw:WikiLink" title="Load balancing (computing)">load balancing</a> than basic consistent hashing, reduce the overhead of adding new sites, and reduce metadata overhead and offer other benefits.<sup about="#mwt147" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Amazon2007"},"body":{"id":"mw-reference-text-cite_note-Amazon2007-26"}}' id="cite_ref-Amazon2007_26-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Amazon2007-26" id="mwAU4"><span class="mw-reflink-text" id="mwAU8"><span class="cite-bracket" id="mwAVA">[</span>26<span class="cite-bracket" id="mwAVE">]</span></span></a></sup></p>
+<p id="mwAVM">Rendezvous hashing (HRW) is much simpler conceptually and in practice. It also distributes objects uniformly over all sites, given a uniform hash function. Unlike consistent hashing, HRW requires no precomputing or storage of tokens. Consider <i id="mwAVQ">k =1.</i> An object <span about="#mwt148" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O_i"}}' id="mwAVU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>O</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/907f89d54862168ae54a66e6835115df7587954f" style="vertical-align: -0.671ex; width:2.573ex; height:2.509ex;"/></span> is placed into one of <span about="#mwt149" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAVY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> sites <span about="#mwt150" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_1, S_2 \\dots S_n"}}' id="mwAVc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{1},S_{2}\dots S_{n}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>…<!-- … --></mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{1},S_{2}\dots S_{n}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{1},S_{2}\dots S_{n}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3239a81e86f12ba9f4b3cc40d3cdab6a3c9e7891" style="vertical-align: -0.671ex; width:12.133ex; height:2.509ex;"/></span> by computing the <span about="#mwt151" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAVg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> hash values <span about="#mwt152" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(O_i, S_j)"}}' id="mwAVk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(O_{i},S_{j})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>O</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(O_{i},S_{j})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(O_{i},S_{j})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01600cad6572db81ceeddfd1b26aa9f1541c7851" style="vertical-align: -1.005ex; width:9.09ex; height:3.009ex;"/></span> and picking the site <span about="#mwt153" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwAVo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> that yields the highest hash value. If a new site <span about="#mwt154" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{n+1}"}}' id="mwAVs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{n+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{n+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{n+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f8b0ac107028f431bb7698eeab7c508d3fe1a976" style="vertical-align: -0.671ex; width:4.744ex; height:2.509ex;"/></span> is added, new object placements or requests will compute <span about="#mwt155" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n+1"}}' id="mwAVw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n+1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n+1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n+1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a135e65a42f2d73cccbfc4569523996ca0036f1" style="vertical-align: -0.505ex; width:5.398ex; height:2.343ex;"/></span> hash values, and pick the largest of these. If an object already in the system at <span about="#mwt156" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwAV0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> maps to this new site <span about="#mwt157" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{n+1}"}}' id="mwAV4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{n+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{n+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{n+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f8b0ac107028f431bb7698eeab7c508d3fe1a976" style="vertical-align: -0.671ex; width:4.744ex; height:2.509ex;"/></span>, it will be fetched afresh and cached at <span about="#mwt158" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_{n+1}"}}' id="mwAV8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{n+1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{n+1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{n+1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f8b0ac107028f431bb7698eeab7c508d3fe1a976" style="vertical-align: -0.671ex; width:4.744ex; height:2.509ex;"/></span>. All clients will henceforth obtain it from this site, and the old cached copy at <span about="#mwt159" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k "}}' id="mwAWA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> will ultimately be replaced by the local cache management algorithm. If <span about="#mwt160" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S_k"}}' id="mwAWE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>S</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fd1325d812cf88e5341ac097d8bda175723da887" style="vertical-align: -0.671ex; width:2.514ex; height:2.509ex;"/></span> is taken offline, its objects will be remapped uniformly to the remaining <span about="#mwt161" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n-1 "}}' id="mwAWI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n-1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n-1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n-1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fbd0b0f32b28f51962943ee9ede4fb34198a2521" style="vertical-align: -0.505ex; width:5.398ex; height:2.343ex;"/></span> sites.</p>
+<p id="mwAWM">Variants of the HRW algorithm, such as the use of a skeleton (see below), can reduce the <span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n)"}}' id="mwAWQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" style="vertical-align: -0.838ex; width:4.977ex; height:2.843ex;"/></span> time for object location to <span about="#mwt163" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(\\log n)"}}' id="mwAWU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(\log n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(\log n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(\log n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aae0f22048ba6b7c05dbae17b056bfa16e21807d" style="vertical-align: -0.838ex; width:8.336ex; height:2.843ex;"/></span>, at the cost of less global uniformity of placement. When <span about="#mwt164" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwAWY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span> is not too large, however, the <span about="#mwt165" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n)"}}' id="mwAWc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" style="vertical-align: -0.838ex; width:4.977ex; height:2.843ex;"/></span> placement cost of basic HRW is not likely to be a problem. HRW completely avoids all the overhead and complexity associated with correctly handling multiple tokens for each site and associated metadata.</p>
+<p id="mwAWg">Rendezvous hashing also has the great advantage that it provides simple solutions to other important problems, such as distributed <span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k"}}' id="mwAWk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c3c9a2c7b599b37105512c5d570edc034056dd40" style="vertical-align: -0.338ex; width:1.211ex; height:2.176ex;"/></span>-agreement.</p>
+<p id="mwAWs">Rendezvous hashing is both simpler and more general than consistent hashing. Consistent hashing can be shown to be a special case of HRW by an appropriate choice of a two-place hash function. From the site identifier <span about="#mwt167" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S"}}' id="mwAWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4611d85173cd3b508e67077d4a1252c9c05abca2" style="vertical-align: -0.338ex; width:1.499ex; height:2.176ex;"/></span> the simplest version of consistent hashing computes a list of token positions, e.g., <span about="#mwt168" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"t_s = h_c(S)"}}' id="mwAW0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle t_{s}=h_{c}(S)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>S</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle t_{s}=h_{c}(S)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle t_{s}=h_{c}(S)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/90aceb9fd2a78ab01847731bedfa46e584b66b75" style="vertical-align: -0.838ex; width:10.533ex; height:2.843ex;"/></span> where <span about="#mwt169" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_c"}}' id="mwAW4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{c}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{c}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{c}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d06972075e10d9390c826454530d3e2a6351dc45" style="vertical-align: -0.671ex; width:2.283ex; height:2.509ex;"/></span> hashes values to locations on the unit circle. Define the two place hash function <span about="#mwt170" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(S, O)"}}' id="mwAW8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(S,O)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>S</mi>
+<mo>,</mo>
+<mi>O</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(S,O)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(S,O)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5e4e356b2a7fcc48168c0d92a5a65a8ae064e019" style="vertical-align: -0.838ex; width:7.455ex; height:2.843ex;"/></span> to be <span about="#mwt171" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{1}{\\min_S ( h_c(O) - t_s )}"}}' id="mwAXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {1}{\min _{S}(h_{c}(O)-t_{s})}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mrow>
+<munder>
+<mo form="prefix" movablelimits="true">min</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>S</mi>
+</mrow>
+</munder>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>O</mi>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {1}{\min _{S}(h_{c}(O)-t_{s})}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {1}{\min _{S}(h_{c}(O)-t_{s})}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2738d0b1a90f50a3238115b8c772c4ec284a5fe5" style="vertical-align: -2.671ex; width:18.362ex; height:6.009ex;"/></span> where <span about="#mwt172" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_c(O) - t_s"}}' id="mwAXE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{c}(O)-t_{s}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>O</mi>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{c}(O)-t_{s}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{c}(O)-t_{s}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f3def495c1f238c41ab75e59bcb023b4b3b1e0ce" style="vertical-align: -0.838ex; width:10.549ex; height:2.843ex;"/></span> denotes the distance along the unit circle from <span about="#mwt173" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_c(O)"}}' id="mwAXI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{c}(O)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>O</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{c}(O)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{c}(O)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/859fb7772a23c0f239d1fe74e187d58d4a5dbc0f" style="vertical-align: -0.838ex; width:5.866ex; height:2.843ex;"/></span> to <span about="#mwt174" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"t_s"}}' id="mwAXM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle t_{s}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle t_{s}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle t_{s}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ddf19ec057a1467dc4b6c7452aaa9a35bb099fea" style="vertical-align: -0.671ex; width:1.843ex; height:2.343ex;"/></span> (since <span about="#mwt175" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_c(O) - t_s"}}' id="mwAXQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{c}(O)-t_{s}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>c</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>O</mi>
+<mo stretchy="false">)</mo>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>t</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{c}(O)-t_{s}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{c}(O)-t_{s}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f3def495c1f238c41ab75e59bcb023b4b3b1e0ce" style="vertical-align: -0.838ex; width:10.549ex; height:2.843ex;"/></span> has some minimal non-zero value there is no problem translating this value to a unique integer in some bounded range). This will duplicate exactly the assignment produced by consistent hashing.</p>
+<p id="mwAXU">It is not possible, however, to <a href="https://en.wikipedia.org/wiki/Reduction_(complexity)" id="mwAXY" rel="mw:WikiLink" title="Reduction (complexity)">reduce</a> HRW to consistent hashing (assuming the number of tokens per site is bounded), since HRW potentially reassigns the objects from a removed site to an unbounded number of other sites.</p>
+<p id="mwAXg">In the standard implementation of rendezvous hashing, every node receives a statically equal proportion of the keys. This behavior, however, is undesirable when the nodes have different capacities for processing or holding their assigned keys. For example, if one of the nodes had twice the storage capacity as the others, it would be beneficial if the algorithm could take this into account such that this more powerful node would receive twice the number of keys as each of the others.</p>
+<p id="mwAXk">A straightforward mechanism to handle this case is to assign two virtual locations to this node, so that if either of that larger node's virtual locations has the highest hash, that node receives the key. But this strategy does not work when the relative weights are not integer multiples. For example, if one node had 42% more storage capacity, it would require adding many virtual nodes in different proportions, leading to greatly reduced performance. Several modifications to rendezvous hashing have been proposed to overcome this limitation.</p>
+<p id="mwAXs">The <a href="https://en.wikipedia.org/wiki/Cache_Array_Routing_Protocol" id="mwAXw" rel="mw:WikiLink" title="Cache Array Routing Protocol">Cache Array Routing Protocol</a> (CARP) is a 1998 IETF draft that describes a method for computing <i id="mwAX0">load factors</i> which can be multiplied by each node's hash score to yield an arbitrary level of precision for weighting nodes differently.<sup about="#mwt176" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"carp"}}' id="cite_ref-carp_21-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-carp-21" id="mwAX4"><span class="mw-reflink-text" id="mwAX8"><span class="cite-bracket" id="mwAYA">[</span>21<span class="cite-bracket" id="mwAYE">]</span></span></a></sup> However, one disadvantage of this approach is that when any node's weight is changed, or when any node is added or removed, all the load factors must be re-computed and relatively scaled. When the load factors change relative to one another, it triggers movement of keys between nodes whose weight was not changed, but whose load factor did change relative to other nodes in the system. This results in excess movement of keys.<sup about="#mwt179" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"wrh"},"body":{"id":"mw-reference-text-cite_note-wrh-27"}}' id="cite_ref-wrh_27-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-wrh-27" id="mwAYI"><span class="mw-reflink-text" id="mwAYM"><span class="cite-bracket" id="mwAYQ">[</span>27<span class="cite-bracket" id="mwAYU">]</span></span></a></sup></p>
+<p id="mwAYc">Controlled replication under scalable hashing or CRUSH<sup about="#mwt182" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"crush"},"body":{"id":"mw-reference-text-cite_note-crush-28"}}' id="cite_ref-crush_28-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-crush-28" id="mwAYg"><span class="mw-reflink-text" id="mwAYk"><span class="cite-bracket" id="mwAYo">[</span>28<span class="cite-bracket" id="mwAYs">]</span></span></a></sup> is an extension to RUSH<sup about="#mwt185" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"rush"},"body":{"id":"mw-reference-text-cite_note-rush-29"}}' id="cite_ref-rush_29-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-rush-29" id="mwAYw"><span class="mw-reflink-text" id="mwAY0"><span class="cite-bracket" id="mwAY4">[</span>29<span class="cite-bracket" id="mwAY8">]</span></span></a></sup> that improves upon rendezvous hashing by constructing a tree where a pseudo-random function (hash) is used to navigate down the tree to find which node is ultimately responsible for a given key. It permits perfect stability for adding nodes; however, it is not perfectly stable when removing or re-weighting nodes, with the excess movement of keys being proportional to the height of the tree.</p>
+<p id="mwAZA">The CRUSH algorithm is used by the <a href="https://en.wikipedia.org/wiki/Ceph_(software)" id="mwAZE" rel="mw:WikiLink" title="Ceph (software)">ceph</a> data storage system to map data objects to the nodes responsible for storing them.<sup about="#mwt188" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-30"}}' id="cite_ref-30" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-30" id="mwAZI"><span class="mw-reflink-text" id="mwAZM"><span class="cite-bracket" id="mwAZQ">[</span>30<span class="cite-bracket" id="mwAZU">]</span></span></a></sup></p>
+<p id="mwAZc">In 2005, Christian Schindelhauer and Gunnar Schomaker described a logarithmic method for re-weighting hash scores in a way that does not require relative scaling of load factors when a node's weight changes or when nodes are added or removed.<sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAZg"><span class="mw-reflink-text" id="mwAZk"><span class="cite-bracket" id="mwAZo">[</span>31<span class="cite-bracket" id="mwAZs">]</span></span></a></sup> This enabled the dual benefits of perfect precision when weighting nodes, along with perfect stability, as only a minimum number of keys needed to be remapped to new nodes.</p>
+<p id="mwAZw">A similar logarithm-based hashing strategy is used to assign data to storage nodes in <a href="https://en.wikipedia.org/wiki/Cleversafe_Inc." id="mwAZ0" rel="mw:WikiLink" title="Cleversafe Inc.">Cleversafe</a>'s data storage system, now <a class="mw-redirect" href="https://en.wikipedia.org/wiki/IBM_Cloud_Object_Storage" id="mwAZ4" rel="mw:WikiLink" title="IBM Cloud Object Storage">IBM Cloud Object Storage</a>.<sup about="#mwt193" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"wrh"}}' id="cite_ref-wrh_27-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-wrh-27" id="mwAZ8"><span class="mw-reflink-text" id="mwAaA"><span class="cite-bracket" id="mwAaE">[</span>27<span class="cite-bracket" id="mwAaI">]</span></span></a></sup></p>
+</div></div>
+</body></html>

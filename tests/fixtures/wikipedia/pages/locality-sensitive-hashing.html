@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Locality-sensitive hashing - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Locality-sensitive hashing</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwAw">In <a href="https://en.wikipedia.org/wiki/Computer_science" id="mwBA" rel="mw:WikiLink" title="Computer science">computer science</a>, <b id="mwBQ">locality-sensitive hashing</b> (<b id="mwBg">LSH</b>) is a <a href="https://en.wikipedia.org/wiki/Fuzzy_hashing" id="mwBw" rel="mw:WikiLink" title="Fuzzy hashing">fuzzy hashing</a> technique that hashes similar input items into the same "buckets" with high probability.<sup about="#mwt4" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MOMD"},"body":{"id":"mw-reference-text-cite_note-MOMD-1"}}' id="cite_ref-MOMD_1-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MOMD-1" id="mwCA"><span class="mw-reflink-text" id="mwCQ"><span class="cite-bracket" id="mwCg">[</span>1<span class="cite-bracket" id="mwCw">]</span></span></a></sup> The number of buckets is much smaller than the universe of possible input items.<sup about="#mwt5" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MOMD"}}' id="cite_ref-MOMD_1-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MOMD-1" id="mwDA"><span class="mw-reflink-text" id="mwDQ"><span class="cite-bracket" id="mwDg">[</span>1<span class="cite-bracket" id="mwDw">]</span></span></a></sup> Since similar items end up in the same buckets, this technique can be used for <a href="https://en.wikipedia.org/wiki/Cluster_analysis" id="mwEA" rel="mw:WikiLink" title="Cluster analysis">data clustering</a> and <a href="https://en.wikipedia.org/wiki/Nearest_neighbor_search" id="mwEQ" rel="mw:WikiLink" title="Nearest neighbor search">nearest neighbor search</a>. It differs from <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwEg" rel="mw:WikiLink" title="Hash function">conventional hashing techniques</a> in that <a href="https://en.wikipedia.org/wiki/Hash_collision" id="mwEw" rel="mw:WikiLink" title="Hash collision">hash collisions</a> are maximized, not minimized. Alternatively, the technique can be seen as a way to <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Dimension_reduction" id="mwFA" rel="mw:WikiLink" title="Dimension reduction">reduce the dimensionality</a> of high-dimensional data; high-dimensional input items can be reduced to low-dimensional versions while preserving relative distances between items.</p>
+<p id="mwFQ">Hashing-based approximate <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Nearest-neighbor_search" id="mwFg" rel="mw:WikiLink" title="Nearest-neighbor search">nearest-neighbor search</a> algorithms generally use one of two main categories of hashing methods: either data-independent methods, such as locality-sensitive hashing (LSH); or data-dependent methods, such as locality-preserving hashing (LPH).<sup about="#mwt8" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}' id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-2" id="mwFw"><span class="mw-reflink-text" id="mwGA"><span class="cite-bracket" id="mwGQ">[</span>2<span class="cite-bracket" id="mwGg">]</span></span></a></sup><sup about="#mwt11" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>3<span class="cite-bracket" id="mwHg">]</span></span></a></sup></p>
+<p id="mwHw">Locality-preserving hashing was initially devised as a way to facilitate <a href="https://en.wikipedia.org/wiki/Pipeline_(computing)" id="mwIA" rel="mw:WikiLink" title="Pipeline (computing)">data pipelining</a> in implementations of <a href="https://en.wikipedia.org/wiki/Parallel_RAM" id="mwIQ" rel="mw:WikiLink" title="Parallel RAM">massively parallel</a> algorithms that use <a href="https://en.wikipedia.org/wiki/Routing#Path_selection" id="mwIg" rel="mw:WikiLink" title="Routing">randomized routing</a> and <a href="https://en.wikipedia.org/wiki/Universal_hashing" id="mwIw" rel="mw:WikiLink" title="Universal hashing">universal hashing</a> to reduce memory <a href="https://en.wikipedia.org/wiki/Resource_contention" id="mwJA" rel="mw:WikiLink" title="Resource contention">contention</a> and <a href="https://en.wikipedia.org/wiki/Network_congestion" id="mwJQ" rel="mw:WikiLink" title="Network congestion">network congestion</a>.<sup about="#mwt14" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chin1991"},"body":{"id":"mw-reference-text-cite_note-Chin1991-4"}}' id="cite_ref-Chin1991_4-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chin1991-4" id="mwJg"><span class="mw-reflink-text" id="mwJw"><span class="cite-bracket" id="mwKA">[</span>4<span class="cite-bracket" id="mwKQ">]</span></span></a></sup><sup about="#mwt17" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Chin1994"},"body":{"id":"mw-reference-text-cite_note-Chin1994-5"}}' id="cite_ref-Chin1994_5-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Chin1994-5" id="mwKg"><span class="mw-reflink-text" id="mwKw"><span class="cite-bracket" id="mwLA">[</span>5<span class="cite-bracket" id="mwLQ">]</span></span></a></sup></p>
+<p id="mwMA">A finite family <span about="#mwt18" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" \\mathcal F"}}' id="mwMQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> of functions <span about="#mwt19" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h\\colon M \\to S"}}' id="mwMg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h\colon M\to S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo>:<!-- : --></mo>
+<mi>M</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h\colon M\to S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h\colon M\to S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/897e4dcf4ee810630dfc622cdf07ffd668367f26" style="vertical-align: -0.338ex; width:9.928ex; height:2.176ex;"/></span> is defined to be an <i id="mwMw">LSH family</i><sup about="#mwt20" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MOMD"}}' id="cite_ref-MOMD_1-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MOMD-1" id="mwNA"><span class="mw-reflink-text" id="mwNQ"><span class="cite-bracket" id="mwNg">[</span>1<span class="cite-bracket" id="mwNw">]</span></span></a></sup><sup about="#mwt23" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"GIM1999"},"body":{"id":"mw-reference-text-cite_note-GIM1999-6"}}' id="cite_ref-GIM1999_6-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-GIM1999-6" id="mwOA"><span class="mw-reflink-text" id="mwOQ"><span class="cite-bracket" id="mwOg">[</span>6<span class="cite-bracket" id="mwOw">]</span></span></a></sup><sup about="#mwt26" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"IndykMotwani98"},"body":{"id":"mw-reference-text-cite_note-IndykMotwani98-7"}}' id="cite_ref-IndykMotwani98_7-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-IndykMotwani98-7" id="mwPA"><span class="mw-reflink-text" id="mwPQ"><span class="cite-bracket" id="mwPg">[</span>7<span class="cite-bracket" id="mwPw">]</span></span></a></sup>
+for </p>
+<p id="mwSg">if it satisfies the following condition. For any two points <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a, b \\in M"}}' id="mwSw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a,b\in M}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo>,</mo>
+<mi>b</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>M</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a,b\in M}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a,b\in M}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/dbb00e3fe8849131890d2b4db8373457573bd0a4" style="vertical-align: -0.671ex; width:8.544ex; height:2.509ex;"/></span> and a hash function <span about="#mwt32" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> chosen uniformly at random from <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwTQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>:</p>
+<p id="mwWQ">Such a family <span about="#mwt42" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwWg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> is called <span about="#mwt43" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(r,cr,p_1,p_2)"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (r,cr,p_{1},p_{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mi>r</mi>
+<mo>,</mo>
+<mi>c</mi>
+<mi>r</mi>
+<mo>,</mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (r,cr,p_{1},p_{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (r,cr,p_{1},p_{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/91954384bc2bc1a0ae965c19ab0c5826a4867aba" style="vertical-align: -0.838ex; width:12.463ex; height:2.843ex;"/></span>-sensitive.</p>
+<p id="mwXQ">Alternatively<sup about="#mwt51" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Charikar2002"},"body":{"id":"mw-reference-text-cite_note-Charikar2002-8"}}' id="cite_ref-Charikar2002_8-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Charikar2002-8" id="mwXg"><span class="mw-reflink-text" id="mwXw"><span class="cite-bracket" id="mwYA">[</span>8<span class="cite-bracket" id="mwYQ">]</span></span></a></sup> it is possible to define an LSH family on a universe of items <span about="#mwt44" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"U"}},"i":0}}]}' id="mwYg" style="font-style:italic;" typeof="mw:Transclusion">U</span> endowed with a similarity function <span about="#mwt52" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\phi\\colon U \\times U \\to [0,1]"}}' id="mwYw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \phi \colon U\times U\to [0,1]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ϕ<!-- ϕ --></mi>
+<mo>:<!-- : --></mo>
+<mi>U</mi>
+<mo>×<!-- × --></mo>
+<mi>U</mi>
+<mo stretchy="false">→<!-- → --></mo>
+<mo stretchy="false">[</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \phi \colon U\times U\to [0,1]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \phi \colon U\times U\to [0,1]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5687d93ac393d6903b3fdf0d3cc173da5792313e" style="vertical-align: -0.838ex; width:17.092ex; height:2.843ex;"/></span>. In this setting, a LSH scheme is a family of <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwZA" rel="mw:WikiLink" title="Hash function">hash functions</a> <span about="#mwt45" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"H"}},"i":0}}]}' id="mwZQ" style="font-style:italic;" typeof="mw:Transclusion">H</span> coupled with a <a href="https://en.wikipedia.org/wiki/Probability_distribution" id="mwZg" rel="mw:WikiLink" title="Probability distribution">probability distribution</a> <span about="#mwt46" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwZw" style="font-style:italic;" typeof="mw:Transclusion">D</span> over <span about="#mwt47" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"H"}},"i":0}}]}' id="mwaA" style="font-style:italic;" typeof="mw:Transclusion">H</span> such that a function <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h \\in H"}}' id="mwaQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h\in H}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>H</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h\in H}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h\in H}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/675a79e26028d91d97f4e2ce279c314b0f194c1e" style="vertical-align: -0.338ex; width:6.243ex; height:2.176ex;"/></span> chosen according to <span about="#mwt48" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwag" style="font-style:italic;" typeof="mw:Transclusion">D</span> satisfies <span about="#mwt54" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Pr [h(a) = h(b)] = \\phi(a,b)"}}' id="mwaw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Pr[h(a)=h(b)]=\phi (a,b)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mi>r</mi>
+<mo stretchy="false">[</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+<mo>=</mo>
+<mi>ϕ<!-- ϕ --></mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo>,</mo>
+<mi>b</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Pr[h(a)=h(b)]=\phi (a,b)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Pr[h(a)=h(b)]=\phi (a,b)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/abd8774392b325d2241014de6e8547f5b376ae19" style="vertical-align: -0.838ex; width:25.265ex; height:2.843ex;"/></span> for each <span about="#mwt55" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"a,b \\in U"}}' id="mwbA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle a,b\in U}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>a</mi>
+<mo>,</mo>
+<mi>b</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>U</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle a,b\in U}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle a,b\in U}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/37993682f4308f970fc0234608a475fc293dc2cc" style="vertical-align: -0.671ex; width:7.885ex; height:2.509ex;"/></span>.</p>
+<p id="mwbg">Given a <span about="#mwt56" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(d_1, d_2, p_1, p_2)"}}' id="mwbw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (d_{1},d_{2},p_{1},p_{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (d_{1},d_{2},p_{1},p_{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (d_{1},d_{2},p_{1},p_{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fb12f13193627d160343a10c74f56cd1ac4bc181" style="vertical-align: -0.838ex; width:13.885ex; height:2.843ex;"/></span>-sensitive family <span about="#mwt57" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwcA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>, we can construct new families <span about="#mwt58" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mwcQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> by either the AND-construction or OR-construction of <span about="#mwt59" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwcg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>.<sup about="#mwt60" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"MOMD"}}' id="cite_ref-MOMD_1-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-MOMD-1" id="mwcw"><span class="mw-reflink-text" id="mwdA"><span class="cite-bracket" id="mwdQ">[</span>1<span class="cite-bracket" id="mwdg">]</span></span></a></sup></p>
+<p id="mwdw">To create an AND-construction, we define a new family <span about="#mwt64" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mweA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> of hash functions <span about="#mwt61" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mweQ" style="font-style:italic;" typeof="mw:Transclusion">g</span>, where each function <span about="#mwt62" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mweg" style="font-style:italic;" typeof="mw:Transclusion">g</span> is constructed from <span about="#mwt63" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwew" style="font-style:italic;" typeof="mw:Transclusion">k</span> random functions <span about="#mwt65" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1, \\ldots, h_k"}}' id="mwfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1},\ldots ,h_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1},\ldots ,h_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1},\ldots ,h_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8837affead2771529f2552b071b5b7698fb33369" style="vertical-align: -0.671ex; width:9.999ex; height:2.509ex;"/></span> from <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwfQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>.  We then say that for a hash function <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g \\in \\mathcal G"}}' id="mwfg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g\in {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g\in {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g\in {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/234ed606a13e83e2572c4ff4339ac7e63d4d7eae" style="vertical-align: -0.671ex; width:5.349ex; height:2.509ex;"/></span>, <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(x) = g(y)"}}' id="mwfw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(x)=g(y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(x)=g(y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(x)=g(y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a27a4ee89f0ff1746f24a1533ef12420485e926" style="vertical-align: -0.838ex; width:11.434ex; height:2.843ex;"/></span> if and only if all <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_i(x) = h_i(y)"}}' id="mwgA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{i}(x)=h_{i}(y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{i}(x)=h_{i}(y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{i}(x)=h_{i}(y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/428bd4aae978a32ff91a83c211305fd9e914fa13" style="vertical-align: -0.838ex; width:13.48ex; height:2.843ex;"/></span> for <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i = 1, 2, \\ldots, k"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i=1,2,\ldots ,k}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>k</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i=1,2,\ldots ,k}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i=1,2,\ldots ,k}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/aee9793e2e8e2df43ad37c089bb8d9d4125369f3" style="vertical-align: -0.671ex; width:13.649ex; height:2.509ex;"/></span>.  Since the members of <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> are independently chosen for any <span about="#mwt72" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g \\in \\mathcal G"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g\in {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g\in {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g\in {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/234ed606a13e83e2572c4ff4339ac7e63d4d7eae" style="vertical-align: -0.671ex; width:5.349ex; height:2.509ex;"/></span>, <span about="#mwt73" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mwhA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> is a <span about="#mwt74" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(d_1, d_2, p_{1}^k, p_{2}^k)"}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (d_{1},d_{2},p_{1}^{k},p_{2}^{k})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msubsup>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msubsup>
+<mo>,</mo>
+<msubsup>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msubsup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (d_{1},d_{2},p_{1}^{k},p_{2}^{k})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (d_{1},d_{2},p_{1}^{k},p_{2}^{k})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ecd5e936f1ef32a2868db000d46a5260a4b263b8" style="vertical-align: -1.005ex; width:13.954ex; height:3.176ex;"/></span>-sensitive family.</p>
+<p id="mwhg">To create an OR-construction, we define a new family <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> of hash functions <span about="#mwt75" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwiA" style="font-style:italic;" typeof="mw:Transclusion">g</span>, where each function <span about="#mwt76" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwiQ" style="font-style:italic;" typeof="mw:Transclusion">g</span> is constructed from <span about="#mwt77" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwig" style="font-style:italic;" typeof="mw:Transclusion">k</span> random functions <span about="#mwt80" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1, \\ldots, h_k"}}' id="mwiw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1},\ldots ,h_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1},\ldots ,h_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1},\ldots ,h_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8837affead2771529f2552b071b5b7698fb33369" style="vertical-align: -0.671ex; width:9.999ex; height:2.509ex;"/></span> from <span about="#mwt81" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwjA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>.  We then say that for a hash function <span about="#mwt82" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g \\in \\mathcal G"}}' id="mwjQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g\in {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g\in {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g\in {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/234ed606a13e83e2572c4ff4339ac7e63d4d7eae" style="vertical-align: -0.671ex; width:5.349ex; height:2.509ex;"/></span>, <span about="#mwt83" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(x) = g(y)"}}' id="mwjg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(x)=g(y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(x)=g(y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(x)=g(y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0a27a4ee89f0ff1746f24a1533ef12420485e926" style="vertical-align: -0.838ex; width:11.434ex; height:2.843ex;"/></span> if and only if <span about="#mwt84" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_i(x) = h_i(y)"}}' id="mwjw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{i}(x)=h_{i}(y)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>y</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{i}(x)=h_{i}(y)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{i}(x)=h_{i}(y)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/428bd4aae978a32ff91a83c211305fd9e914fa13" style="vertical-align: -0.838ex; width:13.48ex; height:2.843ex;"/></span> for one or more values of <span about="#mwt78" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"i"}},"i":0}}]}' id="mwkA" style="font-style:italic;" typeof="mw:Transclusion">i</span>.  Since the members of <span about="#mwt85" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwkQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> are independently chosen for any <span about="#mwt86" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g \\in \\mathcal G"}}' id="mwkg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g\in {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g\in {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g\in {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/234ed606a13e83e2572c4ff4339ac7e63d4d7eae" style="vertical-align: -0.671ex; width:5.349ex; height:2.509ex;"/></span>, <span about="#mwt87" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mwkw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> is a <span about="#mwt88" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(d_1, d_2, 1- (1 - p_1)^k, 1 - (1 - p_2)^k)"}}' id="mwlA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (d_{1},d_{2},1-(1-p_{1})^{k},1-(1-p_{2})^{k})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>d</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+<mo>,</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>p</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (d_{1},d_{2},1-(1-p_{1})^{k},1-(1-p_{2})^{k})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (d_{1},d_{2},1-(1-p_{1})^{k},1-(1-p_{2})^{k})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5eae000a99636e265a278b58e037c8a2d05f274b" style="vertical-align: -0.838ex; width:35.692ex; height:3.176ex;"/></span>-sensitive family.</p>
+<p id="mwlg">LSH has been applied to several problem domains, including:</p>
+<p id="mw6w">One of the easiest ways to construct an LSH family is by bit sampling.<sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"IndykMotwani98"}}' id="cite_ref-IndykMotwani98_7-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-IndykMotwani98-7" id="mw7A"><span class="mw-reflink-text" id="mw7Q"><span class="cite-bracket" id="mw7g">[</span>7<span class="cite-bracket" id="mw7w">]</span></span></a></sup> This approach works for the <a href="https://en.wikipedia.org/wiki/Hamming_distance" id="mw8A" rel="mw:WikiLink" title="Hamming distance">Hamming distance</a> over <span about="#mwt125" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mw8Q" style="font-style:italic;" typeof="mw:Transclusion">d</span>-dimensional vectors <span about="#mwt127" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\{0,1\\}^d"}}' id="mw8g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \{0,1\}^{d}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<msup>
+<mo fence="false" stretchy="false">}</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \{0,1\}^{d}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \{0,1\}^{d}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9534b0bb1ad3d280f79e36ed2f47c015ce8eb2c9" style="vertical-align: -0.838ex; width:6.776ex; height:3.176ex;"/></span>. Here, the family <span about="#mwt128" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mw8w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> of hash functions is simply the family of all the projections of points on one of the <span about="#mwt129" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d"}}' id="mw9A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle d}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>d</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle d}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle d}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e85ff03cbe0c7341af6b982e47e9f90d235c66ab" style="vertical-align: -0.338ex; width:1.216ex; height:2.176ex;"/></span> coordinates, i.e., <span about="#mwt130" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"{\\mathcal F}=\\{h\\colon \\{0,1\\}^d\\to \\{0,1\\}\\mid h(x)=x_i \\text{ for some } i\\in \\{1, \\ldots, d\\}\\}"}}' id="mw9Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}=\{h\colon \{0,1\}^{d}\to \{0,1\}\mid h(x)=x_{i}{\text{ for some }}i\in \{1,\ldots ,d\}\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+<mo>=</mo>
+<mo fence="false" stretchy="false">{</mo>
+<mi>h</mi>
+<mo>:<!-- : --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<msup>
+<mo fence="false" stretchy="false">}</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+<mo stretchy="false">→<!-- → --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mn>1</mn>
+<mo fence="false" stretchy="false">}</mo>
+<mo>∣<!-- ∣ --></mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>x</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext> for some </mtext>
+</mrow>
+<mi>i</mi>
+<mo>∈<!-- ∈ --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mn>1</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>d</mi>
+<mo fence="false" stretchy="false">}</mo>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}=\{h\colon \{0,1\}^{d}\to \{0,1\}\mid h(x)=x_{i}{\text{ for some }}i\in \{1,\ldots ,d\}\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}=\{h\colon \{0,1\}^{d}\to \{0,1\}\mid h(x)=x_{i}{\text{ for some }}i\in \{1,\ldots ,d\}\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b4221f664c984583ecd55510fb6a0a33a0a92273" style="vertical-align: -0.838ex; width:60.539ex; height:3.176ex;"/></span>, where <span about="#mwt131" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_i"}}' id="mw9g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e87000dd6142b81d041896a30fe58f0c3acb2158" style="vertical-align: -0.671ex; width:2.129ex; height:2.009ex;"/></span> is the <span about="#mwt132" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mw9w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>th coordinate of <span about="#mwt133" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mw-A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span>. A random function <span about="#mwt134" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mw-Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> from <span about="#mwt135" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"{\\mathcal F}"}}' id="mw-g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span> simply selects a random bit from the input point. This family has the following parameters: <span about="#mwt136" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_1=1-R/d"}}' id="mw-w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{1}=1-R/d}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>d</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{1}=1-R/d}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{1}=1-R/d}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f4a88884a450d84bd92ffc8e6e1a9ec72991864b" style="vertical-align: -0.838ex; width:13.79ex; height:2.843ex;"/></span>, <span about="#mwt137" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_2=1-cR/d"}}' id="mw_A" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{2}=1-cR/d}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>=</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>c</mi>
+<mi>R</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mi>d</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{2}=1-cR/d}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{2}=1-cR/d}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e9018a924981b83b449fda04cf2b440b05476898" style="vertical-align: -0.838ex; width:14.797ex; height:2.843ex;"/></span>.
+That is, any two vectors <span about="#mwt138" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x,y"}}' id="mw_Q" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x,y}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x,y}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x,y}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5ea0abffd33a692ded22accc104515a032851dff" style="vertical-align: -0.671ex; width:3.519ex; height:2.009ex;"/></span> with Hamming distance at most <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"R"}}' id="mw_g" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle R}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle R}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle R}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4b0bfb3769bf24d80e15374dc37b0441e2616e33" style="vertical-align: -0.338ex; width:1.764ex; height:2.176ex;"/></span> collide under a random <span about="#mwt140" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h"}}' id="mw_w" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b26be3e694314bc90c3215047e4a2010c6ee184a" style="vertical-align: -0.338ex; width:1.339ex; height:2.176ex;"/></span> with probability at least <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_1"}}' id="mwAQA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/398f438d75434e6fbf48dc232c1ad7228a738568" style="vertical-align: -0.671ex; width:2.547ex; height:2.509ex;"/></span>. 
+Any <span about="#mwt142" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x,y"}}' id="mwAQE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x,y}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+<mo>,</mo>
+<mi>y</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x,y}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x,y}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5ea0abffd33a692ded22accc104515a032851dff" style="vertical-align: -0.671ex; width:3.519ex; height:2.009ex;"/></span> with Hamming distance at least <span about="#mwt143" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"cR"}}' id="mwAQI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle cR}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+<mi>R</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle cR}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle cR}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/397b5e6755ef317d52c2c3753c899fa45e09e097" style="vertical-align: -0.338ex; width:2.771ex; height:2.176ex;"/></span> collide with probability at most <span about="#mwt144" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_2"}}' id="mwAQM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87858df7457aa93caaef5a316db87a7240cc8c29" style="vertical-align: -0.671ex; width:2.547ex; height:2.509ex;"/></span>.</p>
+<p id="mwAQc">Suppose <span about="#mwt147" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"U"}},"i":0}}]}' id="mwAQg" style="font-style:italic;" typeof="mw:Transclusion">U</span>  is composed of subsets of some ground set of enumerable items <span about="#mwt148" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"S"}},"i":0}}]}' id="mwAQk" style="font-style:italic;" typeof="mw:Transclusion">S</span> and the similarity function of interest is the <a href="https://en.wikipedia.org/wiki/Jaccard_index" id="mwAQo" rel="mw:WikiLink" title="Jaccard index">Jaccard index</a> <span about="#mwt149" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"J"}},"i":0}}]}' id="mwAQs" style="font-style:italic;" typeof="mw:Transclusion">J</span>. If <span about="#mwt150" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"&amp;pi;"}},"i":0}}]}' id="mwAQw" style="font-style:italic;" typeof="mw:Transclusion"><span typeof="mw:Entity">π</span></span> is a permutation on the indices of <span about="#mwt151" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"S"}},"i":0}}]}' id="mwAQ0" style="font-style:italic;" typeof="mw:Transclusion">S</span>, for <span about="#mwt155" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A \\subseteq S"}}' id="mwAQ4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A\subseteq S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>⊆<!-- ⊆ --></mo>
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A\subseteq S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A\subseteq S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0791d9c130fbe3965c0684e260f41f904240395c" style="vertical-align: -0.505ex; width:6.341ex; height:2.343ex;"/></span> let <span about="#mwt156" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(A) = \\min_{a \\in A} \\{ \\pi(a) \\}"}}' id="mwAQ8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(A)=\min _{a\in A}\{\pi (a)\}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munder>
+<mo form="prefix" movablelimits="true">min</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>a</mi>
+<mo>∈<!-- ∈ --></mo>
+<mi>A</mi>
+</mrow>
+</munder>
+<mo fence="false" stretchy="false">{</mo>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">(</mo>
+<mi>a</mi>
+<mo stretchy="false">)</mo>
+<mo fence="false" stretchy="false">}</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(A)=\min _{a\in A}\{\pi (a)\}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(A)=\min _{a\in A}\{\pi (a)\}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/230fcd638bda46accbe9562769ee0261b0905472" style="vertical-align: -2.171ex; width:18.561ex; height:4.176ex;"/></span>. Each possible choice of <span about="#mwt152" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"&amp;pi;"}},"i":0}}]}' id="mwARA" style="font-style:italic;" typeof="mw:Transclusion"><span typeof="mw:Entity">π</span></span> defines a single hash function <span about="#mwt153" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"h"}},"i":0}}]}' id="mwARE" style="font-style:italic;" typeof="mw:Transclusion">h</span> mapping input sets to elements of <span about="#mwt154" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"S"}},"i":0}}]}' id="mwARI" style="font-style:italic;" typeof="mw:Transclusion">S</span>.</p>
+<p id="mwARM">Define the function family <span about="#mwt157" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"H"}},"i":0}}]}' id="mwARQ" style="font-style:italic;" typeof="mw:Transclusion">H</span> to be the set of all such functions and let <span about="#mwt158" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"D"}},"i":0}}]}' id="mwARU" style="font-style:italic;" typeof="mw:Transclusion">D</span> be the <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution" id="mwARY" rel="mw:WikiLink" title="Discrete uniform distribution">uniform distribution</a>. Given two sets <span about="#mwt161" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A,B \\subseteq S"}}' id="mwARc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A,B\subseteq S}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mo>⊆<!-- ⊆ --></mo>
+<mi>S</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A,B\subseteq S}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A,B\subseteq S}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1d7a14e914b94fe6e57792cab46e071ad1e988ab" style="vertical-align: -0.671ex; width:9.139ex; height:2.509ex;"/></span> the event that <span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(A) = h(B)"}}' id="mwARg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(A)=h(B)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(A)=h(B)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(A)=h(B)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1a6f377cba1489b24f1010701bf4fa38d98adebf" style="vertical-align: -0.838ex; width:12.902ex; height:2.843ex;"/></span> corresponds exactly to the event that the minimizer of <span about="#mwt159" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"&amp;pi;"}},"i":0}}]}' id="mwARk" style="font-style:italic;" typeof="mw:Transclusion"><span typeof="mw:Entity">π</span></span> over <span about="#mwt163" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A \\cup B"}}' id="mwARo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A\cup B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>∪<!-- ∪ --></mo>
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A\cup B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A\cup B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cdb575990bcfbcdf616aa6fd76e8b30bf7fd2169" style="vertical-align: -0.338ex; width:6.09ex; height:2.176ex;"/></span> lies inside <span about="#mwt164" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"A \\cap B"}}' id="mwARs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle A\cap B}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>A</mi>
+<mo>∩<!-- ∩ --></mo>
+<mi>B</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle A\cap B}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle A\cap B}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bb27b38cf9eac6060e67b61f66cd9beec5067f81" style="vertical-align: -0.338ex; width:6.09ex; height:2.176ex;"/></span>. As <span about="#mwt160" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"h"}},"i":0}}]}' id="mwARw" style="font-style:italic;" typeof="mw:Transclusion">h</span> was chosen uniformly at random, <span about="#mwt165" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Pr[h(A) = h(B)] = J(A,B)\\,"}}' id="mwAR0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Pr[h(A)=h(B)]=J(A,B)\,}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>P</mi>
+<mi>r</mi>
+<mo stretchy="false">[</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+<mo>=</mo>
+<mi>J</mi>
+<mo stretchy="false">(</mo>
+<mi>A</mi>
+<mo>,</mo>
+<mi>B</mi>
+<mo stretchy="false">)</mo>
+<mspace width="thinmathspace"></mspace>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Pr[h(A)=h(B)]=J(A,B)\,}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Pr[h(A)=h(B)]=J(A,B)\,}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a54e5e0058c034a898dcbf92737b7db0feff4a15" style="vertical-align: -0.838ex; width:28.297ex; height:2.843ex;"/></span> and <span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(H,D)\\,"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (H,D)\,}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mi>H</mi>
+<mo>,</mo>
+<mi>D</mi>
+<mo stretchy="false">)</mo>
+<mspace width="thinmathspace"></mspace>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (H,D)\,}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (H,D)\,}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f20198a61a2030fa4881316c0c8cdbeea3b1bb42" style="vertical-align: -0.838ex; width:7.218ex; height:2.843ex;"/></span> define an LSH scheme for the Jaccard index.</p>
+<p id="mwAR8">Because the <a href="https://en.wikipedia.org/wiki/Symmetric_group" id="mwASA" rel="mw:WikiLink" title="Symmetric group">symmetric group</a> on <span about="#mwt167" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwASE" style="font-style:italic;" typeof="mw:Transclusion">n</span> elements has size <span about="#mwt168" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwASI" style="font-style:italic;" typeof="mw:Transclusion">n</span>!, choosing a truly <a href="https://en.wikipedia.org/wiki/Random_permutation" id="mwASM" rel="mw:WikiLink" title="Random permutation">random permutation</a> from the full symmetric group is infeasible for even moderately sized <span about="#mwt169" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwASQ" style="font-style:italic;" typeof="mw:Transclusion">n</span>. Because of this fact, there has been significant work on finding a family of permutations that is "min-wise independent" — a permutation family for which each element of the domain has equal probability of being the minimum under a randomly chosen <span about="#mwt170" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"&amp;pi;"}},"i":0}}]}' id="mwASU" style="font-style:italic;" typeof="mw:Transclusion"><span typeof="mw:Entity">π</span></span>. It has been established that a min-wise independent family of permutations is at least of size <span about="#mwt171" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\operatorname{lcm}\\{\\,1, 2, \\ldots, n\\,\\} \\ge e^{n-o(n)}"}}' id="mwASY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \operatorname {lcm} \{\,1,2,\ldots ,n\,\}\geq e^{n-o(n)}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>lcm</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo fence="false" stretchy="false">{</mo>
+<mspace width="thinmathspace"></mspace>
+<mn>1</mn>
+<mo>,</mo>
+<mn>2</mn>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mi>n</mi>
+<mspace width="thinmathspace"></mspace>
+<mo fence="false" stretchy="false">}</mo>
+<mo>≥<!-- ≥ --></mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>−<!-- − --></mo>
+<mi>o</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \operatorname {lcm} \{\,1,2,\ldots ,n\,\}\geq e^{n-o(n)}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \operatorname {lcm} \{\,1,2,\ldots ,n\,\}\geq e^{n-o(n)}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cdec0285695837c012f6356f99c1eee9a3403468" style="vertical-align: -0.838ex; width:26.388ex; height:3.343ex;"/></span>,<sup about="#mwt174" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Broder1998"},"body":{"id":"mw-reference-text-cite_note-Broder1998-20"}}' id="cite_ref-Broder1998_20-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Broder1998-20" id="mwASc"><span class="mw-reflink-text" id="mwASg"><span class="cite-bracket" id="mwASk">[</span>20<span class="cite-bracket" id="mwASo">]</span></span></a></sup> and that this bound is tight.<sup about="#mwt177" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mwASs"><span class="mw-reflink-text" id="mwASw"><span class="cite-bracket" id="mwAS0">[</span>21<span class="cite-bracket" id="mwAS4">]</span></span></a></sup></p>
+<p id="mwAS8">Because min-wise independent families are too big for practical applications, two variant notions of min-wise independence are introduced: restricted min-wise independent permutations families, and approximate min-wise independent families.
+Restricted min-wise independence is the min-wise independence property restricted to certain sets of cardinality at most <span about="#mwt178" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwATA" style="font-style:italic;" typeof="mw:Transclusion">k</span>.<sup about="#mwt182" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Matousek2002"},"body":{"id":"mw-reference-text-cite_note-Matousek2002-22"}}' id="cite_ref-Matousek2002_22-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Matousek2002-22" id="mwATE"><span class="mw-reflink-text" id="mwATI"><span class="cite-bracket" id="mwATM">[</span>22<span class="cite-bracket" id="mwATQ">]</span></span></a></sup>
+Approximate min-wise independence differs from the property by at most a fixed <span about="#mwt183" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"&amp;epsilon;"}},"i":0}}]}' id="mwATU" style="font-style:italic;" typeof="mw:Transclusion"><span typeof="mw:Entity">ε</span></span>.<sup about="#mwt187" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Saks2000"},"body":{"id":"mw-reference-text-cite_note-Saks2000-23"}}' id="cite_ref-Saks2000_23-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Saks2000-23" id="mwATY"><span class="mw-reflink-text" id="mwATc"><span class="cite-bracket" id="mwATg">[</span>23<span class="cite-bracket" id="mwATk">]</span></span></a></sup></p>
+<p id="mwAT4"><b id="mwAT8">Nilsimsa</b> is a locality-sensitive hashing algorithm used in <a href="https://en.wikipedia.org/wiki/Anti-spam_techniques" id="mwAUA" rel="mw:WikiLink" title="Anti-spam techniques">anti-spam</a> efforts.<sup about="#mwt192" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mwAUE"><span class="mw-reflink-text" id="mwAUI"><span class="cite-bracket" id="mwAUM">[</span>24<span class="cite-bracket" id="mwAUQ">]</span></span></a></sup> The goal of Nilsimsa is to generate a hash digest of an email message such that the digests of two similar messages are similar to each other.  The paper suggests that the Nilsimsa satisfies three requirements:</p>
+<p id="mwAUk">Testing performed in the paper on a range of file types identified the Nilsimsa hash as having a significantly higher false positive rate when compared to other similarity digest schemes such as TLSH, Ssdeep and Sdhash.<sup about="#mwt195" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mwAUo"><span class="mw-reflink-text" id="mwAUs"><span class="cite-bracket" id="mwAUw">[</span>25<span class="cite-bracket" id="mwAU0">]</span></span></a></sup></p>
+<p id="mwAU8"><b id="mwAVA">TLSH</b> is locality-sensitive hashing algorithm designed for a range of security and digital forensic applications.<sup about="#mwt196" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"TLSH"}}' id="cite_ref-TLSH_18-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-TLSH-18" id="mwAVE"><span class="mw-reflink-text" id="mwAVI"><span class="cite-bracket" id="mwAVM">[</span>18<span class="cite-bracket" id="mwAVQ">]</span></span></a></sup> The goal of TLSH is to generate hash digests for messages such that low distances between digests indicate that their corresponding messages are likely to be similar.</p>
+<p id="mwAVU">An implementation of TLSH is available as <a href="https://en.wikipedia.org/wiki/Open-source_software" id="mwAVY" rel="mw:WikiLink" title="Open-source software">open-source software</a>.<sup about="#mwt199" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAVc"><span class="mw-reflink-text" id="mwAVg"><span class="cite-bracket" id="mwAVk">[</span>26<span class="cite-bracket" id="mwAVo">]</span></span></a></sup></p>
+<p id="mwAWU">The random projection method of LSH due to <a href="https://en.wikipedia.org/wiki/Moses_Charikar" id="mwAWY" rel="mw:WikiLink" title="Moses Charikar">Moses Charikar</a><sup about="#mwt205" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Charikar2002"}}' id="cite_ref-Charikar2002_8-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Charikar2002-8" id="mwAWc"><span class="mw-reflink-text" id="mwAWg"><span class="cite-bracket" id="mwAWk">[</span>8<span class="cite-bracket" id="mwAWo">]</span></span></a></sup> called <a href="https://en.wikipedia.org/wiki/SimHash" id="mwAWs" rel="mw:WikiLink" title="SimHash">SimHash</a> (also sometimes called arccos<sup about="#mwt208" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Andoni2008"},"body":{"id":"mw-reference-text-cite_note-Andoni2008-27"}}' id="cite_ref-Andoni2008_27-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Andoni2008-27" id="mwAWw"><span class="mw-reflink-text" id="mwAW0"><span class="cite-bracket" id="mwAW4">[</span>27<span class="cite-bracket" id="mwAW8">]</span></span></a></sup>) uses an approximation of the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Cosine_distance" id="mwAXA" rel="mw:WikiLink" title="Cosine distance">cosine distance</a> between vectors.  The technique was used to approximate the NP-complete <a href="https://en.wikipedia.org/wiki/Maximum_cut" id="mwAXE" rel="mw:WikiLink" title="Maximum cut">max-cut</a> problem.<sup about="#mwt209" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Charikar2002"}}' id="cite_ref-Charikar2002_8-2" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Charikar2002-8" id="mwAXI"><span class="mw-reflink-text" id="mwAXM"><span class="cite-bracket" id="mwAXQ">[</span>8<span class="cite-bracket" id="mwAXU">]</span></span></a></sup></p>
+<p id="mwAXY">The basic idea of this technique is to choose a random <a href="https://en.wikipedia.org/wiki/Hyperplane" id="mwAXc" rel="mw:WikiLink" title="Hyperplane">hyperplane</a> (defined by a normal unit vector <span about="#mwt210" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"r"}},"i":0}}]}' id="mwAXg" style="font-style:italic;" typeof="mw:Transclusion">r</span>) at the outset and use the hyperplane to hash input vectors.</p>
+<p id="mwAXk">Given an input vector <span about="#mwt211" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"v"}},"i":0}}]}' id="mwAXo" style="font-style:italic;" typeof="mw:Transclusion">v</span> and a hyperplane defined by <span about="#mwt212" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"r"}},"i":0}}]}' id="mwAXs" style="font-style:italic;" typeof="mw:Transclusion">r</span>, we let <span about="#mwt215" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(v) = \\sgn(v \\cdot r)"}}' id="mwAXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(v)=\operatorname {sgn}(v\cdot r)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>sgn</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>v</mi>
+<mo>⋅<!-- ⋅ --></mo>
+<mi>r</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(v)=\operatorname {sgn}(v\cdot r)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(v)=\operatorname {sgn} (v\cdot r)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a64539686612e866f7eeb9dbf6d66fc4370b07a" style="vertical-align: -0.838ex; width:16.41ex; height:2.843ex;"/></span>. That is,  <span about="#mwt216" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(v) = \\pm 1"}}' id="mwAX0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(v)=\pm 1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo>±<!-- ± --></mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(v)=\pm 1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(v)=\pm 1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/594fff19fbe340060a8a37412e7acabef6cf37c4" style="vertical-align: -0.838ex; width:10.345ex; height:2.843ex;"/></span> depending on which side of the hyperplane <span about="#mwt213" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"v"}},"i":0}}]}' id="mwAX4" style="font-style:italic;" typeof="mw:Transclusion">v</span> lies. This way, each possible choice of a random hyperplane <span about="#mwt214" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"r"}},"i":0}}]}' id="mwAX8" style="font-style:italic;" typeof="mw:Transclusion">r</span> can be interpreted as a hash function <span about="#mwt217" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h(v)"}}' id="mwAYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h(v)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>h</mi>
+<mo stretchy="false">(</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h(v)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h(v)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5642c579b0a2d0271b1ecb418390f78902d5de45" style="vertical-align: -0.838ex; width:4.276ex; height:2.843ex;"/></span>.</p>
+<p id="mwAYE">For two vectors <span about="#mwt218" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"u,v"}},"i":0}}]}' id="mwAYI" style="font-style:italic;" typeof="mw:Transclusion">u,v</span> with angle <span about="#mwt219" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\theta(u,v)"}}' id="mwAYM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \theta (u,v)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>θ<!-- θ --></mi>
+<mo stretchy="false">(</mo>
+<mi>u</mi>
+<mo>,</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \theta (u,v)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \theta (u,v)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e3f8507dbc95f6750f26d4c4beb83c1d530a5e07" style="vertical-align: -0.838ex; width:6.391ex; height:2.843ex;"/></span> between them, it can be shown that</p>
+<p id="mwAYc">Since the ratio between <span about="#mwt221" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\frac{\\theta(u,v)}{\\pi}"}}' id="mwAYg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\frac {\theta (u,v)}{\pi }}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>θ<!-- θ --></mi>
+<mo stretchy="false">(</mo>
+<mi>u</mi>
+<mo>,</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+<mi>π<!-- π --></mi>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\frac {\theta (u,v)}{\pi }}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\frac {\theta (u,v)}{\pi }}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5b129e9e20d94b27b9a16a7ed5f144b3f9de5a60" style="vertical-align: -1.838ex; width:7.227ex; height:5.676ex;"/></span> and <span about="#mwt222" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1-\\cos(\\theta(u,v))"}}' id="mwAYk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1-\cos(\theta (u,v))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>cos</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mo stretchy="false">(</mo>
+<mi>θ<!-- θ --></mi>
+<mo stretchy="false">(</mo>
+<mi>u</mi>
+<mo>,</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1-\cos(\theta (u,v))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1-\cos(\theta (u,v))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/76498a311ab1c40e465dbe7b6de206ac577f548e" style="vertical-align: -0.838ex; width:15.314ex; height:2.843ex;"/></span> is at least 0.439 when <span about="#mwt223" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\theta(u, v) \\in [0, \\pi]"}}' id="mwAYo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \theta (u,v)\in [0,\pi ]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>θ<!-- θ --></mi>
+<mo stretchy="false">(</mo>
+<mi>u</mi>
+<mo>,</mo>
+<mi>v</mi>
+<mo stretchy="false">)</mo>
+<mo>∈<!-- ∈ --></mo>
+<mo stretchy="false">[</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mi>π<!-- π --></mi>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \theta (u,v)\in [0,\pi ]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \theta (u,v)\in [0,\pi ]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/61609a42522867b54976fd386171f22fb657549d" style="vertical-align: -0.838ex; width:14.054ex; height:2.843ex;"/></span>,<sup about="#mwt224" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Charikar2002"}}' id="cite_ref-Charikar2002_8-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Charikar2002-8" id="mwAYs"><span class="mw-reflink-text" id="mwAYw"><span class="cite-bracket" id="mwAY0">[</span>8<span class="cite-bracket" id="mwAY4">]</span></span></a></sup><sup about="#mwt227" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Goemans Williamson 1995 pp. 1115–1145"},"body":{"id":"mw-reference-text-cite_note-Goemans_Williamson_1995_pp._1115–1145-28"}}' id="cite_ref-Goemans_Williamson_1995_pp._1115–1145_28-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Goemans_Williamson_1995_pp._1115–1145-28" id="mwAY8"><span class="mw-reflink-text" id="mwAZA"><span class="cite-bracket" id="mwAZE">[</span>28<span class="cite-bracket" id="mwAZI">]</span></span></a></sup> the probability of two vectors being on different sides of the random hyperplane is approximately proportional to the <a href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_Distance" id="mwAZM" rel="mw:WikiLink" title="Cosine similarity">cosine distance</a> between them.</p>
+<p id="mwAZU">The hash function
+<sup about="#mwt231" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"DIIM04"},"body":{"id":"mw-reference-text-cite_note-DIIM04-29"}}' id="cite_ref-DIIM04_29-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-DIIM04-29" id="mwAZY"><span class="mw-reflink-text" id="mwAZc"><span class="cite-bracket" id="mwAZg">[</span>29<span class="cite-bracket" id="mwAZk">]</span></span></a></sup> <span about="#mwt232" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{\\mathbf{a},b} (\\boldsymbol{\\upsilon}) : \n\\mathcal{R}^d\n\\to \\mathcal{N} "}}' id="mwAZo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }}):{\mathcal {R}}^{d}\to {\mathcal {N}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+<mo>,</mo>
+<mi>b</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">υ<!-- υ --></mi>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>:</mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">R</mi>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>d</mi>
+</mrow>
+</msup>
+<mo stretchy="false">→<!-- → --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">N</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }}):{\mathcal {R}}^{d}\to {\mathcal {N}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }}):{\mathcal {R}}^{d}\to {\mathcal {N}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7e7bd361d5ef396967394a9ab4096409843ef2d8" style="vertical-align: -1.005ex; width:17.818ex; height:3.343ex;"/></span> maps a <span about="#mwt228" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mwAZs" style="font-style:italic;" typeof="mw:Transclusion">d</span>-dimensional vector
+<span about="#mwt233" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\boldsymbol{\\upsilon}"}}' id="mwAZw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\boldsymbol {\upsilon }}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">υ<!-- υ --></mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\boldsymbol {\upsilon }}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\boldsymbol {\upsilon }}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d8bb1251b4f3ac5ab36eebd99d08edefbbf71427" style="vertical-align: -0.338ex; width:1.467ex; height:1.676ex;"/></span> onto the set of integers. Each hash function
+in the family is indexed by a choice of random <span about="#mwt234" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{a}"}}' id="mwAZ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {a} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {a} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {a} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1a957216653a9ee0d0133dcefd13fb75e36b8b9d" style="vertical-align: -0.338ex; width:1.299ex; height:1.676ex;"/></span> and
+<span about="#mwt236" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwAZ4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> where <span about="#mwt237" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{a}"}}' id="mwAZ8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {a} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {a} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {a} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1a957216653a9ee0d0133dcefd13fb75e36b8b9d" style="vertical-align: -0.338ex; width:1.299ex; height:1.676ex;"/></span> is a <span about="#mwt235" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mwAaA" style="font-style:italic;" typeof="mw:Transclusion">d</span>-dimensional 
+vector with
+entries chosen independently from a <a href="https://en.wikipedia.org/wiki/Stable_distribution" id="mwAaE" rel="mw:WikiLink" title="Stable distribution">stable distribution</a> and 
+<span about="#mwt238" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"b"}}' id="mwAaI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" style="vertical-align: -0.338ex; width:0.998ex; height:2.176ex;"/></span> is
+a real number chosen uniformly from the range [0,r]. For a fixed
+<span about="#mwt239" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathbf{a},b"}}' id="mwAaM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \mathbf {a} ,b}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+<mo>,</mo>
+<mi>b</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \mathbf {a} ,b}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \mathbf {a} ,b}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b31e6b06eee9994f8957223006fba1328ee5cdac" style="vertical-align: -0.671ex; width:3.331ex; height:2.509ex;"/></span> the hash function <span about="#mwt240" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{\\mathbf{a},b}"}}' id="mwAaQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{\mathbf {a} ,b}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+<mo>,</mo>
+<mi>b</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{\mathbf {a} ,b}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{\mathbf {a} ,b}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/eede9d28f17981a2559c90db8d09ce341ad7c059" style="vertical-align: -1.005ex; width:3.653ex; height:2.843ex;"/></span> is
+given by <span about="#mwt241" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_{\\mathbf{a},b} (\\boldsymbol{\\upsilon}) = \\left \\lfloor\n\\frac{\\mathbf{a}\\cdot \\boldsymbol{\\upsilon}+b}{r} \\right \\rfloor "}}' id="mwAaU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }})=\left\lfloor {\frac {\mathbf {a} \cdot {\boldsymbol {\upsilon }}+b}{r}}\right\rfloor }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+<mo>,</mo>
+<mi>b</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">υ<!-- υ --></mi>
+</mrow>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow>
+<mo>⌊</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold">a</mi>
+</mrow>
+<mo>⋅<!-- ⋅ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="bold-italic">υ<!-- υ --></mi>
+</mrow>
+<mo>+</mo>
+<mi>b</mi>
+</mrow>
+<mi>r</mi>
+</mfrac>
+</mrow>
+<mo>⌋</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }})=\left\lfloor {\frac {\mathbf {a} \cdot {\boldsymbol {\upsilon }}+b}{r}}\right\rfloor }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{\mathbf {a} ,b}({\boldsymbol {\upsilon }})=\left\lfloor {\frac {\mathbf {a} \cdot {\boldsymbol {\upsilon }}+b}{r}}\right\rfloor }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/058c61be78444a179dc2db0e6c1239093fbf9b75" style="vertical-align: -2.505ex; width:21.857ex; height:6.176ex;"/></span>.</p>
+<p id="mwAaY">Other construction methods for hash functions have been proposed to better fit the data. 
+<sup about="#mwt244" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"PJA10"},"body":{"id":"mw-reference-text-cite_note-PJA10-30"}}' id="cite_ref-PJA10_30-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-PJA10-30" id="mwAac"><span class="mw-reflink-text" id="mwAag"><span class="cite-bracket" id="mwAak">[</span>30<span class="cite-bracket" id="mwAao">]</span></span></a></sup>
+In particular k-means hash functions are better in practice than projection-based hash functions, but without any theoretical guarantee.</p>
+<p id="mwAaw">Semantic hashing is a technique that attempts to map input items to addresses such that closer inputs have higher <a href="https://en.wikipedia.org/wiki/Semantic_similarity" id="mwAa0" rel="mw:WikiLink" title="Semantic similarity">semantic similarity</a>.<sup about="#mwt248" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAa4"><span class="mw-reflink-text" id="mwAa8"><span class="cite-bracket" id="mwAbA">[</span>31<span class="cite-bracket" id="mwAbE">]</span></span></a></sup> The hashcodes are found via training of an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mwAbI" rel="mw:WikiLink" title="Artificial neural network">artificial neural network</a> or <a href="https://en.wikipedia.org/wiki/Graphical_model" id="mwAbM" rel="mw:WikiLink" title="Graphical model">graphical model</a>.<link about="#mwt245" data-mw='{"parts":[{"template":{"target":{"wt":"citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"September 2021"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mwAbQ" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt245" href="./Category:Articles_with_unsourced_statements_from_September_2021" rel="mw:PageProp/Category"/><sup about="#mwt245" class="noprint Inline-Template Template-Fact" id="mwAbU" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (September 2021)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup></p>
+<p id="mwAbc">One of the main applications of LSH is to provide a method for efficient approximate <a href="https://en.wikipedia.org/wiki/Nearest_neighbor_search" id="mwAbg" rel="mw:WikiLink" title="Nearest neighbor search">nearest neighbor search</a> algorithms.  Consider an LSH family <span about="#mwt251" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwAbk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>.  The algorithm has two main parameters: the width parameter <span about="#mwt249" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwAbo" style="font-style:italic;" typeof="mw:Transclusion">k</span> and the number of hash tables <span about="#mwt250" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"L"}},"i":0}}]}' id="mwAbs" style="font-style:italic;" typeof="mw:Transclusion">L</span>.</p>
+<p id="mwAbw">In the first step, we define a new family <span about="#mwt259" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal G"}}' id="mwAb0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {G}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">G</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {G}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {G}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a980c59d42c003fd07fdf3646e1fb95ff82f99" style="vertical-align: -0.505ex; width:1.392ex; height:2.343ex;"/></span> of hash functions <span about="#mwt252" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAb4" style="font-style:italic;" typeof="mw:Transclusion">g</span>, where each function <span about="#mwt253" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAb8" style="font-style:italic;" typeof="mw:Transclusion">g</span> is obtained by concatenating <span about="#mwt254" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwAcA" style="font-style:italic;" typeof="mw:Transclusion">k</span> functions <span about="#mwt260" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"h_1, \\ldots, h_k"}}' id="mwAcE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle h_{1},\ldots ,h_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle h_{1},\ldots ,h_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle h_{1},\ldots ,h_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8837affead2771529f2552b071b5b7698fb33369" style="vertical-align: -0.671ex; width:9.999ex; height:2.509ex;"/></span> from <span about="#mwt261" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwAcI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>, i.e., <span about="#mwt262" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"g(p) = [h_1(p), \\ldots, h_k(p)]"}}' id="mwAcM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle g(p)=[h_{1}(p),\ldots ,h_{k}(p)]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>g</mi>
+<mo stretchy="false">(</mo>
+<mi>p</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo stretchy="false">[</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>p</mi>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>h</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>p</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle g(p)=[h_{1}(p),\ldots ,h_{k}(p)]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle g(p)=[h_{1}(p),\ldots ,h_{k}(p)]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a1bae3b75c37b58d8cf55999768bd3840f836c1a" style="vertical-align: -0.838ex; width:24.443ex; height:2.843ex;"/></span>.  In other words, a random hash function <span about="#mwt255" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAcQ" style="font-style:italic;" typeof="mw:Transclusion">g</span> is obtained by concatenating <span about="#mwt256" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwAcU" style="font-style:italic;" typeof="mw:Transclusion">k</span> randomly chosen hash functions from <span about="#mwt263" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\mathcal F"}}' id="mwAcY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\mathcal {F}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi class="MJX-tex-caligraphic" mathvariant="script">F</mi>
+</mrow>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\mathcal {F}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\mathcal {F}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/205d4b91000d9dcf1a5bbabdfa6a8395fa60b676" style="vertical-align: -0.338ex; width:1.927ex; height:2.176ex;"/></span>.  The algorithm then constructs <span about="#mwt257" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"L"}},"i":0}}]}' id="mwAcc" style="font-style:italic;" typeof="mw:Transclusion">L</span> hash tables, each corresponding to a different randomly chosen hash function <span about="#mwt258" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAcg" style="font-style:italic;" typeof="mw:Transclusion">g</span>.</p>
+<p id="mwAck">In the preprocessing step we hash all <span about="#mwt264" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAco" style="font-style:italic;" typeof="mw:Transclusion">n</span> <span about="#mwt265" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"d"}},"i":0}}]}' id="mwAcs" style="font-style:italic;" typeof="mw:Transclusion">d</span>-dimensional points from the data set <span about="#mwt266" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"S"}},"i":0}}]}' id="mwAcw" style="font-style:italic;" typeof="mw:Transclusion">S</span> into each of the <span about="#mwt267" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"L"}},"i":0}}]}' id="mwAc0" style="font-style:italic;" typeof="mw:Transclusion">L</span> hash tables.  Given that the resulting hash tables have only <span about="#mwt268" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"n"}},"i":0}}]}' id="mwAc4" style="font-style:italic;" typeof="mw:Transclusion">n</span> non-zero entries, one can reduce the amount of memory used per each hash table to <span about="#mwt269" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n)"}}' id="mwAc8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<mi>n</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" style="vertical-align: -0.838ex; width:4.977ex; height:2.843ex;"/></span> using standard <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hash_functions" id="mwAdA" rel="mw:WikiLink" title="Hash functions">hash functions</a>.</p>
+<p id="mwAdE">Given a query point <span about="#mwt270" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"q"}},"i":0}}]}' id="mwAdI" style="font-style:italic;" typeof="mw:Transclusion">q</span>, the algorithm iterates over the <span about="#mwt271" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"L"}},"i":0}}]}' id="mwAdM" style="font-style:italic;" typeof="mw:Transclusion">L</span> hash functions <span about="#mwt272" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAdQ" style="font-style:italic;" typeof="mw:Transclusion">g</span>.  For each <span about="#mwt273" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"g"}},"i":0}}]}' id="mwAdU" style="font-style:italic;" typeof="mw:Transclusion">g</span> considered, it retrieves the data points that are hashed into the same bucket as <span about="#mwt274" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"q"}},"i":0}}]}' id="mwAdY" style="font-style:italic;" typeof="mw:Transclusion">q</span>.  The process is stopped as soon as a point within distance <span about="#mwt275" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"cR"}},"i":0}}]}' id="mwAdc" style="font-style:italic;" typeof="mw:Transclusion">cR</span> from <span about="#mwt276" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"q"}},"i":0}}]}' id="mwAdg" style="font-style:italic;" typeof="mw:Transclusion">q</span> is found.</p>
+<p id="mwAdk">Given the parameters <span about="#mwt277" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwAdo" style="font-style:italic;" typeof="mw:Transclusion">k</span> and <span about="#mwt278" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"L"}},"i":0}}]}' id="mwAds" style="font-style:italic;" typeof="mw:Transclusion">L</span>, the algorithm has the following performance guarantees:</p>
+<p id="mwAes">For a fixed approximation ratio <span about="#mwt289" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"c=1+\\epsilon"}}' id="mwAew" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle c=1+\epsilon }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>c</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>+</mo>
+<mi>ϵ<!-- ϵ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle c=1+\epsilon }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle c=1+\epsilon }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d8b8ab1c8a4c026cf4ff9159968b946c5c86e4af" style="vertical-align: -0.505ex; width:9.052ex; height:2.343ex;"/></span> and probabilities <span about="#mwt290" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_1"}}' id="mwAe0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/398f438d75434e6fbf48dc232c1ad7228a738568" style="vertical-align: -0.671ex; width:2.547ex; height:2.509ex;"/></span> and <span about="#mwt291" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"P_2"}}' id="mwAe4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle P_{2}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle P_{2}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle P_{2}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87858df7457aa93caaef5a316db87a7240cc8c29" style="vertical-align: -0.671ex; width:2.547ex; height:2.509ex;"/></span>, one can set <span about="#mwt292" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k = \\left\\lceil\\tfrac{\\log n}{\\log 1/P_2}\\right\\rceil"}}' id="mwAe8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k=\left\lceil {\tfrac {\log n}{\log 1/P_{2}}}\right\rceil }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>=</mo>
+<mrow>
+<mo>⌈</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mfrac>
+<mrow>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>n</mi>
+</mrow>
+<mrow>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mrow>
+</mfrac>
+</mstyle>
+</mrow>
+<mo>⌉</mo>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k=\left\lceil {\tfrac {\log n}{\log 1/P_{2}}}\right\rceil }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k=\left\lceil {\tfrac {\log n}{\log 1/P_{2}}}\right\rceil }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/8cb5458c5adfb4a2525bd07ec023a6c24cd4e673" style="vertical-align: -1.838ex; width:13.62ex; height:4.843ex;"/></span> and <span about="#mwt293" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"L = \\lceil P_1^{-k}\\rceil = O(n^{\\rho}P_1^{-1})"}}' id="mwAfA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle L=\lceil P_{1}^{-k}\rceil =O(n^{\rho }P_{1}^{-1})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>L</mi>
+<mo>=</mo>
+<mo fence="false" stretchy="false">⌈<!-- ⌈ --></mo>
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mi>k</mi>
+</mrow>
+</msubsup>
+<mo fence="false" stretchy="false">⌉<!-- ⌉ --></mo>
+<mo>=</mo>
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>ρ<!-- ρ --></mi>
+</mrow>
+</msup>
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</msubsup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle L=\lceil P_{1}^{-k}\rceil =O(n^{\rho }P_{1}^{-1})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle L=\lceil P_{1}^{-k}\rceil =O(n^{\rho }P_{1}^{-1})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/db5b264d0de558e89f4d08bc74a3dab708ef59ca" style="vertical-align: -1.005ex; width:24.247ex; height:3.343ex;"/></span>, where <span about="#mwt294" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\rho={\\tfrac{\\log P_1}{\\log P_2}}"}}' id="mwAfE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \rho ={\tfrac {\log P_{1}}{\log P_{2}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ρ<!-- ρ --></mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="false" scriptlevel="0">
+<mfrac>
+<mrow>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mrow>
+<mrow>
+<mi>log</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mrow>
+</mfrac>
+</mstyle>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \rho ={\tfrac {\log P_{1}}{\log P_{2}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \rho ={\tfrac {\log P_{1}}{\log P_{2}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/de75d6be62198676b03d73568ff9d84198846a2f" style="vertical-align: -1.671ex; width:9.512ex; height:4.509ex;"/></span>. Then one obtains the following performance guarantees:</p>
+<p id="mwAfo">To generalize the above algorithm without radius <span about="#mwt298" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"R"}},"i":0}}]}' id="mwAfs" style="font-style:italic;" typeof="mw:Transclusion">R</span> being fixed, we can take the algorithm and do a sort of <a href="https://en.wikipedia.org/wiki/Binary_search" id="mwAfw" rel="mw:WikiLink" title="Binary search">binary search</a> over <span about="#mwt299" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"R"}},"i":0}}]}' id="mwAf0" style="font-style:italic;" typeof="mw:Transclusion">R</span>. It has been shown<sup about="#mwt302" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-32"}}' id="cite_ref-32" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-32" id="mwAf4"><span class="mw-reflink-text" id="mwAf8"><span class="cite-bracket" id="mwAgA">[</span>32<span class="cite-bracket" id="mwAgE">]</span></span></a></sup> that there is a <a href="https://en.wikipedia.org/wiki/Data_structure" id="mwAgI" rel="mw:WikiLink" title="Data structure">data structure</a> for the approximate nearest neighbor with the following performance guarantees:</p>
+<p id="mwAgs">When <span about="#mwt306" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwAgw" style="font-style:italic;" typeof="mw:Transclusion">t</span> is large, it is possible to reduce the hashing time from <span about="#mwt307" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^{\\rho})"}}' id="mwAg0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{\rho })}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>ρ<!-- ρ --></mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{\rho })}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{\rho })}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b65f6d5fa653920a0c9b548d2bf42f0f4cf4b933" style="vertical-align: -0.838ex; width:6.059ex; height:2.843ex;"/></span>.
+This was shown by<sup about="#mwt308" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-33"}}' id="cite_ref-33" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-33" id="mwAg4"><span class="mw-reflink-text" id="mwAg8"><span class="cite-bracket" id="mwAhA">[</span>33<span class="cite-bracket" id="mwAhE">]</span></span></a></sup> and<sup about="#mwt309" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-34"}}' id="cite_ref-34" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-34" id="mwAhI"><span class="mw-reflink-text" id="mwAhM"><span class="cite-bracket" id="mwAhQ">[</span>34<span class="cite-bracket" id="mwAhU">]</span></span></a></sup> which gave</p>
+<p id="mwAhs">It is also sometimes the case that the factor <span about="#mwt312" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1/P_1"}}' id="mwAhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1/P_{1}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1/P_{1}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1/P_{1}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b4f88248ab70283b715f81486b6ebd4497f25dc" style="vertical-align: -0.838ex; width:4.871ex; height:2.843ex;"/></span> can be very large.
+This happens for example with <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Jaccard_similarity" id="mwAh0" rel="mw:WikiLink" title="Jaccard similarity">Jaccard similarity</a> data, where even the most similar neighbor often has a quite low Jaccard similarity with the query.
+In<sup about="#mwt314" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-35"}}' id="cite_ref-35" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-35" id="mwAh4"><span class="mw-reflink-text" id="mwAh8"><span class="cite-bracket" id="mwAiA">[</span>35<span class="cite-bracket" id="mwAiE">]</span></span></a></sup> it was shown how to reduce the query time to <span about="#mwt315" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"O(n^\\rho/P_1^{1-\\rho})"}}' id="mwAiI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle O(n^{\rho }/P_{1}^{1-\rho })}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>O</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>ρ<!-- ρ --></mi>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<msubsup>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>ρ<!-- ρ --></mi>
+</mrow>
+</msubsup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle O(n^{\rho }/P_{1}^{1-\rho })}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle O(n^{\rho }/P_{1}^{1-\rho })}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1ceca988850aa08b589f966b33491b183f0ae8e4" style="vertical-align: -1.005ex; width:12.226ex; height:3.509ex;"/></span> (not including hashing costs) and similarly the space usage.</p>
+</div></div>
+</body></html>

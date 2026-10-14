@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 32
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Paxos (computer science)",
+    "pageid": 5722488,
+    "size": 64995,
+    "wordcount": 6829,
+    "snippet": "In <span class=\"searchmatch\">computer</span> <span class=\"searchmatch\">science</span>, <span class=\"searchmatch\">Paxos</span> is a family of protocols for solving consensus in a network of unreliable or fallible processors. Consensus is the process",
+    "timestamp": "2026-09-18T10:54:14Z"
+   },
+   {
+    "ns": 0,
+    "title": "Paxos (disambiguation)",
+    "pageid": 1267785,
+    "size": 278,
+    "wordcount": 66,
+    "snippet": "<span class=\"searchmatch\">Paxos</span> or Paxi is a Greek island in the Ionian sea. <span class=\"searchmatch\">Paxos</span> may also refer to: <span class=\"searchmatch\">Paxos</span> (<span class=\"searchmatch\">computer</span> <span class=\"searchmatch\">science</span>), a family of algorithms <span class=\"searchmatch\">Paxos</span> Trust Company, an American",
+    "timestamp": "2022-09-29T10:20:11Z"
+   },
+   {
+    "ns": 0,
+    "title": "Consensus (computer science)",
+    "pageid": 5406474,
+    "size": 45653,
+    "wordcount": 4799,
+    "snippet": "log layer which is based on the <span class=\"searchmatch\">Paxos</span> consensus algorithm. In this scheme, Chubby clients communicate with the <span class=\"searchmatch\">Paxos</span> master in order to access/update",
+    "timestamp": "2026-08-28T13:18:07Z"
+   },
+   {
+    "ns": 0,
+    "title": "CAP theorem",
+    "pageid": 26411268,
+    "size": 11717,
+    "wordcount": 1225,
+    "snippet": "computing Lambda architecture (solution) PACELC theorem <span class=\"searchmatch\">Paxos</span> (<span class=\"searchmatch\">computer</span> <span class=\"searchmatch\">science</span>) Raft (<span class=\"searchmatch\">computer</span> <span class=\"searchmatch\">science</span>) Zooko&#039;s triangle Inconsistent triad Trilemma Gilbert",
+    "timestamp": "2026-09-10T02:51:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "Gbcast",
+    "pageid": 36377373,
+    "size": 66052,
+    "wordcount": 9701,
+    "snippet": "versions of <span class=\"searchmatch\">Paxos</span> are not <span class=\"searchmatch\">Paxos</span> protocols. For example, &quot;Cheap <span class=\"searchmatch\">Paxos</span>&quot; and &quot;Vertical <span class=\"searchmatch\">Paxos</span>&quot; are not bisimulation-equivalent to Basic <span class=\"searchmatch\">Paxos</span>. Thus the question",
+    "timestamp": "2026-07-24T23:39:16Z"
+   }
+  ]
+ }
+}

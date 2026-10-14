@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Stochastic gradient descent - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Stochastic gradient descent</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBg"><b id="mwBw">Stochastic gradient descent</b> (often abbreviated <b id="mwCA">SGD</b>) is an <a href="https://en.wikipedia.org/wiki/Iterative_method" id="mwCQ" rel="mw:WikiLink" title="Iterative method">iterative</a> method for optimizing an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Objective_function" id="mwCg" rel="mw:WikiLink" title="Objective function">objective function</a> with suitable <a href="https://en.wikipedia.org/wiki/Smoothness" id="mwCw" rel="mw:WikiLink" title="Smoothness">smoothness</a> properties (e.g. <a href="https://en.wikipedia.org/wiki/Differentiable_function" id="mwDA" rel="mw:WikiLink" title="Differentiable function">differentiable</a> or <a href="https://en.wikipedia.org/wiki/Subderivative" id="mwDQ" rel="mw:WikiLink" title="Subderivative">subdifferentiable</a>). It can be regarded as a <a href="https://en.wikipedia.org/wiki/Stochastic_approximation" id="mwDg" rel="mw:WikiLink" title="Stochastic approximation">stochastic approximation</a> of <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwDw" rel="mw:WikiLink" title="Gradient descent">gradient descent</a> optimization, since it replaces the actual gradient (calculated from the entire <a href="https://en.wikipedia.org/wiki/Data_set" id="mwEA" rel="mw:WikiLink" title="Data set">data set</a>) by an estimate thereof, calculated from a randomly selected subset of the data. Especially in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/High-dimensional" id="mwEQ" rel="mw:WikiLink" title="High-dimensional">high-dimensional</a> optimization problems this reduces the very high <a href="https://en.wikipedia.org/wiki/Computational_complexity" id="mwEg" rel="mw:WikiLink" title="Computational complexity">computational burden</a>, achieving faster iterations in exchange for a lower <a href="https://en.wikipedia.org/wiki/Rate_of_convergence" id="mwEw" rel="mw:WikiLink" title="Rate of convergence">convergence rate</a>.<sup about="#mwt13" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}' id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-1" id="mwFA"><span class="mw-reflink-text" id="mwFQ"><span class="cite-bracket" id="mwFg">[</span>1<span class="cite-bracket" id="mwFw">]</span></span></a></sup></p>
+<p id="mwGA">The basic idea behind stochastic approximation can be traced back to the <a href="https://en.wikipedia.org/wiki/Stochastic_approximation#Robbins–Monro_algorithm" id="mwGQ" rel="mw:WikiLink" title="Stochastic approximation">Robbins–Monro algorithm</a> of the 1950s. Today, stochastic gradient descent has become an important optimization method in <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwGg" rel="mw:WikiLink" title="Machine learning">machine learning</a>.<sup about="#mwt16" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bottou 1998"},"body":{"id":"mw-reference-text-cite_note-Bottou_1998-2"}}' id="cite_ref-Bottou_1998_2-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bottou_1998-2" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>2<span class="cite-bracket" id="mwHg">]</span></span></a></sup></p>
+<p id="mwJQ">Both <a href="https://en.wikipedia.org/wiki/Statistics" id="mwJg" rel="mw:WikiLink" title="Statistics">statistical</a> <a class="mw-redirect" href="https://en.wikipedia.org/wiki/M-estimation" id="mwJw" rel="mw:WikiLink" title="M-estimation">estimation</a> and <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mwKA" rel="mw:WikiLink" title="Machine learning">machine learning</a> consider the problem of <a href="https://en.wikipedia.org/wiki/Mathematical_optimization" id="mwKQ" rel="mw:WikiLink" title="Mathematical optimization">minimizing</a> an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Objective_function" id="mwKg" rel="mw:WikiLink" title="Objective function">objective function</a> that has the form of a sum:
+<span about="#mwt21" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"Q(w) = \\frac{1}{n}\\sum_{i=1}^n Q_i(w),"}}' id="mwKw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)={\frac {1}{n}}\sum _{i=1}^{n}Q_{i}(w),}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>n</mi>
+</mfrac>
+</mrow>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)={\frac {1}{n}}\sum _{i=1}^{n}Q_{i}(w),}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)={\frac {1}{n}}\sum _{i=1}^{n}Q_{i}(w),}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7f38e0bdfea090cfd651222e7db9806dce6164cd" style="vertical-align: -3.005ex; width:21.529ex; height:6.843ex;"/></span>
+where the <a href="https://en.wikipedia.org/wiki/Parametric_statistics" id="mwLA" rel="mw:WikiLink" title="Parametric statistics">parameter</a> <span about="#mwt22" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w"}}' id="mwLQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" style="vertical-align: -0.338ex; width:1.664ex; height:1.676ex;"/></span> that minimizes <span about="#mwt23" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q(w)"}}' id="mwLg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6346b36d378401a300ca8fea88d2a37d48973d0a" style="vertical-align: -0.838ex; width:5.312ex; height:2.843ex;"/></span> is to be <a href="https://en.wikipedia.org/wiki/Estimator" id="mwLw" rel="mw:WikiLink" title="Estimator">estimated</a>. Each summand function <span about="#mwt24" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q_i"}}' id="mwMA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b9f7193081d440425e522698e80817b5d558df03" style="vertical-align: -0.671ex; width:2.638ex; height:2.509ex;"/></span> is typically associated with the <span about="#mwt25" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwMQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>-th <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Observation_(statistics)" id="mwMg" rel="mw:WikiLink" title="Observation (statistics)">observation</a> in the <a href="https://en.wikipedia.org/wiki/Data_set" id="mwMw" rel="mw:WikiLink" title="Data set">data set</a> (used for training).</p>
+<p id="mwNA">In classical statistics, sum-minimization problems arise in <a href="https://en.wikipedia.org/wiki/Least_squares" id="mwNQ" rel="mw:WikiLink" title="Least squares">least squares</a> and in <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Maximum-likelihood_estimation" id="mwNg" rel="mw:WikiLink" title="Maximum-likelihood estimation">maximum-likelihood estimation</a> (for independent observations).  The general class of estimators that arise as minimizers of sums are called <a href="https://en.wikipedia.org/wiki/M-estimator" id="mwNw" rel="mw:WikiLink" title="M-estimator">M-estimators</a>. However, in statistics, it has been long recognized that requiring even local minimization is too restrictive for some problems of maximum-likelihood estimation.<sup about="#mwt28" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwOA"><span class="mw-reflink-text" id="mwOQ"><span class="cite-bracket" id="mwOg">[</span>3<span class="cite-bracket" id="mwOw">]</span></span></a></sup> Therefore, contemporary statistical theorists often consider <a href="https://en.wikipedia.org/wiki/Stationary_point" id="mwPA" rel="mw:WikiLink" title="Stationary point">stationary points</a> of the <a href="https://en.wikipedia.org/wiki/Likelihood_function" id="mwPQ" rel="mw:WikiLink" title="Likelihood function">likelihood function</a> (or zeros of its derivative, the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Score_(statistics)" id="mwPg" rel="mw:WikiLink" title="Score (statistics)">score function</a>, and other <a href="https://en.wikipedia.org/wiki/Estimating_equations" id="mwPw" rel="mw:WikiLink" title="Estimating equations">estimating equations</a>).</p>
+<p id="mwQA">The sum-minimization problem also arises for <a href="https://en.wikipedia.org/wiki/Empirical_risk_minimization" id="mwQQ" rel="mw:WikiLink" title="Empirical risk minimization">empirical risk minimization</a>. There, <span about="#mwt29" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q_i(w)"}}' id="mwQg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q_{i}(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q_{i}(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q_{i}(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25b1170e62c103ff59c79ea424f1c409c4742225" style="vertical-align: -0.838ex; width:6.111ex; height:2.843ex;"/></span> is the value of the <a href="https://en.wikipedia.org/wiki/Loss_function" id="mwQw" rel="mw:WikiLink" title="Loss function">loss function</a> at <span about="#mwt30" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwRA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span>-th example, and <span about="#mwt31" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q(w)"}}' id="mwRQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6346b36d378401a300ca8fea88d2a37d48973d0a" style="vertical-align: -0.838ex; width:5.312ex; height:2.843ex;"/></span> is the empirical risk.</p>
+<p id="mwRg">When used to minimize the above function, a standard (or "batch") <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwRw" rel="mw:WikiLink" title="Gradient descent">gradient descent</a> method would perform the following iterations:
+<span about="#mwt32" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w := w - \\eta\\,\\nabla Q(w) = w - \\frac{\\eta}{n} \\sum_{i=1}^n \\nabla Q_i(w)."}}' id="mwSA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w:=w-\eta \,\nabla Q(w)=w-{\frac {\eta }{n}}\sum _{i=1}^{n}\nabla Q_{i}(w).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+<mo>:=</mo>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mspace width="thinmathspace"></mspace>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>η<!-- η --></mi>
+<mi>n</mi>
+</mfrac>
+</mrow>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w:=w-\eta \,\nabla Q(w)=w-{\frac {\eta }{n}}\sum _{i=1}^{n}\nabla Q_{i}(w).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w:=w-\eta \,\nabla Q(w)=w-{\frac {\eta }{n}}\sum _{i=1}^{n}\nabla Q_{i}(w).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b56e64f17f26302a097e801b4d6c64c1d984194c" style="vertical-align: -3.005ex; width:41.375ex; height:6.843ex;"/></span>
+The step size is denoted by <span about="#mwt33" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwSQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> (sometimes called the <i id="mwSg"><a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwSw" rel="mw:WikiLink" title="Learning rate">learning rate</a></i> in machine learning) and here "<span about="#mwt34" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":":="}}' id="mwTA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle :=}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo>:=</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle</annotation></semantics></math><span typeof="mw:DisplaySpace"> </span>:=}
+  
+</span><img alt="{\displaystyle :=}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3b9a320a04a814e22f58952141fd0d92cd5ac402" style="vertical-align: -0.338ex; width:2.455ex; height:1.676ex;"/></span>" denotes the update of a variable in the algorithm.</p>
+<p id="mwTQ">In many cases, the summand functions have a simple form that enables inexpensive evaluations of the sum-function and the sum gradient. For example, in statistics, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Exponential_families" id="mwTg" rel="mw:WikiLink" title="Exponential families">one-parameter exponential families</a> allow economical function-evaluations and gradient-evaluations.</p>
+<p id="mwTw">However, in other cases, evaluating the sum-gradient may require expensive evaluations of the gradients from all summand functions. When the training set is enormous and no simple formulas exist, evaluating the sums of gradients becomes very expensive, because evaluating the gradient requires evaluating all the summand functions' gradients. To economize on the computational cost at every iteration, stochastic gradient descent <a href="https://en.wikipedia.org/wiki/Sampling_(statistics)" id="mwUA" rel="mw:WikiLink" title="Sampling (statistics)">samples</a> a subset of summand functions at every step. This is very effective in the case of large-scale machine learning problems.<sup about="#mwt37" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-4"}}' id="cite_ref-4" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-4" id="mwUQ"><span class="mw-reflink-text" id="mwUg"><span class="cite-bracket" id="mwUw">[</span>4<span class="cite-bracket" id="mwVA">]</span></span></a></sup></p>
+<p id="mwWg">In stochastic (or "on-line") gradient descent, the true gradient of <span about="#mwt38" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q(w)"}}' id="mwWw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6346b36d378401a300ca8fea88d2a37d48973d0a" style="vertical-align: -0.838ex; width:5.312ex; height:2.843ex;"/></span> is approximated by a gradient at a single sample:
+<span about="#mwt39" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w := w - \\eta\\, \\nabla Q_i(w)."}}' id="mwXA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w:=w-\eta \,\nabla Q_{i}(w).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+<mo>:=</mo>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mspace width="thinmathspace"></mspace>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w:=w-\eta \,\nabla Q_{i}(w).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w:=w-\eta \,\nabla Q_{i}(w).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/70916511ef8cbf2a59686723caf35c007ec20894" style="vertical-align: -0.838ex; width:20.165ex; height:2.843ex;"/></span>
+As the algorithm sweeps through the training set, it performs the above update for each training sample. Several passes can be made over the training set until the algorithm converges. If this is done, the data can be shuffled for each pass to prevent cycles. Typical implementations may use an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Adaptive_learning_rate" id="mwXQ" rel="mw:WikiLink" title="Adaptive learning rate">adaptive learning rate</a> so that the algorithm converges.<sup about="#mwt42" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwXg"><span class="mw-reflink-text" id="mwXw"><span class="cite-bracket" id="mwYA">[</span>5<span class="cite-bracket" id="mwYQ">]</span></span></a></sup></p>
+<p about="#mwt43" data-mw='{"parts":["In pseudocode, stochastic gradient descent can be presented as :\n",{"template":{"target":{"wt":"framebox","href":"./Template:Framebox"},"params":{"1":{"wt":"blue"},"margin-left":{"wt":"35px"},"width":{"wt":"600px"}},"i":0}},"\n* Choose an initial vector of parameters &lt;math&gt;w&lt;/math&gt; and learning rate &lt;math&gt;\\eta&lt;/math&gt;.\n* Repeat until an approximate minimum is obtained:\n** Randomly shuffle samples in the training set.\n** For &lt;math&gt; i=1, 2, ..., n&lt;/math&gt;, do:\n*** &lt;math&gt; w := w - \\eta\\, \\nabla Q_i(w).&lt;/math&gt;\n",{"template":{"target":{"wt":"frame-footer","href":"./Template:Frame-footer"},"params":{},"i":1}}]}' id="mwYg" typeof="mw:Transclusion">In pseudocode, stochastic gradient descent can be presented as<span typeof="mw:DisplaySpace"> </span>:
+<span class="mw-empty-elt"><style about="#mwt44" data-mw='{"name":"templatestyles","attrs":{"src":"Framebox/styles.css"}}' data-mw-deduplicate="TemplateStyles:r1269837509" typeof="mw:Extension/templatestyles">.mw-parser-output .framebox-container{margin-bottom:1.25em}.mw-parser-output .framebox-header{height:8px;margin:0;border:0;padding:0;font-size:1px}.mw-parser-output .framebox-inner{padding:5px;font-size:85%}</style></span></p>
+<p id="mwZA">A compromise between computing the true gradient and the gradient at a single sample is to compute the gradient against more than one training sample (called a "mini-batch") at each step.  This can perform significantly better than "true" stochastic gradient descent described, because the code can make use of <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)" id="mwZQ" rel="mw:WikiLink" title="Vectorization (mathematics)">vectorization</a> libraries rather than computing each step separately as was first shown in <sup about="#mwt52" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwZg"><span class="mw-reflink-text" id="mwZw"><span class="cite-bracket" id="mwaA">[</span>6<span class="cite-bracket" id="mwaQ">]</span></span></a></sup> where it was called "the bunch-mode back-propagation algorithm".  It may also result in smoother convergence, as the gradient computed at each step is averaged over more training samples.</p>
+<p id="mwag">The convergence of stochastic gradient descent has been analyzed using the theories of <a href="https://en.wikipedia.org/wiki/Convex_optimization" id="mwaw" rel="mw:WikiLink" title="Convex optimization">convex minimization</a> and of <a href="https://en.wikipedia.org/wiki/Stochastic_approximation" id="mwbA" rel="mw:WikiLink" title="Stochastic approximation">stochastic approximation</a>. Briefly, when the <a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwbQ" rel="mw:WikiLink" title="Learning rate">learning rates</a> <span about="#mwt53" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwbg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> decrease with an appropriate rate,
+and subject to relatively mild assumptions, stochastic gradient descent converges <a href="https://en.wikipedia.org/wiki/Almost_surely" id="mwbw" rel="mw:WikiLink" title="Almost surely">almost surely</a> to a global minimum 
+when the objective function is <a href="https://en.wikipedia.org/wiki/Convex_function" id="mwcA" rel="mw:WikiLink" title="Convex function">convex</a> or <a href="https://en.wikipedia.org/wiki/Pseudoconvex_function" id="mwcQ" rel="mw:WikiLink" title="Pseudoconvex function">pseudoconvex</a>, 
+and otherwise converges almost surely to a local minimum.<sup about="#mwt54" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Bottou 1998"}}' id="cite_ref-Bottou_1998_2-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Bottou_1998-2" id="mwcg"><span class="mw-reflink-text" id="mwcw"><span class="cite-bracket" id="mwdA">[</span>2<span class="cite-bracket" id="mwdQ">]</span></span></a></sup><sup about="#mwt57" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwdg"><span class="mw-reflink-text" id="mwdw"><span class="cite-bracket" id="mweA">[</span>7<span class="cite-bracket" id="mweQ">]</span></span></a></sup>
+This is in fact a consequence of the <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Robbins–Siegmund theorem"]}}' href="https://en.wikipedia.org/wiki/Robbins–Siegmund_theorem?action=edit&amp;redlink=1" id="mweg" rel="mw:WikiLink" title="Robbins–Siegmund theorem (page does not exist)" typeof="mw:LocalizedAttrs">Robbins–Siegmund theorem</a>.<sup about="#mwt60" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mwew"><span class="mw-reflink-text" id="mwfA"><span class="cite-bracket" id="mwfQ">[</span>8<span class="cite-bracket" id="mwfg">]</span></span></a></sup></p>
+<p id="mwgA">Suppose we want to fit a straight line <span about="#mwt61" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\hat y = w_1 + w_2 x"}}' id="mwgQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\hat {y}}=w_{1}+w_{2}x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mo>=</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\hat {y}}=w_{1}+w_{2}x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\hat {y}}=w_{1}+w_{2}x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9afc31397b8bbd3a9be8349908cd7987881aea78" style="vertical-align: -0.671ex; width:14.008ex; height:2.509ex;"/></span> to a training set with observations <span about="#mwt62" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"((x_1, y_1), (x_2, y_2) \\ldots, (x_n, y_n))"}}' id="mwgg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle ((x_{1},y_{1}),(x_{2},y_{2})\ldots ,(x_{n},y_{n}))}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle ((x_{1},y_{1}),(x_{2},y_{2})\ldots ,(x_{n},y_{n}))}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle ((x_{1},y_{1}),(x_{2},y_{2})\ldots ,(x_{n},y_{n}))}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/59a10f5235f347054d9a4dddbab23b6c6828cf82" style="vertical-align: -0.838ex; width:29.965ex; height:2.843ex;"/></span> and corresponding estimated responses <span about="#mwt63" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(\\hat y_1, \\hat y_2, \\ldots, \\hat y_n)"}}' id="mwgw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle ({\hat {y}}_{1},{\hat {y}}_{2},\ldots ,{\hat {y}}_{n})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle ({\hat {y}}_{1},{\hat {y}}_{2},\ldots ,{\hat {y}}_{n})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle ({\hat {y}}_{1},{\hat {y}}_{2},\ldots ,{\hat {y}}_{n})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b55207c74907230fdb4067f3202fe08c735cbadb" style="vertical-align: -0.838ex; width:15.255ex; height:2.843ex;"/></span> using <a href="https://en.wikipedia.org/wiki/Least_squares" id="mwhA" rel="mw:WikiLink" title="Least squares">least squares</a>. The objective function to be minimized is
+<span about="#mwt64" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"Q(w) = \\sum_{i=1}^n Q_i(w) = \\sum_{i=1}^n \\left(\\hat y_i - y_i\\right)^2 = \\sum_{i=1}^n \\left(w_1 + w_2 x_i - y_i\\right)^2."}}' id="mwhQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)=\sum _{i=1}^{n}Q_{i}(w)=\sum _{i=1}^{n}\left({\hat {y}}_{i}-y_{i}\right)^{2}=\sum _{i=1}^{n}\left(w_{1}+w_{2}x_{i}-y_{i}\right)^{2}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<msup>
+<mrow>
+<mo>(</mo>
+<mrow>
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<msup>
+<mrow>
+<mo>(</mo>
+<mrow>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)=\sum _{i=1}^{n}Q_{i}(w)=\sum _{i=1}^{n}\left({\hat {y}}_{i}-y_{i}\right)^{2}=\sum _{i=1}^{n}\left(w_{1}+w_{2}x_{i}-y_{i}\right)^{2}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)=\sum _{i=1}^{n}Q_{i}(w)=\sum _{i=1}^{n}\left({\hat {y}}_{i}-y_{i}\right)^{2}=\sum _{i=1}^{n}\left(w_{1}+w_{2}x_{i}-y_{i}\right)^{2}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e8ae4720d8afa9a114ee8e8f48fd4f226617add9" style="vertical-align: -3.005ex; width:60.386ex; height:6.843ex;"/></span>
+The last line in the above pseudocode for this specific problem will become:
+<span about="#mwt65" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\begin{bmatrix} w_1 \\\\ w_2 \\end{bmatrix} \\leftarrow\n \\begin{bmatrix} w_1 \\\\ w_2 \\end{bmatrix}\n - \\eta \\begin{bmatrix} \\frac{\\partial}{\\partial w_1} (w_1 + w_2 x_i - y_i)^2 \\\\\n   \\frac{\\partial}{\\partial w_2} (w_1 + w_2 x_i - y_i)^2 \\end{bmatrix} =\n \\begin{bmatrix} w_1 \\\\ w_2 \\end{bmatrix}\n -  \\eta  \\begin{bmatrix} 2 (w_1 + w_2 x_i - y_i) \\\\ 2 x_i(w_1 + w_2 x_i - y_i) \\end{bmatrix}."}}' id="mwhg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}\leftarrow {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}{\frac {\partial }{\partial w_{1}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\\{\frac {\partial }{\partial w_{2}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\end{bmatrix}}={\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}2(w_{1}+w_{2}x_{i}-y_{i})\\2x_{i}(w_{1}+w_{2}x_{i}-y_{i})\end{bmatrix}}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mo stretchy="false">←<!-- ← --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mrow>
+</mfrac>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<mrow>
+<mi mathvariant="normal">∂<!-- ∂ --></mi>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mrow>
+</mfrac>
+</mrow>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow>
+<mo>[</mo>
+<mtable columnspacing="1em" rowspacing="4pt">
+<mtr>
+<mtd>
+<mn>2</mn>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mn>2</mn>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">)</mo>
+</mtd>
+</mtr>
+</mtable>
+<mo>]</mo>
+</mrow>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}\leftarrow {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}{\frac {\partial }{\partial w_{1}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\\{\frac {\partial }{\partial w_{2}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\end{bmatrix}}={\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}2(w_{1}+w_{2}x_{i}-y_{i})\\2x_{i}(w_{1}+w_{2}x_{i}-y_{i})\end{bmatrix}}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}\leftarrow {\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}{\frac {\partial }{\partial w_{1}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\\{\frac {\partial }{\partial w_{2}}}(w_{1}+w_{2}x_{i}-y_{i})^{2}\end{bmatrix}}={\begin{bmatrix}w_{1}\\w_{2}\end{bmatrix}}-\eta {\begin{bmatrix}2(w_{1}+w_{2}x_{i}-y_{i})\\2x_{i}(w_{1}+w_{2}x_{i}-y_{i})\end{bmatrix}}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/22a0c6b6d2e19d1332a0be2203dc567ee8651da0" style="vertical-align: -3.838ex; width:82.325ex; height:8.676ex;"/></span>Note that in each iteration or update step, the gradient is only evaluated at a single <span about="#mwt66" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_i"}}' id="mwhw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e87000dd6142b81d041896a30fe58f0c3acb2158" style="vertical-align: -0.671ex; width:2.129ex; height:2.009ex;"/></span>. This is the key difference between stochastic gradient descent and batched gradient descent.</p>
+<p id="mwiA">In general, given a linear regression <span about="#mwt67" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\hat y = \\sum_{k\\in 1:m} w_k x_k"}}' id="mwiQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\hat {y}}=\sum _{k\in 1:m}w_{k}x_{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>y</mi>
+<mo stretchy="false">^<!-- ^ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mo>=</mo>
+<munder>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+<mo>∈<!-- ∈ --></mo>
+<mn>1</mn>
+<mo>:</mo>
+<mi>m</mi>
+</mrow>
+</munder>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\hat {y}}=\sum _{k\in 1:m}w_{k}x_{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\hat {y}}=\sum _{k\in 1:m}w_{k}x_{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b257a20462b0facc5392c509fcaed79818839dce" style="vertical-align: -3.171ex; width:14.634ex; height:5.676ex;"/></span> problem, stochastic gradient descent behaves differently when <span about="#mwt68" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m &lt; n"}}' id="mwig" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m&lt;n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>&lt;</mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m&lt;n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m&lt;n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/490c01b0cb770144f28afd17bb5fef277daf6f38" style="vertical-align: -0.338ex; width:6.534ex; height:1.843ex;"/></span> (underparameterized) and <span about="#mwt69" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m \\geq n"}}' id="mwiw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m\geq n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>≥<!-- ≥ --></mo>
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m\geq n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m\geq n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6b02f25e62da7fe3162ac80446437cdc1c0fd341" style="vertical-align: -0.505ex; width:6.534ex; height:2.176ex;"/></span> (overparameterized). In the overparameterized case, stochastic gradient descent converges to <span about="#mwt70" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\arg\\min_{w: w^T x_k =y_k \\forall k \\in 1:n} \\|w - w_0\\|"}}' id="mwjA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \arg \min _{w:w^{T}x_{k}=y_{k}\forall k\in 1:n}\|w-w_{0}\|}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>arg</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<munder>
+<mo form="prefix" movablelimits="true">min</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>w</mi>
+<mo>:</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>T</mi>
+</mrow>
+</msup>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msub>
+<mi mathvariant="normal">∀<!-- ∀ --></mi>
+<mi>k</mi>
+<mo>∈<!-- ∈ --></mo>
+<mn>1</mn>
+<mo>:</mo>
+<mi>n</mi>
+</mrow>
+</munder>
+<mo fence="false" stretchy="false">‖<!-- ‖ --></mo>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+<mo fence="false" stretchy="false">‖<!-- ‖ --></mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \arg \min _{w:w^{T}x_{k}=y_{k}\forall k\in 1:n}\|w-w_{0}\|}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \arg \min _{w:w^{T}x_{k}=y_{k}\forall k\in 1:n}\|w-w_{0}\|}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b137d23823cc5852973cecf05a0e754a191777b7" style="vertical-align: -2.838ex; width:27.349ex; height:4.843ex;"/></span>. That is, SGD converges to the interpolation solution with minimum distance from the starting <span about="#mwt71" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w_0"}}' id="mwjQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w_{0}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w_{0}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w_{0}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7aa052386ec49846179aa8bbe2b279b57a675e00" style="vertical-align: -0.671ex; width:2.718ex; height:2.009ex;"/></span>. This is true even when the learning rate remains constant. In the underparameterized case, SGD does not converge if learning rate remains constant.<sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwjg"><span class="mw-reflink-text" id="mwjw"><span class="cite-bracket" id="mwkA">[</span>9<span class="cite-bracket" id="mwkQ">]</span></span></a></sup></p>
+<p id="mwkw">In 1951, <a href="https://en.wikipedia.org/wiki/Herbert_Robbins" id="mwlA" rel="mw:WikiLink" title="Herbert Robbins">Herbert Robbins</a> and <a class="new" data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Sutton Monro"]}}' href="https://en.wikipedia.org/wiki/Sutton_Monro?action=edit&amp;redlink=1" id="mwlQ" rel="mw:WikiLink" title="Sutton Monro (page does not exist)" typeof="mw:LocalizedAttrs">Sutton Monro</a> introduced the earliest stochastic approximation methods, preceding stochastic gradient descent.<sup about="#mwt77" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"rm"},"body":{"id":"mw-reference-text-cite_note-rm-10"}}' id="cite_ref-rm_10-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-rm-10" id="mwlg"><span class="mw-reflink-text" id="mwlw"><span class="cite-bracket" id="mwmA">[</span>10<span class="cite-bracket" id="mwmQ">]</span></span></a></sup> Building on this work one year later, <a href="https://en.wikipedia.org/wiki/Jack_Kiefer_(statistician)" id="mwmg" rel="mw:WikiLink" title="Jack Kiefer (statistician)">Jack Kiefer</a> and <a href="https://en.wikipedia.org/wiki/Jacob_Wolfowitz" id="mwmw" rel="mw:WikiLink" title="Jacob Wolfowitz">Jacob Wolfowitz</a> published <a href="https://en.wikipedia.org/wiki/Stochastic_approximation#Kiefer–Wolfowitz_algorithm" id="mwnA" rel="mw:WikiLink" title="Stochastic approximation">an optimization algorithm</a> very close to stochastic gradient descent, using <a href="https://en.wikipedia.org/wiki/Finite_difference#Basic_types" id="mwnQ" rel="mw:WikiLink" title="Finite difference">central differences</a> as an approximation of the gradient.<sup about="#mwt80" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-11"}}' id="cite_ref-11" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-11" id="mwng"><span class="mw-reflink-text" id="mwnw"><span class="cite-bracket" id="mwoA">[</span>11<span class="cite-bracket" id="mwoQ">]</span></span></a></sup> Later in the 1950s, <a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt" id="mwog" rel="mw:WikiLink" title="Frank Rosenblatt">Frank Rosenblatt</a> used SGD to optimize his <a href="https://en.wikipedia.org/wiki/Perceptron" id="mwow" rel="mw:WikiLink" title="Perceptron">perceptron model</a>, demonstrating the first applicability of stochastic gradient descent to neural networks.<sup about="#mwt83" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-12"}}' id="cite_ref-12" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-12" id="mwpA"><span class="mw-reflink-text" id="mwpQ"><span class="cite-bracket" id="mwpg">[</span>12<span class="cite-bracket" id="mwpw">]</span></span></a></sup></p>
+<p id="mwqA"><a href="https://en.wikipedia.org/wiki/Backpropagation" id="mwqQ" rel="mw:WikiLink" title="Backpropagation">Backpropagation</a> was first described in 1986, with stochastic gradient descent being used to efficiently optimize parameters across neural networks with multiple <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mwqg" rel="mw:WikiLink" title="Artificial neural network">hidden layers</a>. Soon after, another improvement was developed: mini-batch gradient descent, where small batches of data are substituted for single samples. In 1997, the practical performance benefits from vectorization achievable with such small batches were first explored,<sup about="#mwt86" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-13"}}' id="cite_ref-13" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-13" id="mwqw"><span class="mw-reflink-text" id="mwrA"><span class="cite-bracket" id="mwrQ">[</span>13<span class="cite-bracket" id="mwrg">]</span></span></a></sup> paving the way for efficient optimization in machine learning. As of 2023, this mini-batch approach remains the norm for training neural networks, balancing the benefits of stochastic gradient descent with <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwrw" rel="mw:WikiLink" title="Gradient descent">gradient descent</a>.<sup about="#mwt89" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-14"}}' id="cite_ref-14" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-14" id="mwsA"><span class="mw-reflink-text" id="mwsQ"><span class="cite-bracket" id="mwsg">[</span>14<span class="cite-bracket" id="mwsw">]</span></span></a></sup></p>
+<p id="mwtA">By the 1980s, <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Momentum_(machine_learning)" id="mwtQ" rel="mw:WikiLink" title="Momentum (machine learning)">momentum</a> had already been introduced, and was added to SGD optimization techniques in 1986.<sup about="#mwt92" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-15"}}' id="cite_ref-15" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-15" id="mwtg"><span class="mw-reflink-text" id="mwtw"><span class="cite-bracket" id="mwuA">[</span>15<span class="cite-bracket" id="mwuQ">]</span></span></a></sup> However, these optimization techniques assumed constant <a href="https://en.wikipedia.org/wiki/Hyperparameter_(machine_learning)" id="mwug" rel="mw:WikiLink" title="Hyperparameter (machine learning)">hyperparameters</a>, i.e. a fixed learning rate and momentum parameter. In the 2010s, adaptive approaches to applying SGD with a per-parameter learning rate were introduced with AdaGrad (for "Adaptive Gradient") in 2011<sup about="#mwt95" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"duchi2"},"body":{"id":"mw-reference-text-cite_note-duchi2-16"}}' id="cite_ref-duchi2_16-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-duchi2-16" id="mwuw"><span class="mw-reflink-text" id="mwvA"><span class="cite-bracket" id="mwvQ">[</span>16<span class="cite-bracket" id="mwvg">]</span></span></a></sup> and RMSprop (for "Root Mean Square Propagation") in 2012.<sup about="#mwt98" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"rmsprop2"},"body":{"id":"mw-reference-text-cite_note-rmsprop2-17"}}' id="cite_ref-rmsprop2_17-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-rmsprop2-17" id="mwvw"><span class="mw-reflink-text" id="mwwA"><span class="cite-bracket" id="mwwQ">[</span>17<span class="cite-bracket" id="mwwg">]</span></span></a></sup> In 2014, Adam (for "Adaptive Moment Estimation") was published, applying the adaptive approaches of RMSprop to momentum; many improvements and branches of Adam were then developed such as Adadelta, Adagrad, AdamW, and Adamax.<sup about="#mwt101" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Adam20142"},"body":{"id":"mw-reference-text-cite_note-Adam20142-18"}}' id="cite_ref-Adam20142_18-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Adam20142-18" id="mwww"><span class="mw-reflink-text" id="mwxA"><span class="cite-bracket" id="mwxQ">[</span>18<span class="cite-bracket" id="mwxg">]</span></span></a></sup><sup about="#mwt104" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"pytorch.org"},"body":{"id":"mw-reference-text-cite_note-pytorch.org-19"}}' id="cite_ref-pytorch.org_19-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-pytorch.org-19" id="mwxw"><span class="mw-reflink-text" id="mwyA"><span class="cite-bracket" id="mwyQ">[</span>19<span class="cite-bracket" id="mwyg">]</span></span></a></sup></p>
+<p id="mwyw">Within machine learning, approaches to optimization in 2023 are dominated by Adam-derived optimizers, <a href="https://en.wikipedia.org/wiki/TensorFlow" id="mwzA" rel="mw:WikiLink" title="TensorFlow">TensorFlow</a> and <a href="https://en.wikipedia.org/wiki/PyTorch" id="mwzQ" rel="mw:WikiLink" title="PyTorch">PyTorch</a>, by far the most popular machine learning libraries,<sup about="#mwt107" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-20"}}' id="cite_ref-20" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-20" id="mwzg"><span class="mw-reflink-text" id="mwzw"><span class="cite-bracket" id="mw0A">[</span>20<span class="cite-bracket" id="mw0Q">]</span></span></a></sup> as of 2023 largely only include Adam-derived optimizers, as well as predecessors to Adam such as RMSprop and classic SGD. PyTorch also partially supports <a href="https://en.wikipedia.org/wiki/Limited-memory_BFGS" id="mw0g" rel="mw:WikiLink" title="Limited-memory BFGS">limited-memory BFGS</a>, a line-search method, but only for single-device setups without parameter groups.<sup about="#mwt108" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"pytorch.org"}}' id="cite_ref-pytorch.org_19-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-pytorch.org-19" id="mw0w"><span class="mw-reflink-text" id="mw1A"><span class="cite-bracket" id="mw1Q">[</span>19<span class="cite-bracket" id="mw1g">]</span></span></a></sup><sup about="#mwt111" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-21"}}' id="cite_ref-21" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-21" id="mw1w"><span class="mw-reflink-text" id="mw2A"><span class="cite-bracket" id="mw2Q">[</span>21<span class="cite-bracket" id="mw2g">]</span></span></a></sup></p>
+<p id="mw3A">Stochastic gradient descent is a popular algorithm for training a wide range of models in <a href="https://en.wikipedia.org/wiki/Machine_learning" id="mw3Q" rel="mw:WikiLink" title="Machine learning">machine learning</a>, including (linear) <a href="https://en.wikipedia.org/wiki/Support_vector_machine" id="mw3g" rel="mw:WikiLink" title="Support vector machine">support vector machines</a>, <a href="https://en.wikipedia.org/wiki/Logistic_regression" id="mw3w" rel="mw:WikiLink" title="Logistic regression">logistic regression</a> (see, e.g., <a href="https://en.wikipedia.org/wiki/Vowpal_Wabbit" id="mw4A" rel="mw:WikiLink" title="Vowpal Wabbit">Vowpal Wabbit</a>) and <a href="https://en.wikipedia.org/wiki/Graphical_model" id="mw4Q" rel="mw:WikiLink" title="Graphical model">graphical models</a>.<sup about="#mwt112" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-22"}}' id="cite_ref-22" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-22" id="mw4g"><span class="mw-reflink-text" id="mw4w"><span class="cite-bracket" id="mw5A">[</span>22<span class="cite-bracket" id="mw5Q">]</span></span></a></sup> When combined with the <a href="https://en.wikipedia.org/wiki/Backpropagation" id="mw5g" rel="mw:WikiLink" title="Backpropagation">backpropagation</a> algorithm, it is the <i id="mw5w">de facto</i> standard algorithm for training <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_network" id="mw6A" rel="mw:WikiLink" title="Artificial neural network">artificial neural networks</a>.<sup about="#mwt113" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-23"}}' id="cite_ref-23" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-23" id="mw6Q"><span class="mw-reflink-text" id="mw6g"><span class="cite-bracket" id="mw6w">[</span>23<span class="cite-bracket" id="mw7A">]</span></span></a></sup> Its use has been also reported in the <a href="https://en.wikipedia.org/wiki/Geophysics" id="mw7Q" rel="mw:WikiLink" title="Geophysics">Geophysics</a> community, specifically to applications of Full Waveform Inversion (FWI).<sup about="#mwt116" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-24"}}' id="cite_ref-24" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-24" id="mw7g"><span class="mw-reflink-text" id="mw7w"><span class="cite-bracket" id="mw8A">[</span>24<span class="cite-bracket" id="mw8Q">]</span></span></a></sup></p>
+<p id="mw8g">Stochastic gradient descent competes with the <a href="https://en.wikipedia.org/wiki/Limited-memory_BFGS" id="mw8w" rel="mw:WikiLink" title="Limited-memory BFGS">L-BFGS</a> algorithm,<link about="#mwt117" data-mw='{"parts":[{"template":{"target":{"wt":"Citation needed","href":"./Template:Citation_needed"},"params":{"date":{"wt":"July 2015"}},"i":0}}]}' href="./Category:All_articles_with_unsourced_statements" id="mw9A" rel="mw:PageProp/Category" typeof="mw:Transclusion"/><link about="#mwt117" href="./Category:Articles_with_unsourced_statements_from_July_2015" rel="mw:PageProp/Category"/><sup about="#mwt117" class="noprint Inline-Template Template-Fact" id="mw9Q" style="white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" rel="mw:WikiLink" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (July 2015)">citation needed</span></a></i><span typeof="mw:Entity">]</span></sup> which is also widely used. Stochastic gradient descent has been used since at least 1960 for training <a href="https://en.wikipedia.org/wiki/Linear_regression" id="mw9g" rel="mw:WikiLink" title="Linear regression">linear regression</a> models, originally under the name <a href="https://en.wikipedia.org/wiki/ADALINE" id="mw9w" rel="mw:WikiLink" title="ADALINE">ADALINE</a>.<sup about="#mwt121" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-25"}}' id="cite_ref-25" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-25" id="mw-A"><span class="mw-reflink-text" id="mw-Q"><span class="cite-bracket" id="mw-g">[</span>25<span class="cite-bracket" id="mw-w">]</span></span></a></sup></p>
+<p id="mw_A">Another stochastic gradient descent algorithm is the <a href="https://en.wikipedia.org/wiki/Least_mean_squares_filter" id="mw_Q" rel="mw:WikiLink" title="Least mean squares filter">least mean squares (LMS)</a> adaptive filter.</p>
+<p id="mw_w">Many improvements on the basic stochastic gradient descent algorithm have been proposed and used. In particular, in machine learning, the need to set a <a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwAQA" rel="mw:WikiLink" title="Learning rate">learning rate</a> (step size) has been recognized as problematic. Setting this parameter too high can cause the algorithm to diverge; setting it too low makes it slow to converge.<sup about="#mwt126" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-26"}}' id="cite_ref-26" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-26" id="mwAQE"><span class="mw-reflink-text" id="mwAQI"><span class="cite-bracket" id="mwAQM">[</span>26<span class="cite-bracket" id="mwAQQ">]</span></span></a></sup> A conceptually simple extension of stochastic gradient descent makes the learning rate a decreasing function <span about="#mwt122" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"η&lt;sub&gt;t&lt;/sub&gt;"}},"i":0}}]}' id="mwAQU" style="font-style:italic;" typeof="mw:Transclusion">η<sub>t</sub></span> of the iteration number <span about="#mwt123" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"t"}},"i":0}}]}' id="mwAQY" style="font-style:italic;" typeof="mw:Transclusion">t</span>, giving a <i id="mwAQc">learning rate schedule</i>, so that the first iterations cause large changes in the parameters, while the later ones do only fine-tuning. Such schedules have been known since the work of MacQueen on <a href="https://en.wikipedia.org/wiki/K-means_clustering" id="mwAQg" rel="mw:WikiLink" title="K-means clustering"><span about="#mwt133" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwAQk" style="font-style:italic;" typeof="mw:Transclusion">k</span>-means clustering</a>.<sup about="#mwt129" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-27"}}' id="cite_ref-27" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-27" id="mwAQo"><span class="mw-reflink-text" id="mwAQs"><span class="cite-bracket" id="mwAQw">[</span>27<span class="cite-bracket" id="mwAQ0">]</span></span></a></sup> Practical guidance on choosing the step size in several variants of SGD is given by Spall.<sup about="#mwt132" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-28"}}' id="cite_ref-28" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-28" id="mwAQ4"><span class="mw-reflink-text" id="mwAQ8"><span class="cite-bracket" id="mwARA">[</span>28<span class="cite-bracket" id="mwARE">]</span></span></a></sup></p>
+<p id="mwARs">As mentioned earlier, classical stochastic gradient descent is generally sensitive to <a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwARw" rel="mw:WikiLink" title="Learning rate">learning rate</a> <span about="#mwt134" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"η"}},"i":0}}]}' id="mwAR0" style="font-style:italic;" typeof="mw:Transclusion">η</span>. Fast convergence requires large learning rates but this may induce numerical instability. The problem can be largely solved<sup about="#mwt137" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-29"}}' id="cite_ref-29" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-29" id="mwAR4"><span class="mw-reflink-text" id="mwAR8"><span class="cite-bracket" id="mwASA">[</span>29<span class="cite-bracket" id="mwASE">]</span></span></a></sup> by considering <i id="mwASI">implicit updates</i> whereby the stochastic gradient is evaluated at the next iterate rather than the current one:
+<span about="#mwt138" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w^\\text{new} := w^\\text{old} - \\eta\\, \\nabla Q_i(w^\\text{new})."}}' id="mwASM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}:=w^{\text{old}}-\eta \,\nabla Q_{i}(w^{\text{new}}).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo>:=</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mspace width="thinmathspace"></mspace>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}:=w^{\text{old}}-\eta \,\nabla Q_{i}(w^{\text{new}}).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}:=w^{\text{old}}-\eta \,\nabla Q_{i}(w^{\text{new}}).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/03aae99e804805a651997417e4dba5683fad4c23" style="vertical-align: -0.838ex; width:28.716ex; height:3.176ex;"/></span></p>
+<p id="mwASQ">This equation is implicit since <span about="#mwt139" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w^\\text{new}"}}' id="mwASU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e680936ce832182c4d333abb8236370fb69d8e07" style="vertical-align: -0.338ex; width:4.727ex; height:2.343ex;"/></span> appears on both sides of the equation. It is a stochastic form of the <a href="https://en.wikipedia.org/wiki/Proximal_gradient_method" id="mwASY" rel="mw:WikiLink" title="Proximal gradient method">proximal gradient method</a> since the update
+can also be written as:
+<span about="#mwt140" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w^\\text{new} := \\arg\\min_w \\left\\{ Q_i(w) + \\frac{1}{2\\eta} \\left\\|w - w^\\text{old}\\right\\|^2 \\right\\}."}}' id="mwASc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}:=\arg \min _{w}\left\{Q_{i}(w)+{\frac {1}{2\eta }}\left\|w-w^{\text{old}}\right\|^{2}\right\}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo>:=</mo>
+<mi>arg</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<munder>
+<mo form="prefix" movablelimits="true">min</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>w</mi>
+</mrow>
+</munder>
+<mrow>
+<mo>{</mo>
+<mrow>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mrow>
+<mn>2</mn>
+<mi>η<!-- η --></mi>
+</mrow>
+</mfrac>
+</mrow>
+<msup>
+<mrow>
+<mo symmetric="true">‖</mo>
+<mrow>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+</mrow>
+<mo symmetric="true">‖</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mrow>
+<mo>}</mo>
+</mrow>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}:=\arg \min _{w}\left\{Q_{i}(w)+{\frac {1}{2\eta }}\left\|w-w^{\text{old}}\right\|^{2}\right\}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}:=\arg \min _{w}\left\{Q_{i}(w)+{\frac {1}{2\eta }}\left\|w-w^{\text{old}}\right\|^{2}\right\}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/60b3552fa12faddb14196bbaaf7b38919d8088a9" style="vertical-align: -2.505ex; width:44.972ex; height:6.176ex;"/></span></p>
+<p id="mwASg">As an example, 
+consider least squares with features <span about="#mwt141" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_1, \\ldots, x_n \\in\\mathbb{R}^p"}}' id="mwASk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{1},\ldots ,x_{n}\in \mathbb {R} ^{p}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>∈<!-- ∈ --></mo>
+<msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>p</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{1},\ldots ,x_{n}\in \mathbb {R} ^{p}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{1},\ldots ,x_{n}\in \mathbb {R} ^{p}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4a086282964125832b4f3aeefa25380cbd8ef11b" style="vertical-align: -0.671ex; width:15.688ex; height:2.676ex;"/></span> and observations
+<span about="#mwt142" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y_1, \\ldots, y_n\\in\\mathbb{R}"}}' id="mwASo" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle y_{1},\ldots ,y_{n}\in \mathbb {R} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>,</mo>
+<mo>…<!-- … --></mo>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle y_{1},\ldots ,y_{n}\in \mathbb {R} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle y_{1},\ldots ,y_{n}\in \mathbb {R} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25d616c0660db8c623d25dd85a7261ace02a5738" style="vertical-align: -0.671ex; width:14.248ex; height:2.509ex;"/></span>. We wish to solve:
+<span about="#mwt143" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;\\min_w \\sum_{j=1}^n \\left(y_j - x_j'w\\right)^2,&quot;}}" id="mwASs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \min _{w}\sum _{j=1}^{n}\left(y_{j}-x_{j}'w\right)^{2},}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<munder>
+<mo form="prefix" movablelimits="true">min</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>w</mi>
+</mrow>
+</munder>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</munderover>
+<msup>
+<mrow>
+<mo>(</mo>
+<mrow>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo>,</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \min _{w}\sum _{j=1}^{n}\left(y_{j}-x_{j}'w\right)^{2},}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \min _{w}\sum _{j=1}^{n}\left(y_{j}-x_{j}'w\right)^{2},}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1958d8915c0f74ac227f212f18d47c4feef94f36" style="vertical-align: -3.338ex; width:21.274ex; height:7.176ex;"/></span>
+where <span about="#mwt144" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;x_j' w = x_{j1} w_1 + x_{j, 2} w_2 + ... + x_{j,p} w_p&quot;}}" id="mwASw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{j}'w=x_{j1}w_{1}+x_{j,2}w_{2}+...+x_{j,p}w_{p}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo>=</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mn>1</mn>
+</mrow>
+</msub>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>1</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>,</mo>
+<mn>2</mn>
+</mrow>
+</msub>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msub>
+<mo>+</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>.</mo>
+<mo>+</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>,</mo>
+<mi>p</mi>
+</mrow>
+</msub>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>p</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{j}'w=x_{j1}w_{1}+x_{j,2}w_{2}+...+x_{j,p}w_{p}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{j}'w=x_{j1}w_{1}+x_{j,2}w_{2}+...+x_{j,p}w_{p}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2edd7364cc83b0e3e474cd0d8b40c632b8683656" style="vertical-align: -1.338ex; width:34.824ex; height:3.176ex;"/></span>  indicates the inner product.
+Note that <span about="#mwt145" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}' id="mwAS0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>x</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;"/></span> could have "1" as the first element to include an intercept. Classical stochastic gradient descent proceeds as follows:
+<span about="#mwt146" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;w^\\text{new} = w^\\text{old} + \\eta \\left(y_i - x_i'w^\\text{old}\\right) x_i&quot;}}" id="mwAS4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}=w^{\text{old}}+\eta \left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+<mo>+</mo>
+<mi>η<!-- η --></mi>
+<mrow>
+<mo>(</mo>
+<mrow>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+</mrow>
+<mo>)</mo>
+</mrow>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}=w^{\text{old}}+\eta \left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}=w^{\text{old}}+\eta \left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/57a733e0617ed9b39b93eba14aa1e87cf82d0bb1" style="vertical-align: -1.005ex; width:31.957ex; height:3.343ex;"/></span></p>
+<p id="mwAS8">where <span about="#mwt147" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"i"}}' id="mwATA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle i}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>i</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle i}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle i}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/add78d8608ad86e54951b8c8bd6c8d8416533d20" style="vertical-align: -0.338ex; width:0.802ex; height:2.176ex;"/></span> is uniformly sampled between 1 and <span about="#mwt148" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n"}}' id="mwATE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>n</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a601995d55609f2d9f5e233e36fbe9ea26011b3b" style="vertical-align: -0.338ex; width:1.395ex; height:1.676ex;"/></span>. Although theoretical convergence of this procedure happens under relatively mild assumptions, in practice the procedure can be quite unstable. In particular, when <span about="#mwt149" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwATI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> is misspecified so that <span about="#mwt150" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;I - \\eta x_i x_i'&quot;}}" id="mwATM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle I-\eta x_{i}x_{i}'}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>I</mi>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle I-\eta x_{i}x_{i}'}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle I-\eta x_{i}x_{i}'}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/04a418d15fb3bca31f5dcc2f05508dbe851aa212" style="vertical-align: -1.005ex; width:9.44ex; height:2.843ex;"/></span> has large absolute eigenvalues with high probability, the procedure may diverge numerically within a few iterations. In contrast, <i id="mwATQ">implicit stochastic gradient descent</i> (shortened as ISGD) can be solved in closed-form as:
+<span about="#mwt151" class="mwe-math-element mwe-math-element-block" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{&quot;display&quot;:&quot;block&quot;},&quot;body&quot;:{&quot;extsrc&quot;:&quot;w^\\text{new} = w^\\text{old} + \\frac{\\eta}{1 + \\eta \\left\\|x_i\\right\\|^2} \\left(y_i - x_i'w^\\text{old}\\right) x_i.&quot;}}" id="mwATU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}=w^{\text{old}}+{\frac {\eta }{1+\eta \left\|x_{i}\right\|^{2}}}\left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+<mo>+</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>η<!-- η --></mi>
+<mrow>
+<mn>1</mn>
+<mo>+</mo>
+<mi>η<!-- η --></mi>
+<msup>
+<mrow>
+<mo symmetric="true">‖</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo symmetric="true">‖</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mrow>
+<mrow>
+<mo>(</mo>
+<mrow>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+</mrow>
+<mo>)</mo>
+</mrow>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}=w^{\text{old}}+{\frac {\eta }{1+\eta \left\|x_{i}\right\|^{2}}}\left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}=w^{\text{old}}+{\frac {\eta }{1+\eta \left\|x_{i}\right\|^{2}}}\left(y_{i}-x_{i}'w^{\text{old}}\right)x_{i}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e1feb68fd084d22b91acc6932ae62fa205c7668b" style="vertical-align: -3.171ex; width:42.951ex; height:6.176ex;"/></span></p>
+<p id="mwATY">This procedure will remain numerically stable virtually for all <span about="#mwt152" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwATc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> as the <a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwATg" rel="mw:WikiLink" title="Learning rate">learning rate</a> is now normalized. Such comparison between classical and implicit stochastic gradient descent in the least squares problem is very similar to the comparison between <a href="https://en.wikipedia.org/wiki/Least_mean_squares_filter" id="mwATk" rel="mw:WikiLink" title="Least mean squares filter">least mean squares (LMS)</a> and 
+<a href="https://en.wikipedia.org/wiki/Least_mean_squares_filter#Normalized_least_mean_squares_filter_(NLMS)" id="mwATo" rel="mw:WikiLink" title="Least mean squares filter">normalized least mean squares filter (NLMS)</a>.</p>
+<p id="mwATs">Even though a closed-form solution for ISGD is only possible in least squares, the procedure can be efficiently implemented in a wide range of models. Specifically, suppose that <span about="#mwt153" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q_i(w)"}}' id="mwATw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q_{i}(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q_{i}(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q_{i}(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25b1170e62c103ff59c79ea424f1c409c4742225" style="vertical-align: -0.838ex; width:6.111ex; height:2.843ex;"/></span> depends on <span about="#mwt154" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w"}}' id="mwAT0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" style="vertical-align: -0.338ex; width:1.664ex; height:1.676ex;"/></span> only through a linear combination with features <span about="#mwt155" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_i"}}' id="mwAT4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e87000dd6142b81d041896a30fe58f0c3acb2158" style="vertical-align: -0.671ex; width:2.129ex; height:2.009ex;"/></span>, so that we can write <span about="#mwt156" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;\\nabla_w Q_i(w) = -q(x_i'w) x_i&quot;}}" id="mwAT8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \nabla _{w}Q_{i}(w)=-q(x_{i}'w)x_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>w</mi>
+</mrow>
+</msub>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mo>−<!-- − --></mo>
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \nabla _{w}Q_{i}(w)=-q(x_{i}'w)x_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \nabla _{w}Q_{i}(w)=-q(x_{i}'w)x_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bc60760be82f4ab7ced0dc1e8d7108591e22a319" style="vertical-align: -1.005ex; width:23.165ex; height:3.009ex;"/></span>, where <span about="#mwt157" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q() \\in\\mathbb{R}"}}' id="mwAUA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q()\in \mathbb {R} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<mo stretchy="false">)</mo>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q()\in \mathbb {R} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q()\in \mathbb {R} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f611c4f9e2388ee543ce8cd3d5c5248f51b78414" style="vertical-align: -0.838ex; width:7.398ex; height:2.843ex;"/></span> may depend on <span about="#mwt158" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x_i, y_i"}}' id="mwAUE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i},y_{i}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i},y_{i}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i},y_{i}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2dccea2bb6a826b389fd2d042508c3d30443dd77" style="vertical-align: -0.671ex; width:5.102ex; height:2.009ex;"/></span> as well but not on <span about="#mwt159" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w"}}' id="mwAUI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" style="vertical-align: -0.338ex; width:1.664ex; height:1.676ex;"/></span> except through <span about="#mwt160" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;x_i'w&quot;}}" id="mwAUM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle x_{i}'w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle x_{i}'w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle x_{i}'w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/01ca12457e89344c13cf259fd19b79dabf903b57" style="vertical-align: -1.005ex; width:3.793ex; height:2.843ex;"/></span>. Least squares obeys this rule, and so does <a href="https://en.wikipedia.org/wiki/Logistic_regression" id="mwAUQ" rel="mw:WikiLink" title="Logistic regression">logistic regression</a>, and most <a href="https://en.wikipedia.org/wiki/Generalized_linear_model" id="mwAUU" rel="mw:WikiLink" title="Generalized linear model">generalized linear models</a>. For instance, in least squares, <span about="#mwt161" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;q(x_i'w) = y_i - x_i'w&quot;}}" id="mwAUY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q(x_{i}'w)=y_{i}-x_{i}'w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q(x_{i}'w)=y_{i}-x_{i}'w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q(x_{i}'w)=y_{i}-x_{i}'w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/607ddbf97fe348c4be9e04075ace1daa9f7cd328" style="vertical-align: -1.005ex; width:18.344ex; height:3.009ex;"/></span>, and in logistic regression <span about="#mwt162" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;q(x_i'w) = y_i - S(x_i'w)&quot;}}" id="mwAUc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q(x_{i}'w)=y_{i}-S(x_{i}'w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<mi>S</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q(x_{i}'w)=y_{i}-S(x_{i}'w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q(x_{i}'w)=y_{i}-S(x_{i}'w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e6f282d5b99039cb5ed58b1fdfc87831f73e1613" style="vertical-align: -1.005ex; width:21.652ex; height:3.009ex;"/></span>, where <span about="#mwt163" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"S(u) = e^u/(1+e^u)"}}' id="mwAUg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle S(u)=e^{u}/(1+e^{u})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>S</mi>
+<mo stretchy="false">(</mo>
+<mi>u</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msup>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>/</mo>
+</mrow>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>+</mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>u</mi>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle S(u)=e^{u}/(1+e^{u})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle S(u)=e^{u}/(1+e^{u})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/de2504987ff339b8e7bd2e2c86ed8636a8d7578e" style="vertical-align: -0.838ex; width:19.223ex; height:2.843ex;"/></span> is the <a href="https://en.wikipedia.org/wiki/Logistic_function" id="mwAUk" rel="mw:WikiLink" title="Logistic function">logistic function</a>. In <a href="https://en.wikipedia.org/wiki/Poisson_regression" id="mwAUo" rel="mw:WikiLink" title="Poisson regression">Poisson regression</a>, <span about="#mwt164" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;q(x_i'w) = y_i - e^{x_i'w}&quot;}}" id="mwAUs" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q(x_{i}'w)=y_{i}-e^{x_{i}'w}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<msub>
+<mi>y</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>−<!-- − --></mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<mi>w</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q(x_{i}'w)=y_{i}-e^{x_{i}'w}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q(x_{i}'w)=y_{i}-e^{x_{i}'w}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/78f90a4477fb0482519879c1b580ecd8e8a559b1" style="vertical-align: -1.005ex; width:18.608ex; height:3.509ex;"/></span>, and so on.</p>
+<p id="mwAUw">In such settings, ISGD is simply implemented as follows. Let <span about="#mwt165" class="mwe-math-element mwe-math-element-inline" data-mw="{&quot;name&quot;:&quot;math&quot;,&quot;attrs&quot;:{},&quot;body&quot;:{&quot;extsrc&quot;:&quot;f(\\xi) = \\eta q(x_i'w^\\text{old} + \\xi \\|x_i\\|^2)&quot;}}" id="mwAU0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle f(\xi )=\eta q(x_{i}'w^{\text{old}}+\xi \|x_{i}\|^{2})}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mi>ξ<!-- ξ --></mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mi>η<!-- η --></mi>
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<msubsup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+<mo>′</mo>
+</msubsup>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+<mo>+</mo>
+<mi>ξ<!-- ξ --></mi>
+<mo fence="false" stretchy="false">‖<!-- ‖ --></mo>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<msup>
+<mo fence="false" stretchy="false">‖<!-- ‖ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle f(\xi )=\eta q(x_{i}'w^{\text{old}}+\xi \|x_{i}\|^{2})}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle f(\xi )=\eta q(x_{i}'w^{\text{old}}+\xi \|x_{i}\|^{2})}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9ff7039597962c00ffb835401deb9bc92027c48e" style="vertical-align: -1.005ex; width:26.863ex; height:3.343ex;"/></span>, where <span about="#mwt166" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\xi"}}' id="mwAU4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \xi }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>ξ<!-- ξ --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \xi }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \xi }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e0b461aaf61091abd5d2c808931c48b8ff9647db" style="vertical-align: -0.671ex; width:1.03ex; height:2.509ex;"/></span> is scalar.
+Then, ISGD is equivalent to:
+<span about="#mwt167" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w^\\text{new} = w^\\text{old} + \\xi^\\ast x_i,~\\text{where}~\\xi^\\ast = f(\\xi^\\ast)."}}' id="mwAU8" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w^{\text{new}}=w^{\text{old}}+\xi ^{\ast }x_{i},~{\text{where}}~\xi ^{\ast }=f(\xi ^{\ast }).}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>new</mtext>
+</mrow>
+</msup>
+<mo>=</mo>
+<msup>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>old</mtext>
+</mrow>
+</msup>
+<mo>+</mo>
+<msup>
+<mi>ξ<!-- ξ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<msub>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>,</mo>
+<mtext> </mtext>
+<mrow class="MJX-TeXAtom-ORD">
+<mtext>where</mtext>
+</mrow>
+<mtext> </mtext>
+<msup>
+<mi>ξ<!-- ξ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>=</mo>
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<msup>
+<mi>ξ<!-- ξ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo stretchy="false">)</mo>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w^{\text{new}}=w^{\text{old}}+\xi ^{\ast }x_{i},~{\text{where}}~\xi ^{\ast }=f(\xi ^{\ast }).}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w^{\text{new}}=w^{\text{old}}+\xi ^{\ast }x_{i},~{\text{where}}~\xi ^{\ast }=f(\xi ^{\ast }).}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5070f3dcc857cf3a957637f863c2edc3829d212f" style="vertical-align: -0.838ex; width:38.124ex; height:3.176ex;"/></span></p>
+<p id="mwAVA">The scaling factor <span about="#mwt168" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\xi^\\ast\\in\\mathbb{R}"}}' id="mwAVE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \xi ^{\ast }\in \mathbb {R} }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>ξ<!-- ξ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+<mo>∈<!-- ∈ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">R</mi>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \xi ^{\ast }\in \mathbb {R} }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \xi ^{\ast }\in \mathbb {R} }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fc2f9ce598e6b32c18ecac6bd64ba037209855da" style="vertical-align: -0.671ex; width:6.607ex; height:2.676ex;"/></span> can be found through the <a href="https://en.wikipedia.org/wiki/Bisection_method" id="mwAVI" rel="mw:WikiLink" title="Bisection method">bisection method</a> since in most regular models, such as the aforementioned generalized linear models, function <span about="#mwt169" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q()"}}' id="mwAVM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle q()}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>q</mi>
+<mo stretchy="false">(</mo>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle q()}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle q()}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/eaa4e64f94c9b3a7b9c178c756dff3c17228e1d8" style="vertical-align: -0.838ex; width:2.879ex; height:2.843ex;"/></span> is decreasing, and thus the search bounds for <span about="#mwt170" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\xi^\\ast"}}' id="mwAVQ" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \xi ^{\ast }}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>ξ<!-- ξ --></mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \xi ^{\ast }}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \xi ^{\ast }}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/74ce2447e43e305cf9923127dc902a8f51db7fad" style="vertical-align: -0.671ex; width:2.088ex; height:2.676ex;"/></span> are <span about="#mwt171" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"[\\min(0, f(0)), \\max(0, f(0))]"}}' id="mwAVU" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle [\min(0,f(0)),\max(0,f(0))]}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">[</mo>
+<mo form="prefix" movablelimits="true">min</mo>
+<mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<mo>,</mo>
+<mo form="prefix" movablelimits="true">max</mo>
+<mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo>,</mo>
+<mi>f</mi>
+<mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle [\min(0,f(0)),\max(0,f(0))]}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle [\min(0,f(0)),\max(0,f(0))]}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/103d0e4214316fcef57cd3bbba35919dc2708884" style="vertical-align: -0.838ex; width:27.041ex; height:2.843ex;"/></span>.</p>
+<p id="mwAVc"><span about="#mwt172" class="anchor" data-mw='{"parts":[{"template":{"target":{"wt":"Anchor","href":"./Template:Anchor"},"params":{"1":{"wt":"Momentum"},"2":{"wt":"Nesterov"}},"i":0}}]}' data-x-id="Momentum" id="mwAVg" typeof="mw:Transclusion"></span><span about="#mwt172" class="anchor" id="Nesterov"></span></p>
+<p id="mwAVk">Further proposals include the <i id="mwAVo">momentum method</i> or the <i id="mwAVs">heavy ball method</i>, which in ML context appeared in <a href="https://en.wikipedia.org/wiki/David_Rumelhart" id="mwAVw" rel="mw:WikiLink" title="David Rumelhart">Rumelhart</a>, <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton" id="mwAV0" rel="mw:WikiLink" title="Geoffrey Hinton">Hinton</a> and <a href="https://en.wikipedia.org/wiki/Ronald_J._Williams" id="mwAV4" rel="mw:WikiLink" title="Ronald J. Williams">Williams</a>' paper on backpropagation learning<sup about="#mwt176" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Rumelhart1986"},"body":{"id":"mw-reference-text-cite_note-Rumelhart1986-30"}}' id="cite_ref-Rumelhart1986_30-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Rumelhart1986-30" id="mwAV8"><span class="mw-reflink-text" id="mwAWA"><span class="cite-bracket" id="mwAWE">[</span>30<span class="cite-bracket" id="mwAWI">]</span></span></a></sup> and borrowed the idea from Soviet mathematician Boris Polyak's 1964 article on solving functional equations.<sup about="#mwt179" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-31"}}' id="cite_ref-31" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-31" id="mwAWM"><span class="mw-reflink-text" id="mwAWQ"><span class="cite-bracket" id="mwAWU">[</span>31<span class="cite-bracket" id="mwAWY">]</span></span></a></sup> Stochastic gradient descent with momentum remembers the update <span about="#mwt173" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Δ''w''&quot;}},&quot;i&quot;:0}}]}" id="mwAWc" typeof="mw:Transclusion">Δ<i>w</i></span> at each iteration, and determines the next update as a <a href="https://en.wikipedia.org/wiki/Linear_combination" id="mwAWg" rel="mw:WikiLink" title="Linear combination">linear combination</a> of the gradient and the previous update:<sup about="#mwt182" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Sutskever2013"},"body":{"id":"mw-reference-text-cite_note-Sutskever2013-32"}}' id="cite_ref-Sutskever2013_32-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Sutskever2013-32" id="mwAWk"><span class="mw-reflink-text" id="mwAWo"><span class="cite-bracket" id="mwAWs">[</span>32<span class="cite-bracket" id="mwAWw">]</span></span></a></sup><sup about="#mwt185" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"SutskeverPhD"},"body":{"id":"mw-reference-text-cite_note-SutskeverPhD-33"}}' id="cite_ref-SutskeverPhD_33-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-SutskeverPhD-33" id="mwAW0"><span class="mw-reflink-text" id="mwAW4"><span class="cite-bracket" id="mwAW8">[</span>33<span class="cite-bracket" id="mwAXA">]</span></span></a></sup>
+<span about="#mwt186" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\Delta w := \\alpha \\Delta w - \\eta\\, \\nabla Q_i(w)"}}' id="mwAXE" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \Delta w:=\alpha \Delta w-\eta \,\nabla Q_{i}(w)}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi mathvariant="normal">Δ<!-- Δ --></mi>
+<mi>w</mi>
+<mo>:=</mo>
+<mi>α<!-- α --></mi>
+<mi mathvariant="normal">Δ<!-- Δ --></mi>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mspace width="thinmathspace"></mspace>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \Delta w:=\alpha \Delta w-\eta \,\nabla Q_{i}(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \Delta w:=\alpha \Delta w-\eta \,\nabla Q_{i}(w)}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f758199c43fb11261e2dfd575de807b401b6496e" style="vertical-align: -0.838ex; width:24.877ex; height:2.843ex;"/></span>
+<span about="#mwt187" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w := w + \\Delta w "}}' id="mwAXI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w:=w+\Delta w}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+<mo>:=</mo>
+<mi>w</mi>
+<mo>+</mo>
+<mi mathvariant="normal">Δ<!-- Δ --></mi>
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w:=w+\Delta w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w:=w+\Delta w}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9305a474135c05fa8767aebd66c404e189506d03" style="vertical-align: -0.505ex; width:13.514ex; height:2.343ex;"/></span>
+that leads to:
+<span about="#mwt188" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"w := w - \\eta\\, \\nabla Q_i(w) + \\alpha \\Delta w "}}' id="mwAXM" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w:=w-\eta \,\nabla Q_{i}(w)+\alpha \Delta w}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+<mo>:=</mo>
+<mi>w</mi>
+<mo>−<!-- − --></mo>
+<mi>η<!-- η --></mi>
+<mspace width="thinmathspace"></mspace>
+<mi mathvariant="normal">∇<!-- ∇ --></mi>
+<msub>
+<mi>Q</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+<mo>+</mo>
+<mi>α<!-- α --></mi>
+<mi mathvariant="normal">Δ<!-- Δ --></mi>
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w:=w-\eta \,\nabla Q_{i}(w)+\alpha \Delta w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w:=w-\eta \,\nabla Q_{i}(w)+\alpha \Delta w}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34d0a4a8529cc81e00a33c9c4a79db57ab76dd5d" style="vertical-align: -0.838ex; width:27.446ex; height:2.843ex;"/></span></p>
+<p id="mwAXQ">where the <a href="https://en.wikipedia.org/wiki/Parametric_statistics" id="mwAXU" rel="mw:WikiLink" title="Parametric statistics">parameter</a> <span about="#mwt189" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w"}}' id="mwAXY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" style="vertical-align: -0.338ex; width:1.664ex; height:1.676ex;"/></span> which minimizes <span about="#mwt190" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"Q(w)"}}' id="mwAXc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle Q(w)}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>Q</mi>
+<mo stretchy="false">(</mo>
+<mi>w</mi>
+<mo stretchy="false">)</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle Q(w)}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle Q(w)}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6346b36d378401a300ca8fea88d2a37d48973d0a" style="vertical-align: -0.838ex; width:5.312ex; height:2.843ex;"/></span> is to be <a href="https://en.wikipedia.org/wiki/Estimator" id="mwAXg" rel="mw:WikiLink" title="Estimator">estimated</a>, <span about="#mwt191" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\eta"}}' id="mwAXk" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \eta }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>η<!-- η --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \eta }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \eta }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e4d701857cf5fbec133eebaf94deadf722537f64" style="vertical-align: -0.838ex; width:1.169ex; height:2.176ex;"/></span> is a step size (sometimes called the <i id="mwAXo"><a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwAXs" rel="mw:WikiLink" title="Learning rate">learning rate</a></i> in machine learning) and <span about="#mwt192" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\alpha"}}' id="mwAXw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \alpha }" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>α<!-- α --></mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \alpha }</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \alpha }" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b79333175c8b3f0840bfb4ec41b8072c83ea88d3" style="vertical-align: -0.338ex; width:1.488ex; height:1.676ex;"/></span> is an exponential <a href="https://en.wikipedia.org/wiki/Learning_rate#Learning_rate_schedule" id="mwAX0" rel="mw:WikiLink" title="Learning rate">decay factor</a> between 0 and 1 that determines the relative contribution of the current gradient and earlier gradients to the weight change.</p>
+<p id="mwAX4">The name momentum stems from an analogy to <a href="https://en.wikipedia.org/wiki/Momentum" id="mwAX8" rel="mw:WikiLink" title="Momentum">momentum</a> in physics: the weight vector <span about="#mwt197" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"w"}}' id="mwAYA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle w}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>w</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle w}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle w}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" style="vertical-align: -0.338ex; width:1.664ex; height:1.676ex;"/></span>, thought of as a particle traveling through parameter space,<style about="#mwt193" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"r","href":"./Template:R"},"params":{"1":{"wt":"Rumelhart1986"}},"i":0}}]}' data-mw-deduplicate="TemplateStyles:r1333433106" id="mwAYE" typeof="mw:Extension/templatestyles mw:Transclusion">.mw-parser-output cite.citation{font-style:inherit;word-wrap:break-word}.mw-parser-output .citation q{quotes:"\"""\"""'""'"}.mw-parser-output .citation:target{background-color:rgba(0,127,255,0.133)}.mw-parser-output .id-lock-free.id-lock-free a{background:url("//upload.wikimedia.org/wikipedia/commons/6/65/Lock-green.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-limited.id-lock-limited a,.mw-parser-output .id-lock-registration.id-lock-registration a{background:url("//upload.wikimedia.org/wikipedia/commons/d/d6/Lock-gray-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-subscription.id-lock-subscription a{background:url("//upload.wikimedia.org/wikipedia/commons/a/aa/Lock-red-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .cs1-ws-icon a{background:url("//upload.wikimedia.org/wikipedia/commons/4/4c/Wikisource-logo.svg")right 0.1em center/12px no-repeat}body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-free a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-limited a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-registration a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-subscription a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .cs1-ws-icon a{background-size:contain;padding:0 1em 0 0}.mw-parser-output .cs1-code{color:inherit;background:inherit;border:none;padding:inherit}.mw-parser-output .cs1-hidden-error{display:none;color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-visible-error{color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-maint{display:none;color:#085;margin-left:0.3em}.mw-parser-output .cs1-kern-left{padding-left:0.2em}.mw-parser-output .cs1-kern-right{padding-right:0.2em}.mw-parser-output .citation .mw-selflink{font-weight:inherit}@media screen{.mw-parser-output .cs1-format{font-size:95%}html.skin-theme-clientpref-night .mw-parser-output .cs1-maint{color:#18911f}}@media screen and (prefers-color-scheme:dark){html.skin-theme-clientpref-os .mw-parser-output .cs1-maint{color:#18911f}}</style><sup about="#mwt193" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"Rumelhart1986"},"body":{"html":""}}' id="cite_ref-Rumelhart1986_30-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Rumelhart1986-30" id="mwAYI"><span class="mw-reflink-text" id="mwAYM"><span class="cite-bracket" id="mwAYQ">[</span>30<span class="cite-bracket" id="mwAYU">]</span></span></a></sup> incurs acceleration from the gradient of the loss ("<a href="https://en.wikipedia.org/wiki/Force" id="mwAYY" rel="mw:WikiLink" title="Force">force</a>"). Unlike in classical stochastic gradient descent, it tends to keep traveling in the same direction, preventing oscillations. Momentum has been used successfully by computer scientists in the training of <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Artificial_neural_networks" id="mwAYc" rel="mw:WikiLink" title="Artificial neural networks">artificial neural networks</a> for several decades.<sup about="#mwt200" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Zeiler 2012"},"body":{"id":"mw-reference-text-cite_note-Zeiler_2012-34"}}' id="cite_ref-Zeiler_2012_34-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Zeiler_2012-34" id="mwAYg"><span class="mw-reflink-text" id="mwAYk"><span class="cite-bracket" id="mwAYo">[</span>34<span class="cite-bracket" id="mwAYs">]</span></span></a></sup>
+The <i id="mwAYw">momentum method</i>  is closely related to <a href="https://en.wikipedia.org/wiki/Langevin_dynamics" id="mwAY0" rel="mw:WikiLink" title="Langevin dynamics">underdamped Langevin dynamics</a>, and may be combined with <a href="https://en.wikipedia.org/wiki/Simulated_annealing" id="mwAY4" rel="mw:WikiLink" title="Simulated annealing">simulated annealing</a>.<sup about="#mwt203" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Borysenko2021"},"body":{"id":"mw-reference-text-cite_note-Borysenko2021-35"}}' id="cite_ref-Borysenko2021_35-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Borysenko2021-35" id="mwAY8"><span class="mw-reflink-text" id="mwAZA"><span class="cite-bracket" id="mwAZE">[</span>35<span class="cite-bracket" id="mwAZI">]</span></span></a></sup></p>
+<p id="mwAZM">In mid-1980s the method was modified by <a href="https://en.wikipedia.org/wiki/Yurii_Nesterov" id="mwAZQ" rel="mw:WikiLink" title="Yurii Nesterov">Yurii Nesterov</a> to use the gradient predicted at the next point, and the resulting so-called <i id="mwAZU">Nesterov Accelerated Gradient</i> was sometimes used in ML in the 2010s.<sup about="#mwt206" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-36"}}' id="cite_ref-36" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-36" id="mwAZY"><span class="mw-reflink-text" id="mwAZc"><span class="cite-bracket" id="mwAZg">[</span>36<span class="cite-bracket" id="mwAZk">]</span></span></a></sup></p>
+<p id="mwAZs"><i id="mwAZw">Averaged stochastic gradient descent</i>, invented independently by Ruppert and Polyak in the late 1980s, is ordinary stochastic gradient descent that records an average of its parameter vector over time. That is, the update is the same as for ordinary stochastic gradient descent, but the algorithm also keeps track of<sup about="#mwt209" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-37"}}' id="cite_ref-37" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-37" id="mwAZ0"><span class="mw-reflink-text" id="mwAZ4"><span class="cite-bracket" id="mwAZ8">[</span>37<span class="cite-bracket" id="mwAaA">]</span></span></a></sup></p>
+<p id="mwAaE"><span about="#mwt211" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"\\bar{w} = \\frac{1}{t} \\sum_{i=0}^{t-1} w_i."}}' id="mwAaI" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle {\bar {w}}={\frac {1}{t}}\sum _{i=0}^{t-1}w_{i}.}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mover>
+<mi>w</mi>
+<mo stretchy="false">¯<!-- ¯ --></mo>
+</mover>
+</mrow>
+</mrow>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>t</mi>
+</mfrac>
+</mrow>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+<mo>=</mo>
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+<mo>−<!-- − --></mo>
+<mn>1</mn>
+</mrow>
+</munderover>
+<msub>
+<mi>w</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>i</mi>
+</mrow>
+</msub>
+<mo>.</mo>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle {\bar {w}}={\frac {1}{t}}\sum _{i=0}^{t-1}w_{i}.}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle {\bar {w}}={\frac {1}{t}}\sum _{i=0}^{t-1}w_{i}.}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c8d046252329fab27b51666c755dbc839f1be753" style="vertical-align: -3.005ex; width:14.001ex; height:7.343ex;"/></span>When optimization is done, this averaged parameter vector takes the place of <span about="#mwt210" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"w"}},"i":0}}]}' id="mwAaM" style="font-style:italic;" typeof="mw:Transclusion">w</span>.</p>
+<p id="mwAaU"><i id="mwAaY">AdaGrad</i> (for adaptive <a href="https://en.wikipedia.org/wiki/Gradient_descent" id="mwAac" rel="mw:WikiLink" title="Gradient descent">gradient</a> algorithm) is a modified stochastic gradient descent algorithm with per-parameter <a href="https://en.wikipedia.org/wiki/Learning_rate" id="mwAag" rel="mw:WikiLink" title="Learning rate">learning rate</a>, first published in 2011.<sup about="#mwt215" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"duchi"},"body":{"id":"mw-reference-text-cite_note-duchi-38"}}' id="cite_ref-duchi_38-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-duchi-38" id="mwAak"><span class="mw-reflink-text" id="mwAao"><span class="cite-bracket" id="mwAas">[</span>38<span class="cite-bracket" id="mwAaw">]</span></span></a></sup> Informally, this increases the learning rate for <span about="#mwt212" class="cleanup-needed-content" data-mw='{"parts":[{"template":{"target":{"wt":"clarify","href":"./Template:Clarify"},"params":{"text":{"wt":"sparser parameters"},"date":{"wt":"November 2023"}},"i":0}}]}' id="mwAa0" style="padding-left:0.1em; padding-right:0.1em; color:var(--color-subtle, #54595d); border:1px solid var(--border-color-subtle, #c8ccd1);" typeof="mw:Transclusion">sparser parameters</span><link about="#mwt212" href="./Category:Wikipedia_articles_needing_clarification_from_November_2023" rel="mw:PageProp/Category"/><sup about="#mwt212" class="noprint Inline-Template" id="mwAa4" style="margin-left:0.1em; white-space:nowrap;"><span typeof="mw:Entity">[</span><i><a href="https://en.wikipedia.org/wiki/Wikipedia:Please_clarify" rel="mw:WikiLink" title="Wikipedia:Please clarify"><span title="The text near this tag may need clarification or removal of jargon. (November 2023)">clarification needed</span></a></i><span typeof="mw:Entity">]</span></sup> and decreases the learning rate for ones that are less sparse. This strategy often improves convergence performance over standard stochastic gradient descent in settings where data is sparse and sparse parameters are more informative. Examples of such applications include natural language processing and image recognition.<sup about="#mwt216" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"duchi"}}' id="cite_ref-duchi_38-1" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-duchi-38" id="mwAa8"><span class="mw-reflink-text" id="mwAbA"><span class="cite-bracket" id="mwAbE">[</span>38<span class="cite-bracket" id="mwAbI">]</span></span></a></sup></p>
+<p id="mwAbM">It still has a base learning rate <span about="#mwt217" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"η"}},"i":0}}]}' id="mwAbQ" style="font-style:italic;" typeof="mw:Transclusion">η</span>, but this is multiplied with the elements of a vector <span about="#mwt218" class="texhtml" data-mw="{&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;math&quot;,&quot;href&quot;:&quot;./Template:Math&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;{''G''&lt;sub&gt;''j'',''j''&lt;/sub&gt;} &quot;}},&quot;i&quot;:0}}]}" id="mwAbU" typeof="mw:Transclusion">{<i>G</i><sub><i>j</i>,<i>j</i></sub>} </span> which is the diagonal of the <a href="https://en.wikipedia.org/wiki/Outer_product" id="mwAbY" rel="mw:WikiLink" title="Outer product">outer product</a> matrix</p>
+<p id="mwAbc"><span about="#mwt219" class="mwe-math-element mwe-math-element-block" data-mw='{"name":"math","attrs":{"display":"block"},"body":{"extsrc":"G = \\sum_{\\tau=1}^t g_\\tau g_\\tau^\\mathsf{T}"}}' id="mwAbg" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle G=\sum _{\tau =1}^{t}g_{\tau }g_{\tau }^{\mathsf {T}}}" class="mathjax_ignore" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>G</mi>
+<mo>=</mo>
+<munderover>
+<mo>∑<!-- ∑ --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>τ<!-- τ --></mi>
+<mo>=</mo>
+<mn>1</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>t</mi>
+</mrow>
+</munderover>
+<msub>
+<mi>g</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>τ<!-- τ --></mi>
+</mrow>
+</msub>
+<msubsup>
+<mi>g</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>τ<!-- τ --></mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="sans-serif">T</mi>
+</mrow>
+</mrow>
+</msubsup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle G=\sum _{\tau =1}^{t}g_{\tau }g_{\tau }^{\mathsf {T}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle G=\sum _{\tau =1}^{t}g_{\tau }g_{\tau }^{\mathsf {T}}}" aria-hidden="true" class="mwe-math-fallback-image-display mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2312c7e8aef5aa986ec4ce3ce6118a9b50ebaa23" style="vertical-align: -3.005ex; width:13.328ex; height:7.176ex;"/></span></p>
+</div></div>
+</body></html>

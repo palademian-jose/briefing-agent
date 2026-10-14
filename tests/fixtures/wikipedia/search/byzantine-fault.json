@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 1004
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Byzantine fault",
+    "pageid": 970031,
+    "size": 36223,
+    "wordcount": 4205,
+    "snippet": "A <span class=\"searchmatch\">Byzantine</span> <span class=\"searchmatch\">fault</span> is a condition of a system, particularly a distributed computing system, where a <span class=\"searchmatch\">fault</span> occurs such that different symptoms are presented",
+    "timestamp": "2026-07-02T17:24:28Z"
+   },
+   {
+    "ns": 0,
+    "title": "Raft (algorithm)",
+    "pageid": 40226710,
+    "size": 20935,
+    "wordcount": 2576,
+    "snippet": "is named after Reliable, Replicated, Redundant, And <span class=\"searchmatch\">Fault</span>-Tolerant. Raft is not <span class=\"searchmatch\">Byzantine</span> <span class=\"searchmatch\">fault</span> tolerant in the base form; the nodes trust the elected",
+    "timestamp": "2026-08-13T09:54:41Z"
+   },
+   {
+    "ns": 0,
+    "title": "Byzantine (disambiguation)",
+    "pageid": 61031,
+    "size": 1654,
+    "wordcount": 232,
+    "snippet": "United States Byzantine (video game) &quot;<span class=\"searchmatch\">Byzantine</span>&quot; (song), from 2019 Weezer album <span class=\"searchmatch\">Byzantine</span> <span class=\"searchmatch\">fault</span>, a type of <span class=\"searchmatch\">fault</span> affecting system consensus in computer",
+    "timestamp": "2026-09-28T15:48:37Z"
+   },
+   {
+    "ns": 0,
+    "title": "Robert Shostak",
+    "pageid": 59868627,
+    "size": 16472,
+    "wordcount": 1874,
+    "snippet": "for his seminal work in the branch of distributed computing known as <span class=\"searchmatch\">Byzantine</span> <span class=\"searchmatch\">Fault</span> Tolerance. He is also known for co-authoring the Paradox Database,",
+    "timestamp": "2026-09-01T13:27:00Z"
+   },
+   {
+    "ns": 0,
+    "title": "Fault tolerance",
+    "pageid": 2091393,
+    "size": 37925,
+    "wordcount": 5049,
+    "snippet": "highly <span class=\"searchmatch\">fault</span> resistant. But when a <span class=\"searchmatch\">fault</span> did occur, they stopped operating completely, and therefore were not <span class=\"searchmatch\">fault</span> tolerant. <span class=\"searchmatch\">Byzantine</span> <span class=\"searchmatch\">fault</span> tolerance –",
+    "timestamp": "2026-06-22T20:32:40Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Bloom filter - Wikipedia</title></head>
+<body>
+<h1 id="firstHeading">Bloom filter</h1>
+<div id="mw-content-text"><div class="mw-parser-output">
+<p id="mwBw">In <a href="https://en.wikipedia.org/wiki/Computing" id="mwCA" rel="mw:WikiLink" title="Computing">computing</a>, a <b id="mwCQ">Bloom filter</b> is a space-efficient <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Probabilistic" id="mwCg" rel="mw:WikiLink" title="Probabilistic">probabilistic</a> <a href="https://en.wikipedia.org/wiki/Data_structure" id="mwCw" rel="mw:WikiLink" title="Data structure">data structure</a>, conceived by Burton Howard Bloom in 1970, that is used to test whether an <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Element_(mathematics)" id="mwDA" rel="mw:WikiLink" title="Element (mathematics)">element</a> is a member of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Set_(computer_science)" id="mwDQ" rel="mw:WikiLink" title="Set (computer science)">set</a>. <a href="https://en.wikipedia.org/wiki/Type_I_and_type_II_errors" id="mwDg" rel="mw:WikiLink" title="Type I and type II errors">False positive</a> matches are possible, but <a href="https://en.wikipedia.org/wiki/Type_I_and_type_II_errors" id="mwDw" rel="mw:WikiLink" title="Type I and type II errors">false negatives</a> are not – in other words, a query returns either "possibly in set" or "definitely not in set". Elements can be added to the set, but not removed (though this can be addressed with the <a class="mw-selflink-fragment" href="#Counting_Bloom_filters" id="mwEA" rel="mw:WikiLink">counting Bloom filter</a> variant); the more items added, the larger the probability of false positives.</p>
+<p id="mwEQ">Bloom proposed the technique for applications where the amount of source data would require an impractically large amount of memory if "conventional" error-free <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwEg" rel="mw:WikiLink" title="Hash function">hashing</a> techniques were applied. He gave the example of a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Hyphenation_algorithm" id="mwEw" rel="mw:WikiLink" title="Hyphenation algorithm">hyphenation algorithm</a> for a dictionary of 500,000 words, out of which 90% follow simple hyphenation rules, but the remaining 10% require expensive disk accesses to retrieve specific hyphenation patterns. With sufficient <a href="https://en.wikipedia.org/wiki/Computer_memory" id="mwFA" rel="mw:WikiLink" title="Computer memory">memory</a>, an error-free hash could be used to eliminate all unnecessary disk accesses; on the other hand, with limited memory, Bloom's technique uses a smaller hash area but still eliminates most unnecessary accesses. For example, a hash area only 18% of the size needed by an ideal error-free hash still eliminates 87% of the disk accesses.<sup about="#mwt9" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEBloom1970"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEBloom1970-1"},"parts":[{"template":{"target":{"wt":"sfnp","href":"./Template:Sfnp"},"params":{"1":{"wt":"Bloom"},"2":{"wt":"1970"}},"i":0}}]}' id="cite_ref-FOOTNOTEBloom1970_1-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEBloom1970-1" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>1<span class="cite-bracket" id="mwGA">]</span></span></a></sup></p>
+<p id="mwGQ">More generally, fewer than 10 <a href="https://en.wikipedia.org/wiki/Bit" id="mwGg" rel="mw:WikiLink" title="Bit">bits</a> per element are required for a 1% false positive probability, independent of the size or number of elements in the set.<sup about="#mwt12" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEBonomiMitzenmacherPanigrahySingh2006"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEBonomiMitzenmacherPanigrahySingh2006-2"},"parts":[{"template":{"target":{"wt":"sfnp","href":"./Template:Sfnp"},"params":{"1":{"wt":"Bonomi"},"2":{"wt":"Mitzenmacher"},"3":{"wt":"Panigrahy"},"4":{"wt":"Singh"},"5":{"wt":"2006"}},"i":0}}]}' id="cite_ref-FOOTNOTEBonomiMitzenmacherPanigrahySingh2006_2-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEBonomiMitzenmacherPanigrahySingh2006-2" id="mwGw"><span class="mw-reflink-text" id="mwHA"><span class="cite-bracket" id="mwHQ">[</span>2<span class="cite-bracket" id="mwHg">]</span></span></a></sup></p>
+<p id="mwKg">An <i id="mwKw">empty Bloom filter</i> is a <a href="https://en.wikipedia.org/wiki/Bit_array" id="mwLA" rel="mw:WikiLink" title="Bit array">bit array</a> of <span about="#mwt20" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"m"}},"i":0}}]}' id="mwLQ" style="font-style:italic;" typeof="mw:Transclusion">m</span> bits, all set to 0. It is equipped with <span about="#mwt21" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwLg" style="font-style:italic;" typeof="mw:Transclusion">k</span> different <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwLw" rel="mw:WikiLink" title="Hash function">hash functions</a>, which map set elements to one of the <span about="#mwt22" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"m"}},"i":0}}]}' id="mwMA" style="font-style:italic;" typeof="mw:Transclusion">m</span> possible array positions. To be optimal, the hash functions should be <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution" id="mwMQ" rel="mw:WikiLink" title="Discrete uniform distribution">uniformly distributed</a> and <a href="https://en.wikipedia.org/wiki/Independence_(probability_theory)" id="mwMg" rel="mw:WikiLink" title="Independence (probability theory)">independent</a>. Typically, <span about="#mwt23" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwMw" style="font-style:italic;" typeof="mw:Transclusion">k</span> is a small constant which depends on the desired false error rate  <span about="#mwt24" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"ε"}},"i":0}}]}' id="mwNA" style="font-style:italic;" typeof="mw:Transclusion">ε</span>, while <span about="#mwt25" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"m"}},"i":0}}]}' id="mwNQ" style="font-style:italic;" typeof="mw:Transclusion">m</span> is proportional to <span about="#mwt26" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwNg" style="font-style:italic;" typeof="mw:Transclusion">k</span> and the number of elements to be added.</p>
+<p id="mwNw">To <i id="mwOA">add</i> an element, feed it to each of the <span about="#mwt27" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwOQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> hash functions to get <span about="#mwt28" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwOg" style="font-style:italic;" typeof="mw:Transclusion">k</span> array positions. Set the bits at all these positions to 1.</p>
+<p id="mwOw">To <i id="mwPA">test</i> whether an element is in the set, feed it to each of the <span about="#mwt29" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwPQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> hash functions to get <span about="#mwt30" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwPg" style="font-style:italic;" typeof="mw:Transclusion">k</span> array positions. If <i id="mwPw">any</i> of the bits at these positions is 0, the element is definitely not in the set; if it were, then all the bits would have been set to 1 when it was inserted. If all are 1, then either the element is in the set, <i id="mwQA">or</i> the bits have by chance been set to 1 during the insertion of other elements, resulting in a <a class="mw-redirect" href="https://en.wikipedia.org/wiki/False_positive" id="mwQQ" rel="mw:WikiLink" title="False positive">false positive</a>. In a simple Bloom filter, there is no way to distinguish between the two cases, but more advanced techniques can address this problem.</p>
+<p id="mwQg">The requirement of designing <span about="#mwt31" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwQw" style="font-style:italic;" typeof="mw:Transclusion">k</span> different independent hash functions can be prohibitive for large <span about="#mwt32" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwRA" style="font-style:italic;" typeof="mw:Transclusion">k</span>. For a good hash function with a wide output, there should be little if any correlation between different bit-fields of such a hash, so this type of hash can be used to generate multiple "different" hash functions by slicing its output into multiple bit fields.  Alternatively, one can pass <span about="#mwt33" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwRQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> different initial values (such as 0, 1, ..., <span about="#mwt34" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwRg" style="font-style:italic;" typeof="mw:Transclusion">k</span><span id="mwRw" typeof="mw:Entity"> </span><span id="mwSA" typeof="mw:Entity">−</span><span id="mwSQ" typeof="mw:Entity"> </span>1) to a hash function that takes an initial value; or add (or append) these values to the key. For larger <span about="#mwt35" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"m"}},"i":0}}]}' id="mwSg" style="font-style:italic;" typeof="mw:Transclusion">m</span> and/or <span about="#mwt36" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwSw" style="font-style:italic;" typeof="mw:Transclusion">k</span>, independence among the hash functions can be relaxed with negligible increase in false positive rate.<sup about="#mwt41" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}' id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-3" id="mwTA"><span class="mw-reflink-text" id="mwTQ"><span class="cite-bracket" id="mwTg">[</span>3<span class="cite-bracket" id="mwTw">]</span></span></a></sup> (Specifically, <a about="#mwt37" class="mw-selflink-fragment" data-mw='{"parts":[{"template":{"target":{"wt":"harvtxt","href":"./Template:Harvtxt"},"params":{"1":{"wt":"Dillinger"},"2":{"wt":"Manolios"},"3":{"wt":"2004b"}},"i":0}}]}' href="#CITEREFDillingerManolios2004b" id="mwUA" rel="mw:WikiLink" typeof="mw:Transclusion">Dillinger <span typeof="mw:Entity">&amp;</span> Manolios (2004b)</a> show the effectiveness of deriving the <span about="#mwt38" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwUQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> indices using <a href="https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing" id="mwUg" rel="mw:WikiLink" title="Double hashing">enhanced double hashing</a>
+and <a href="https://en.wikipedia.org/wiki/Double_hashing#Triple_hashing" id="mwUw" rel="mw:WikiLink" title="Double hashing">triple hashing</a>, variants of <a href="https://en.wikipedia.org/wiki/Double_hashing" id="mwVA" rel="mw:WikiLink" title="Double hashing">double hashing</a> that are effectively simple random number generators seeded with the two or three hash values.)</p>
+<p id="mwVQ">Removing an element from this simple Bloom filter is impossible because there is no way to tell which of the <span about="#mwt42" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwVg" style="font-style:italic;" typeof="mw:Transclusion">k</span> bits it maps to should be cleared.  Although setting any one of those <span about="#mwt43" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwVw" style="font-style:italic;" typeof="mw:Transclusion">k</span> bits to zero suffices to remove the element, it would also remove any other elements that happen to map onto that bit. Since the simple algorithm provides no way to determine whether any other elements have been added that affect the bits for the element to be removed, clearing any of the bits would introduce the possibility of false negatives.</p>
+<p id="mwWA">One-time removal of an element from a Bloom filter can be simulated by having a second Bloom filter that contains items that have been removed.  However, false positives in the second filter become false negatives in the composite filter, which may be undesirable.  In this approach re-adding a previously removed item is not possible, as one would have to remove it from the "removed" filter.</p>
+<p id="mwWQ">It is often the case that all the keys are available but are expensive to enumerate (for example, requiring many disk reads).  When the false positive rate gets too high, the filter can be regenerated; this should be a relatively rare event.</p>
+<p id="mwYQ">While risking false positives, Bloom filters have a substantial space advantage over other data structures for representing sets, such as <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree" id="mwYg" rel="mw:WikiLink" title="Self-balancing binary search tree">self-balancing binary search trees</a>, <a href="https://en.wikipedia.org/wiki/Trie" id="mwYw" rel="mw:WikiLink" title="Trie">tries</a>, <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwZA" rel="mw:WikiLink" title="Hash table">hash tables</a>, or simple <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Array_data_structure" id="mwZQ" rel="mw:WikiLink" title="Array data structure">arrays</a> or <a href="https://en.wikipedia.org/wiki/Linked_list" id="mwZg" rel="mw:WikiLink" title="Linked list">linked lists</a> of the entries. Most of these require storing at least the data items themselves, which can require anywhere from a small number of bits, for small integers, to an arbitrary number of bits, such as for strings (<a about="#mwt45" data-mw='{"parts":[{"template":{"target":{"wt":"Not a typo","href":"./Template:Not_a_typo"},"params":{"1":{"wt":"[[Trie|tries]]"}},"i":0}}]}' href="https://en.wikipedia.org/wiki/Trie" id="mwZw" rel="mw:WikiLink" title="Trie" typeof="mw:Transclusion">tries</a> are an exception since they can share storage between elements with equal prefixes).  However, Bloom filters do not store the data items at all, and a separate solution must be provided for the actual storage. Linked structures incur an additional linear space overhead for pointers. A Bloom filter with a 1% error and an optimal value of <span about="#mwt46" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwaA" style="font-style:italic;" typeof="mw:Transclusion">k</span>, in contrast, requires only about 9.6 bits per element, regardless of the size of the elements. This advantage comes partly from its compactness, inherited from arrays, and partly from its probabilistic nature. The 1% false-positive rate can be reduced by a factor of ten by adding only about 4.8 bits per element.</p>
+<p id="mwaQ">However, if the number of potential values is small and many of them can be in the set, the Bloom filter is easily surpassed by the deterministic <a href="https://en.wikipedia.org/wiki/Bit_array" id="mwag" rel="mw:WikiLink" title="Bit array">bit array</a>, which requires only one bit for each potential element. Hash tables gain a space and time advantage if they begin ignoring collisions and store only whether each bucket contains an entry; in this case, they have effectively become Bloom filters with <span about="#mwt47" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"{{var|k}} = 1"}},"i":0}}]}' id="mwaw" typeof="mw:Transclusion"><var style="padding-right: 1px;">k</var> = 1</span>.<sup about="#mwt48" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"group":"","name":"FOOTNOTEMitzenmacherUpfal2005"},"body":{"id":"mw-reference-text-cite_note-FOOTNOTEMitzenmacherUpfal2005-4"},"parts":[{"template":{"target":{"wt":"sfnp","href":"./Template:Sfnp"},"params":{"1":{"wt":"Mitzenmacher"},"2":{"wt":"Upfal"},"3":{"wt":"2005"}},"i":0}}]}' id="cite_ref-FOOTNOTEMitzenmacherUpfal2005_4-0" rel="dc:references" typeof="mw:Transclusion mw:Extension/ref"><a href="#cite_note-FOOTNOTEMitzenmacherUpfal2005-4" id="mwbA"><span class="mw-reflink-text" id="mwbQ"><span class="cite-bracket" id="mwbg">[</span>4<span class="cite-bracket" id="mwbw">]</span></span></a></sup></p>
+<p id="mwcA">Bloom filters also have the unusual property that the time needed either to add items or to check whether an item is in the set is a fixed constant, <span about="#mwt51" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"O({{var|k}})"}},"i":0}}]}' id="mwcQ" typeof="mw:Transclusion">O(<var style="padding-right: 1px;">k</var>)</span>, completely independent of the number of items already in the set. No other constant-space set data structure has this property, but the average <a href="https://en.wikipedia.org/wiki/Access_time" id="mwcg" rel="mw:WikiLink" title="Access time">access time</a> of sparse <a href="https://en.wikipedia.org/wiki/Hash_table" id="mwcw" rel="mw:WikiLink" title="Hash table">hash tables</a> can make them faster in practice than some Bloom filters.  In a hardware implementation, however, the Bloom filter shines because its <span about="#mwt52" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mwdA" style="font-style:italic;" typeof="mw:Transclusion">k</span> lookups are independent and can be parallelized.</p>
+<p id="mwdQ">To understand its space efficiency, it is instructive to compare the general Bloom filter with its special case when <span about="#mwt53" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"{{var|k}} = 1"}},"i":0}}]}' id="mwdg" typeof="mw:Transclusion"><var style="padding-right: 1px;">k</var> = 1</span>.  If <span about="#mwt54" class="texhtml" data-mw='{"parts":[{"template":{"target":{"wt":"math","href":"./Template:Math"},"params":{"1":{"wt":"{{var|k}} = 1"}},"i":0}}]}' id="mwdw" typeof="mw:Transclusion"><var style="padding-right: 1px;">k</var> = 1</span>, then in order to keep the false positive rate sufficiently low, a small fraction of bits should be set, which means the array must be very large and contain long runs of zeros.  The <a href="https://en.wikipedia.org/wiki/Information_content" id="mweA" rel="mw:WikiLink" title="Information content">information content</a> of the array relative to its size is low.  The generalized Bloom filter (<span about="#mwt55" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mweQ" style="font-style:italic;" typeof="mw:Transclusion">k</span> greater than 1) allows many more bits to be set while still maintaining a low false positive rate; if the parameters (<span about="#mwt56" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"k"}},"i":0}}]}' id="mweg" style="font-style:italic;" typeof="mw:Transclusion">k</span> and <span about="#mwt57" class="texhtml mvar" data-mw='{"parts":[{"template":{"target":{"wt":"mvar","href":"./Template:Mvar"},"params":{"1":{"wt":"m"}},"i":0}}]}' id="mwew" style="font-style:italic;" typeof="mw:Transclusion">m</span>) are chosen well, about half of the bits will be set,<sup about="#mwt59" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}' id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-5" id="mwfA"><span class="mw-reflink-text" id="mwfQ"><span class="cite-bracket" id="mwfg">[</span>5<span class="cite-bracket" id="mwfw">]</span></span></a></sup> and these will be apparently random, minimizing redundancy and maximizing information content.</p>
+<p id="mwiQ">Assume that a <a href="https://en.wikipedia.org/wiki/Hash_function" id="mwig" rel="mw:WikiLink" title="Hash function">hash function</a> selects each array position with equal probability. If <i id="mwiw">m</i> is the number of bits in the array, the probability that a certain bit is not set to 1 by a certain hash function during the insertion of an element is</p>
+<p id="mwjw">If <i id="mwkA">k</i> is the number of hash functions and each has no significant correlation between each other, then the probability that the bit is not set to 1 by any of the hash functions is</p>
+<p id="mwlA">We can use the well-known identity for <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)" id="mwlQ" rel="mw:WikiLink" title="E (mathematical constant)"><i id="mwlg">e</i></a><sup id="mwlw"><span id="mwmA" typeof="mw:Entity">−</span>1</sup></p>
+<p id="mwnA">to conclude that, for large <i id="mwnQ">m</i>,</p>
+<p id="mwoQ">If we have inserted <i id="mwog">n</i> elements, the probability that a certain bit is still 0 is</p>
+<p id="mwpg">the probability that it is 1 is therefore</p>
+<p id="mwqg">Now test membership of an element that is not in the set. Each of the <i id="mwqw">k</i> array positions computed by the hash functions is 1 with a probability as above. The probability of all of them being 1, which would cause the <a href="https://en.wikipedia.org/wiki/Algorithm" id="mwrA" rel="mw:WikiLink" title="Algorithm">algorithm</a> to erroneously claim that the element is in the set, is often given as</p>
+<p id="mwsA">This is not strictly correct as it assumes independence for the probabilities of each bit being set. However, assuming it is a close approximation we have that the probability of false positives decreases as <i id="mwsQ">m</i> (the number of bits in the array) increases, and increases as <i id="mwsg">n</i> (the number of inserted elements) increases.</p>
+<p id="mwsw">The true probability of a false positive, without assuming independence, is</p>
+<p id="mwtw">where the {braces} denote <a href="https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind" id="mwuA" rel="mw:WikiLink" title="Stirling numbers of the second kind">Stirling numbers of the second kind</a>.<sup about="#mwt74" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}' id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-6" id="mwuQ"><span class="mw-reflink-text" id="mwug"><span class="cite-bracket" id="mwuw">[</span>6<span class="cite-bracket" id="mwvA">]</span></span></a></sup></p>
+<p id="mwvQ">An alternative analysis arriving at the same approximation without the assumption of independence is given by Mitzenmacher and Upfal.<sup about="#mwt78" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-7"}}' id="cite_ref-7" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-7" id="mwvg"><span class="mw-reflink-text" id="mwvw"><span class="cite-bracket" id="mwwA">[</span>7<span class="cite-bracket" id="mwwQ">]</span></span></a></sup> After all <i id="mwwg">n</i> items have been added to the Bloom filter, let <i id="mwww">q</i> be the fraction of the <i id="mwxA">m</i> bits that are set to 0. (That is, the number of bits still set to 0 is <i id="mwxQ">qm</i>.) Then, when testing membership of an element not in the set, for the array position given by any of the <i id="mwxg">k</i> hash functions, the probability that the bit is found set to 1 is <span about="#mwt79" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1-q"}}' id="mwxw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1-q}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>q</mi>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1-q}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1-q}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3ccb1d1caf362976d80524abd2c5b3d9e58b1344" style="vertical-align: -0.671ex; width:5.072ex; height:2.509ex;"/></span>. So the probability that all <i id="mwyA">k</i> hash functions find their bit set to 1 is <span about="#mwt75" class="nowrap" data-mw='{"parts":[{"template":{"target":{"wt":"Nowrap","href":"./Template:Nowrap"},"params":{"1":{"wt":"&lt;math&gt;(1 - q)^k&lt;/math&gt;."}},"i":0}}]}' id="mwyQ" typeof="mw:Transclusion"><span about="#mwt76" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(1 - q)^k"}}' typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle (1-q)^{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mi>q</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle (1-q)^{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle (1-q)^{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5f384f3cdf2549d253b9666353746bf10cfd1e0e" style="vertical-align: -0.838ex; width:7.97ex; height:3.176ex;"/></span>.</span>  Further, the expected value of <i id="mwyg">q</i> is the probability that a given array position is left untouched by each of the <i id="mwyw">k</i> hash functions for each of the <i id="mwzA">n</i> items, which is (as above)</p>
+<p id="mw0A">It is possible to prove, without the independence assumption, that <i id="mw0Q">q</i> is very strongly concentrated around its expected value.  In particular, from the <a class="mw-redirect" href="https://en.wikipedia.org/wiki/Azuma–Hoeffding_inequality" id="mw0g" rel="mw:WikiLink" title="Azuma–Hoeffding inequality">Azuma–Hoeffding inequality</a>, they prove that<sup about="#mwt82" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-8"}}' id="cite_ref-8" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-8" id="mw0w"><span class="mw-reflink-text" id="mw1A"><span class="cite-bracket" id="mw1Q">[</span>8<span class="cite-bracket" id="mw1g">]</span></span></a></sup></p>
+<p id="mw2g">Because of this, we can say that the exact probability of false positives is</p>
+<p id="mw3g">as before.</p>
+<p id="mw4A">The number of hash functions, <i id="mw4Q">k</i>, must be a positive integer.  Putting this constraint aside, for a given <i id="mw4g">m</i> and <i id="mw4w">n</i>, the value of <i id="mw5A">k</i> that minimizes the false positive probability is</p>
+<p id="mw6A">The required number of bits, <i id="mw6Q">m</i>, given <i id="mw6g">n</i> (the number of inserted elements) and a desired false positive probability <i id="mw6w">ε</i> (and assuming the optimal value of <i id="mw7A">k</i> is used) can be computed by substituting the optimal value of <i id="mw7Q">k</i> in the probability expression above:</p>
+<p id="mw8Q">which can be simplified to:</p>
+<p id="mw9Q">This results in:</p>
+<p id="mw-Q">So the optimal number of bits per element is</p>
+<p id="mw_Q">with the corresponding number of hash functions <i id="mw_g">k</i> (ignoring integrality):</p>
+<p id="mwAQI">This means that for a given false positive probability <i id="mwAQM">ε</i>, the length of a Bloom filter <i id="mwAQQ">m</i> is proportionate to the number of elements being filtered <i id="mwAQU">n</i> and the required number of hash functions only depends on the target false positive probability <i id="mwAQY">ε</i>.<sup about="#mwt92" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-9"}}' id="cite_ref-9" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-9" id="mwAQc"><span class="mw-reflink-text" id="mwAQg"><span class="cite-bracket" id="mwAQk">[</span>9<span class="cite-bracket" id="mwAQo">]</span></span></a></sup></p>
+<p id="mwAQs">The formula <span about="#mwt93" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"m=-\\frac{n\\ln\\varepsilon}{(\\ln 2)^2}"}}' id="mwAQw" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m=-{\frac {n\ln \varepsilon }{(\ln 2)^{2}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>=</mo>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>n</mi>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mi>ε<!-- ε --></mi>
+</mrow>
+<mrow>
+<mo stretchy="false">(</mo>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mn>2</mn>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m=-{\frac {n\ln \varepsilon }{(\ln 2)^{2}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m=-{\frac {n\ln \varepsilon }{(\ln 2)^{2}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/72c259d2b3b44ed3ae5b761887f87c220e039468" style="vertical-align: -2.671ex; width:14.136ex; height:6.176ex;"/></span> is approximate for three reasons.  First, and of least concern, it approximates
+<span about="#mwt94" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"1 - \\frac{1}{m}"}}' id="mwAQ0" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle 1-{\frac {1}{m}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle 1-{\frac {1}{m}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle 1-{\frac {1}{m}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ac7138ac40c1a9e28c3d38e4461803563bef6443" style="vertical-align: -1.838ex; width:6.879ex; height:5.176ex;"/></span> as <span about="#mwt95" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"e^{-\\frac{1}{m}}"}}' id="mwAQ4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle e^{-{\frac {1}{m}}}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mn>1</mn>
+<mi>m</mi>
+</mfrac>
+</mrow>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle e^{-{\frac {1}{m}}}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle e^{-{\frac {1}{m}}}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/49f584f9392be51e3e80790a81162c22c855a652" style="vertical-align: -0.338ex; width:4.602ex; height:3.343ex;"/></span>, which is a good asymptotic approximation (i.e., which holds as <i id="mwAQ8">m</i> →∞).  Second, of more concern, it assumes that during the membership test the event that one tested bit is set to 1 is independent of the event that any other tested bit is set to 1.  Third, of most concern, it assumes that <span about="#mwt96" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"k = \\frac{m}{n} \\ln 2"}}' id="mwARA" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle k={\frac {m}{n}}\ln 2}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>k</mi>
+<mo>=</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mi>m</mi>
+<mi>n</mi>
+</mfrac>
+</mrow>
+<mi>ln</mi>
+<mo>⁡<!-- ⁡ --></mo>
+<mn>2</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle k={\frac {m}{n}}\ln 2}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle k={\frac {m}{n}}\ln 2}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/76b2ffcb64af4db830273f5b73ac67b91dace6ac" style="vertical-align: -1.838ex; width:11.062ex; height:4.676ex;"/></span> is fortuitously integral.</p>
+<p id="mwARE">Goel and Gupta,<sup about="#mwt98" class="mw-ref reference" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-10"}}' id="cite_ref-10" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-10" id="mwARI"><span class="mw-reflink-text" id="mwARM"><span class="cite-bracket" id="mwARQ">[</span>10<span class="cite-bracket" id="mwARU">]</span></span></a></sup> however, give a rigorous upper bound that makes no approximations and requires no assumptions.  They show that the false positive probability for a finite Bloom filter with <i id="mwARY">m</i> bits (<span about="#mwt99" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" m &gt; 1"}}' id="mwARc" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle m&gt;1}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<mi>m</mi>
+<mo>&gt;</mo>
+<mn>1</mn>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle m&gt;1}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle m&gt;1}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7f27527902d05e4c32bcbe28d425d7790f8ae191" style="vertical-align: -0.338ex; width:6.301ex; height:2.176ex;"/></span>), <i id="mwARg">n</i> elements, and <i id="mwARk">k</i> hash functions is at most</p>
+<p id="mwAR0">This bound can be interpreted as saying that the approximate formula <span about="#mwt101" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\left( 1-e^{-\\frac{kn}m} \\right)^k"}}' id="mwAR4" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle \left(1-e^{-{\frac {kn}{m}}}\right)^{k}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mrow>
+<mo>(</mo>
+<mrow>
+<mn>1</mn>
+<mo>−<!-- − --></mo>
+<msup>
+<mi>e</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>−<!-- − --></mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mfrac>
+<mrow>
+<mi>k</mi>
+<mi>n</mi>
+</mrow>
+<mi>m</mi>
+</mfrac>
+</mrow>
+</mrow>
+</msup>
+</mrow>
+<mo>)</mo>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>k</mi>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle \left(1-e^{-{\frac {kn}{m}}}\right)^{k}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle \left(1-e^{-{\frac {kn}{m}}}\right)^{k}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/54f345dc43a24c39bf0a0f4d22afa34c1adc2308" style="vertical-align: -1.838ex; width:12.793ex; height:5.343ex;"/></span> can be applied at a penalty of at most half an extra element and at most one less bit.</p>
+<p id="mwASA">The number of items in a Bloom filter can be approximated with the following formula,</p>
+<p id="mwASQ">where <var id="mwASU"><span about="#mwt103" class="mwe-math-element mwe-math-element-inline" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"n^*"}}' id="mwASY" typeof="mw:Extension/math"><span class="mwe-math-mathml-a11y" style="display: none;"><math alttext="{\displaystyle n^{*}}" class="mathjax_ignore" xmlns="http://www.w3.org/1998/Math/MathML">
+<semantics>
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle displaystyle="true" scriptlevel="0">
+<msup>
+<mi>n</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>∗<!-- ∗ --></mo>
+</mrow>
+</msup>
+</mstyle>
+</mrow>
+<annotation encoding="application/x-tex">{\displaystyle n^{*}}</annotation>
+</semantics>
+</math></span><img alt="{\displaystyle n^{*}}" aria-hidden="true" class="mwe-math-fallback-image-inline mw-invert skin-invert" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/9615e0726d9d6cc58d117a844dca1ca84bb81f7e" style="vertical-align: -0.338ex; width:2.449ex; height:2.343ex;"/></span></var> is an estimate of the number of items in the filter, <var id="mwASc">m</var> is the length (size) of the filter, <var id="mwASg">k</var> is the number of hash functions, and <var id="mwASk">X</var> is the number of bits set to one.<sup about="#mwt106" class="mw-ref reference" data-mw='{"name":"ref","attrs":{"name":"Swamidass 2007"},"body":{"id":"mw-reference-text-cite_note-Swamidass_2007-11"}}' id="cite_ref-Swamidass_2007_11-0" rel="dc:references" typeof="mw:Extension/ref"><a href="#cite_note-Swamidass_2007-11" id="mwASo"><span class="mw-reflink-text" id="mwASs"><span class="cite-bracket" id="mwASw">[</span>11<span class="cite-bracket" id="mwAS0">]</span></span></a></sup></p>
+</div></div>
+</body></html>

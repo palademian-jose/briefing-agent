@@ -1,0 +1,59 @@
+{
+ "batchcomplete": "",
+ "continue": {
+  "sroffset": 5,
+  "continue": "-||"
+ },
+ "query": {
+  "searchinfo": {
+   "totalhits": 155
+  },
+  "search": [
+   {
+    "ns": 0,
+    "title": "Raft (algorithm)",
+    "pageid": 40226710,
+    "size": 20935,
+    "wordcount": 2576,
+    "snippet": "<span class=\"searchmatch\">Raft</span> is a consensus <span class=\"searchmatch\">algorithm</span> designed as an alternative to the Paxos family of <span class=\"searchmatch\">algorithms</span>. It was meant to be more understandable than Paxos by means",
+    "timestamp": "2026-08-13T09:54:41Z"
+   },
+   {
+    "ns": 0,
+    "title": "Distributed algorithm",
+    "pageid": 3367202,
+    "size": 5475,
+    "wordcount": 630,
+    "snippet": "decides v {\\displaystyle v} . Common <span class=\"searchmatch\">algorithms</span> for solving consensus are the Paxos <span class=\"searchmatch\">algorithm</span> and the <span class=\"searchmatch\">Raft</span> <span class=\"searchmatch\">algorithm</span>. Distributed search Leader election",
+    "timestamp": "2025-06-23T20:30:57Z"
+   },
+   {
+    "ns": 0,
+    "title": "John Ousterhout",
+    "pageid": 42072,
+    "size": 7089,
+    "wordcount": 466,
+    "snippet": "Software Design, (Yaknyam Press, 2018, ISBN 1732102201) Ousterhout&#039;s dichotomy <span class=\"searchmatch\">Raft</span> (computer science) Ousterhout, J.K.; Jones, K. (2009). Tcl and the Tk Toolkit",
+    "timestamp": "2026-03-26T14:25:16Z"
+   },
+   {
+    "ns": 0,
+    "title": "Raft (disambiguation)",
+    "pageid": 7705924,
+    "size": 1906,
+    "wordcount": 272,
+    "snippet": "The <span class=\"searchmatch\">Raft</span>, a fictional refugee flotilla in Neal Stephenson&#039;s novel Snow Crash <span class=\"searchmatch\">Raft</span> (<span class=\"searchmatch\">algorithm</span>), a distributed consensus protocol <span class=\"searchmatch\">Raft</span>Lib, the <span class=\"searchmatch\">Raft</span> library",
+    "timestamp": "2025-12-11T20:30:06Z"
+   },
+   {
+    "ns": 0,
+    "title": "PACELC design principle",
+    "pageid": 51386205,
+    "size": 13011,
+    "wordcount": 1387,
+    "snippet": "architecture (solution) Paxos (computer science) Project management triangle <span class=\"searchmatch\">Raft</span> (<span class=\"searchmatch\">algorithm</span>) Trilemma Dynamo, Cassandra, and Riak have user-adjustable settings",
+    "timestamp": "2025-12-14T09:56:09Z"
+   }
+  ]
+ }
+}
