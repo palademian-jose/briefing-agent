@@ -17,3 +17,4 @@ reports/latest*.json
 dist/
 build/
 *.egg-info/
+reports/gate.md

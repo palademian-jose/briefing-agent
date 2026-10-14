@@ -9,7 +9,8 @@ just final answers.
 
 Everything runs offline with `LLM_PROVIDER=fake` (a scripted policy over recorded Wikipedia
 fixtures), so tests, CI and the demo never need a key. Set `OPENROUTER_API_KEY` to run the
-same code against a real model.
+same code against a real model. Tracing, pricing and the CI gate come from the sibling project
+[`llm-evalops`](../llm-evalops).
 
 ```
 $ uv run briefing "Consistent hashing"
@@ -196,7 +197,7 @@ look wrong.
 | pass^3 (all 3 runs pass) | 0.93 | n/a (k=1) |
 | recovery_rate (runs with >= 1 injected fault that still passed) | n/a | **0.83** (24 faulted runs) |
 | mean tool calls / task | 6.3 | 8.8 |
-| $/run (mean, pricing.json) | $0.051 | $0.062 |
+| $/run (mean, llmops pricing.json) | $0.051 | $0.062 |
 | latency p95 | 124 ms | 125 ms |
 | verifier first-pass rate | 1.00 | 1.00 |
 | needs_human / budget_exceeded rate | 0.00 / 0.00 | 0.00 / 0.00 |
@@ -223,8 +224,10 @@ agent fetches current Wikipedia pages and the verifier checks against them.
 
 The judge is binary and criterion-specific (shared contract:
 `judge(criterion, input, output, reference) -> {"pass", "reason"}`). With a real key it is
-`JUDGE_MODEL` (OpenAI family, deliberately different from the Anthropic generator); with the
-fake provider it is a lexical rubric. `uv run python scripts/calibrate_judge.py` compares it
+`JUDGE_MODEL` (OpenAI family, deliberately different from the Anthropic generator) run
+through `evalkit.judge.Judge` from llm-evalops (strict JSON verdicts, one repair turn); with the
+fake provider it is a lexical rubric (evalkit's fake judge is a different heuristic, so switching
+would move the committed baseline). `uv run python scripts/calibrate_judge.py` compares it
 with [`evals/human_labels.jsonl`](evals/human_labels.jsonl) (20 samples in four conditions:
 clean, hallucinated, synonym-paraphrased, off-topic; labels assigned by the author by
 inspection, with the reasoning in each row's `note`):
@@ -247,7 +250,7 @@ calibration script is how you check it did (re-run with a key and compare kappa)
 
 ```bash
 uv python pin 3.12 && uv sync          # or: make setup
-uv run pytest                          # 62 tests, offline
+uv run pytest                          # 73 tests, offline
 uv run ruff check . && uv run ruff format --check .
 uv run briefing "Bloom filter" --max-sources 3 --audience "backend engineer"
 uv run briefing "Bloom filter" --faults "fetch_timeout:0.5,search_empty:0.3" --seed 3   # watch recovery
@@ -288,15 +291,19 @@ Three independent stops per run, checked before every LLM and tool call:
 a per-IP token bucket (`RATE_LIMIT_PER_MINUTE`, `RATE_LIMIT_BURST`) and a daily cap
 (`DAILY_USD_CAP`) computed from the runs table.
 
-Cost is tokens x [`pricing.json`](pricing.json) (OpenRouter slugs and bare ids; lookup strips
-the vendor prefix; unknown models cost 0 and log a warning). When OpenRouter reports
-`usage.cost` the provider's number wins and both are stored in the span's `meta`.
+Cost is tokens x llmops' `pricing.json` (`llmops.pricing`: OpenRouter slugs and bare ids; the
+lookup strips the vendor prefix; unknown models cost 0; `PRICING_PATH` overrides the file; there
+is no copy in this repo). When OpenRouter reports `usage.cost` the provider's number wins and
+both are stored in the span's `meta` (`cost_source`, `cost_computed_usd`, `cost_reported_usd`).
 **Verify the prices before relying on them**; `llm-evalops` is the source of truth.
 
 Every LLM call, tool call and verification writes one JSON line to `TRACE_PATH` in the
 shared span schema (`trace_id`, `span_id`, `parent_span_id`, `kind`, tokens, `cost_usd`,
-`status`, `error_kind`, `meta`), and the API response carries the per-run summary
-(`cost.llm_calls`, `cost.tool_calls`, tokens, `cost.by_model`).
+`status`, `error_kind`, `meta`) through `llmops.tracing`: `wrap_client` makes each model call an
+`llm` span (named `agent.think`, `agent.act`, `agent.compose`, `agent.repair`, with `run_id`,
+`phase` and `provider` in `meta`), `Tracer.span` wraps the stages and every tool execution.
+One trace per run (`trace_id` is kept across `--resume`); the API response carries the per-run
+summary (`cost.llm_calls`, `cost.tool_calls`, tokens, `cost.by_model`).
 
 ## Depending on llm-evalops
 
@@ -384,15 +391,28 @@ bottleneck is search quality, not parallelism. A plausible split (one agent per 
 candidate, a critic agent for faithfulness) adds coordination cost and a second place to
 hallucinate. The way to test it: implement the critic as a separate `JUDGE_MODEL` call in the
 repair stage, run the same golden set, and compare pass^3, verifier first-pass rate and $/run
-against this baseline with `scripts/gate.py`. If pass^3 does not move and cost doubles, the
+against this baseline with `evalkit gate`. If pass^3 does not move and cost doubles, the
 answer is no.
 
 **CI gating of prompt changes.** Prompts live in one module
 ([`agent/prompts.py`](src/briefing_agent/agent/prompts.py)). CI runs the eval on a subset
 with the fake provider and gates `task_success`, `pass_k`, `verifier_pass_rate`,
 `judge_pass_rate`, `mean_tool_calls`, `cost_usd_mean` against `reports/baseline.json` with
-`evals.yaml` thresholds (absolute floors and maximum drop). The gate script has the same CLI
-shape as `evalkit gate` from `llm-evalops` and will be swapped for it at integration.
+`evals.yaml` thresholds (absolute floors and maximum drop) using `evalkit gate` from
+`llm-evalops` (`make gate`; CI appends the table to the job summary). The config is evalkit's:
+`max_increase` replaces the old `max_rise`, and `recovery_rate` is `optional: true`, so it is
+skipped (not failed) in runs without fault injection. The committed `reports/baseline.json`
+loads as an evalkit `EvalResult` unchanged.
+
+## Related projects
+
+- [`llm-evalops`](../llm-evalops) (GitHub: `https://github.com/palademian-jose/llm-evalops`):
+  the eval harness and LLMOps toolkit that instruments and gates this agent: `llmops` traces,
+  prices and budgets every call, `evalkit` runs the golden set through a calibrated judge and
+  fails CI on regression.
+- [`docs-rag`](../docs-rag) (GitHub: `https://github.com/palademian-jose/docs-rag`): the RAG
+  sibling (hybrid retrieval, rerank, cited answers, refusal); instrumented and gated by
+  `llm-evalops` the same way.
 
 ## Demo recording note
 
@@ -407,14 +427,14 @@ stderr shows the empty search, the broadened re-query, the retried timeouts
 
 ```
 src/briefing_agent/
-  llm/          provider contract, fake policy, openrouter/openai/anthropic backends, traced calls
+  llm/          provider contract, fake policy, openrouter/openai/anthropic backends
   tools/        schemas, errors, faults, network (live + fixture transport), wikipedia, verify, registry
   agent/        state + checkpoints, retry/escalation policy, the bounded loop, prompts
-  evals/        judge (criterion-specific, lexical fallback)
+  evals/        judge (evalkit.judge for real providers, lexical fallback for fake)
   pipeline.py   fixed stages around the agentic stage
-  api.py, cli.py, store.py, tracing.py, cost.py, settings.py
-scripts/        eval.py, gate.py, calibrate_judge.py, record_fixtures.py, make_label_samples.py, slack_command.py
+  api.py, cli.py, store.py, tracing.py (re-exports llmops.tracing), settings.py
+scripts/        eval.py, calibrate_judge.py, record_fixtures.py, make_label_samples.py, slack_command.py
 evals/          golden/tasks.jsonl (30 tasks), human_labels.jsonl (20 labels)
-tests/          62 tests + recorded Wikipedia fixtures (30 searches, 115 pages)
+tests/          73 tests + recorded Wikipedia fixtures (30 searches, 115 pages)
 reports/        baseline.json, latest.md, latest-faults.md, judge-calibration.md
 ```
